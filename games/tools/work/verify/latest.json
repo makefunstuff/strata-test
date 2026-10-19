@@ -14,17 +14,17 @@
     {
       "label": "3-marble-maze",
       "ok": true,
-      "detail": "errors=0 fps=7.5/6.5 hud_moves=true shows\"STATE ROLLING\""
+      "detail": "errors=0 fps=7.5/7 hud_moves=true shows\"STATE ROLLING\""
     },
     {
       "label": "4-tower-defense",
       "ok": true,
-      "detail": "errors=0 fps=10/9.5 hud_moves=true shows\"MONEY\""
+      "detail": "errors=0 fps=10/9 hud_moves=true shows\"MONEY\""
     },
     {
       "label": "5-flight",
       "ok": true,
-      "detail": "errors=0 fps=22/23.5 hud_moves=true shows\"STATE FLY\""
+      "detail": "errors=0 fps=22/21 hud_moves=true shows\"STATE FLY\""
     }
   ]
 }
