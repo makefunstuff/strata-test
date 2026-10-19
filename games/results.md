@@ -20,7 +20,7 @@ they prove the frame loop runs, not the ceiling.
 Scoring is my own, harsh, against the games I actually play: 5 is a game you'd replay for its
 mechanic alone, 3 is playable with a missing layer, 1 is a demo.
 
-## The shared arcade kit, and the two bugs it carried
+## The shared arcade kit, and the three bugs it carried
 
 Games 1 and 2 are built on `shared/`: `post.js` (Render → Bloom → CRT → Output, plus PMREM
 `RoomEnvironment`), `crt.js` (barrel inflate, RGB triplet sampling, phosphor bleed, scanlines,
@@ -40,6 +40,28 @@ a key (the autoplay gesture), fires the loudest sound and the music, samples the
 from an AnalyserNode, stops, and samples the tail. A runaway loop shows as a tail that never
 falls; the meter now reports silence before the first keypress, peaks of 0.13 (game 1) and
 0.34 (game 2) while playing, and a tail that decays to ~0.
+
+**The line across the screen was a CSS border.** A bright 2px cyan rule sat in the middle of
+tube after tube in every game, and it behaved like a shader artefact: identical in colour and
+height across the whole width, unaffected by turning the CRT pass off, the bloom off, the sky
+background off, the floor apron off, and by hiding every object in the scene. It was
+`.hud { border-bottom: 2px solid rgba(142,232,255,.35) }` on a bar 208px tall — DOM, sitting on
+the canvas, which is why no shader toggle could touch it. The HUD now ends in a 1px divider that
+fades at both ends, and its stats row and controls strip sit inside the tube's aperture instead
+of running under the cabinet frame.
+
+The bisection found four genuine defects on the way to a border, and they stay fixed: the CRT's
+rolling beam stepped by whole rows (`fract(y*0.5 + t*0.05)` is discontinuous, now a continuous
+soft phase); the room's wall trim ran at one constant height all the way round, drawing a rule
+from wall to wall; `skyTexture`'s single colour stop was a hard step that rendered as a bright
+horizontal line at exactly 1-stop of the sky (game 2's horizon, now ramped in over 18%); and the
+120×120 apron tiled a glowing grid over the whole floor, which perspective compresses into one
+rule in the distance (now 70×70, no emissive, faded out radially with an alphaMap). Two
+instruments now make that class of bug measurable instead of arguable: `tools/linescan.mjs`
+scores every pixel row against its neighbourhood with effects toggled live, and with `--trace`
+reports the brightest row per column — flat means screen-space, varying means geometry;
+`tools/domscan.mjs` prints every element whose box edge lands on the bad row, with its computed
+paint. Breakout's worst row went from 46 over its neighbours to 5.
 
 ## Hard parts, and where pi went in circles
 
