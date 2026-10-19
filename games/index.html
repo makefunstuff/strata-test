@@ -3,48 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strata Games</title>
+<title>strata-test — five games on the shared arcade kit</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
 <style>
-  :root { --bg: #0f1115; --card: #181b22; --text: #e8e9ec; --muted: #9aa0ab; --accent: #6cb6ff; --line: #2a2f3a; }
-  @media (prefers-color-scheme: light) {
-    :root { --bg: #f5f6f8; --card: #ffffff; --text: #1b1e24; --muted: #5d6470; --accent: #0b63c5; --line: #dde1e7; }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
-  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 48px; }
-  h1 { margin: 0 0 4px; font-size: 28px; }
-  p.lead { margin: 0 0 24px; color: var(--muted); max-width: 70ch; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-  a.card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
-           color: inherit; text-decoration: none; transition: border-color .15s; }
-  a.card:hover, a.card:focus-visible { border-color: var(--accent); }
-  .card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
-  .card div { padding: 12px 14px 14px; }
-  .card h2 { margin: 0 0 2px; font-size: 18px; }
-  .card span { color: var(--muted); font-size: 14px; }
-  footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
-  footer a { color: var(--accent); }
+:root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--bg:#04060a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:
+  radial-gradient(120% 80% at 50% 0%, #101c2c 0%, #070b12 45%, #04060a 100%) #04060a;
+  color:var(--ink);font-family:"Press Start 2P",monospace;font-size:10px;line-height:1.9;
+  -webkit-font-smoothing:antialiased}
+main{max-width:1100px;margin:0 auto;padding:34px 22px 60px}
+h1{font-size:19px;margin:0 0 8px;letter-spacing:2px;color:#fff;
+  text-shadow:0 0 10px rgba(142,232,255,.5),0 0 34px rgba(53,208,255,.28)}
+p.lead{color:var(--dim);margin:0 0 26px;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+a.card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(142,232,255,.18);
+  background:linear-gradient(180deg,rgba(16,28,44,.92),rgba(6,10,16,.94));padding:10px;
+  transition:transform .12s, box-shadow .12s, border-color .12s}
+a.card:hover{transform:translateY(-3px);border-color:rgba(142,232,255,.5);
+  box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 22px rgba(53,208,255,.22)}
+a.card img{display:block;width:100%;height:150px;object-fit:cover;border:1px solid rgba(142,232,255,.14);
+  filter:saturate(1.06)}
+h2{font-size:11px;margin:10px 0 4px;color:var(--cyan);letter-spacing:1px}
+p.why{color:var(--dim);font-size:8px;margin:0 0 8px}
+kbd{display:inline-block;border:1px solid rgba(142,232,255,.45);border-bottom-width:2px;border-radius:3px;
+  padding:2px 5px;font-size:7px;color:var(--cyan);background:rgba(53,208,255,.08)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:7px;color:var(--dim)}
+footer{margin-top:30px;border-top:1px solid rgba(142,232,255,.14);padding-top:14px;font-size:8px;
+  color:var(--dim)}
+footer a{color:var(--cyan)}
+.scan{pointer-events:none;position:fixed;inset:0;z-index:60;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 3px)}
 </style>
 </head>
 <body>
+<div class="scan"></div>
 <main>
-  <h1>Strata Games</h1>
-  <p class="lead">Five three.js games, each written by a headless pi agent running Qwen3.8-Flash-Next (IQ2_XS) on
-    Strata, from one short spec prompt. Complexity rises from 1 to 5. Click a game to play it.</p>
+  <h1>FIVE GAMES</h1>
+  <p class="lead">Three.js, 0.170.0 from a CDN, plain static files — no build step, no npm, no server.
+  All five run on one shared arcade kit: a CRT and cabinet bezel, procedural textures, particles,
+  bloom, WebAudio sound and a HUD in the same typeface. Click a cabinet.</p>
+
   <div class="grid">
-    <a class="card" href="1-breakout/"><img src="screenshots/1-breakout-input.png" alt="Breakout screenshot" loading="lazy">
-      <div><h2>1 · Breakout</h2><span>Simple: paddle, ball, bricks. ←/→ to move, Space to start.</span></div></a>
-    <a class="card" href="2-runner/"><img src="screenshots/2-runner-input.png" alt="Endless runner screenshot" loading="lazy">
-      <div><h2>2 · Endless runner</h2><span>Arcade: three lanes, rising speed. ←/→ lanes, Space jumps.</span></div></a>
-    <a class="card" href="3-marble-maze/"><img src="screenshots/3-marble-maze-input.png" alt="Marble maze screenshot" loading="lazy">
-      <div><h2>3 · Marble maze</h2><span>Physics: cannon-es, shadows. Arrows/WASD tilt the board.</span></div></a>
-    <a class="card" href="4-tower-defense/"><img src="screenshots/4-tower-defense-input.png" alt="Tower defense screenshot" loading="lazy">
-      <div><h2>4 · Tower defense</h2><span>Strategy: pathfinding enemies, waves. Click tiles to build, N for the next wave.</span></div></a>
-    <a class="card" href="5-flight/"><img src="screenshots/5-flight-input.png" alt="Flight game screenshot" loading="lazy">
-      <div><h2>5 · Flight</h2><span>Showcase: procedural terrain, fog, sky, particles, bloom. Arrows/WASD fly, Shift boosts.</span></div></a>
+    <a class="card" href="1-breakout/index.html">
+      <img src="screenshots/1-breakout-input.png" alt="Breakout: neon room, brick wall, paddle" loading="lazy">
+      <h2>1 · Breakout</h2>
+      <p class="why">Neon room, PMREM reflections, ball trail, brick shatter, shockwave rings,
+      camera shake, 53 bricks.</p>
+      <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd> paddle <kbd>Space</kbd> launch <kbd>C</kbd> crt <kbd>M</kbd> sound</div>
+    </a>
+
+    <a class="card" href="2-runner/index.html">
+      <img src="screenshots/2-runner-input.png" alt="Runner: chrome figure on a neon motorway" loading="lazy">
+      <h2>2 · Runner</h2>
+      <p class="why">Chrome runner on a scrolling motorway: speed ramps, three lanes, jump the
+      hurdles, slide under the tall ones.</p>
+      <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd> lane <kbd>Space</kbd> jump <kbd>R</kbd> restart</div>
+    </a>
+
+    <a class="card" href="3-marble-maze/index.html">
+      <img src="screenshots/3-marble-maze-input.png" alt="Marble Maze: wooden board tilted, chrome marble" loading="lazy">
+      <h2>3 · Marble Maze</h2>
+      <p class="why">A wooden board in real physics (cannon-es): tilt it, roll the chrome marble
+      to the green pad, miss a tile and you fall.</p>
+      <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd><kbd>&#9650;</kbd><kbd>&#9660;</kbd> tilt <kbd>R</kbd> restart</div>
+    </a>
+
+    <a class="card" href="4-tower-defense/index.html">
+      <img src="screenshots/4-tower-defense-input.png" alt="Tower Defense: grass field, lane of enemies, towers" loading="lazy">
+      <h2>4 · Tower Defense</h2>
+      <p class="why">The enemies path-find, and re-path around whatever you build. A tower that
+      seals the lane is refused, so placement is a decision.</p>
+      <div class="row"><kbd>Click</kbd> build <kbd>&#9664;&#9654;&#9650;&#9660;</kbd> cursor <kbd>N</kbd> wave</div>
+    </a>
+
+    <a class="card" href="5-flight/index.html">
+      <img src="screenshots/5-flight-input.png" alt="Flight: jet over procedural terrain with a ring gate" loading="lazy">
+      <h2>5 · Flight</h2>
+      <p class="why">Infinite terrain from 60 lines of noise, flat-shaded by height, sky and fog,
+      bank-to-turn jet, ring gates that burst and recycle.</p>
+      <div class="row"><kbd>&#9664;&#9654;&#9650;&#9660;</kbd> fly <kbd>Shift</kbd> boost <kbd>R</kbd> restart</div>
+    </a>
   </div>
-  <footer>How they were made, the stats and the ratings:
-    <a href="https://github.com/makefunstuff/strata-test/tree/main/games">games/README.md</a>.</footer>
+
+  <footer>
+    Every game is checked in headless Chromium: console/page errors, input reactivity, FPS, and
+    audio (silent before the first keypress, audible while playing, no clipping, decays to
+    silence). The measurements, and the bugs each one caught, are in
+    <a href="results.md">results.md</a>. Harness in <a href="tools/">tools/</a> (not published).
+    <br><br>Built by Strata, running pi headless, five tasks on one board.
+  </footer>
 </main>
 </body>
 </html>

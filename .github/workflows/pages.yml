@@ -3,7 +3,7 @@ name: Deploy games to GitHub Pages
 
 on:
   push:
-    branches: [main, work/4-five-three-js-games-built-by-s]  # TEMP: branch preview while the games are built
+    branches: [main]
   workflow_dispatch:
 
 permissions:

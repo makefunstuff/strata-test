@@ -92,3 +92,14 @@ restart and load 11.8. Earlier builds were cut off mid-run by the memory floor (
 - The runner's "finished in one session" is measured (`--mode print`, `exit 0`, no follow-up
   session). It says nothing about the game working: only the smoke test does that, and only
   the screenshot shows what it looks like.
+
+## What is deployed
+
+All five games and the index, on GitHub Pages:
+**https://makefunstuff.github.io/strata-test/** — the index at `/strata-test/`, each game
+under its own folder.
+
+`.github/workflows/pages.yml` publishes `games/` (minus `tools/`, which is the harness)
+on push to `main`, using the official Pages actions, and keeps `workflow_dispatch` so a
+branch can be deployed for preview — that is how this build was checked before merging.
+The only repo setting touched is Pages → Build source: GitHub Actions.
