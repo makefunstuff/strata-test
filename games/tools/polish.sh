@@ -22,7 +22,7 @@ declare -A input=(
   [2-runner]='--keys Space:100,wait:1500,ArrowLeft:120,wait:800,ArrowUp:120,wait:800,ArrowRight:120'
   [3-marble-maze]='--keys ArrowRight:1500,ArrowDown:1500,wait:1000'
   [4-tower-defense]='--click 0.42,0.45;0.5,0.5;0.58,0.55;0.46,0.6 --keys n:100,wait:5000'
-  [5-flight]='--keys ArrowUp:600,ArrowLeft:900,Shift:1500,wait:1000'
+  [5-flight]='--keys ArrowLeft:500,ArrowRight:400,Shift:1200,wait:900'
 )
 # the game's own end-state verb, run through window.arcade
 declare -A over=(

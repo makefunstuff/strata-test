@@ -2,6 +2,8 @@
 // towers, waves that re-route around them, and an arcade cabinet around the whole thing.
 import * as THREE from "three";
 import { createPost, setupEnvironment } from "../shared/post.js";
+import { quality, autoQuality } from "../shared/mobile.js";
+import { addTouchControls } from "../shared/touch.js";
 import { crtKey } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
@@ -25,7 +27,7 @@ const waveBtn = document.getElementById("wave-btn");
 // ---------------------------------------------------------------- renderer
 const canvas = document.getElementById("game");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(quality({ pixelRatio: 2 }).pixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -40,18 +42,26 @@ const CAM = { x: 0, y: 10.3, z: 10.7 };
 camera.position.set(CAM.x, CAM.y, CAM.z);
 camera.lookAt(0, 0, 0);
 
+const Q = quality({ pixelRatio: 2, bloomScale: 0.5, shadowMap: 1024, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
   exposure: 1.0,
-  bloom: { strength: 0.62, radius: 0.5, threshold: 0.88, scale: 0.5 },
-  crt: { look: "arcade", bezel: { label: "TOWER DEFENSE", accent: "#ff3fa4" } },
+  bloom: { strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 0.88, scale: Q.bloomScale },
+  crt: { look: "arcade", overrides: Q.crt, bezel: { label: "TOWER DEFENSE", accent: "#ff3fa4" } },
 });
+const auto = autoQuality({ floor: 45, onDrop: () => {
+  if (post.bloom) post.bloom.enabled = false;
+  key.shadow.mapSize.set(256, 256);
+} });
 
 const key = new THREE.DirectionalLight(0xfff4de, 2.6);
 key.position.set(7, 14, 5);
 key.castShadow = true;
-key.shadow.mapSize.set(1024, 1024);
+key.shadow.mapSize.set(Q.shadowMap, Q.shadowMap);
 Object.assign(key.shadow.camera, { left: -9, right: 9, top: 9, bottom: -9, near: 2, far: 34 });
 key.shadow.bias = -0.0012;
+// Shadows at full strength on a bright lawn read as holes punched in the board: the tower
+// discs came up black. three's shadow intensity (r168+) takes the opacity out, not the shape.
+key.shadow.intensity = 0.5;
 scene.add(key, key.target);
 scene.add(new THREE.HemisphereLight(0x92b4d8, 0x22301f, 0.75));
 const rim = new THREE.DirectionalLight(0x63c8ff, 1.0);
@@ -226,8 +236,25 @@ window.addEventListener("keydown", (e) => {
 });
 window.addEventListener("pointerdown", () => { audio.ensure(); }, { once: true });
 
+// ---- touch: the board is already pointer-driven, so a tap on a tile is the whole control -
+// touch events drive pointerdown in Chromium, and the tile under the finger is built. Two
+// chips carry the keys a thumb cannot press: start the wave, restart. The arrows are there too
+// for a thumb at the edge of the tube.
+addTouchControls({
+  buttons: [
+    { label: "◀", code: "ArrowLeft" },
+    { label: "build", code: "Space", tap: true, accent: true },
+    { label: "\u25b6", code: "ArrowRight" },
+    { label: "wave", code: "KeyN", tap: true, side: "right" },
+    { label: "R", code: "KeyR", tap: true, side: "right" },
+  ],
+});
+
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
+  // three's fov is vertical, so a tall viewport crops the board sideways: in portrait the fov
+  // opens up and the whole lane is in frame again
+  camera.fov = camera.aspect < 1 ? 56 : 40;
   camera.updateProjectionMatrix();
   post.setSize(window.innerWidth, window.innerHeight);
 });
@@ -245,6 +272,7 @@ function refresh() {
   set("cost", COST);
   set("range", RANGE.toFixed(1));
   set("state", state === "build" ? `build ${Math.ceil(countdown)}s` : state === "wave" ? "wave" : "over");
+  document.body.classList.toggle("playing", state === "wave");
   set("last", last);
 }
 
@@ -302,6 +330,7 @@ function frame() {
 
   hudTick += dt;
   if (hudTick > 0.1) { hudTick = 0; refresh(); }
+  auto.tick(dt);
   fps.tick(dt);
 
   post.update(elapsed);

@@ -68,6 +68,7 @@ export function createGame({ hud, player, spawner, track, camera, canvas, rng, f
     fx.shards.burst(new THREE.Vector3(p.x, 1.0, p.z), { n: 16, color, speed: 7.5, scale: 1.1 });
     fx.rings.burst(new THREE.Vector3(p.x, 0.08, p.z), { color: 0xffffff, from: 0.6, to: 7, dur: 0.7 });
     fx.impact.flash(new THREE.Vector3(p.x, 1.2, p.z), { color, power: 45, dur: 0.5 });
+    fx.flash?.flash({ color: "#ff7a2a", power: 0.42, dur: 0.5 });
     sfx.explode();
     setTimeout(() => sfx.gameOver(), 320);
     audio.stopMusic();
@@ -131,6 +132,9 @@ export function createGame({ hud, player, spawner, track, camera, canvas, rng, f
     hud.set("lane", String(player.state.lane + 1));
     hud.set("passed", String(spawner.passed()));
     hud.set("state", state.crashed ? "crashed" : player.state.grounded ? (player.state.t < 1 ? "sliding" : "running") : "airborne");
+    // the attract card and the key legend are for the attract screen: while running they sit on
+    // top of the road (shared/hud.css hides them under body.playing)
+    document.body.classList.toggle("playing", state.running && !state.crashed);
     hud.set("last", state.last);
   }
 
@@ -183,7 +187,9 @@ export function createGame({ hud, player, spawner, track, camera, canvas, rng, f
     }
     camera.lookAt(player.state.x * 0.5, 1.1, -12);
     camera.rotateZ(-player.state.x * 0.014);
-    const fov = BASE_FOV + stretch * 9;
+    // three's fov is vertical: in portrait the sideways view narrows and the lanes fall off
+    // the edges, so the vertical fov is widened to keep all three lanes in the frame
+    const fov = (BASE_FOV + stretch * 9) * (camera.portraitFit?.() ?? 1);
     if (Math.abs(camera.fov - fov) > 0.05) {
       camera.fov = fov;
       camera.updateProjectionMatrix();

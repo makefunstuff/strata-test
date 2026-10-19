@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { asphaltTexture, gridTexture } from "../shared/textures.js";
+import { asphaltTexture, gridTexture, glowTexture } from "../shared/textures.js";
 
 // Scrolling track: an asphalt ribbon with neon edge strips, instanced lane dashes and
 // glowing pylons that slide toward the player and get recycled. The road and ground
@@ -22,8 +22,8 @@ export function createTrack(scene) {
   const road = new THREE.Mesh(
     new THREE.PlaneGeometry(7.2, 140),
     new THREE.MeshStandardMaterial({
-      color: 0x2a3342, map: roadTex, roughness: 0.72, metalness: 0.24,
-      emissive: 0x1b3350, emissiveMap: roadTex, emissiveIntensity: 0.35,
+      color: 0x1c2431, map: roadTex, roughness: 0.72, metalness: 0.24,
+      emissive: 0x14263c, emissiveMap: roadTex, emissiveIntensity: 0.22,
     })
   );
   road.rotation.x = -Math.PI / 2;
@@ -55,14 +55,53 @@ export function createTrack(scene) {
   const ground = new THREE.Mesh(
     new THREE.PlaneGeometry(320, 640),
     new THREE.MeshStandardMaterial({
-      color: 0x0d1420, map: groundTex, roughness: 0.7, metalness: 0.3,
-      emissive: 0x14304e, emissiveMap: groundTex, emissiveIntensity: 0.35,
+      color: 0x0a1019, map: groundTex, roughness: 0.75, metalness: 0.25,
+      emissive: 0x0f2340, emissiveMap: groundTex, emissiveIntensity: 0.12,
     })
   );
   ground.rotation.x = -Math.PI / 2;
   // long enough to reach past the fog, so there is no hard line at the horizon
   ground.position.set(0, -0.05, -250);
   group.add(ground);
+
+  // ---- far skyline: a band of dark towers with lit windows, so the horizon band is a place
+  // and not a gradient, and speed has something to be measured against. Two instanced meshes
+  // (one draw call each), no per-frame work, and both are inside the fog so they dissolve.
+  const towers = new THREE.InstancedMesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x0b1830, fog: false }), 90);   // at the horizon: outside the fog by design, a silhouette
+  const windows = new THREE.InstancedMesh(
+    new THREE.PlaneGeometry(0.55, 0.4),
+    new THREE.MeshBasicMaterial({
+      color: 0xffcf7a, transparent: true, opacity: 0.45, toneMapped: false, fog: false,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    }), 90);
+  const d = new THREE.Object3D();
+  for (let i = 0; i < 90; i++) {
+    const side = i % 2 ? 1 : -1;
+    const x = side * (10 + Math.random() * 48);
+    const z = -150 - Math.random() * 92;
+    const h = 6 + Math.random() * 26;
+    d.position.set(x, h / 2 - 0.2, z);
+    d.scale.set(3 + Math.random() * 6, h, 3);
+    d.updateMatrix();
+    towers.setMatrixAt(i, d.matrix);
+    d.position.set(x, h * 0.62, z + 1.55);
+    d.scale.set(1, 1, 1);
+    d.updateMatrix();
+    windows.setMatrixAt(i, d.matrix);
+  }
+  towers.frustumCulled = windows.frustumCulled = false;
+  group.add(towers, windows);
+
+  // a low sun sitting in the haze band, which is where the road dissolves
+  const sun = new THREE.Mesh(new THREE.PlaneGeometry(52, 52),
+    new THREE.MeshBasicMaterial({
+      map: glowTexture(), color: 0xffb45c, transparent: true, opacity: 0.45,
+      blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, fog: false,
+    }));
+  sun.position.set(24, 7, -238);
+  group.add(sun);
 
   // Lane dashes down the middle boundaries (x = ±1.1).
   const dashMesh = new THREE.InstancedMesh(

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><rect x=%272%27 y=%273%27 width=%2712%27 height=%278%27 rx=%271.5%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.5%27/><rect x=%276%27 y=%2712%27 width=%274%27 height=%272%27 fill=%27%238ee8ff%27/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strata-test — five games on the shared arcade kit</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
@@ -34,6 +35,20 @@ footer{margin-top:30px;border-top:1px solid rgba(142,232,255,.14);padding-top:14
 footer a{color:var(--cyan)}
 .scan{pointer-events:none;position:fixed;inset:0;z-index:60;mix-blend-mode:overlay;
   background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 3px)}
+
+.pair{display:grid;grid-template-columns:1fr 78px;gap:6px;align-items:stretch}
+.pair img{width:100%;height:150px;object-fit:cover;border:1px solid rgba(142,232,255,.14);filter:saturate(1.06)}
+.pair .phone{height:150px;object-fit:cover;border-radius:8px;border-color:rgba(255,120,170,.35)}
+p.polish{color:#9d7fa5;font-size:7.5px;margin:0 0 8px}
+p.polish a{color:var(--cyan)}
+h2 .tag{font-size:7px;color:#0a0f16;background:var(--amber);border-radius:3px;padding:2px 5px;margin-left:8px;letter-spacing:1px}
+section.sec{margin-top:34px}
+section.sec h2{font-size:12px;color:#fff}
+table{width:100%;border-collapse:collapse;font-size:7.5px;color:var(--dim)}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid rgba(142,232,255,.12)}
+th{color:var(--cyan);letter-spacing:1px;font-weight:normal}
+td b{color:var(--ink)}
+ul.notes{font-size:8px;color:var(--dim);margin:10px 0 0;padding-left:16px}
 </style>
 </head>
 <body>
@@ -42,49 +57,106 @@ footer a{color:var(--cyan)}
   <h1>FIVE GAMES</h1>
   <p class="lead">Three.js, 0.170.0 from a CDN, plain static files — no build step, no npm, no server.
   All five run on one shared arcade kit: a CRT and cabinet bezel, procedural textures, particles,
-  bloom, WebAudio sound and a HUD in the same typeface. Click a cabinet.</p>
+  bloom, WebAudio sound and a HUD in the same typeface. Every one of them is playable on a phone
+  with touch controls. The pictures below are after the polish pass, with the phone layout beside
+  them; the <a href="README.md">before pictures and the numbers</a> are in the README.</p>
 
   <div class="grid">
     <a class="card" href="1-breakout/index.html">
-      <img src="screenshots/1-breakout-input.png" alt="Breakout: neon room, brick wall, paddle" loading="lazy">
+      <div class="pair">
+      <img src="1-breakout/shots/after-play.jpg" alt="1-breakout: after the polish pass — neon brick wall over a lit grid floor, paddle with a contact shadow" loading="lazy">
+      <img class="phone" src="1-breakout/shots/phone-after-play.jpg" alt="1-breakout: the phone layout in portrait, with the touch controls" loading="lazy">
+      </div>
       <h2>1 · Breakout</h2>
       <p class="why">Neon room, PMREM reflections, ball trail, brick shatter, shockwave rings,
       camera shake, 53 bricks.</p>
+      <p class="polish">Neon bricks that keep their row colour, a lit grid floor, contact shadow, tighter trail, screen flashes, a card HUD, phone drag and chips. <a href="1-breakout/POLISH.md">POLISH.md</a></p>
       <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd> paddle <kbd>Space</kbd> launch <kbd>C</kbd> crt <kbd>M</kbd> sound</div>
     </a>
 
     <a class="card" href="2-runner/index.html">
-      <img src="screenshots/2-runner-input.png" alt="Runner: chrome figure on a neon motorway" loading="lazy">
+      <div class="pair">
+      <img src="2-runner/shots/r4-play.jpg" alt="2-runner: after the polish pass — night motorway, city skyline, hazard bands on the road" loading="lazy">
+      <img class="phone" src="2-runner/shots/phone-after-play.jpg" alt="2-runner: the phone layout in portrait, with the touch controls" loading="lazy">
+      </div>
       <h2>2 · Runner</h2>
       <p class="why">Chrome runner on a scrolling motorway: speed ramps, three lanes, jump the
       hurdles, slide under the tall ones.</p>
+      <p class="polish">Dusk palette, city skyline, sun in the haze, hazard bands in the obstacle's colour, fog that dissolves the horizon, phone chips. <a href="2-runner/POLISH.md">POLISH.md</a></p>
       <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd> lane <kbd>Space</kbd> jump <kbd>R</kbd> restart</div>
     </a>
 
     <a class="card" href="3-marble-maze/index.html">
-      <img src="screenshots/3-marble-maze-input.png" alt="Marble Maze: wooden board tilted, chrome marble" loading="lazy">
+      <div class="pair">
+      <img src="3-marble-maze/shots/r4-play.jpg" alt="3-marble-maze: after the polish pass — lit board, high contrast maze, readable holes" loading="lazy">
+      <img class="phone" src="3-marble-maze/shots/phone-after-play.jpg" alt="3-marble-maze: the phone layout in portrait, with the touch controls" loading="lazy">
+      </div>
       <h2>3 · Marble Maze</h2>
       <p class="why">A wooden board in real physics (cannon-es): tilt it, roll the chrome marble
       to the green pad, miss a tile and you fall.</p>
+      <p class="polish">Grade and HUD from the shared pass, a goal beacon that stopped blooming across the tube, softer wall shadows, a stick for the tilt. <a href="3-marble-maze/POLISH.md">POLISH.md</a></p>
       <div class="row"><kbd>&#9664;</kbd><kbd>&#9654;</kbd><kbd>&#9650;</kbd><kbd>&#9660;</kbd> tilt <kbd>R</kbd> restart</div>
     </a>
 
     <a class="card" href="4-tower-defense/index.html">
-      <img src="screenshots/4-tower-defense-input.png" alt="Tower Defense: grass field, lane of enemies, towers" loading="lazy">
+      <div class="pair">
+      <img src="4-tower-defense/shots/r4-play.jpg" alt="4-tower-defense: after the polish pass — darker turf, a lane that reads, soft shadows" loading="lazy">
+      <img class="phone" src="4-tower-defense/shots/phone-after-play.jpg" alt="4-tower-defense: the phone layout in portrait, with the touch controls" loading="lazy">
+      </div>
       <h2>4 · Tower Defense</h2>
       <p class="why">The enemies path-find, and re-path around whatever you build. A tower that
       seals the lane is refused, so placement is a decision.</p>
+      <p class="polish">Darker turf and a warm lane, shadow discs that are no longer holes, wave card, taps on the board to build. <a href="4-tower-defense/POLISH.md">POLISH.md</a></p>
       <div class="row"><kbd>Click</kbd> build <kbd>&#9664;&#9654;&#9650;&#9660;</kbd> cursor <kbd>N</kbd> wave</div>
     </a>
 
     <a class="card" href="5-flight/index.html">
-      <img src="screenshots/5-flight-input.png" alt="Flight: jet over procedural terrain with a ring gate" loading="lazy">
+      <div class="pair">
+      <img src="5-flight/shots/r5-play.jpg" alt="5-flight: after the polish pass — deeper sky, terrain and ring gates in frame" loading="lazy">
+      <img class="phone" src="5-flight/shots/phone-r5-play.jpg" alt="5-flight: the phone layout in portrait, with the touch controls" loading="lazy">
+      </div>
       <h2>5 · Flight</h2>
       <p class="why">Infinite terrain from 60 lines of noise, flat-shaded by height, sky and fog,
       bank-to-turn jet, ring gates that burst and recycle.</p>
+      <p class="polish">Sky scattering that stopped washing the tube, a chase camera that opens up in portrait, a stick for pitch and roll, boost on a thumb. <a href="5-flight/POLISH.md">POLISH.md</a></p>
       <div class="row"><kbd>&#9664;&#9654;&#9650;&#9660;</kbd> fly <kbd>Shift</kbd> boost <kbd>R</kbd> restart</div>
     </a>
   </div>
+
+
+  <section class="sec">
+    <h2>POLISH PASS <span style="color:var(--dim);font-size:8px">— 2026-10-19, TST-5</span></h2>
+    <p class="why" style="font-size:8px;margin:0 0 10px">Two visual rounds per game plus a phone round: the shared
+    CRT/HUD/effects kit was regraded, then each game was taken apart frame by frame. Every change was
+    shot at start, mid-play and game-over, on desktop and on a phone viewport, and kept only if the
+    picture improved and nothing else moved. fps is idle / play / game-over, measured in headless
+    Chromium on the software rasteriser next to the model server &mdash; it is a floor, not the frame
+    rate a real GPU gets, and it is compared round to round on the same machine.</p>
+    <table>
+      <tr><th>game</th><th>fps before</th><th>fps after</th><th>phone fps</th><th>look</th><th>what moved</th></tr>
+      <tr><td><b>1 Breakout</b></td><td>9.5 / 8.5 / 8.7</td><td><b>9.0 / 8.5 / 8.7</b></td><td>11.5 / 11 / 10.7</td><td>3.5 &rarr; <b>4.5</b></td><td>washed pastel bricks and a black room &rarr; neon that keeps its row colour, a lit grid floor, a paddle with a contact shadow</td></tr>
+      <tr><td><b>2 Runner</b></td><td>11 / 10.5 / 10.7</td><td><b>11 / 12 / 12</b></td><td>15.5 / 16.5 / 16</td><td>3 &rarr; <b>4.5</b></td><td>a flat daytime wash &rarr; a night motorway: city skyline, sun in the haze, hazard bands painted on the road in the obstacle's colour</td></tr>
+      <tr><td><b>3 Marble Maze</b></td><td>7.5 / 6.5 / 6.7</td><td><b>7.5 / 7.5 / 7.3</b></td><td>11.5 / 11.5 / 12</td><td>3.5 &rarr; <b>4</b></td><td>the goal beacon bloomed a green streak across the tube &rarr; narrow and dim; wall shadows no longer blacken the floor</td></tr>
+      <tr><td><b>4 Tower Defense</b></td><td>6.5 / 6.5 / 6.7</td><td><b>10 / 10.5 / 9.3</b></td><td>12.5 / 12.5 / 12</td><td>3 &rarr; <b>3.5</b></td><td>bright flat turf with black holes under the towers &rarr; darker turf, a warm lane that reads, shadows at half strength</td></tr>
+      <tr><td><b>5 Flight</b></td><td>16 / 18.5 / 14.7</td><td><b>24.5 / 25 / 15.3</b></td><td>36 / 35 / 23.3</td><td>2.5 &rarr; <b>3.5</b></td><td>the sky scattered to a pale wash with nothing in frame &rarr; deeper scattering, terrain and ring gates in the picture</td></tr>
+    </table>
+    <ul class="notes">
+      <li><b>Phone</b>: drag / stick / chips per game, drawn only on a touch device, driving the same
+      input path as the keyboard; portrait camera, compact HUD, safe areas, no scroll and no pinch zoom,
+      device pixel ratio capped (2 on a tablet, 1.5 on a phone) and a frame-time watchdog that drops the
+      bloom and the shadow map if a phone cannot hold the frame rate.
+      <a href="README.md">Controls per game</a>.</li>
+      <li><b>Checks</b>: <code>tools/polish.sh</code> shoots start / play / game-over from the game's own
+      end verbs; <code>tools/mobilecheck.mjs</code> drives each game with real CDP touch events in a
+      portrait touch context and reads the state back &mdash; 5/5 pass; <code>node tools/verify.mjs</code>
+      runs the whole console/FPS sweep.</li>
+      <li><b>The bug worth knowing</b>: the new colour grade declared three GLSL uniforms and never added
+      them to the material, so WebGL defaulted them to 0 and every frame became mid-grey with scanlines
+      on it, with no console output at all. Four rounds were measured against that grey screen before it
+      was caught by looking at a phone screenshot. The CRT pass now diffs the uniforms declared in GLSL
+      against the uniforms the material provides and warns. Evidence: <code>1-breakout/shots/bug-greywash-*.jpg</code>.</li>
+    </ul>
+  </section>
 
   <footer>
     Every game is checked in headless Chromium: console/page errors, input reactivity, FPS, and

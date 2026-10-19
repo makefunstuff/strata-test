@@ -8,6 +8,8 @@ import * as CANNON from "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cann
 import * as L from "./level.js";
 
 import { createPost, setupEnvironment } from "../shared/post.js";
+import { quality, autoQuality } from "../shared/mobile.js";
+import { addTouchControls } from "../shared/touch.js";
 import { crtKey } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
@@ -28,7 +30,7 @@ const fps = createFps(document.getElementById("fps"), { label: "FPS" });
 // ---------------------------------------------------------------- renderer
 const canvas = document.getElementById("game");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(quality({ pixelRatio: 2 }).pixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -43,19 +45,26 @@ const CAM = { x: 0, y: 2.28, z: 2.66 };
 camera.position.set(CAM.x, CAM.y, CAM.z);
 camera.lookAt(0, 0, 0);
 
+const Q = quality({ pixelRatio: 2, bloomScale: 0.5, shadowMap: 1024, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
   exposure: 1.02,
-  bloom: { strength: 0.55, radius: 0.5, threshold: 0.88, scale: 0.5 },
-  crt: { look: "cabinet", bezel: { label: "MARBLE MAZE", accent: "#ffcf5c" } },
+  bloom: { strength: 0.55 * Q.bloomStrength, radius: 0.5, threshold: 0.88, scale: Q.bloomScale },
+  crt: { look: "cabinet", overrides: Q.crt, bezel: { label: "MARBLE MAZE", accent: "#ffcf5c" } },
 });
+// a phone that cannot hold the frame rate loses the shadow map and the bloom, once
+const auto = autoQuality({ floor: 45, onDrop: () => {
+  if (post.bloom) post.bloom.enabled = false;
+  key.shadow.mapSize.set(256, 256);
+} });
 
 // lights: warm key over the table, cool rim from the arcade room
 const key = new THREE.DirectionalLight(0xfff2dc, 2.4);
 key.position.set(1.8, 3.4, 1.7);
 key.castShadow = true;
-key.shadow.mapSize.set(1024, 1024);
+key.shadow.mapSize.set(Q.shadowMap, Q.shadowMap);
 Object.assign(key.shadow.camera, { left: -2.4, right: 2.4, top: 2.4, bottom: -2.4, near: 0.5, far: 9 });
 key.shadow.bias = -0.0008;
+key.shadow.intensity = 0.55;   // the walls' own shadows at full strength blacken the maze floor
 scene.add(key, key.target);
 scene.add(new THREE.HemisphereLight(0x8fa8cc, 0x1b2430, 0.7));
 const rim = new THREE.DirectionalLight(0x6fd8ff, 1.1);
@@ -194,18 +203,21 @@ function pad(col, row, color, emissive, intensity = 0.9) {
   return m;
 }
 pad(L.START[0], L.START[1], 0x2f6f7c, 0x18d6ff, 0.7);
-const goalPad = pad(L.GOAL[0], L.GOAL[1], 0x2f8f5f, 0x37ff86, 1.0);
+const goalPad = pad(L.GOAL[0], L.GOAL[1], 0x2f8f5f, 0x37ff86, 0.7);
 const gc = L.local(L.GOAL[0], L.GOAL[1]);
 
-// goal beacon: a soft column of light, readable from across the board
+// goal beacon: a soft column of light, readable from across the board. Kept narrow and dim:
+// at the camera's grazing angle a wide additive column blooms into a green streak across the
+// whole left of the tube, which reads as an artefact and not as a goal
 const beacon = new THREE.Mesh(
-  new THREE.CylinderGeometry(L.TILE * 0.34, L.TILE * 0.22, 0.9, 20, 1, true),
+  new THREE.CylinderGeometry(L.TILE * 0.26, L.TILE * 0.16, 0.62, 20, 1, true),
   new THREE.MeshBasicMaterial({
-    map: glowTexture(), color: 0x4dff9a, transparent: true, opacity: 0.28, side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false,
+    map: glowTexture(), color: 0x4dff9a, transparent: true, opacity: 0.34, side: THREE.DoubleSide,
+    depthWrite: false, toneMapped: true,   // normal blending, tone mapped: the column is the shape of a
+                                          // goal marker, not a light source, so the bloom leaves it alone
   }),
 );
-beacon.position.set(gc.x, 0.45, gc.z);
+beacon.position.set(gc.x, 0.31, gc.z);
 boardGroup.add(beacon);
 
 // table under the board. Tiled grids are line magnets at a distance (see the notes in
@@ -429,6 +441,7 @@ function refresh() {
   set("tile", `${t.col},${t.row}`);
   set("tilt", `${deg(tilt.x)} / ${deg(tilt.z)}`);
   set("state", state === "complete" ? "clear" : state === "ready" ? "ready" : "rolling");
+  document.body.classList.toggle("playing", state === "rolling");
   set("last", lastEvent);
 }
 
@@ -454,8 +467,18 @@ window.addEventListener("keyup", (e) => {
 });
 window.addEventListener("pointerdown", () => { audio.ensure(); }, { once: true });
 
+// ---- touch: a stick for the tilt, one chip to restart. The stick pushes the arrow keys the
+// game already reads, so tilting with a thumb and tilting with the keys are the same code path.
+addTouchControls({
+  pad: { label: "tilt" },
+  buttons: [{ label: "R", code: "KeyR", tap: true, side: "right" }],
+});
+
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
+  // three's fov is vertical, so a tall viewport crops the board sideways: in portrait the fov
+  // opens up and the whole board is in frame again
+  camera.fov = camera.aspect < 1 ? 52 : 38;
   camera.updateProjectionMatrix();
   post.setSize(window.innerWidth, window.innerHeight);
 });
@@ -534,6 +557,7 @@ function frame(now) {
 
   hudTick += dt;
   if (hudTick > 0.1) { hudTick = 0; refresh(); }
+  auto.tick(dt);
   fps.tick(dt);
 
   post.update(e);
@@ -561,7 +585,8 @@ function warp(kind) {
   }
   return null;
 }
-window.arcade = { post, scene, camera, renderer, audio, body: marbleBody, fell, level: L, warp };
+window.arcade = { post, scene, camera, renderer, audio, body: marbleBody, fell, level: L, warp,
+  get state() { return state; } };
 window.arcadeAudio = audio;
 
 placeMarble();

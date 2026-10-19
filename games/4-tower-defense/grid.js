@@ -59,7 +59,10 @@ export function createGrid(scene) {
   const rocks = new Set(ROCKS.map(([c, r]) => idx(c, r)));
   const towers = new Set();
 
-  const grass = grassTexture({ base: "#33663c" });
+  // The board is the brightest thing on the tube, and the path tint multiplied by a green grass
+// map comes out olive, so the lane you must read is the least readable thing in the frame.
+// Darker, cooler turf, and the path tint pushed warm and bright so the lane separates.
+const grass = grassTexture({ base: "#25462c" });
   grass.repeat.set(N / 2, N / 2);
   const rough = noiseTexture({ size: 256, octaves: 3, contrast: 1.2, base: 0.62 });
   rough.repeat.set(N / 2, N / 2);
@@ -83,8 +86,8 @@ export function createGrid(scene) {
   scene.add(tiles);
 
   const TINT = {
-    grass: new THREE.Color("#46874f"),
-    path: new THREE.Color("#cba86d"),
+    grass: new THREE.Color("#3c7448"),
+    path: new THREE.Color("#e6c184"),
     rock: new THREE.Color("#59636f"),
     gate: new THREE.Color("#ff3fa4"),
     exit: new THREE.Color("#3dff8b"),

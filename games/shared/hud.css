@@ -123,6 +123,17 @@
   pointer-events: none;
 }
 
+/* A hint that is part of the HUD strip stays in the strip. The fixed placement above is for
+   the attract card in the middle of the tube; the runner's keyboard legend inherited it and sat
+   across the road in the middle of the play field. */
+.hud > .hud-hint {
+  position: static;
+  transform: none;
+  width: 100%;
+  margin-top: 8px;
+  text-align: left;
+}
+
 .hud-hint.blink,
 .blink {
   /* steps, not ease: a continuous opacity animation under the CRT's blended layers makes

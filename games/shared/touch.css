@@ -27,10 +27,16 @@
   align-items: flex-end;
   gap: 10px;
   padding: 0 4%;
+  flex-wrap: wrap;          /* five chips on a 390px phone: the row wraps, it does not overflow */
+  /* The chips are above the drag surface, which covers the whole tube. Painted later, the
+     surface would be the topmost element everywhere and the chips would be dead to a finger:
+     every chip tap on breakout landed on the surface and served instead of moving. */
+  z-index: 3;
 }
 
 .touch-btn {
   pointer-events: auto;
+  z-index: 3;
   min-width: 58px;
   min-height: 52px;
   padding: 12px 10px;
@@ -65,6 +71,7 @@
 /* ---- virtual stick ---- */
 .touch-pad {
   pointer-events: auto;
+  z-index: 3;
   position: absolute;
   bottom: calc(84px + env(safe-area-inset-bottom, 0px));
   width: 116px;
@@ -115,6 +122,7 @@
 /* ---- drag surface (a paddle that follows the finger) ---- */
 .touch-drag {
   pointer-events: auto;
+  z-index: 1;              /* under the chips and the stick, over the tube */
   position: absolute;
   inset: 0;
   touch-action: none;

@@ -8,6 +8,7 @@
 // canvas.toDataURL — because there is no image toolchain here, and no build step is allowed.
 import { createServer } from "node:http";
 import { mkdir, readFile, readdir, stat, unlink, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
@@ -19,7 +20,8 @@ await mkdir(out, { recursive: true });
 
 const pages = [];
 for (const g of games) {
-  const dir = join(gamesDir, g, "shots");
+  // a game name means games/<name>/shots; an argument with a slash is a folder as given
+  const dir = existsSync(join(gamesDir, g, "shots")) ? join(gamesDir, g, "shots") : join(gamesDir, g);
   try { pages.push(...(await readdir(dir)).filter((f) => f.endsWith(".png")).map((f) => join(dir, f))); }
   catch { console.log(`no shots for ${g}`); }
 }
