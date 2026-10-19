@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strata-test — browser lab: five games, five graphics experiments</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
+<style>
+:root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--bg:#04060a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:
+  radial-gradient(120% 80% at 50% 0%, #101c2c 0%, #070b12 45%, #04060a 100%) #04060a;
+  color:var(--ink);font-family:"Press Start 2P",monospace;font-size:10px;line-height:1.9;
+  -webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:0 auto;padding:46px 22px 60px}
+h1{font-size:21px;margin:0 0 10px;letter-spacing:2px;color:#fff;
+  text-shadow:0 0 10px rgba(142,232,255,.5),0 0 34px rgba(53,208,255,.28)}
+p.lead{color:var(--dim);margin:0 0 30px;font-size:9px}
+a.shelf{display:block;text-decoration:none;color:inherit;border:1px solid rgba(142,232,255,.18);
+  background:linear-gradient(180deg,rgba(16,28,44,.92),rgba(6,10,16,.94));padding:18px;margin-bottom:16px;
+  transition:transform .12s, box-shadow .12s, border-color .12s}
+a.shelf:hover{transform:translateY(-3px);border-color:rgba(142,232,255,.5);
+  box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 22px rgba(53,208,255,.22)}
+a.shelf h2{font-size:14px;margin:0 0 6px;color:var(--cyan);letter-spacing:1px}
+a.shelf p{color:var(--dim);font-size:9px;margin:0 0 10px}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap}
+.thumbs img{width:120px;height:70px;object-fit:cover;border:1px solid rgba(142,232,255,.14)}
+kbd{display:inline-block;border:1px solid rgba(142,232,255,.45);border-bottom-width:2px;border-radius:3px;
+  padding:2px 5px;font-size:7px;color:var(--cyan);background:rgba(53,208,255,.08)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:7px;color:var(--dim)}
+footer{margin-top:30px;border-top:1px solid rgba(142,232,255,.14);padding-top:14px;font-size:8px;color:var(--dim)}
+footer a{color:var(--cyan)}
+code{color:var(--amber)}
+.scan{pointer-events:none;position:fixed;inset:0;z-index:60;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 3px)}
+</style>
+</head>
+<body>
+<div class="scan"></div>
+<main>
+  <h1>STRATA TEST — BROWSER LAB</h1>
+  <p class="lead">Ten three.js things in plain static files: no build step, no npm, no server. Pinned CDN
+  importmap (three 0.170.0, lil-gui 0.19.2, Rapier 0.14.0), ES modules, one folder per thing. Built by
+  Strata running pi headless, one task per build, each verified in headless Chromium.</p>
+
+  <a class="shelf" href="games/index.html">
+    <h2>FIVE GAMES →</h2>
+    <p>Breakout, runner, marble maze, tower defense, flight — on one shared arcade kit: CRT bezel,
+    procedural textures, particles, bloom, WebAudio, HUD in a pixel face.</p>
+    <div class="row"><kbd>games/</kbd> published at <code>/games/</code> · hub of cabinets · scores, sound, restart</div>
+  </a>
+
+  <a class="shelf" href="experiments/index.html">
+    <h2>FIVE GRAPHICS EXPERIMENTS →</h2>
+    <p>GPU water, voxel demolition, tearing cloth, GPU flocking, volumetric fire — motion and graphics
+    pieces with a control panel, a quality preset and interaction hints on every page.</p>
+    <div class="thumbs">
+      <img src="experiments/1-water/shots/hero.jpg" alt="GPU water: waves, floating crates, spray" loading="lazy">
+      <img src="experiments/2-voxel-demolition/shots/hero.jpg" alt="Voxel wall with a shell hole and debris" loading="lazy">
+      <img src="experiments/3-cloth-tearing/shots/hero.jpg" alt="Flag streaming on a pole in the wind" loading="lazy">
+      <img src="experiments/4-gpu-flocking/shots/hero.jpg" alt="Flock of boids around glowing spheres" loading="lazy">
+      <img src="experiments/5-volumetric-fire/shots/hero.jpg" alt="Raymarched campfire with embers" loading="lazy">
+    </div>
+    <div class="row"><kbd>experiments/</kbd> published at <code>/experiments/</code> · measured table in <code>experiments/README.md</code></div>
+  </a>
+
+  <footer>
+    Each page is checked in headless Chromium (software renderer on this box, so the FPS numbers are a
+    floor): console, page and network errors, an interaction driven from the harness into the page's own
+    <code>window.experiment</code> hook, and FPS sampled before and after it.
+    The checkers are <code>games/tools/verify.mjs</code> and <code>experiments/tools/check.mjs</code>.
+    <br><br>Source: <a href="https://github.com/Niko1221/strata-test">Niko1221/strata-test</a>.
+    Built by Strata, running pi headless.
+  </footer>
+</main>
+</body>
+</html>

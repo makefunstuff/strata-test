@@ -86,6 +86,16 @@ footer a{color:var(--cyan)}
     </a>
   </div>
 
+    <a class="card" href="../experiments/index.html">
+      <img src="../experiments/1-water/shots/hero.jpg" alt="GPU water: waves, floating crates, spray" loading="lazy">
+      <h2>&#8627; The graphics experiments</h2>
+      <p class="why">Same repo, other shelf: GPU water, Rapier voxel demolition, tearing cloth,
+      16k boids on the GPU, raymarched fire. Plain static three.js with a control panel and a quality
+      preset on every page.</p>
+      <div class="row"><span style="font-size:7px;color:#ffb45c">experiments/</span> five pages · measured table in README</div>
+    </a>
+  </div>
+
   <footer>
     Every game is checked in headless Chromium: console/page errors, input reactivity, FPS, and
     audio (silent before the first keypress, audible while playing, no clipping, decays to
@@ -93,7 +103,8 @@ footer a{color:var(--cyan)}
     it last reported are committed at <code>tools/work/verify/latest.md</code>; the ratings are
     in <a href="README.md">README.md</a>. The harness lives in the repo at
     <code>games/tools/</code>
-    and is not published (Pages ships `games/` minus `tools/`).
+    and is not published (Pages ships <code>games/</code> minus <code>tools/</code>, at
+    <code>/games/</code>; the lab is at <a href="../experiments/index.html">/experiments/</a>).
     <br><br>Built by Strata, running pi headless, five tasks on one board.
   </footer>
 </main>

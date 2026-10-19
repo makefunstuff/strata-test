@@ -4,7 +4,8 @@ Five browser games, each in its own folder, all on one shared arcade kit. Plain 
 `index.html`, ES modules, CSS. No build step, no npm, no server-side code. Open `index.html`
 and it runs; this folder is what GitHub Pages publishes.
 
-Live: **https://makefunstuff.github.io/strata-test/** · the [hub](index.html) is the cabinet row.
+Live: **https://makefunstuff.github.io/strata-test/games/** · the [hub](index.html) is the cabinet row
+(the site root is the [lab hub](../index.html), with the [graphics experiments](../experiments/index.html) on the other shelf).
 
 ## The five, as measured
 

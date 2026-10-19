@@ -15,7 +15,7 @@ const lab = createLab({
   exposure: 1.05,
   background: null,
   shadow: false,
-  hints: ["move the pointer — the hawk follows", "click = scatter", "H hawk mode", "T trails", "Space gust", "right-drag / wheel for the camera"],
+  hints: ["move the pointer — the hawk follows", "click = scatter", "H hawk mode", "T trails", "Space scatter", "right-drag / wheel for the camera"],
   guiTitle: "flock",
 });
 const { renderer, scene, camera, gui, pointer, composer } = lab;
