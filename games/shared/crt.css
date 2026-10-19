@@ -63,3 +63,16 @@ body:not(.crt-off) #hint,
 body:not(.crt-off) #fps {
   text-shadow: 0 0 10px rgba(120, 210, 255, 0.35), 0 2px 12px rgba(0, 0, 0, 0.8);
 }
+
+/* impact flash (shared/effects.js createScreenFlash): a screen tint under the glass, so a hit
+   lights the tube. Blends additively and decays to nothing — it must never sit on screen. */
+.crt-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: none;            /* only in the layer tree while a hit is flashing */
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: opacity;
+}

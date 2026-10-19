@@ -2,13 +2,17 @@
 //   node smoke.ts <game-dir|url> [--out shot-prefix (default: $TMPDIR/smoke)] [--wait 4] [--keys "ArrowLeft:800,Space:100"] [--click x,y]
 // Serves <game-dir> over a throwaway local HTTP server (or loads <url> as is), then:
 //   1. waits --wait seconds, screenshots <prefix>-start.png, reads the page text;
-//   2. plays the input (key:holdMs pairs, optional click at canvas-relative fractions), screenshots <prefix>-input.png;
-//   3. prints console errors, page errors, failed requests, frame rate and the page text before/after input.
-// Exit code 1 when there were errors. Chromium: CHROMIUM_PATH (default: tools/chromium-capped.sh, a RAM-capped
+//   2. plays the input (key:holdMs pairs, optional click at canvas-relative fractions), screenshots <prefix>-play.png
+//      (also written as <prefix>-input.png, the name the older checks use);
+//   3. with --overjs "<js>" (run through window.arcade) and --overwait s, screenshots <prefix>-over.png;
+//   4. prints console errors, page errors, failed requests, frame rate and the page text before/after input.
+// Exit code 1 when there were errors. --phone runs a 390x844 touch context (mobile metrics, DPR 1) so the
+// games' touch controls come up; PHONE_MODE=landscape runs it sideways at 844x390, PHONE_DPR=2 is a
+// GPU-box option. Chromium: CHROMIUM_PATH (default: tools/chromium-capped.sh, a RAM-capped
 // /usr/bin/chromium); SMOKE_GPU=1 renders on the GPU at 1280x720 without the cap.
 import { chromium } from "playwright-core";
 import { createServer } from "node:http";
-import { readFile, stat } from "node:fs/promises";
+import { copyFile, readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { extname, join, resolve, normalize, basename, dirname } from "node:path";
@@ -30,6 +34,11 @@ const keys = (opt("keys", "") as string).split(",").filter(Boolean).map((p) => {
   return { key: k, ms: Number(ms ?? 100) };
 });
 const clicks = (opt("click", "") as string).split(";").filter(Boolean).map((c) => c.split(",").map(Number));
+const overjs = opt("overjs", "");
+const overWaitS = Number(opt("overwait", "1.6"));
+const phone = args.includes("--phone");   // a flag: no value (an option that swallows the next argument is how --phone silently became "--tap")
+const shotType = args.includes("--jpeg") ? "jpeg" : "png";
+const shotExt = shotType === "jpeg" ? "jpg" : "png";   // a 3D frame at quality 82 is ~1/8 the bytes of a PNG
 
 const types: Record<string, string> = {
   ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css",
@@ -85,8 +94,37 @@ async function stop(code: number, why: string): Promise<never> {
 }
 const deadline = setTimeout(() => void stop(3, `timed out after ${MAX_MS}ms (SMOKE_MAX_MS)`), MAX_MS);
 for (const sig of ["SIGTERM", "SIGINT"] as const) process.on(sig, () => void stop(4, `caught ${sig}`));
-const view = gpu ? { width: 1280, height: 720 } : { width: 960, height: 540 };
-const page = await browser.newPage({ viewport: view });
+// The --phone viewport: a Pixel-sized portrait by default, sideways with PHONE_MODE=landscape
+// (844x390) — a real way to hold a phone, and the layout the landscape rules in touch.css have to
+// survive. An environment variable, not an option value: an option that swallows the next argument
+// is how "--phone landscape" ate the game name.
+const view = phone
+  ? process.env.PHONE_MODE === "landscape"
+    ? { width: 844, height: 390 }
+    : { width: 390, height: 844 }
+  : gpu
+  ? { width: 1280, height: 720 }
+  : { width: 960, height: 540 };
+// --phone: a Pixel-sized portrait viewport with touch, which is what turns the games' touch
+// controls and phone layout on. The touch flags have to be set on the browser context (newPage's
+// own options do not reach them in this Chromium build), and the context must be created before
+// the page. deviceScaleFactor is 1 by default: at 2 the software rasteriser plus the RAM cap
+// kills the browser, so PHONE_DPR=2 is a GPU-box option, not a sweep option.
+const ctx = await browser.newContext({
+  viewport: view,
+  ...(phone
+    ? { deviceScaleFactor: Number(process.env.PHONE_DPR ?? 1), isMobile: true, hasTouch: true }
+    : {}),
+});
+const page = await ctx.newPage();
+const taps = (opt("tap", "") as string).split(";").filter(Boolean).map((c) => c.split(",").map(Number));
+// Touch in this Chromium (software, --single-process) does not come from Playwright's hasTouch,
+// so the CDP Emulation domain turns it on and taps are dispatched as real touch events.
+let cdp: any = null;
+if (phone) {
+  cdp = await ctx.newCDPSession(page).catch((e) => { console.error("cdp session: " + String(e).slice(0, 140)); return null; });
+  if (cdp) await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 1 }).catch(() => {});
+}
 const errors: string[] = [];
 const warnings: string[] = [];
 page.on("console", (m) => {
@@ -105,6 +143,8 @@ await page.addInitScript(() => {
 });
 
 const text = () => page.evaluate(() => document.body?.innerText.replace(/\s+/g, " ").trim().slice(0, 400) ?? "");
+const shot = (path: string) => page.screenshot(
+  shotType === "jpeg" ? { path, type: "jpeg", quality: 82 } : { path });
 const fps = async (ms: number) => {
   const a = await page.evaluate(() => (window as any).__frames);
   await page.waitForTimeout(ms);
@@ -122,9 +162,19 @@ const gl = await page.evaluate(() => {
 });
 const fpsIdle = await fps(2000);
 const before = await text();
-await page.screenshot({ path: `${out}-start.png` });
+await shot(`${out}-start.${shotExt}`);
 
 const box = await page.locator("canvas").first().boundingBox().catch(() => null);
+for (const [fx, fy] of taps) {
+  const b = box ?? { x: 0, y: 0, ...view };
+  const x = Math.round(b.x + fx * b.width), y = Math.round(b.y + fy * b.height);
+  const tap = cdp
+    ? cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] })
+        .then(() => cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] }))
+    : page.touchscreen.tap(x, y);
+  await tap.catch((e: any) => errors.push(`tap: ${String(e.message ?? e).slice(0, 120)}`));
+  await page.waitForTimeout(320);
+}
 for (const [fx, fy] of clicks) {
   const b = box ?? { x: 0, y: 0, ...view };
   await page.mouse.click(b.x + fx * b.width, b.y + fy * b.height);
@@ -138,15 +188,32 @@ for (const { key, ms } of keys) {
 }
 const fpsPlay = await fps(2000);
 const after = await text();
-await page.screenshot({ path: `${out}-input.png` });
+const playShot = `${out}-play.${shotExt}`;
+await shot(playShot);
+await copyFile(playShot, `${out}-input.${shotExt}`).catch(() => {});
+
+// the end screen: drive the game's own end verb through window.arcade, then shoot what the player sees
+let overText = "";
+let fpsOver = 0;
+const overShots = [];
+if (overjs) {
+  const shotOver = `${out}-over.${shotExt}`;
+  overShots.push(shotOver);
+  await page.evaluate(overjs).catch((e) => errors.push(`overjs: ${e.message}`));
+  await page.waitForTimeout(overWaitS * 1000);
+  overText = await text();
+  fpsOver = await fps(1500);
+  await shot(shotOver);
+}
 
 console.log(JSON.stringify({
   url, gpu, gl, canvases,
   fps_idle: Math.round(fpsIdle * 10) / 10,
   fps_play: Math.round(fpsPlay * 10) / 10,
-  text_before: before, text_after: after,
+  fps_over: Math.round(fpsOver * 10) / 10,
+  text_before: before, text_after: after, text_over: overText,
   errors, warnings: warnings.slice(0, 10),
-  screenshots: [`${out}-start.png`, `${out}-input.png`],
+  screenshots: [`${out}-start.${shotExt}`, playShot, ...overShots],
 }, null, 2));
 clearTimeout(deadline);
 await browser.close();

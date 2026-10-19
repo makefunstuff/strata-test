@@ -6,10 +6,12 @@ import { buildWorld } from "./entities.js";
 import { glowTexture, skyTexture } from "../../shared/textures.js";
 import { stepBall } from "./collision.js";
 import { createInput } from "./input.js";
-import { createSparks, createShatter, createRings, createImpactLight } from "../../shared/effects.js";
+import { createSparks, createShatter, createRings, createImpactLight, createScreenFlash } from "../../shared/effects.js";
 import { crtKey } from "../../shared/crt.js";
 import { createPost, setupEnvironment } from "../../shared/post.js";
 import { createAudio, audioKey } from "../../shared/audio.js";
+import { quality, autoQuality } from "../../shared/mobile.js";
+import { addTouchControls, touchTap } from "../../shared/touch.js";
 import { ui } from "./ui.js";
 
 const STATE = { START: "start", PLAY: "play", LOST_BALL: "lost", OVER: "over", WIN: "win" };
@@ -17,14 +19,15 @@ const paddleHalf = PADDLE.w / 2;
 const maxOffset = FIELD.width / 2 - paddleHalf;
 
 export function createGame(canvas) {
+  const Q = quality({ pixelRatio: 2, bloomScale: 0.5, shadow: 1024, sparks: 1 });
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Q.pixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
   scene.background = skyTexture("#16273f", "#04060b");
-  scene.fog = new THREE.Fog(COLORS.fog, 26, 54);
+  scene.fog = new THREE.Fog(COLORS.fog, 20, 44);
 
   // image-based lighting: gives the metal and chrome something to reflect
   setupEnvironment(renderer, scene, { intensity: LIGHT.env });
@@ -34,7 +37,7 @@ export function createGame(canvas) {
   const key = new THREE.DirectionalLight(0xf2f6ff, LIGHT.intensity);
   key.position.set(...LIGHT.position);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(Q.shadowMap, Q.shadowMap);
   key.shadow.camera.left = -12;
   key.shadow.camera.right = 12;
   key.shadow.camera.top = 14;
@@ -57,24 +60,35 @@ export function createGame(canvas) {
   for (const b of world.bricks) b.mesh.castShadow = true;
 
   const glow = glowTexture();
-  const sparks = createSparks(scene, { texture: glow, count: 700 });
+  const sparks = createSparks(scene, { texture: glow, count: Math.round(700 * Q.sparks) });
   const shards = createShatter(scene, {
-    count: 240,
+    count: Math.round(240 * Q.sparks),
     geometry: new THREE.BoxGeometry(BRICK.w * 0.34, BRICK.h * 0.8, BRICK.d * 0.34),
   });
   const rings = createRings(scene, { slots: 10 });
   const impact = createImpactLight(scene, { distance: 8 });
+  const screenFlash = createScreenFlash({ max: 0.45 });
 
   // Render → Bloom → CRT (barrel inflate, scanlines, phosphor mask, tube edge) → Output
   const post = createPost(renderer, scene, camera, {
-    exposure: 0.98,
-    bloom: { strength: 0.5, radius: 0.45, threshold: 0.92, scale: 0.5 },
-    crt: { look: "arcade", bezel: { label: "BREAKOUT", accent: "#8ee8ff" } },
+    exposure: 1.08,
+    bloom: {
+      strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 0.82, scale: Q.bloomScale,
+    },
+    crt: { look: "arcade", overrides: Q.crt, bezel: { label: "BREAKOUT", accent: "#8ee8ff" } },
   });
   const audio = createAudio({ master: 0.42, delayMix: 0.14 });
   const sfx = audio.sfx;
   window.arcadeAudio = audio;   // exposed for tools/audiotest.ts
-  window.arcade = { post, scene, camera, renderer, audio };   // exposed for tools/linescan.mjs
+  // exposed for tools/linescan.mjs, and the end-state verbs the harness shoots: the game's own
+  // lose/win paths (loseBall/hitBrick), not a faked screen
+  window.arcade = {
+    post, scene, camera, renderer, audio, world,
+    state: () => state,
+    over: () => { ui.lives = 1; loseBall(); },
+    win: () => { ui.bricksLeft = 1; hitBrick(world.bricks[0]); },
+  };
+  window.arcade.flash = screenFlash;   // the harness shoots the end screens with this
   let musicOn = false;
   const MUSIC = {
     bpm: 138,
@@ -92,16 +106,42 @@ export function createGame(canvas) {
   });
 
   const input = createInput();
+
+  // ---- touch: drag anywhere on the tube to slide the paddle, tap to serve. The paddle is
+  // driven through the same axis() the arrows use, by comparing the finger's screen x with the
+  // paddle's projected screen x — so the feel is identical on a phone and on a keyboard.
+  const proj = new THREE.Vector3();
+  let dragFrac = null;
+  const paddleFrac = () => {
+    proj.set(world.paddle.position.x, PADDLE.h, world.paddle.position.z).project(camera);
+    return (proj.x + 1) / 2;
+  };
+  const touch = addTouchControls({
+    drag: {
+      label: "drag to move · tap to serve",
+      onMove: (fx) => { dragFrac = fx; },
+      onEnd: () => { dragFrac = null; },
+      onTap: () => { touchTap("Space"); },
+    },
+    buttons: [
+      { label: "\u25c0", code: "ArrowLeft" },
+      { label: "serve", code: "Space", tap: true, accent: true },
+      { label: "\u25b6", code: "ArrowRight" },
+    ],
+  });
   const clock = new THREE.Clock();
   const ballStart = new THREE.Vector3(0, PLANE_Y, FIELD.depth / 2 - 1.4);
 
   // ---- camera: fixed pitch, distance fitted so the whole field fits the viewport
-  const camDir = new THREE.Vector3(0, Math.sin(CAMERA.pitch), Math.cos(CAMERA.pitch)).normalize();
+  const camDir = new THREE.Vector3();
+  const setCamDir = (pitch) => camDir.set(0, Math.sin(pitch), Math.cos(pitch)).normalize();
+  setCamDir(CAMERA.pitch);
   const camTarget = new THREE.Vector3(...CAMERA.target);
   const corners = [];
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) for (const y of [0, 1.4]) {
     corners.push(new THREE.Vector3(sx * (FIELD.width / 2 + 0.5), y, sz * (FIELD.depth / 2 + 0.5)));
   }
+  const worldUp = new THREE.Vector3(0, 1, 0);
   let camDist = 26;
   function fitCamera() {
     const v = new THREE.Vector3();
@@ -147,7 +187,7 @@ export function createGame(canvas) {
       b.mesh.visible = true;
       b.cap.visible = true;
     }
-    for (const e of [sparks, shards, rings, impact]) e.clear();
+    for (const e of [sparks, shards, rings, impact, screenFlash]) e.clear();
     ui.bricksLeft = world.bricks.length;
     ui.sync();
     serve();
@@ -165,6 +205,8 @@ export function createGame(canvas) {
     ui.hint = hint;
     ui.set("message", text);
     ui.set("hint", hint);
+    // the attract card is for the screens, not for play: mid-game it sat over the field
+    document.body.classList.toggle("playing", state === STATE.PLAY);
   }
 
   function loseBall() {
@@ -175,6 +217,7 @@ export function createGame(canvas) {
       { n: 34, speed: 5, size: 0.55, life: 0.7, color: COLORS.fail, up: 0.9 });
     rings.burst(new THREE.Vector3(p.x, 0.05, FIELD.depth / 2 - 0.3), { color: COLORS.fail, from: 0.6, to: 5, dur: 0.6 });
     impact.flash(new THREE.Vector3(p.x, 0.1, FIELD.depth / 2 - 0.3), { color: COLORS.fail, power: 30 });
+    screenFlash.flash({ color: "#ff2f4f", power: 0.4, dur: 0.42 });
     shake = 0.5;
     if (ui.lives <= 0) {
       sfx.gameOver();
@@ -204,6 +247,8 @@ export function createGame(canvas) {
     sparks.spawn(p, { n: 22, speed: 4.4, size: 0.42, life: 0.45, color, up: 0.8 });
     rings.burst(new THREE.Vector3(p.x, 0.04, p.z), { color, from: 0.4, to: 2.6, dur: 0.4 });
     impact.flash(p, { color, power: 22, dur: 0.3 });
+    screenFlash.flash({ color: "#ffd7a8", power: 0.13, dur: 0.17 });
+    ui.pop("score");
     flash();
     shake = Math.max(shake, 0.12);
     if (ui.bricksLeft <= 0) {
@@ -211,6 +256,7 @@ export function createGame(canvas) {
       audio.stopMusic();
       musicOn = false;
       state = STATE.WIN;
+      screenFlash.flash({ color: "#cfe9ff", power: 0.42, dur: 0.6 });
       setMessage(`You win — score ${ui.score}`, "Space to play again");
     }
   }
@@ -221,7 +267,9 @@ export function createGame(canvas) {
   function flash() { flashAmount = 0.7; }
 
   function movePaddle(dt) {
-    const axis = input.axis();
+    const axis = dragFrac === null
+      ? input.axis()
+      : THREE.MathUtils.clamp((dragFrac - paddleFrac()) * 6, -1, 1);
     const target = world.paddle.position.x + axis * 9 * dt;
     const nx = THREE.MathUtils.clamp(target, -maxOffset, maxOffset);
     const lean = THREE.MathUtils.clamp((nx - world.paddle.position.x) * 0.5, -0.16, 0.16);
@@ -236,6 +284,13 @@ export function createGame(canvas) {
     focus.set(ball.position.x * 0.16, 0.25, THREE.MathUtils.clamp(ball.position.z * 0.35, -3.5, 3.5) - 1.4);
     camTarget.lerp(focus, Math.min(1, dt * 2.2));
     camera.position.copy(camTarget).addScaledVector(camDir, camDist);
+    // attract drift: on the start and end screens the view turns slowly on its own, so the
+    // cabinet is never a frozen frame; in play it is exact, and the aim never moves
+    if (state !== STATE.PLAY) {
+      camera.position.sub(camTarget)
+        .applyAxisAngle(worldUp, Math.sin(elapsed * 0.34) * CAMERA.drift)
+        .add(camTarget);
+    }
     if (shake > 0) {
       shake = Math.max(0, shake - dt * 1.6);
       const a = shake * shake * 0.9;
@@ -267,8 +322,20 @@ export function createGame(canvas) {
     ballLight.intensity = playing ? 5 + flashAmount * 22 : 1.5;
   }
 
+  const auto = autoQuality({
+    floor: 45,
+    onDrop: () => {
+      // the frame-time watchdog: a machine that cannot hold 45 fps loses the shadow map and
+      // the bloom, which is where the frame time is
+      renderer.shadowMap.enabled = false;
+      if (post.bloom) post.bloom.enabled = false;
+      scene.traverse((o) => { if (o.isMesh && o.castShadow) { o.castShadow = false; } });
+    },
+  });
+
   function step() {
     const dt = Math.min(0.033, clock.getDelta());
+    auto.tick(dt);
     const elapsed = clock.elapsedTime;
     if (pending) { pending = false; onAction(); }
     if (input.consumeAction()) onAction();
@@ -301,6 +368,7 @@ export function createGame(canvas) {
     shards.update(dt);
     rings.update(dt);
     impact.update(dt);
+    screenFlash.update(dt);
     updateTrail(dt, elapsed);
     updateCamera(dt, elapsed);
 
@@ -322,10 +390,14 @@ export function createGame(canvas) {
   function resize() {
     const w = Math.max(1, window.innerWidth);
     const h = Math.max(1, window.innerHeight);
+    // portrait: steeper pitch (the field reads flat, not as a wall) and a capped distance, so
+    // the playfield stays big and the fog hides the far apron instead of filling the tube
+    setCamDir(h > w ? CAMERA.pitchPortrait : CAMERA.pitch);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     post.setSize(w, h);
     fitCamera();
+    camDist = Math.min(camDist, h > w ? CAMERA.distMax.portrait : CAMERA.distMax.landscape);
   }
   window.addEventListener("resize", resize);
 
@@ -334,5 +406,5 @@ export function createGame(canvas) {
   ui.sync();
   resize();
 
-  return { step, render, get state() { return state; } };
+  return { step, render, get state() { return state; }, touch, quality: Q };
 }

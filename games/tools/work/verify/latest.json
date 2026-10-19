@@ -9,22 +9,22 @@
     {
       "label": "2-runner",
       "ok": true,
-      "detail": "errors=0 fps=11/10.5 hud_moves=true shows\"STATE RUNNING\""
+      "detail": "errors=0 fps=10.5/11 hud_moves=true shows\"STATE RUNNING\""
     },
     {
       "label": "3-marble-maze",
       "ok": true,
-      "detail": "errors=0 fps=7.5/7 hud_moves=true shows\"STATE ROLLING\""
+      "detail": "errors=0 fps=7.5/6.5 hud_moves=true shows\"STATE ROLLING\""
     },
     {
       "label": "4-tower-defense",
       "ok": true,
-      "detail": "errors=0 fps=10/9 hud_moves=true shows\"MONEY\""
+      "detail": "errors=0 fps=10.5/9 hud_moves=true shows\"MONEY\""
     },
     {
       "label": "5-flight",
       "ok": true,
-      "detail": "errors=0 fps=22/21 hud_moves=true shows\"STATE FLY\""
+      "detail": "errors=0 fps=23/22.5 hud_moves=true shows\"STATE FLY\""
     }
   ]
 }
