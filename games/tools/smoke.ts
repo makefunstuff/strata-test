@@ -35,6 +35,8 @@ const clicks = (opt("click", "") as string).split(";").filter(Boolean).map((c) =
 const overjs = opt("overjs", "");
 const overWaitS = Number(opt("overwait", "1.6"));
 const phone = args.includes("--phone");   // a flag: no value (an option that swallows the next argument is how --phone silently became "--tap")
+const shotType = args.includes("--jpeg") ? "jpeg" : "png";
+const shotExt = shotType === "jpeg" ? "jpg" : "png";   // a 3D frame at quality 82 is ~1/8 the bytes of a PNG
 
 const types: Record<string, string> = {
   ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css",
@@ -129,6 +131,8 @@ await page.addInitScript(() => {
 });
 
 const text = () => page.evaluate(() => document.body?.innerText.replace(/\s+/g, " ").trim().slice(0, 400) ?? "");
+const shot = (path: string) => page.screenshot(
+  shotType === "jpeg" ? { path, type: "jpeg", quality: 82 } : { path });
 const fps = async (ms: number) => {
   const a = await page.evaluate(() => (window as any).__frames);
   await page.waitForTimeout(ms);
@@ -146,7 +150,7 @@ const gl = await page.evaluate(() => {
 });
 const fpsIdle = await fps(2000);
 const before = await text();
-await page.screenshot({ path: `${out}-start.png` });
+await shot(`${out}-start.${shotExt}`);
 
 const box = await page.locator("canvas").first().boundingBox().catch(() => null);
 for (const [fx, fy] of taps) {
@@ -172,22 +176,22 @@ for (const { key, ms } of keys) {
 }
 const fpsPlay = await fps(2000);
 const after = await text();
-const playShot = `${out}-play.png`;
-await page.screenshot({ path: playShot });
-await copyFile(playShot, `${out}-input.png`).catch(() => {});
+const playShot = `${out}-play.${shotExt}`;
+await shot(playShot);
+await copyFile(playShot, `${out}-input.${shotExt}`).catch(() => {});
 
 // the end screen: drive the game's own end verb through window.arcade, then shoot what the player sees
 let overText = "";
 let fpsOver = 0;
 const overShots = [];
 if (overjs) {
-  const shotOver = `${out}-over.png`;
+  const shotOver = `${out}-over.${shotExt}`;
   overShots.push(shotOver);
   await page.evaluate(overjs).catch((e) => errors.push(`overjs: ${e.message}`));
   await page.waitForTimeout(overWaitS * 1000);
   overText = await text();
   fpsOver = await fps(1500);
-  await page.screenshot({ path: shotOver });
+  await shot(shotOver);
 }
 
 console.log(JSON.stringify({
@@ -197,7 +201,7 @@ console.log(JSON.stringify({
   fps_over: Math.round(fpsOver * 10) / 10,
   text_before: before, text_after: after, text_over: overText,
   errors, warnings: warnings.slice(0, 10),
-  screenshots: [`${out}-start.png`, playShot, ...overShots],
+  screenshots: [`${out}-start.${shotExt}`, playShot, ...overShots],
 }, null, 2));
 clearTimeout(deadline);
 await browser.close();

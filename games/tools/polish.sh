@@ -43,7 +43,7 @@ for g in "${games[@]}"; do
   shots="$G/$g/shots"
   mkdir -p "$shots"
   node "$G/tools/smoke.ts" "$G/$g" --wait 4 --out "$shots/$tagp" \
-    ${input[$g]} "${extra[@]}" --overjs "${over[$g]}" --overwait "${overwait[$g]}" \
+    ${input[$g]} "${extra[@]}" --jpeg --overjs "${over[$g]}" --overwait "${overwait[$g]}" \
     > "$G/tools/work/polish/$g.$tagp.json"
   rc=$?
   node -e 'const r=require(process.argv[1]);

@@ -217,6 +217,11 @@
 @keyframes blink { 0%, 44% { opacity: 1 } 62%, 100% { opacity: 0.25 } }
 @keyframes attract { 0%, 92% { opacity: 1 } 93%, 100% { opacity: 0.55 } }
 
+/* in play there is nothing to attract: the cards are for the start and end screens, and a
+   chip floating over the playfield is a smudge on the picture (games set body.playing) */
+body.playing .hud-hint,
+body.playing .hud-msg:empty { display: none; }
+
 /* panel entrances: one eased pop, no looping flicker burnt over the playfield */
 @keyframes msg-in {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.86); }

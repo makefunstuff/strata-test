@@ -35,36 +35,44 @@ export function buildWorld(scene) {
   fTex.repeat.set(3, 4);
   const fRough = noiseTexture({ size: 256, octaves: 4, contrast: 1.2, base: 0.42 });
   fRough.repeat.set(3, 4);
+  // The emissive map must be a black plate with glowing lines. Reusing the albedo grid texture
+  // (base #16263a) made the whole floor a light source: in portrait, where the camera looks
+  // straight down the field, the floor fills the tube, the CRT's gain (set for a dark arcade
+  // picture) clips it, and the phone shows a white screen with scanlines on it.
+  const fEmis = gridTexture({ base: "#000000", line: "rgba(120,215,255,0.55)", major: "rgba(190,245,255,0.9)" });
+  fEmis.repeat.set(3, 4);
   const floor = add(field,
     new THREE.BoxGeometry(FIELD.width, t, FIELD.depth),
     new THREE.MeshStandardMaterial({
       color: COLORS.floor, map: fTex, roughnessMap: fRough,
-      emissive: COLORS.gridGlow, emissiveMap: fTex, emissiveIntensity: 0.55,
+      emissive: COLORS.gridGlow, emissiveMap: fEmis, emissiveIntensity: 1.1,
       roughness: 0.34, metalness: 0.45, envMapIntensity: 1.5,
     }), 0, -t / 2, 0);
   floor.name = "floor";
   floor.receiveShadow = true;
 
   // light pool on the floor behind the paddle: a wide additive wash that grounds the field
-  const pool = add(field, new THREE.PlaneGeometry(FIELD.width * 1.1, FIELD.depth * 0.8),
+  const pool = add(field, new THREE.PlaneGeometry(FIELD.width * 0.9, FIELD.depth * 0.55),
     new THREE.MeshBasicMaterial({
-      map: glowTexture(), color: 0x2f7fd0, transparent: true, opacity: 0.34,
+      map: glowTexture(), color: 0x2f7fd0, transparent: true, opacity: 0.22,
       blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false,
-    }), 0, 0.012, -1.5);
+    }), 0, 0.012, -2.2);
   pool.rotation.x = -Math.PI / 2;
 
   // apron below and behind the field, so the cabinet sits in a lit room, not in a void
   const aTex = gridTexture({ base: "#0a1120", line: "rgba(70,150,220,0.16)", major: "rgba(110,200,255,0.24)", pool: null }).clone();  // clone: its repeat must not touch the floor's copy
   aTex.wrapS = aTex.wrapT = THREE.RepeatWrapping;
-  aTex.repeat.set(14, 14);
+  aTex.repeat.set(9, 9);
+  // anisotropy: a tiled grid seen at a grazing angle moirés into bright bands, which under the
+  // CRT's gain reads as a white tube (first seen in portrait, where the camera sits far back).
+  // Same family as the "this line wtf" artefact of 2026-08-11 — a full-tube-width cyan rule from
+  // a far grid compressing into one line. The apron is now a quarter smaller, anisotropically
+  // filtered, and fades out radially with an alphaMap so its grid dissolves into the dark before
+  // the perspective can squash it. It carries no emissive at all.
+  aTex.anisotropy = 8;
   aTex.needsUpdate = true;
-  // A tiled grid over a huge plane is a line magnet: far away the grid lines compress into one
-  // bright rule across the whole view (that is the "this line wtf" artefact of 2026-08-11 — a
-  // full-tube-width cyan rule at exactly one screen row, scene-side, with the CRT off). The apron
-  // now fades out radially with an alphaMap, so its grid dissolves into the dark before the
-  // perspective can squash it, and it carries no emissive at all.
   const apron = add(scene,
-    new THREE.PlaneGeometry(70, 70),
+    new THREE.PlaneGeometry(44, 44),
     new THREE.MeshStandardMaterial({
       color: 0x0a1120, map: aTex, roughness: 0.6, metalness: 0.3,
       alphaMap: glowTexture(), transparent: true, depthWrite: false, envMapIntensity: 0.8,

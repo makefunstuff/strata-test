@@ -47,6 +47,10 @@ export const LIGHT = {
 export const CAMERA = {
   fov: 46,
   pitch: 64 * Math.PI / 180,
+  // portrait: the same fit puts the camera so far back that the field is a stamp in the middle
+  // of a foggy apron. A steeper pitch and a capped distance keep the playfield large.
+  pitchPortrait: 70 * Math.PI / 180,
+  distMax: { landscape: 27, portrait: 30 },
   target: [0, 0.25, -0.6],
   margin: 0.985,
   drift: 0.055,          // idle yaw (radians) so the attract screen breathes

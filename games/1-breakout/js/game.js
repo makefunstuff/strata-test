@@ -27,7 +27,7 @@ export function createGame(canvas) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
   scene.background = skyTexture("#16273f", "#04060b");
-  scene.fog = new THREE.Fog(COLORS.fog, 26, 54);
+  scene.fog = new THREE.Fog(COLORS.fog, 20, 44);
 
   // image-based lighting: gives the metal and chrome something to reflect
   setupEnvironment(renderer, scene, { intensity: LIGHT.env });
@@ -133,7 +133,9 @@ export function createGame(canvas) {
   const ballStart = new THREE.Vector3(0, PLANE_Y, FIELD.depth / 2 - 1.4);
 
   // ---- camera: fixed pitch, distance fitted so the whole field fits the viewport
-  const camDir = new THREE.Vector3(0, Math.sin(CAMERA.pitch), Math.cos(CAMERA.pitch)).normalize();
+  const camDir = new THREE.Vector3();
+  const setCamDir = (pitch) => camDir.set(0, Math.sin(pitch), Math.cos(pitch)).normalize();
+  setCamDir(CAMERA.pitch);
   const camTarget = new THREE.Vector3(...CAMERA.target);
   const corners = [];
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) for (const y of [0, 1.4]) {
@@ -203,6 +205,8 @@ export function createGame(canvas) {
     ui.hint = hint;
     ui.set("message", text);
     ui.set("hint", hint);
+    // the attract card is for the screens, not for play: mid-game it sat over the field
+    document.body.classList.toggle("playing", state === STATE.PLAY);
   }
 
   function loseBall() {
@@ -386,10 +390,14 @@ export function createGame(canvas) {
   function resize() {
     const w = Math.max(1, window.innerWidth);
     const h = Math.max(1, window.innerHeight);
+    // portrait: steeper pitch (the field reads flat, not as a wall) and a capped distance, so
+    // the playfield stays big and the fog hides the far apron instead of filling the tube
+    setCamDir(h > w ? CAMERA.pitchPortrait : CAMERA.pitch);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     post.setSize(w, h);
     fitCamera();
+    camDist = Math.min(camDist, h > w ? CAMERA.distMax.portrait : CAMERA.distMax.landscape);
   }
   window.addEventListener("resize", resize);
 

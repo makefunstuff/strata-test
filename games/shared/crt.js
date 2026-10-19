@@ -34,6 +34,9 @@ export const CRTShader = {
     uFlicker: { value: 0.035 },
     uNoise: { value: 0.02 },
     uGain: { value: 1.6 },
+    uSat: { value: 1.16 },
+    uContrast: { value: 1.05 },
+    uLift: { value: 0.012 },
     uGlowColor: { value: new THREE.Color(0x2a6ea8) },
   },
   vertexShader: /* glsl */`
@@ -146,10 +149,10 @@ export const CRT_PRESETS = {
   // Each preset darkens the picture by a known amount, so uGain puts the level back.
   arcade: { uCurvature: 0.13, uOverscan: 1.16, uTube: new THREE.Vector2(0.88, 0.82), uTubeR: 0.15, uGain: 1.72, uScan: 0.38, uScanPitch: 3.6, uMask: 0.26,
             uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0016, uGlow: 0.38, uVignette: 0.5,
-            uBeam: 0.035, uFlicker: 0.028, uNoise: 0.012, uSat: 1.2, uContrast: 1.06, uLift: 0.014 },
+            uBeam: 0.035, uFlicker: 0.028, uNoise: 0.018, uSat: 1.2, uContrast: 1.06, uLift: 0.014 },
   cabinet: { uCurvature: 0.095, uOverscan: 1.12, uTube: new THREE.Vector2(0.90, 0.85), uTubeR: 0.14, uGain: 1.6, uScan: 0.27, uScanPitch: 3.2, uMask: 0.2,
              uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0013, uGlow: 0.3, uVignette: 0.44,
-             uBeam: 0.03, uFlicker: 0.024, uNoise: 0.01, uSat: 1.18, uContrast: 1.05, uLift: 0.012 },
+             uBeam: 0.03, uFlicker: 0.024, uNoise: 0.014, uSat: 1.18, uContrast: 1.05, uLift: 0.012 },
   glass: { uCurvature: 0.055, uOverscan: 1.05, uTube: new THREE.Vector2(0.97, 0.94), uTubeR: 0.12, uGain: 1.4, uScan: 0.16, uScanPitch: 3.0, uMask: 0.12,
            uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0008, uGlow: 0.22, uVignette: 0.38,
            uBeam: 0.02, uFlicker: 0.016, uNoise: 0.007, uSat: 1.14, uContrast: 1.04, uLift: 0.01 },
@@ -167,7 +170,15 @@ export function tubeRect(tx = 0.94, ty = 0.90, r = 0.14) {
 export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}, overlay = true, bezel = {} } = {}) {
   const pass = new ShaderPass(CRTShader);
   const u = pass.uniforms;
+  // A uniform the shader declares and the material does not provide silently defaults to 0 in
+  // WebGL — which is how a saturation grade (uSat 0) turned the whole tube flat grey for four
+  // sweeps without one console message. Say it out loud instead.
+  const declared = (CRTShader.fragmentShader.match(/uniform\s+\w+\s+([^;]+);/g) ?? [])
+    .flatMap((d) => d.replace(/uniform\s+\w+\s+/, "").split(",").map((s) => s.trim().replace(/\[.*/, "")));
+  const missing = declared.filter((n) => !(n in u));
+  if (missing.length) console.warn(`CRTShader: uniforms declared in GLSL but not provided: ${missing.join(", ")}`);
   for (const [k, v] of Object.entries({ ...CRT_PRESETS[look], ...overrides })) {
+    if (!u[k] && declared.includes(k)) console.warn(`CRTShader: preset sets ${k}, which the shader does not declare`);
     if (u[k]) u[k].value = v;
   }
   composer.addPass(pass);

@@ -178,6 +178,10 @@
   .crt-bezel { display: none; }      /* the drawn cabinet is a desktop framing device */
 }
 
+/* A touch device gets chips, not a legend of keys it does not have: the control strip is
+   replaced by the control layer, so the two never overlap at the bottom of the tube. */
+body.touch .hud-controls { display: none; }
+
 /* in portrait, the row of chips sits under the stick, not across the middle of the screen */
 @media (orientation: portrait) {
   .touch-row { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
