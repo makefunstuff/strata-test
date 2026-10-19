@@ -1,67 +1,45 @@
 [
   {
     "label": "asis",
-    "title": "Tower Defense — hold the lane",
-    "text": "MONEY 100 LIVES 10 WAVE 0 LEFT 0 TOWERS 0 COST 25 STATE BUILD 10S LAST ROCK HERE START WAVE (N) 21 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND YOUR TO",
+    "title": "Flight — through the rings",
+    "text": "SCORE 0 RINGS 0 SPEED 52 ALT 110 GROUND 0 BEST 0 STATE FLYING LAST AIRBORNE 23 FPS ARROWS FLY · SHIFT BOOSTS · FLY THE RINGS, DO NOT FLY THE GROUND ◀▶ ROLL ▲▼ P",
     "lines": [
       {
-        "y": 257,
-        "bright": 107.3,
-        "over": 14.9
+        "y": 132,
+        "bright": 211.3,
+        "over": 45.8
       },
       {
-        "y": 260,
-        "bright": 105.4,
-        "over": 13
+        "y": 129,
+        "bright": 201,
+        "over": 45.1
       },
       {
-        "y": 254,
-        "bright": 101.3,
-        "over": 7.9
+        "y": 130,
+        "bright": 204.3,
+        "over": 44.8
       }
     ]
   },
   {
-    "label": "env_place_4_4_env_place_5_7_env_plac",
-    "title": "Tower Defense — hold the lane",
-    "text": "MONEY 65 LIVES 10 WAVE 1 LEFT 0 TOWERS 3 COST 25 STATE BUILD 12S LAST WAVE 1 CLEAR +$12 START WAVE (N) 20 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND ",
+    "label": "env_fly_pos_y_0_4",
+    "title": "Flight — through the rings",
+    "text": "SCORE 0 RINGS 0 SPEED 52 ALT 0 GROUND 0 BEST 0 STATE DOWN LAST CLIPPED THE GROUND 21 FPS ARROWS FLY · SHIFT BOOSTS · FLY THE RINGS, DO NOT FLY THE GROUND DOWN 0",
     "lines": [
       {
-        "y": 257,
-        "bright": 117.2,
-        "over": 15.5
+        "y": 146,
+        "bright": 176.3,
+        "over": 37.1
       },
       {
-        "y": 260,
-        "bright": 115.3,
-        "over": 13.5
+        "y": 145,
+        "bright": 173.6,
+        "over": 37
       },
       {
-        "y": 254,
-        "bright": 113,
-        "over": 10.9
-      }
-    ]
-  },
-  {
-    "label": "document_title_JSON_stringify_state_",
-    "title": "{\"state\":\"build\",\"money\":65,\"lives\":10,\"kills\":7,\"leaked\":0,\"alive\":0,\"q\":0,\"towers\":3}",
-    "text": "MONEY 65 LIVES 10 WAVE 1 LEFT 0 TOWERS 3 COST 25 STATE BUILD 2S LAST WAVE 1 CLEAR +$12 START WAVE (N) 20 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND Y",
-    "lines": [
-      {
-        "y": 257,
-        "bright": 108.9,
-        "over": 11
-      },
-      {
-        "y": 242,
-        "bright": 106.7,
-        "over": 9.5
-      },
-      {
-        "y": 260,
-        "bright": 107.9,
-        "over": 9.3
+        "y": 181,
+        "bright": 173.1,
+        "over": 35.7
       }
     ]
   }

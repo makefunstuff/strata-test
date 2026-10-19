@@ -1,8 +1,10 @@
 // Bisect a rendering artifact: load a game, toggle shader uniforms live, and measure which pixel
 // rows are brighter than their neighbourhood (a "line" is a row that stands out by a lot).
-//   node linescan.mjs <game-dir> [--shot out.png] [expr ...]
-// Each expr is JS evaluated with `env` = {post, scene, camera, renderer} from window.arcade, e.g.
-//   "env.post.crt.uniforms.uBeam.value = 0"   "env.scene.getObjectByName('apron').visible = false"
+//   node linescan.mjs <game-dir> [--out dir] [--wait ms] [--band y0,y1] [--x f0,f1] [--trace]
+//                    [--shot label [expr ...]]...
+// Each expr is JS evaluated with `env` = window.arcade (falling back to { post: window.arcadePost }),
+// and shots are cumulative: expressions after a --shot apply before that shot and stay applied.
+//   node linescan.mjs 5-flight --shot s0 --shot boost "window.dispatchEvent(...)" --shot crash "env.fly.pos.y = 0.4"
 import { chromium } from "playwright-core";
 import { createServer } from "node:http";
 import { readFile, stat, writeFile, mkdir } from "node:fs/promises";
@@ -33,10 +35,7 @@ function traceRows(img, band, xr, step = 8) {
 
 const args = process.argv.slice(2);
 const target = args[0];
-if (!target) { console.error("usage: node linescan.mjs <game-dir|file.png> [expr ...]"); process.exit(2); }
-const flags = new Set(["--shot", "--band", "--x", "--trace", "--wait"]);
-const exprs = args.filter((a, i) => i > 0 && !a.startsWith("--") && !flags.has(args[i - 1]));
-const shot = args.includes("--shot") ? args[args.indexOf("--shot") + 1] : null;
+if (!target) { console.error("usage: node linescan.mjs <game-dir> [--out dir] [--wait ms] [--band y0,y1] [--x f0,f1] [--trace] [--shot label [expr ...]]..."); process.exit(2); }
 
 // --- minimal PNG decoder (8-bit RGBA/RGB, non-interlaced) -> {w,h,chan,px}
 function decodePng(buf) {
@@ -149,40 +148,66 @@ const browser = await chromium.launch({
          "--disable-dev-shm-usage", "--js-flags=--max-old-space-size=256"],
 });
 
+// A shot sequence: each --shot is "label" plus the expressions to apply before that shot.
+// The flags above have no fixed arity, so collect the free args (expressions) and the shots
+// together, and treat every non-flag value between two flags as belonging to the first one.
+const valued = ["--band", "--x", "--wait", "--out"];
+const shotSpecs = [];
+const exprs = [];
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === "--shot") { shotSpecs.push({ label: args[i + 1] ?? `shot${shotSpecs.length}`, start: exprs.length }); i += 2; continue; }
+  if (valued.includes(a)) { i += 2; continue; }
+  if (a.startsWith("--")) continue;
+  exprs.push(a);
+}
+if (shotSpecs.length) {
+  shotSpecs.forEach((s, k) => { s.exprs = exprs.slice(s.start, shotSpecs[k + 1]?.start ?? exprs.length); });
+} else {
+  exprs.length && shotSpecs.push({ label: "asis", start: 0, exprs: [] });
+}
+
 const xr = args.includes("--x") ? args[args.indexOf("--x") + 1].split(",").map(Number) : [0.1, 0.26];
 const band = args.includes("--band") ? args[args.indexOf("--band") + 1].split(",").map(Number) : [100, 400];
-const shots = [];
+const wait = args.includes("--wait") ? +args[args.indexOf("--wait") + 1] : 1500;
+const out = args.includes("--out") ? resolve(args[args.indexOf("--out") + 1]) : "/tmp";
+const trace = args.includes("--trace");
+const results = [];
 try {
   const page = await browser.newPage({ viewport: { width: 960, height: 540 } });
-  page.on("pageerror", (e) => shots.push({ label: "pageerror", err: e.message }));
+  page.on("pageerror", (e) => results.push({ label: "pageerror", err: e.message }));
   await page.goto(url, { waitUntil: "load" });
   await page.waitForTimeout(4000);
   await page.keyboard.press("Space");
   await page.keyboard.press("Space");
   await page.waitForTimeout(2500);
 
-  for (let i = 0; i <= exprs.length; i++) {
-    if (i > 0) {
-      const e = exprs[i - 1];
-      await page.evaluate((src) => { new Function("env", src)(window.arcade ?? { post: window.arcadePost }); }, e);
-      if (args.includes("--wait")) await page.waitForTimeout(+args[args.indexOf("--wait") + 1]);
+  const shotSpec = shotSpecs.length ? shotSpecs : [{ label: "asis", exprs: [] }];
+  const applied = [];
+  for (const spec of shotSpec) {
+    for (const e of spec.exprs) {
+      if (!applied.includes(e)) {
+        await page.evaluate((src) => { new Function("env", src)(window.arcade ?? { post: window.arcadePost }); }, e);
+        applied.push(e);
+      }
     }
-    const label = i === 0 ? "asis" : exprs[i - 1].replace(/[^a-z0-9]+/gi, "_").slice(0, 36);
-    const buf = await page.screenshot({ path: shot ?? `/tmp/linescan-${label}.png` });
+    await page.waitForTimeout(wait);
+    const file = join(out, `linescan-${spec.label}.png`);
+    const buf = await page.screenshot({ path: file, type: "png" });
     const img = decodePng(buf);
-    if (args.includes("--trace")) { shots.push({ label, trace: traceRows(img, band, xr) }); continue; }
+    if (trace) { results.push({ label: spec.label, trace: traceRows(img, band, xr), file }); continue; }
     const all = rowPeaksAll(img, xr);
-    shots.push({
-      label,
+    results.push({
+      label: spec.label,
+      file,
       title: await page.title(),
-      text: (await page.evaluate(() => document.body.innerText)).replace(/\s+/g, " ").slice(0, 160),
+      text: (await page.evaluate(() => document.body.innerText)).replace(/\s+/g, " ").slice(0, 170),
       lines: all.filter((r) => r.y >= band[0] && r.y <= band[1]).slice(0, 3),
     });
-    await page.waitForTimeout(400);
   }
-  await mkdir("games/tools/work", { recursive: true }).catch(() => {});
-  await writeFile("games/tools/work/linescan.json", JSON.stringify(shots, null, 2));
-  console.log(JSON.stringify(shots, null, 2));
+  await mkdir(out, { recursive: true }).catch(() => {});
+  await writeFile(join(out, "linescan.json"), JSON.stringify(results, null, 2));
+  console.log(JSON.stringify(results, null, 2));
 } finally {
   await browser.close().catch(() => {});
   server.close();
