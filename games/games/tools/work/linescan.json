@@ -1,45 +1,67 @@
 [
   {
     "label": "asis",
-    "title": "Marble Maze — tilt the board",
-    "text": "TIME 0.00 FALLS 0 BEST -- TILE 13,1 TILT 0.0 / 0.0 STATE READY LAST START 21 FPS ARROWS / WASD TILT THE BOARD · REACH THE GREEN PAD ◀▶▲▼ TILT R RESTART M SOUND ",
+    "title": "Tower Defense — hold the lane",
+    "text": "MONEY 100 LIVES 10 WAVE 0 LEFT 0 TOWERS 0 COST 25 STATE BUILD 10S LAST ROCK HERE START WAVE (N) 21 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND YOUR TO",
     "lines": [
       {
-        "y": 214,
-        "bright": 102.2,
-        "over": 16.3
+        "y": 257,
+        "bright": 107.3,
+        "over": 14.9
       },
       {
-        "y": 213,
-        "bright": 98.4,
-        "over": 12.7
+        "y": 260,
+        "bright": 105.4,
+        "over": 13
       },
       {
-        "y": 215,
-        "bright": 88.3,
-        "over": 2.9
+        "y": 254,
+        "bright": 101.3,
+        "over": 7.9
       }
     ]
   },
   {
-    "label": "env_body_position_set_1_2_0_06_0_8_e",
-    "title": "Marble Maze — tilt the board",
-    "text": "TIME 0.00 FALLS 0 BEST 0.00 TILE 1,9 TILT 0.0 / 0.0 STATE CLEAR LAST START 21 FPS ARROWS / WASD TILT THE BOARD · REACH THE GREEN PAD COURSE CLEAR 0.00 S · 0 FAL",
+    "label": "env_place_4_4_env_place_5_7_env_plac",
+    "title": "Tower Defense — hold the lane",
+    "text": "MONEY 65 LIVES 10 WAVE 1 LEFT 0 TOWERS 3 COST 25 STATE BUILD 12S LAST WAVE 1 CLEAR +$12 START WAVE (N) 20 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND ",
     "lines": [
       {
-        "y": 214,
-        "bright": 83.8,
-        "over": 7
+        "y": 257,
+        "bright": 117.2,
+        "over": 15.5
       },
       {
-        "y": 213,
-        "bright": 82.9,
-        "over": 6.5
+        "y": 260,
+        "bright": 115.3,
+        "over": 13.5
       },
       {
-        "y": 196,
-        "bright": 73.9,
-        "over": 1.5
+        "y": 254,
+        "bright": 113,
+        "over": 10.9
+      }
+    ]
+  },
+  {
+    "label": "document_title_JSON_stringify_state_",
+    "title": "{\"state\":\"build\",\"money\":65,\"lives\":10,\"kills\":7,\"leaked\":0,\"alive\":0,\"q\":0,\"towers\":3}",
+    "text": "MONEY 65 LIVES 10 WAVE 1 LEFT 0 TOWERS 3 COST 25 STATE BUILD 2S LAST WAVE 1 CLEAR +$12 START WAVE (N) 20 FPS CLICK A TILE TO BUILD · THE LANE RE-ROUTES AROUND Y",
+    "lines": [
+      {
+        "y": 257,
+        "bright": 108.9,
+        "over": 11
+      },
+      {
+        "y": 242,
+        "bright": 106.7,
+        "over": 9.5
+      },
+      {
+        "y": 260,
+        "bright": 107.9,
+        "over": 9.3
       }
     ]
   }

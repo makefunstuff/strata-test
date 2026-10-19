@@ -1,0 +1,25 @@
+/* page chrome only; the HUD look is shared (../shared/hud.css, ../shared/crt.css) */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #05070d; color: #eaf6ff; }
+body { font-family: "Press Start 2P", monospace; }
+#stage { position: fixed; inset: 0; }
+#game { display: block; width: 100%; height: 100%; }
+
+/* the wave button is the one HUD control that takes the pointer, so it has to opt back in */
+.hud-btn {
+  pointer-events: auto;
+  font-family: var(--arcade-font, "Press Start 2P", monospace);
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 63, 164, 0.65);
+  border-bottom-width: 3px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(64, 16, 44, 0.95), rgba(20, 8, 18, 0.95));
+  box-shadow: 0 0 14px rgba(255, 63, 164, 0.35), 0 0 4px rgba(255, 63, 164, 0.5) inset;
+  cursor: pointer;
+}
+.hud-btn:hover { background: linear-gradient(180deg, rgba(104, 26, 68, 0.95), rgba(30, 10, 24, 0.95)); }
+.hud-btn:active { transform: translateY(1px); border-bottom-width: 2px; }
