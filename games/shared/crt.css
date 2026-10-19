@@ -1,0 +1,53 @@
+/* Shared CRT glass overlay: the DOM layer (HUD text) sits behind the same scanlines and
+   vignette as the canvas, so the whole screen reads as one tube. Add .off (or body.crt-off)
+   to remove it; every game binds that to the C key. */
+
+.crt-glass {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background:
+    /* scanlines over everything, including the HUD */
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.16) 0px, rgba(0, 0, 0, 0.16) 1px,
+      rgba(0, 0, 0, 0) 1px, rgba(0, 0, 0, 0) 4px),
+    /* phosphor grille, very faint */
+    repeating-linear-gradient(90deg,
+      rgba(255, 60, 60, 0.05) 0px, rgba(60, 255, 120, 0.05) 1px, rgba(60, 120, 255, 0.05) 2px,
+      rgba(0, 0, 0, 0) 3px),
+    /* tube vignette */
+    radial-gradient(135% 110% at 50% 50%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+}
+
+.crt-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* glass reflections: a soft sheen in the top-left corner and a bright rim */
+  background:
+    radial-gradient(60% 42% at 18% 8%, rgba(190, 225, 255, 0.10), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(120% 100% at 50% 50%, rgba(0, 0, 0, 0) 78%, rgba(120, 170, 220, 0.10) 100%);
+  border-radius: 3% / 5%;
+}
+
+.crt-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* the black bezel, with rounded corners so the picture looks inflated */
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.55), inset 0 0 60px 18px rgba(0, 0, 0, 0.75);
+  border-radius: 4% / 6%;
+}
+
+.crt-glass.off { display: none; }
+
+/* HUD text glows a little on the tube */
+body:not(.crt-off) #hud,
+body:not(.crt-off) #stats,
+body:not(.crt-off) #message,
+body:not(.crt-off) #hint,
+body:not(.crt-off) #fps {
+  text-shadow: 0 0 10px rgba(120, 210, 255, 0.35), 0 2px 12px rgba(0, 0, 0, 0.8);
+}

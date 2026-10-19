@@ -1,62 +1,8 @@
-:root {
-  --bg: #0b0e14;
-  --ink: #e8eef7;
-  --dim: #8b97a8;
-  --accent: #4fd1c5;
-  --font: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-}
-
+/* page chrome only; the HUD look is shared (../shared/hud.css, ../shared/crt.css) */
 * { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  height: 100%;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font);
-  overflow: hidden;
-}
-
+html, body { margin: 0; height: 100%; overflow: hidden; background: #04060b; }
+body { color: #eaf6ff; font-family: "Press Start 2P", monospace; }
 #stage { position: fixed; inset: 0; }
-#stage canvas { display: block; width: 100%; height: 100%; }
-
-#hud {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  padding: 22px 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-#stats {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  font-size: 16px;
-  letter-spacing: 0.06em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-}
-
-#stats .label {
-  font-size: 11px;
-  color: var(--dim);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-}
-
-#score { color: var(--accent); font-size: 20px; }
-#lives { color: #ff6b57; letter-spacing: 0.25em; }
-#bricks { color: var(--dim); }
-
-#message {
-  margin-top: auto;
-  font-size: 28px;
-  letter-spacing: 0.04em;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
-}
-
-#hint { font-size: 13px; color: var(--dim); }
-
-#fps { font-size: 11px; color: var(--dim); }
+canvas { display: block; }
+#message:empty { display: none; }
+.hud-hint { margin-left: 4px; }

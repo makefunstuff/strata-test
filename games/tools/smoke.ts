@@ -11,7 +11,7 @@ import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
-import { extname, join, resolve, normalize } from "node:path";
+import { extname, join, resolve, normalize, basename, dirname } from "node:path";
 
 const args = process.argv.slice(2);
 const opt = (name: string, def?: string) => {
@@ -40,7 +40,9 @@ const types: Record<string, string> = {
 let url = target;
 let server: ReturnType<typeof createServer> | undefined;
 if (!/^https?:/.test(target)) {
-  const root = resolve(target);
+  // Serve the game's parent folder: the games import shared modules with "../shared/…".
+  const game = resolve(target);
+  const root = resolve(dirname(game));
   server = createServer(async (req, res) => {
     try {
       let p = normalize(decodeURIComponent(new URL(req.url ?? "/", "http://x").pathname));
@@ -55,7 +57,7 @@ if (!/^https?:/.test(target)) {
   });
   await new Promise<void>((r) => server!.listen(0, "127.0.0.1", r));
   const addr = server.address() as { port: number };
-  url = `http://127.0.0.1:${addr.port}/`;
+  url = `http://127.0.0.1:${addr.port}/${basename(game)}/`;
 }
 
 const gpu = process.env.SMOKE_GPU === "1";
