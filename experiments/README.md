@@ -23,17 +23,17 @@ node experiments/tools/check.mjs 1-water --label water --wait 8 \
 ```
 
 `bash experiments/tools/sweep.sh` runs all five and prints one line each
-(`experiments/tools/summarize.mjs` reads the JSON the checker emits). The checker writes
+(`experiments/tools/summarize.mjs` reads the JSON the checker emits). The table is the last full sweep, run on the branch after merging `origin/main`. The checker writes
 `<experiment>/shots/<label>-start.jpg` and `<label>-after.jpg`; the after-shot is the evidence and is
 kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones the gallery shows.
 
 | # | experiment | works? (headless, software renderer) | fps (sw) idle / after input | one line | controls |
 |---|---|---|---|---|---|
-| 1 | [Water](1-water/index.html) | 0 errors; splats 0→52 from drag + click, 76 spray particles, 7 floating bodies bobbing, sim 256², reflection RT 384² | 12.4 / 9.2 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
-| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 121 shattered, 700 displaced, 706 awake, 683 chips, 721 dust, max impact 50 m/s | 18.0 / 18.4 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
-| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, 318 snapped, quads 1873 of 2052 after cuts and a pull | 30.4 / 30 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so a sustained yank rags the sheet, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
-| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.0, trails on; 16 384 boids measured at 8.8 fps | 18.0 / 18.4 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
-| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; intensity 1→1.98 from the click-stoke, light 185, gust 0.67, 60 march steps at 42% resolution | 5.6 / 5.6 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
+| 1 | [Water](1-water/index.html) | 0 errors; splats 0→54 from drag + click, 7 floating bodies bobbing, sim 256², reflection RT 384² | 14.0 / 14.8 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
+| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 121 shattered, 700 displaced, 706 awake, 689 chips, 695 dust, max impact 50 m/s | 18.8 / 18.0 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
+| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, 286 snapped, quads 1882 of 2052 after cuts and a pull | 30.4 / 29.6 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so a sustained yank rags the sheet, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
+| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.0, trails on; 16 384 boids measured at 8.8 fps | 17.6 / 18.0 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
+| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; intensity 1→2.13 from the click-stoke, light 214, gust 0.74, 60 march steps at 42% resolution | 4.8 / 4.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
