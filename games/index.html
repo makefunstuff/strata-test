@@ -89,8 +89,10 @@ footer a{color:var(--cyan)}
   <footer>
     Every game is checked in headless Chromium: console/page errors, input reactivity, FPS, and
     audio (silent before the first keypress, audible while playing, no clipping, decays to
-    silence). The measurements, and the bugs each one caught, are in
-    <a href="results.md">results.md</a>. The harness lives in the repo at <code>games/tools/</code>
+    silence). One command runs the sweep — <code>node tools/verify.mjs</code> — and the numbers
+    it last reported are committed at <code>tools/work/verify/latest.md</code>; the ratings are
+    in <a href="README.md">README.md</a>. The harness lives in the repo at
+    <code>games/tools/</code>
     and is not published (Pages ships `games/` minus `tools/`).
     <br><br>Built by Strata, running pi headless, five tasks on one board.
   </footer>

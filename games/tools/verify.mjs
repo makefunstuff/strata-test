@@ -1,5 +1,5 @@
 // One bounded verification sweep for all five games — the command a reviewer (or the board)
-// runs once, in about three minutes, to check the claims in games/results.md.
+// runs once, in about three minutes, to check the claims in games/README.md.
 //
 //   node tools/verify.mjs            # quick: every game loads clean, reacts to input, has FPS
 //   node tools/verify.mjs --full     # + audio measured, + the game rules driven through

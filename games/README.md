@@ -1,92 +1,82 @@
 # games
 
-Five browser games, each in its own folder, all on one shared arcade kit. Plain static
-files: `index.html`, ES modules, CSS. No build step, no npm, no server-side code. Open
-`index.html` and it runs; the site is published from this folder by GitHub Pages.
+Five browser games, each in its own folder, all on one shared arcade kit. Plain static files:
+`index.html`, ES modules, CSS. No build step, no npm, no server-side code. Open `index.html`
+and it runs; this folder is what GitHub Pages publishes.
 
-| game | the one line |
-|---|---|
-| [1 · Breakout](1-breakout/index.html) | neon room, PMREM reflections, ball trail, brick shatter, 53 bricks |
-| [2 · Runner](2-runner/index.html) | chrome runner on a scrolling motorway that gets faster and never ends |
-| [3 · Marble Maze](3-marble-maze/index.html) | a wooden board in real physics (cannon-es): tilt, roll, don't fall |
-| [4 · Tower Defense](4-tower-defense/index.html) | enemies path-find and re-path around what you build; sealing the lane is refused |
-| [5 · Flight](5-flight/index.html) | infinite terrain from 60 lines of noise, bank-to-turn jet, ring gates |
+Live: **https://makefunstuff.github.io/strata-test/** · the [hub](index.html) is the cabinet row.
 
-The [index](index.html) is the cabinet row, with screenshots.
-[results.md](results.md) is the log: what each harness reported, and the bugs that catching
-them found.
+## The five, as measured
 
-## The rules the site is built to
+FPS is headless Chromium on SwiftShader (software: the model server on this machine holds the
+GPU), so it is a floor. On a real GPU all five run at 60. "Works" is what the headless check
+saw, not what it should do.
 
-- `three@0.170.0` from jsDelivr, pinned, via an importmap:
-  `"three"` → `https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js`,
-  `"three/addons/"` → `.../examples/jsm/`. Every other library is pinned to an exact
-  jsDelivr version (cannon-es 0.20.0, @fontsource/press-start-2p 5.3.0).
-- All paths are relative, so the whole folder works under a sub-path (`/strata-test/`).
-- No asset files. Every texture, the cabinet bezel and every sound are generated at
-  runtime — procedural canvas textures, a canvas-drawn bezel, WebAudio synthesis.
+| # | game | works? | fps (sw) | what is in it | play | look |
+|---|---|---|---|---|---|---|
+| 1 | [Breakout](1-breakout/index.html) | 0 errors; score 0→7 on input, 53 bricks | 10.5 / 8.5 | neon room, PMREM reflections, procedural grid + metal, ball trail, ball-follow light, brick shatter, shockwave rings, camera shake, bloom, CRT + cabinet, WebAudio SFX + bassline | 3/5 — the CRT and the room carry it; the game is plain Breakout | 4/5 |
+| 2 | [Runner](2-runner/index.html) | 0 errors; score 0→56, lanes and jumps react | 11 / 10.5 | scrolling neon motorway, instanced lane dashes, pylons with lit caps, chrome runner with swinging limbs and a contact shadow, additive speed trail, dodge crates and jump hurdles, chase camera that leans, FOV widening with speed, crash sparks/shards/rings | 3/5 — speed reads well; the obstacle set is thin | 4/5 |
+| 3 | [Marble Maze](3-marble-maze/index.html) | 0 errors; `ready → rolling`, tile 13,1→11,1; warped onto the goal → `STATE CLEAR`, into a hole → `FALLS 1 · LAST HOLE` | 7.5 / 6.5 | real physics (cannon-es): a static body per floor run and per wall, re-placed by the board quaternion each frame, tilt on a damped spring; procedural wood/stone/metal, PMREM chrome marble, lit hole rims, goal beacon, wall clacks from real impact velocities, camera lean + shake | 4/5 — the spring tilt rewards restraint, that is the game | 4/5 |
+| 4 | [Tower Defense](4-tower-defense/index.html) | 0 errors; towers 0→3 from clicks, money 100→29; rules driven headlessly: 7 kills, 0 leaks, wave clear, money 65 | 10 / 9.5 | 12x12 field, BFS lane that **re-routes around what you build**, a placement that seals the lane is refused, pooled walkers with billboard health bars, towers that lead their target, muzzle flash, sparks/shards/rings, camera drift + shake on leak | 4/5 — building a wall behind the pack is a real decision | 4/5 |
+| 5 | [Flight](5-flight/index.html) | 0 errors; pitch moves the altitude 110→15→95 m; gate in front → `RINGS 1 · LAST RING +20` at `SPEED 86`; on the ground → `STATE DOWN`, flying again 2 s later | 22 / 24 | infinite terrain from my own value-noise fbm, 5x5 recycled 46 m chunks (refilled buffers, 25 draw calls, no per-frame allocation), height-banded flat shading, Sky shader + sun + fog, bank-to-turn jet, spinning prop, wingtip vapour trail, ring gates that burst and recycle | 4/5 — rings, speed, and the ground is the whole danger | 5/5 |
+
+## What got hard as the complexity rose
+
+1. **Graphics with no assets.** Every texture, the cabinet bezel and every sound are generated
+   at runtime (canvas textures, WebAudio synthesis), so the site stays plain files. That
+   decision is what made the CRT, the wood, the chrome and the coin-op sound possible at all.
+2. **The CRT is a shader and a DOM overlay at once.** The tube's rounded edge and the drawn
+   cabinet's aperture have to be the same geometry, so both read `tubeRect()`. Thin bright
+   curves fringe red/cyan through per-pixel RGB sampling, so range rings are bands, not lines.
+3. **A horizon seam** in the runner took three passes: the fog colour, the sky texture's
+   horizon ramp, and a far grid compressing into a line.
+4. **The line across the tube** — bisected by toggling the post chain, the sky, the mesh, the
+   background, then the DOM. Four real defects fell out; the line itself was the HUD's 2px
+   cyan underline (`tools/linescan.mjs`, `tools/domscan.mjs`).
+5. **Sound you can test.** The tape delay had a second, unity-gain feedback path that
+   self-oscillated into a shriek. `tools/audiotest.ts` measures it through an `AnalyserNode`:
+   silent before the first keypress (autoplay policy), audible while playing, no clipping, tail
+   decaying to silence — which is what catches a feedback loop.
+6. **Verification that fits a shared machine.** Headless Chromium runs beside a model server
+   that holds the GPU and most of the RAM: 220 MiB caps, one browser per sweep, a watchdog that
+   closes it on a deadline, and the results committed with the branch.
 
 ## shared/ — the kit all five run on
 
-- `post.js` — the render pipeline: Render → UnrealBloom → CRT → OutputPass, plus
-  `setupEnvironment()` (PMREM `RoomEnvironment`) so metal has something to reflect.
-- `crt.js` + `crt.css` + `bezel.js` — the monitor: barrel "inflate", per-pixel RGB triplet
-  sampling, phosphor, scanlines, an aperture grille, a rolling beam, flicker, noise,
-  vignette and a rounded tube edge, with a plastic cabinet bezel drawn on a canvas around
-  it. `C` toggles the whole thing. The bezel's aperture and the shader's tube edge come
-  from the same `tubeRect()`, so they cannot drift apart.
-- `textures.js` — glow, streak, grid, asphalt, brushed metal, wood, stone, grass, stripes,
-  noise, sky, shadow, disc.
-- `effects.js` — sparks, shatter shards, shockwave rings, impact lights: pooled, allocated
-  once. `speedlines.js` — speed streaks. `fps.js` — the FPS readout.
-- `audio.js` — coin-op synthesis: 19 one-shot SFX, a tape echo, a compressor, and a
-  bassline/lead/hat/kick sequencer. Nothing is scheduled before the first keypress (the
-  autoplay policy), and `meter()` exposes an analyser so a headless test can *measure*
-  sound.
-- `hud.css` — the HUD, the cabinet typeface, the attract/game-over panel.
+`post.js` (Render → UnrealBloom → CRT → OutputPass, and `setupEnvironment()` PMREM so metal
+has something to reflect) · `crt.js` + `crt.css` + `bezel.js` (the tube: barrel inflate,
+per-pixel RGB triplet sampling, phosphor, scanlines, aperture grille, rolling beam, flicker,
+noise, vignette, rounded edge, plus a plastic cabinet drawn on a canvas around it; `C` toggles
+it) · `textures.js` (wood, stone, grass, asphalt, brushed metal, stripes, sky, glow, shadow…)
+· `effects.js` (pooled sparks, shards, shockwave rings, impact lights) · `speedlines.js` ·
+`fps.js` · `audio.js` (19 synthesised SFX, a damped tape echo, a compressor, a bassline
+sequencer, a meter) · `hud.css` (the HUD, the cabinet typeface, the attract panel).
 
-Each game exposes `window.arcade` (renderer, scene, camera, post, and its own state and
-verbs) and `window.arcadeAudio`, which is what makes them testable from outside.
+Each game exposes `window.arcade` — the renderer, scene, camera, post, and its own state and
+verbs (`place()`, `warp()`, `fly`) — and `window.arcadeAudio`. That is what makes them testable
+from outside, and what the rule proofs call.
 
-## Running and checking
+## The rules the site is built to
 
-One command checks the whole site, in about three minutes:
+- `three@0.170.0` from jsDelivr, pinned, through an importmap; every other library pinned to an
+  exact jsDelivr version (cannon-es 0.20.0, @fontsource/press-start-2p 5.3.0).
+- All paths relative, so the folder works under a sub-path (`/strata-test/`).
+- No asset files, no build step, no server code.
+
+## Checking
 
 ```sh
 cd games/tools && npm i          # playwright-core, and nothing else
-node tools/verify.mjs            # five games: clean console, HUD reacts to input, FPS
-node tools/verify.mjs --full     # + audio measured, + the rules driven through the games,
-                                 #   + the published site's relative paths  (~7 minutes)
+node tools/verify.mjs            # ~3 min: five games, clean console, HUD reacts to input, FPS
+node tools/verify.mjs --full     # ~7 min: + measured audio, + the rules, + published paths
 ```
 
-Exit code 0 means every check passed. The latest run is committed, so the evidence travels
-with the branch: `tools/work/verify/latest.md` (the table), `latest.json`, `rules.txt`.
+Exit code is the verdict. The latest run is committed: `tools/work/verify/latest.md` (and
+`latest.json`, `rules.txt`). Per tool: `smoke.ts` (one game: console, HUD text before/after a
+key sequence, FPS), `audiotest.ts` (measured audio), `work/rules.mjs` (the rules, through each
+game's own verbs), `work/linkcheck.mjs` (every published page's local hrefs resolve under the
+sub-path), `linescan.mjs` / `domscan.mjs` (the debug scalpels). Every browser tool has a
+watchdog (`SMOKE_MAX_MS`, SIGTERM/SIGINT) that closes Chromium before exiting.
 
-What each layer asserts:
-
-| tool | asserts |
-|---|---|
-| `tools/verify.mjs` | the sweep, with a hard timeout per check: no run can hang |
-| `tools/smoke.ts <game>` | loads a game, 0 console/page errors, the HUD text changes under a key sequence, FPS before/after |
-| `tools/audiotest.ts <game>` | sound measured through an `AnalyserNode`: silent before the first keypress (autoplay policy), audible while playing, no clipping, tail decays to silence (this is what catches a feedback loop) |
-| `tools/work/rules.mjs` | the rules, through the verbs each game exposes on `window.arcade`: the marble warped onto the goal reports `STATE CLEAR`, warped into a hole reports `FALLS 1 · LAST HOLE`; three towers placed report `TOWERS 3` and pay; a gate moved in front of the plane reports `RINGS 1 · LAST RING +20` at `SPEED 86`; the plane put on the ground reports `STATE DOWN · LAST CLIPPED THE GROUND` |
-| `tools/work/linkcheck.mjs` | every local href/src on every published page resolves under the Pages sub-path |
-| `tools/linescan.mjs`, `tools/domscan.mjs` | the debug scalpel that found the line across the tube: score pixel rows, apply JS to the live scene/post, find DOM box edges on a band |
-
-To play with a game by hand, `python3 -m http.server 8000` in this folder, or open
-`index.html` directly. `tools/run-pi.ts` (via `tools/shoot.sh`) is the builder that made
-these games: it runs pi headless on a game's `PROMPT.md`.
-
-Every browser tool has a watchdog (a `SMOKE_MAX_MS` deadline, and a handler for SIGTERM/SIGINT)
-that closes Chromium before exiting: on this machine the harness runs beside a model server
-that holds the GPU and most of the RAM, and a leaked browser is both a stuck review and a
-memory emergency. The default `SMOKE_MEM_HIGH=220M` cap plus those watchdogs are why the
-RAM floor has held all task long.
-
-## Two facts about checking games on this machine
-
-- **The FPS numbers are a floor, not a ceiling.** Strata holds the GPU for local inference,
-  so the harness runs Chromium on SwiftShader (software) with a 220 MiB ceiling: 7-22 fps.
-  On a real GPU these are 60.
-- **`dt` is capped at 0.05 s**, so at 8 fps a headless session runs about 2.5x slower than
-  real time. A wave that looks stalled in the harness is fine.
+The long build log — the bisections, the pi runs that went in circles, the per-game notes — is
+kept as this task's report on the work board, not in the repo.
