@@ -3,27 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marble Maze</title>
+<title>Marble Maze — tilt the board</title>
+<link rel="stylesheet" href="../shared/hud.css">
+<link rel="stylesheet" href="../shared/crt.css">
 <link rel="stylesheet" href="./style.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
 <body>
-<canvas id="view"></canvas>
-
-<div id="hud">
-  <h1>Marble Maze</h1>
-  <div id="time">Time 0.0 s</div>
-  <div id="state">Ready — press an arrow key to start</div>
-  <div id="marble">Marble —</div>
-  <div id="tilt">Tilt 0.0° / 0.0°</div>
-  <div id="meta">Falls 0 · Best — · Keys 0</div>
-  <div id="help">Arrows / WASD tilt the board · R restarts</div>
-  <div id="panel">
-    <div id="score">Level complete</div>
-    <div class="sub">Press R to play again</div>
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="hud" class="hud">
+      <span class="label">Time</span><b class="value" data-k="time">0.00</b>
+      <span class="label">Falls</span><b class="value lives" data-k="falls">0</b>
+      <span class="label">Best</span><b class="value" data-k="best">--</b>
+      <span class="label">Tile</span><b class="value" data-k="tile">13,1</b>
+      <span class="label">Tilt</span><b class="value" data-k="tilt">0 / 0</b>
+      <span class="label">State</span><b class="value" data-k="state">ready</b>
+      <span class="label">Last</span><b class="value" data-k="last">start</b>
+      <span id="fps" class="hud-fps"></span>
+      <div id="hint" class="hud-hint blink">Arrows / WASD tilt the board &middot; reach the green pad</div>
+      <div id="screen" class="screen" hidden>
+        <h1 class="hud-msg" data-k="title">course clear</h1>
+        <p class="hud-hint" data-k="msg">Press R to run it again</p>
+      </div>
+    </div>
+    <div class="hud-controls">
+      <span class="hud-key">&#9664;</span><span class="hud-key">&#9654;</span><span class="hud-key">&#9650;</span><span class="hud-key">&#9660;</span> tilt
+      <span class="hud-key">R</span> restart
+      <span class="hud-key">M</span> sound
+      <span class="hud-key">C</span> crt
+    </div>
   </div>
-</div>
-
-<script type="module" src="./main.js"></script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>

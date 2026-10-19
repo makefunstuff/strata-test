@@ -74,6 +74,7 @@ export function createGame(canvas) {
   const audio = createAudio({ master: 0.42, delayMix: 0.14 });
   const sfx = audio.sfx;
   window.arcadeAudio = audio;   // exposed for tools/audiotest.ts
+  window.arcade = { post, scene, camera, renderer, audio };   // exposed for tools/linescan.mjs
   let musicOn = false;
   const MUSIC = {
     bpm: 138,
@@ -313,7 +314,9 @@ export function createGame(canvas) {
   }
 
   function render() {
-    post.render();
+    // window.arcadeDirect = true bypasses the post chain (debug: tools/linescan.mjs)
+    if (window.arcadeDirect) renderer.render(scene, camera);
+    else post.render();
   }
 
   function resize() {

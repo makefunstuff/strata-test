@@ -37,9 +37,10 @@ export function buildWorld(scene) {
     new THREE.BoxGeometry(FIELD.width, t, FIELD.depth),
     new THREE.MeshStandardMaterial({
       color: COLORS.floor, map: fTex, roughnessMap: fRough,
-      emissive: COLORS.gridGlow, emissiveMap: fTex, emissiveIntensity: 0.34,
+      emissive: COLORS.gridGlow, emissiveMap: fTex, emissiveIntensity: 0.2,
       roughness: 0.45, metalness: 0.35, envMapIntensity: 1.2,
     }), 0, -t / 2, 0);
+  floor.name = "floor";
   floor.receiveShadow = true;
 
   // apron below and behind the field, so the cabinet sits in a lit room, not in a void
@@ -47,12 +48,18 @@ export function buildWorld(scene) {
   aTex.wrapS = aTex.wrapT = THREE.RepeatWrapping;
   aTex.repeat.set(14, 14);
   aTex.needsUpdate = true;
+  // A tiled grid over a huge plane is a line magnet: far away the grid lines compress into one
+  // bright rule across the whole view (that is the "this line wtf" artefact of 2026-08-11 — a
+  // full-tube-width cyan rule at exactly one screen row, scene-side, with the CRT off). The apron
+  // now fades out radially with an alphaMap, so its grid dissolves into the dark before the
+  // perspective can squash it, and it carries no emissive at all.
   const apron = add(scene,
-    new THREE.PlaneGeometry(120, 120),
+    new THREE.PlaneGeometry(70, 70),
     new THREE.MeshStandardMaterial({
       color: 0x0a1120, map: aTex, roughness: 0.6, metalness: 0.3,
-      emissive: COLORS.gridGlow, emissiveMap: aTex, emissiveIntensity: 0.14, envMapIntensity: 0.8,
+      alphaMap: glowTexture(), transparent: true, depthWrite: false, envMapIntensity: 0.8,
     }), 0, -t - 0.35, 0);
+  apron.name = "apron";
   apron.rotation.x = -Math.PI / 2;
   apron.receiveShadow = true;
 
@@ -63,9 +70,19 @@ export function buildWorld(scene) {
   const rightWall = add(field, new THREE.BoxGeometry(t, wallH, FIELD.depth + t), wallMat, halfW + t / 2, wallH / 2, 0);
   for (const w of [backWall, leftWall, rightWall]) { w.castShadow = true; w.receiveShadow = true; }
 
-  add(field, new THREE.BoxGeometry(FIELD.width + 2 * t, 0.06, 0.09), trimMat, 0, wallH - 0.1, -halfD - t / 2 + 0.02);
-  add(field, new THREE.BoxGeometry(0.09, 0.06, FIELD.depth), trimMat, -halfW - t / 2 + 0.02, wallH - 0.1, 0);
-  add(field, new THREE.BoxGeometry(0.09, 0.06, FIELD.depth), trimMat, halfW + t / 2 - 0.02, wallH - 0.1, 0);
+  // Cabinet trim. Deliberately no strip along the top of the back wall: the camera is level, so
+  // the back strip and both side strips all project to the same height and merge into one bright
+  // horizontal line across the tube, which reads as a broken CRT beam (see the 2026-08-11 report).
+  // Side edges sit lower and are tone-mapped; the bright accents are vertical corner uprights.
+  const trimSoft = new THREE.MeshStandardMaterial({
+    color: 0x0a1a22, emissive: COLORS.trim, emissiveIntensity: 0.5, roughness: 0.4,
+  });
+  for (const sx of [-1, 1]) {
+    add(field, new THREE.BoxGeometry(0.12, 0.12, FIELD.depth), trimSoft,
+      sx * (halfW + t / 2 - 0.06), wallH - 0.5, 0);
+    add(field, new THREE.BoxGeometry(0.1, wallH - 0.2, 0.1), trimMat,
+      sx * (halfW + t / 2 - 0.05), (wallH - 0.2) / 2, -halfD - t / 2 + 0.05);
+  }
 
   // the danger line behind the paddle
   const failMat = new THREE.MeshBasicMaterial({ color: COLORS.fail, toneMapped: false });

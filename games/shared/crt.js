@@ -108,8 +108,13 @@ export const CRTShader = {
       vec3 mask = vec3(band(fx, 1.0 / 6.0, 0.16), band(fx, 3.0 / 6.0, 0.16), band(fx, 5.0 / 6.0, 0.16));
       col *= mix(vec3(1.0), mask * 1.45, uMask);
 
-      // rolling beam, refresh flicker, grime
-      col += exp(-pow((fract(su.y * 0.5 + uTime * 0.05) - 0.5) * 9.0, 2.0)) * uBeam;
+      // Rolling beam: a wide soft brightening band. The phase is fract over one full screen
+      // height, so the Gaussian has the same value at both ends and the wrap is continuous —
+      // scaling su.y by 0.5 made the two ends differ and drew a hard bright line across the tube.
+      float beamPhase = fract(su.y + uTime * 0.08);
+      float beam = exp(-pow((beamPhase - 0.5) * 5.0, 2.0));
+      col *= 1.0 + beam * uBeam * 4.0;
+      col += uGlowColor * beam * uBeam * 0.9;
       col *= 1.0 + uFlicker * (0.6 * sin(uTime * 6.3) + 0.4 * sin(uTime * 91.0));
       float n = fract(sin(dot(su * uResolution + uTime, vec2(12.9898, 78.233))) * 43758.5453);
       col += (n - 0.5) * uNoise;
@@ -132,13 +137,13 @@ export const CRT_PRESETS = {
   // Each preset darkens the picture by a known amount, so uGain puts the level back.
   arcade: { uCurvature: 0.13, uOverscan: 1.16, uTube: new THREE.Vector2(0.88, 0.82), uTubeR: 0.15, uGain: 1.85, uScan: 0.42, uScanPitch: 3.6, uMask: 0.34,
             uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0016, uGlow: 0.4, uVignette: 0.42,
-            uBeam: 0.05, uFlicker: 0.035, uNoise: 0.02 },
+            uBeam: 0.035, uFlicker: 0.035, uNoise: 0.02 },
   cabinet: { uCurvature: 0.095, uOverscan: 1.12, uTube: new THREE.Vector2(0.90, 0.85), uTubeR: 0.14, uGain: 1.7, uScan: 0.3, uScanPitch: 3.2, uMask: 0.26,
              uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0013, uGlow: 0.32, uVignette: 0.38,
-             uBeam: 0.04, uFlicker: 0.03, uNoise: 0.016 },
+             uBeam: 0.03, uFlicker: 0.03, uNoise: 0.016 },
   glass: { uCurvature: 0.055, uOverscan: 1.05, uTube: new THREE.Vector2(0.97, 0.94), uTubeR: 0.12, uGain: 1.45, uScan: 0.18, uScanPitch: 3.0, uMask: 0.15,
            uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0008, uGlow: 0.24, uVignette: 0.32,
-           uBeam: 0.025, uFlicker: 0.02, uNoise: 0.01 },
+           uBeam: 0.02, uFlicker: 0.02, uNoise: 0.01 },
 };
 
 /** Aperture geometry for the cabinet bezel, in canvas fractions (must match the shader). */

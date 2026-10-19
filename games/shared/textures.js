@@ -287,14 +287,28 @@ export function shadowTexture({ size = 256, strength = 0.6 } = {}) {
 }
 
 /** Vertical sky gradient, used as a stretched background. */
+function mix(a, b, t) {
+  const p = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  const ca = a.startsWith("#") ? p(a) : [0, 0, 0], cb = b.startsWith("#") ? p(b) : [0, 0, 0];
+  const c = ca.map((v, i) => Math.round(v + (cb[i] - v) * t));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
 export function skyTexture(top = "#13203a", bottom = "#05070d", horizon = null, stop = 0.62) {
   return memo(`sky:${top}${bottom}${horizon}${stop}`, () => {
     const c = document.createElement("canvas");
     c.width = 8; c.height = 256;
     const x = c.getContext("2d");
+    // One colour stop is a hard step, and as scene.background it renders as a bright horizontal
+    // line across the whole sky (the "what is that line" bug of 2026-08-11, at exactly 1-stop).
+    // The horizon colour now ramps in over 18% and out over 14% of the sky.
     const g = x.createLinearGradient(0, 0, 0, 256);
     g.addColorStop(0, top);
-    if (horizon) g.addColorStop(stop, horizon);
+    if (horizon) {
+      g.addColorStop(Math.max(0.02, stop - 0.18), mix(top, horizon, 0.35));
+      g.addColorStop(stop, horizon);
+      g.addColorStop(Math.min(0.98, stop + 0.14), mix(horizon, bottom, 0.45));
+    }
     g.addColorStop(1, bottom);
     x.fillStyle = g;
     x.fillRect(0, 0, 8, 256);
