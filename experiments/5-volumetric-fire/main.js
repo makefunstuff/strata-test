@@ -13,7 +13,7 @@ const lab = createLab({
   background: null,
   fog: null,
   shadow: false,
-  hints: ["click to stoke the fire", "Space gust of wind", "D douse", "drag the wind with right-drag", "wheel for the camera"],
+  hints: ["click to stoke the fire", "Space gust of wind", "D douse", "wind x/z and gust in the panel", "drag / wheel for the camera"],
   guiTitle: "fire",
 });
 const { renderer, scene, camera, gui, pointer, composer } = lab;
