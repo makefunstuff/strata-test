@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Endless Runner — three lanes</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="hud">
+      <div id="stats">
+        <div><span>score</span><b data-k="score">0</b></div>
+        <div><span>speed</span><b data-k="speed">9.0</b></div>
+        <div><span>best</span><b data-k="best">0</b></div>
+        <div><span>lane</span><b data-k="lane">2</b></div>
+        <div><span>state</span><b data-k="state">running</b></div>
+        <div><span>passed</span><b data-k="passed">0</b></div>
+        <div><span>last</span><b data-k="last">start</b></div>
+      </div>
+      <div id="hint">&larr;/A left &middot; &rarr;/D right &middot; Space/&uarr; jump &middot; R restart &middot; click jumps</div>
+      <div id="screen" hidden>
+        <h1 data-k="title">game over</h1>
+        <p data-k="msg">Press Space or R to run again</p>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

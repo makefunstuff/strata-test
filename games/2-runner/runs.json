@@ -1,0 +1,52 @@
+[
+  {
+    "run": 1,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:01:08.887Z",
+    "exit_code": 0,
+    "wall_s": 397,
+    "turns": 20,
+    "tool_calls": 27,
+    "tool_errors": 1,
+    "tools": {
+      "bash": 11,
+      "read": 2,
+      "write": 12,
+      "edit": 2
+    },
+    "output_tokens": 28125,
+    "input_tokens": 10572,
+    "cache_read_tokens": 467633,
+    "decode_tok_s": 98.5,
+    "stop": "stop",
+    "errors": [],
+    "stderr": "",
+    "mem_min_gib": 8.53,
+    "final_text": "Done — the game works and the smoke test is clean.\n\n**Files** (all relative, static, in `games/2-runner/`):\n- `index.html` — page + the exact three.js 0.170.0 jsDelivr import map + HTML overlay (score, speed, best, lane, state, last action, game-over panel)\n- `style.css`, `main.js` (renderer/scene/camera/light/fog/loop), `game.js` (state machine, speed ramp, scoring, collisions, input), `player.js` (lane tween + jump physics + run animation), `spawner.js` (pooled obstacles + spawn rules), `track.js` (recycled scrolling lane dashes and posts), `hud.js`, `rng.js`\n- `README.md` — what it is, controls, how it works\n\n**Verified with headless Chromium** (`node ../tools/smoke.ts . --keys \"ArrowLeft:500,Space:100\" --click 0.5,0.5`):\n- no console/page/request errors, 60 fps in SwiftShader\n- overlay reacts: `LANE 2 → LANE 1` after ArrowLeft, `LAST jump` after Space/click, score climbs 60 → 95, `PASSED 1` proves a hurdle was cleared by jumping\n- a longer run confirmed a crash (`STATE crashed`, `LAST hit crate`, game-over panel with score/best) and that Space restarts with best score kept in `localStorage`\n- spawn rules guarantee a passable pattern: crates (1.9 m) can't be jumped (jump apex ≈ 1.6 m), and all-three-lane patterns are always jumpable hurdles."
+  },
+  {
+    "run": 2,
+    "prompt_file": "FOLLOWUP-1.md",
+    "started": "2026-10-19T10:14:30.826Z",
+    "exit_code": 0,
+    "wall_s": 244,
+    "turns": 33,
+    "tool_calls": 45,
+    "tool_errors": 5,
+    "tools": {
+      "bash": 23,
+      "read": 15,
+      "edit": 5,
+      "write": 2
+    },
+    "output_tokens": 17378,
+    "input_tokens": 20942,
+    "cache_read_tokens": 713396,
+    "decode_tok_s": 94.9,
+    "stop": "stop",
+    "errors": [],
+    "stderr": "",
+    "mem_min_gib": 8.46,
+    "final_text": "**Cause** — `track.js` built the whole track (road plane, ground plane, instanced lane dashes, side posts) into a `THREE.Group` and returned it, but never added that group to the scene. `main.js` does `const track = createTrack(scene)` and only uses `track.update(move)`, so every mesh in the track stayed outside the scene graph and was never rendered — only the player and obstacles (which *are* added via `scene.add` in `player.js`/`spawner.js`) drew on top of `scene.background`. No error was reported because nothing was wrong at runtime, the group was simply orphaned.\n\nConfirmed from the pre-fix screenshot pixel analysis (my own PNG reader + PIL): the frame was ~88 % pure background `16,20,24` plus a few hundred text/pixel specks — no road/ground/dash colors at all.\n\n**Fix** — `games/2-runner/track.js`:\n\n```js\nexport function createTrack(scene) {\n  const group = new THREE.Group();\n  // The group was never added to the scene, so the whole track (road, ground,\n  // dashes, posts) was invisible and only the player/obstacles rendered.\n  scene.add(group);\n```\n\n**Retest** (`node ../tools/smoke.ts . --keys \"ArrowLeft:500,Space:100\" --click 0.5,0.5`): exit 0, no console/page/request errors, no warnings, 60 fps idle and 60 fps while playing in SwiftShader, overlay still reacts (`LANE 2 → 1`, `LAST jump`, `PASSED 1`, score 60 → 95).\n\nPixel analysis of the new screenshots shows the track is now drawn and scrolling — lower half went from `dash=398 post=185` (all background) to `dash=2517 post=385` with the road/ground trapezoid present, and the dash/post pattern differs between the start and input screenshots, i.e. the world is moving past the camera:\n\n```\ny=400  ......-.---------###---------......      (start)\ny=400  .........###-------------#----########...  (after input)\n```\n\nFiles changed: `track.js` only."
+  }
+]
