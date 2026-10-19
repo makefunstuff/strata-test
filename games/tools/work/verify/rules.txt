@@ -1,0 +1,6 @@
+ok   3-marble-maze goal       {"at":"1,9","state":"ready"} | TIME 0.05 FALLS 0 BEST 0.05 TILE 1,9 TILT 0.0 / 0.0 STATE CLEAR LAST START 60 FPS COURSE CLEAR 0.05 S · 0 FALLS · PRESS 
+ok   3-marble-maze hole       {"at":"10,2"} | TIME 0.67 FALLS 1 BEST -- TILE 13,1 TILT 0.0 / 0.0 STATE ROLLING LAST HOLE 60 FPS ◀▶▲▼ TILT R RESTART M SOUND C CRT
+ok   4-tower-defense wave       {"built":[null,null,null],"before":{"money":25,"lives":10,"kills":0,"leaked":0}} | MONEY 25 LIVES 10 WAVE 0 LEFT 0 TOWERS 3 COST 25 STATE BUILD 7S LAST TOWER 8,5 START WAVE (N) 20 FPS CLICK A TILE TO BUI
+ok   5-flight ring       {"at":[0,110,-153.27520000743854]} | SCORE 20 RINGS 1 SPEED 86 ALT 110 GROUND 0 BEST 0 STATE BOOST LAST RING +20 25 FPS ARROWS FLY · SHIFT BOOSTS · FLY THE R
+ok   5-flight crash      {"y":0.2} | SCORE 0 RINGS 0 SPEED 52 ALT 0 GROUND 0 BEST 0 STATE DOWN LAST CLIPPED THE GROUND 24 FPS ARROWS FLY · SHIFT BOOSTS · FLY
+5/5 rule proofs passed

@@ -73,6 +73,18 @@ const browser = await chromium.launch({
        "--disable-dev-shm-usage", "--disable-extensions", "--disable-background-networking",
        "--disable-component-update", "--js-flags=--max-old-space-size=256"],
 });
+// Watchdog: the RAM-capped single-process Chromium can stall on a loaded machine, and a hung
+// browser is a stuck review and stolen RAM at the same time. Never outlive your own deadline,
+// and never leave the browser open when the board kills this process.
+const MAX_MS = +(process.env.SMOKE_MAX_MS ?? 180000);
+async function stop(code: number, why: string): Promise<never> {
+  console.error(`smoke: ${why}`);
+  await browser.close().catch(() => {});
+  server?.close();
+  process.exit(code);
+}
+const deadline = setTimeout(() => void stop(3, `timed out after ${MAX_MS}ms (SMOKE_MAX_MS)`), MAX_MS);
+for (const sig of ["SIGTERM", "SIGINT"] as const) process.on(sig, () => void stop(4, `caught ${sig}`));
 const view = gpu ? { width: 1280, height: 720 } : { width: 960, height: 540 };
 const page = await browser.newPage({ viewport: view });
 const errors: string[] = [];
@@ -136,6 +148,7 @@ console.log(JSON.stringify({
   errors, warnings: warnings.slice(0, 10),
   screenshots: [`${out}-start.png`, `${out}-input.png`],
 }, null, 2));
+clearTimeout(deadline);
 await browser.close();
 server?.close();
 process.exit(errors.length ? 1 : 0);

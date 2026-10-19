@@ -60,6 +60,16 @@ const browser = await chromium.launch({
          "--disable-dev-shm-usage", "--disable-extensions", "--autoplay-policy=no-user-gesture-required",
          "--js-flags=--max-old-space-size=256"],
 });
+// Watchdog, as in smoke.ts: a stalled headless Chromium must not outlive the run that started it.
+const MAX_MS = +(process.env.SMOKE_MAX_MS ?? 120000);
+async function stop(code: number, why: string): Promise<never> {
+  console.error(`audiotest: ${why}`);
+  await browser.close().catch(() => {});
+  server?.close();
+  process.exit(code);
+}
+const deadline = setTimeout(() => void stop(3, `timed out after ${MAX_MS}ms (SMOKE_MAX_MS)`), MAX_MS);
+for (const sig of ["SIGTERM", "SIGINT"] as const) process.on(sig, () => void stop(4, `caught ${sig}`));
 const errors: string[] = [];
 let result: any = null;
 let pre: any = null;
@@ -120,6 +130,7 @@ try {
     };
   }, { secs });
 } finally {
+  clearTimeout(deadline);
   await browser.close().catch(() => {});
   server?.close();
 }

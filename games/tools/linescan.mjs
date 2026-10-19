@@ -183,6 +183,8 @@ try {
   await page.waitForTimeout(2500);
 
   const shotSpec = shotSpecs.length ? shotSpecs : [{ label: "asis", exprs: [] }];
+  // the shots write into --out, so the directory must exist before the first screenshot
+  await mkdir(out, { recursive: true }).catch(() => {});
   const applied = [];
   for (const spec of shotSpec) {
     for (const e of spec.exprs) {

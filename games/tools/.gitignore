@@ -1,2 +1,4 @@
 node_modules/
-work/
+work/*
+!work/verify/
+!work/*.mjs

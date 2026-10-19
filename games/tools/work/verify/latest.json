@@ -1,0 +1,65 @@
+{
+  "mode": "full",
+  "rows": [
+    {
+      "label": "1-breakout",
+      "ok": true,
+      "detail": "errors=0 fps=9/8 hud_moves=true shows\"SCORE\""
+    },
+    {
+      "label": "2-runner",
+      "ok": true,
+      "detail": "errors=0 fps=11/11 hud_moves=true shows\"STATE RUNNING\""
+    },
+    {
+      "label": "3-marble-maze",
+      "ok": true,
+      "detail": "errors=0 fps=7.5/6.5 hud_moves=true shows\"STATE ROLLING\""
+    },
+    {
+      "label": "4-tower-defense",
+      "ok": true,
+      "detail": "errors=0 fps=9.5/9.5 hud_moves=true shows\"MONEY\""
+    },
+    {
+      "label": "5-flight",
+      "ok": true,
+      "detail": "errors=0 fps=22/24.5 hud_moves=true shows\"STATE FLY\""
+    },
+    {
+      "label": "audio 1-breakout",
+      "ok": true,
+      "detail": "silent_before=true peak=0.179 tail_end=4.2e-6"
+    },
+    {
+      "label": "audio 2-runner",
+      "ok": true,
+      "detail": "silent_before=true peak=0.392 tail_end=5.7e-7"
+    },
+    {
+      "label": "audio 3-marble-maze",
+      "ok": true,
+      "detail": "silent_before=true peak=0.120 tail_end=3.4e-7"
+    },
+    {
+      "label": "audio 4-tower-defense",
+      "ok": true,
+      "detail": "silent_before=true peak=0.377 tail_end=5.1e-7"
+    },
+    {
+      "label": "audio 5-flight",
+      "ok": true,
+      "detail": "silent_before=true peak=0.156 tail_end=4.5e-7"
+    },
+    {
+      "label": "rule proofs",
+      "ok": true,
+      "detail": "5/5 proofs (marble goal+hole, tower wave, flight ring+crash)"
+    },
+    {
+      "label": "published paths",
+      "ok": true,
+      "detail": "31 refs, 0 problems"
+    }
+  ]
+}

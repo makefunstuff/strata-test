@@ -541,10 +541,27 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 
-// exposed for the headless tools (tools/smoke.ts, tools/audiotest.ts, tools/linescan.mjs)
-// marbleBody and fell() are exposed so the headless tools can force a drop into a hole and
-// prove the fall path (effects, sound, counters) runs, without scripting a full solve.
-window.arcade = { post, scene, camera, renderer, audio, body: marbleBody, fell, level: L };
+// exposed for the headless tools (tools/smoke.ts, tools/audiotest.ts, tools/linescan.mjs,
+// tools/verify.mjs). warp(kind) teleports the marble onto the first tile of that kind — a
+// hole, the goal, plain floor — so the tools can prove the fall, the win and the counters
+// run, without scripting a full solve through the maze.
+function warp(kind) {
+  for (let row = 0; row < L.ROWS; row++) {
+    for (let col = 0; col < L.COLS; col++) {
+      if (L.charAt(col, row) !== kind) continue;
+      const c = L.local(col, row);
+      const w = qc.vmult(new CANNON.Vec3(c.x, 0.07, c.z));
+      marbleBody.position.set(w.x, w.y, w.z);
+      marbleBody.velocity.set(0, 0, 0);
+      marbleBody.angularVelocity.set(0, 0, 0);
+      for (const b of world.bodies) if (b.type === CANNON.Body.STATIC) b.updateAABB();
+      if (state === "ready") begin();
+      return col + "," + row;
+    }
+  }
+  return null;
+}
+window.arcade = { post, scene, camera, renderer, audio, body: marbleBody, fell, level: L, warp };
 window.arcadeAudio = audio;
 
 placeMarble();

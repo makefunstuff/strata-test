@@ -50,19 +50,38 @@ verbs) and `window.arcadeAudio`, which is what makes them testable from outside.
 
 ## Running and checking
 
+One command checks the whole site, in about three minutes:
+
 ```sh
-python3 -m http.server 8000       # or just open games/index.html
-cd games/tools && npm i           # the harness, and nothing else
-node tools/smoke.ts 1-breakout --out screenshots/1-breakout --keys "Space:150,ArrowLeft:900"
-node tools/audiotest.ts 5-flight --keys "ArrowDown:250"
-node tools/linescan.mjs 1-breakout --band 100,400 --shot asis
-node tools/domscan.mjs 1-breakout --band 200,212
-node tools/pi-run.sh 1-breakout "implement games/1-breakout/PROMPT.md"   # the builder
+cd games/tools && npm i          # playwright-core, and nothing else
+node tools/verify.mjs            # five games: clean console, HUD reacts to input, FPS
+node tools/verify.mjs --full     # + audio measured, + the rules driven through the games,
+                                 #   + the published site's relative paths  (~7 minutes)
 ```
 
-`tools/README.md` documents them; `tools/RESULTS.md` is the harness's own log. The harness
-runs headless Chromium in a RAM-capped scope, reads the console and the HUD text before and
-after a key sequence, and records FPS.
+Exit code 0 means every check passed. The latest run is committed, so the evidence travels
+with the branch: `tools/work/verify/latest.md` (the table), `latest.json`, `rules.txt`.
+
+What each layer asserts:
+
+| tool | asserts |
+|---|---|
+| `tools/verify.mjs` | the sweep, with a hard timeout per check: no run can hang |
+| `tools/smoke.ts <game>` | loads a game, 0 console/page errors, the HUD text changes under a key sequence, FPS before/after |
+| `tools/audiotest.ts <game>` | sound measured through an `AnalyserNode`: silent before the first keypress (autoplay policy), audible while playing, no clipping, tail decays to silence (this is what catches a feedback loop) |
+| `tools/work/rules.mjs` | the rules, through the verbs each game exposes on `window.arcade`: the marble warped onto the goal reports `STATE CLEAR`, warped into a hole reports `FALLS 1 · LAST HOLE`; three towers placed report `TOWERS 3` and pay; a gate moved in front of the plane reports `RINGS 1 · LAST RING +20` at `SPEED 86`; the plane put on the ground reports `STATE DOWN · LAST CLIPPED THE GROUND` |
+| `tools/work/linkcheck.mjs` | every local href/src on every published page resolves under the Pages sub-path |
+| `tools/linescan.mjs`, `tools/domscan.mjs` | the debug scalpel that found the line across the tube: score pixel rows, apply JS to the live scene/post, find DOM box edges on a band |
+
+To play with a game by hand, `python3 -m http.server 8000` in this folder, or open
+`index.html` directly. `tools/run-pi.ts` (via `tools/shoot.sh`) is the builder that made
+these games: it runs pi headless on a game's `PROMPT.md`.
+
+Every browser tool has a watchdog (a `SMOKE_MAX_MS` deadline, and a handler for SIGTERM/SIGINT)
+that closes Chromium before exiting: on this machine the harness runs beside a model server
+that holds the GPU and most of the RAM, and a leaked browser is both a stuck review and a
+memory emergency. The default `SMOKE_MEM_HIGH=220M` cap plus those watchdogs are why the
+RAM floor has held all task long.
 
 ## Two facts about checking games on this machine
 
