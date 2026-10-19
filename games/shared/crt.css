@@ -43,6 +43,18 @@
 
 .crt-glass.off { display: none; }
 
+/* the plastic cabinet drawn over the screen edges (shared/bezel.js) */
+.crt-bezel {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 45;
+  pointer-events: none;
+}
+
+body.crt-off .crt-bezel { display: none; }
+
 /* HUD text glows a little on the tube */
 body:not(.crt-off) #hud,
 body:not(.crt-off) #stats,

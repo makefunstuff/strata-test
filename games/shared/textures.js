@@ -287,14 +287,14 @@ export function shadowTexture({ size = 256, strength = 0.6 } = {}) {
 }
 
 /** Vertical sky gradient, used as a stretched background. */
-export function skyTexture(top = "#13203a", bottom = "#05070d", horizon = null) {
-  return memo(`sky:${top}${bottom}${horizon}`, () => {
+export function skyTexture(top = "#13203a", bottom = "#05070d", horizon = null, stop = 0.62) {
+  return memo(`sky:${top}${bottom}${horizon}${stop}`, () => {
     const c = document.createElement("canvas");
     c.width = 8; c.height = 256;
     const x = c.getContext("2d");
     const g = x.createLinearGradient(0, 0, 0, 256);
     g.addColorStop(0, top);
-    if (horizon) g.addColorStop(0.62, horizon);
+    if (horizon) g.addColorStop(stop, horizon);
     g.addColorStop(1, bottom);
     x.fillStyle = g;
     x.fillRect(0, 0, 8, 256);

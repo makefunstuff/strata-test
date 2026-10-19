@@ -25,11 +25,12 @@ try {
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-const BG = 0x0b1424;
+// haze horizon: the fog colour is the sky's horizon band, so the road dissolves into it
+// instead of ending on a hard line
+const HAZE = 0x2f5780;
 const scene = new THREE.Scene();
-// the sky's bottom tone matches the fog colour, so the horizon has no seam
-scene.background = skyTexture("#2a4570", "#0b1424", "#4b7fb5");
-scene.fog = new THREE.Fog(BG, 30, 118);
+scene.background = skyTexture("#16324f", "#070d16", "#8fc4ef", 0.5);
+scene.fog = new THREE.Fog(HAZE, 26, 112);
 
 const camera = new THREE.PerspectiveCamera(62, 16 / 9, 0.1, 220);
 camera.position.set(0, 3.1, 9);
@@ -56,15 +57,16 @@ const fx = {
   impact: createImpactLight(scene, { distance: 11 }),
 };
 const streaks = createSpeedLines(scene, { count: 30, spread: 7.5, minY: 0.06, maxY: 4.5 });
-const audio = createAudio({ master: 0.3, delayMix: 0.14 });
+const audio = createAudio({ master: 0.42, delayMix: 0.14 });
 const sfx = audio.sfx;
+window.arcadeAudio = audio;   // exposed for tools/audiotest.ts
 
 const game = createGame({ hud, player, spawner, track, camera, canvas, rng, fx, audio, sfx });
 
 const post = createPost(renderer, scene, camera, {
   exposure: 1.06,
   bloom: { strength: 0.55, radius: 0.5, threshold: 0.85, scale: 0.5 },
-  crt: { look: "cabinet" },
+  crt: { look: "cabinet", bezel: { label: "RUNNER", accent: "#ffb45c" } },
 });
 const fps = createFps(document.getElementById("fps"));
 window.addEventListener("keydown", (e) => {

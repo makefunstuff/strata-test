@@ -9,6 +9,7 @@
 // One full-screen pass; add it as the last pass before OutputPass. `look` presets the strength
 // so an arcade game can be chunky while the terrain showcase stays almost clean.
 import * as THREE from "three";
+import { createBezel } from "./bezel.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 
 export const CRTShader = {
@@ -19,6 +20,8 @@ export const CRTShader = {
     uResolution: { value: new THREE.Vector2(1, 1) },
     uCurvature: { value: 0.2 },
     uOverscan: { value: 1.04 },
+    uTube: { value: new THREE.Vector2(0.94, 0.90) },
+    uTubeR: { value: 0.14 },
     uScan: { value: 0.5 },
     uScanPitch: { value: 2.6 },
     uMask: { value: 0.45 },
@@ -42,6 +45,8 @@ export const CRTShader = {
     uniform vec3 uGlowColor;
     uniform float uTime, uCurvature, uOverscan, uScan, uScanPitch, uMask, uMaskPitch,
                   uPixel, uAberration, uGlow, uVignette, uBeam, uFlicker, uNoise, uGain;
+    uniform vec2 uTube;
+    uniform float uTubeR;
     varying vec2 vUv;
 
     // "inflate": the corners bow outward, the classic barrel warp of a tube.
@@ -112,7 +117,7 @@ export const CRTShader = {
       // glass: vignette, then the rounded tube edge
       col *= mix(1.0, smoothstep(1.8, 0.35, length(q * vec2(0.9, 1.0))), uVignette);
       float inside = step(0.0, min(su.x, min(su.y, min(1.0 - su.x, 1.0 - su.y))));
-      float d = roundedBox(p, vec2(0.99, 0.95), 0.16);
+      float d = roundedBox(p, uTube, uTubeR);
       float rim = 1.0 - smoothstep(-0.02, 0.06, d);
       float on = inside * rim;
       col = col * on + uGlowColor * 0.02 * (1.0 - on);
@@ -125,22 +130,27 @@ export const CRTShader = {
 // look: "arcade" (chunky, heavy scanlines) | "cabinet" (medium) | "glass" (subtle)
 export const CRT_PRESETS = {
   // Each preset darkens the picture by a known amount, so uGain puts the level back.
-  arcade: { uCurvature: 0.13, uOverscan: 1.13, uGain: 1.75, uScan: 0.42, uScanPitch: 3.6, uMask: 0.34,
+  arcade: { uCurvature: 0.13, uOverscan: 1.16, uTube: new THREE.Vector2(0.88, 0.82), uTubeR: 0.15, uGain: 1.85, uScan: 0.42, uScanPitch: 3.6, uMask: 0.34,
             uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0016, uGlow: 0.4, uVignette: 0.42,
             uBeam: 0.05, uFlicker: 0.035, uNoise: 0.02 },
-  cabinet: { uCurvature: 0.095, uOverscan: 1.09, uGain: 1.6, uScan: 0.3, uScanPitch: 3.2, uMask: 0.26,
+  cabinet: { uCurvature: 0.095, uOverscan: 1.12, uTube: new THREE.Vector2(0.90, 0.85), uTubeR: 0.14, uGain: 1.7, uScan: 0.3, uScanPitch: 3.2, uMask: 0.26,
              uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0013, uGlow: 0.32, uVignette: 0.38,
              uBeam: 0.04, uFlicker: 0.03, uNoise: 0.016 },
-  glass: { uCurvature: 0.055, uOverscan: 1.05, uGain: 1.4, uScan: 0.18, uScanPitch: 3.0, uMask: 0.15,
+  glass: { uCurvature: 0.055, uOverscan: 1.05, uTube: new THREE.Vector2(0.97, 0.94), uTubeR: 0.12, uGain: 1.45, uScan: 0.18, uScanPitch: 3.0, uMask: 0.15,
            uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0008, uGlow: 0.24, uVignette: 0.32,
            uBeam: 0.025, uFlicker: 0.02, uNoise: 0.01 },
 };
+
+/** Aperture geometry for the cabinet bezel, in canvas fractions (must match the shader). */
+export function tubeRect(tx = 0.94, ty = 0.90, r = 0.14) {
+  return { x: (1 - tx) / 2, y: (1 - ty) / 2, w: tx, h: ty, rx: r / 2, ry: r / 2 };
+}
 
 /**
  * Adds the CRT pass to a composer (last, before OutputPass) and wires the glass overlay.
  * Returns { pass, setEnabled, toggle, setSize, update }.
  */
-export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}, overlay = true } = {}) {
+export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}, overlay = true, bezel = {} } = {}) {
   const pass = new ShaderPass(CRTShader);
   const u = pass.uniforms;
   for (const [k, v] of Object.entries({ ...CRT_PRESETS[look], ...overrides })) {
@@ -149,25 +159,30 @@ export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}
   composer.addPass(pass);
 
   let glass = null;
+  let tube = null;
   if (overlay) {
     glass = document.createElement("div");
     glass.className = "crt-glass";
     document.body.appendChild(glass);
+    // the plastic cabinet around the tube, sharing the aperture geometry with the shader
+    if (bezel) tube = createBezel({ ...bezel, rect: tubeRect(u.uTube.value.x, u.uTube.value.y, u.uTubeR.value) });
   }
 
   function setEnabled(on) {
     pass.enabled = on;
     if (glass) glass.classList.toggle("off", !on);
+    if (tube) tube.setEnabled(on);
     document.body.classList.toggle("crt-off", !on);
   }
   function setSize(w, h, pixelRatio) {
     const pr = pixelRatio ?? renderer.getPixelRatio();
     u.uResolution.value.set(w * pr, h * pr);
+    if (tube) tube.resize(w, h);
   }
   function update(elapsed) { u.uTime.value = elapsed; }
 
   setEnabled(true);
-  return { pass, uniforms: u, setEnabled, toggle: () => setEnabled(!pass.enabled), setSize, update, glass };
+  return { pass, uniforms: u, setEnabled, toggle: () => setEnabled(!pass.enabled), setSize, update, glass, bezel: tube };
 }
 
 /** Binds the C key to turning the CRT on and off. Returns true when the key was ours. */

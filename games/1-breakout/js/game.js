@@ -69,10 +69,11 @@ export function createGame(canvas) {
   const post = createPost(renderer, scene, camera, {
     exposure: 0.98,
     bloom: { strength: 0.5, radius: 0.45, threshold: 0.92, scale: 0.5 },
-    crt: { look: "arcade" },
+    crt: { look: "arcade", bezel: { label: "BREAKOUT", accent: "#8ee8ff" } },
   });
-  const audio = createAudio({ master: 0.3, delayMix: 0.16 });
+  const audio = createAudio({ master: 0.42, delayMix: 0.14 });
   const sfx = audio.sfx;
+  window.arcadeAudio = audio;   // exposed for tools/audiotest.ts
   let musicOn = false;
   const MUSIC = {
     bpm: 138,
