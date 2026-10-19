@@ -122,6 +122,30 @@
   background: rgba(12, 20, 32, 0.9);
 }
 
+/* the game-over / attract panel that fills the screen */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  text-align: center;
+  background: radial-gradient(58% 58% at 50% 45%, rgba(4, 6, 11, 0.86), rgba(4, 6, 11, 0) 78%);
+  z-index: 11;
+  pointer-events: none;
+}
+
+.screen[hidden] { display: none; }
+
+.screen .hud-msg {
+  position: static;
+  transform: none;
+  font-size: clamp(18px, 4vw, 40px);
+}
+
+.screen .hud-hint { font-size: 9px; opacity: 1; }
+.screen .hud-hint b { color: var(--arcade-amber); }
+
 .hud-paused {
   position: fixed;
   inset: 0;

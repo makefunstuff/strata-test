@@ -1,17 +1,6 @@
+/* page chrome only; the HUD look is shared (../shared/hud.css, ../shared/crt.css) */
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: #101418; color: #e8e9ec; font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0b1424; color: #eaf6ff; }
+body { font-family: "Press Start 2P", monospace; }
 #stage { position: fixed; inset: 0; }
 #game { display: block; width: 100%; height: 100%; }
-
-#hud { position: absolute; inset: 0; pointer-events: none; }
-#stats { position: absolute; top: 14px; left: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px;
-         background: rgba(10, 13, 18, .55); border: 1px solid #2a3240; border-radius: 8px; padding: 10px 12px; }
-#stats div { display: flex; gap: 6px; align-items: baseline; }
-#stats span { color: #8a95a5; text-transform: uppercase; font-size: 11px; letter-spacing: .08em; }
-#stats b { color: #eaf2ff; font-size: 15px; }
-#hint { position: absolute; left: 14px; bottom: 14px; color: #7c8798; }
-
-#screen { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); text-align: center;
-         background: rgba(10, 13, 18, .72); border: 1px solid #3a4353; border-radius: 12px; padding: 18px 24px; }
-#screen h1 { margin: 0 0 6px; font-size: 24px; color: #ff7b7b; }
-#screen p { margin: 0; color: #b6c2d2; }

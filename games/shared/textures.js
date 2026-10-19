@@ -253,6 +253,39 @@ export function noiseTexture({ size = 256, octaves = 4, contrast = 1, base = 0.5
   });
 }
 
+/** Diagonal hazard stripes for crates and hurdles. */
+export function stripesTexture({ a = "#ff5252", b = "#241016", bands = 7, size = 256 } = {}) {
+  return memo(`stripes:${a}${b}${bands}${size}`, () => {
+    const [c, x] = canvas(size);
+    x.fillStyle = b;
+    x.fillRect(0, 0, size, size);
+    x.fillStyle = a;
+    const w = size / bands;
+    x.transform(1, 0, -0.55, 1, 0, 0);
+    for (let i = -bands; i < bands * 2; i += 2) x.fillRect(i * w, 0, w, size);
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    x.strokeStyle = "rgba(0,0,0,0.4)";
+    x.lineWidth = 3;
+    x.strokeRect(2, 2, size - 4, size - 4);
+    grain(x, size, 16);
+    return finish(c);
+  });
+}
+
+/** Soft dark blob: the contact shadow under a player, marble or tower. */
+export function shadowTexture({ size = 256, strength = 0.6 } = {}) {
+  return memo(`shadow:${size}${strength}`, () => {
+    const [c, x] = canvas(size);
+    const g = x.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    g.addColorStop(0, `rgba(0,0,0,${strength})`);
+    g.addColorStop(0.55, `rgba(0,0,0,${strength * 0.45})`);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    x.fillStyle = g;
+    x.fillRect(0, 0, size, size);
+    return finish(c);
+  });
+}
+
 /** Vertical sky gradient, used as a stretched background. */
 export function skyTexture(top = "#13203a", bottom = "#05070d", horizon = null) {
   return memo(`sky:${top}${bottom}${horizon}`, () => {

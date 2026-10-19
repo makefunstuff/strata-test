@@ -8,6 +8,8 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   let ctx = null, out = null, tape = null, wet = null;
   let music = null;
   let muted = false;
+  let gestured = false;        // autoplay policy: nothing is scheduled before the first keypress
+  let pendingMusic = null;
 
   function ensure() {
     if (!ctx) {
@@ -39,7 +41,7 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   const now = () => (ctx ? ctx.currentTime : 0);
 
   function voice(freq, { to = null, dur = 0.12, type = "square", gain = 0.25, at = 0, send = 0.35, detune = 0 } = {}) {
-    if (!ensure()) return;
+    if (!gestured || !ensure()) return;
     const t = now() + at;
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
@@ -58,7 +60,7 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   }
 
   function burst({ dur = 0.2, gain = 0.3, at = 0, freq = 1200, to = null, q = 1, type = "lowpass", send = 0.2 } = {}) {
-    if (!ensure()) return;
+    if (!gestured || !ensure()) return;
     const t = now() + at;
     const n = Math.max(1, Math.floor(ctx.sampleRate * dur));
     const buf = ctx.createBuffer(1, n, ctx.sampleRate);
@@ -89,6 +91,7 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   // ---- a tiny step sequencer for background music ------------------------------------
   function startMusic({ bpm = 132, steps = 16, bass = null, lead = null, hat = true, kick = true,
                         leadType = "square", leadGain = 0.09, bassGain = 0.14 } = {}) {
+    if (!gestured) { pendingMusic = arguments[0]; return; }   // start it on the first keypress
     if (!ensure()) return;
     stopMusic();
     const spb = 60 / bpm / 4; // one sixteenth
@@ -115,6 +118,7 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   }
 
   function stopMusic() {
+    pendingMusic = null;
     if (music) { clearInterval(music); music = null; }
   }
 
@@ -155,7 +159,13 @@ export function createAudio({ master = 0.32, delay = 0.16, delayMix = 0.18 } = {
   try { muted = localStorage.getItem("arcade-muted") === "1"; } catch { /* private mode */ }
 
   // wake the context on the first press (autoplay policy)
-  const wake = () => { ensure(); window.removeEventListener("keydown", wake); window.removeEventListener("pointerdown", wake); };
+  const wake = () => {
+    gestured = true;
+    ensure();
+    if (pendingMusic) { const p = pendingMusic; pendingMusic = null; startMusic(p); }
+    window.removeEventListener("keydown", wake);
+    window.removeEventListener("pointerdown", wake);
+  };
   window.addEventListener("keydown", wake);
   window.addEventListener("pointerdown", wake);
 

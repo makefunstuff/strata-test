@@ -5,6 +5,13 @@ import { createTrack } from "./track.js";
 import { createPlayer } from "./player.js";
 import { createSpawner } from "./spawner.js";
 import { createGame } from "./game.js";
+import { createPost, setupEnvironment } from "../shared/post.js";
+import { crtKey } from "../shared/crt.js";
+import { createAudio, audioKey } from "../shared/audio.js";
+import { createFps } from "../shared/fps.js";
+import { createSpeedLines } from "../shared/speedlines.js";
+import { skyTexture, glowTexture } from "../shared/textures.js";
+import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
 
 const canvas = document.getElementById("game");
 const hud = createHud(document.getElementById("hud"));
@@ -18,40 +25,76 @@ try {
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-const BG = 0x101418;
+const BG = 0x0b1424;
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(BG);
-scene.fog = new THREE.FogExp2(BG, 0.012);
+// the sky's bottom tone matches the fog colour, so the horizon has no seam
+scene.background = skyTexture("#2a4570", "#0b1424", "#4b7fb5");
+scene.fog = new THREE.Fog(BG, 30, 118);
 
 const camera = new THREE.PerspectiveCamera(62, 16 / 9, 0.1, 220);
 camera.position.set(0, 3.1, 9);
 
-scene.add(new THREE.HemisphereLight(0x9db8d6, 0x141a22, 0.8));
-const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+setupEnvironment(renderer, scene, { intensity: 0.7 });
+scene.add(new THREE.HemisphereLight(0x9db8d6, 0x0b1018, 0.55));
+const keyLight = new THREE.DirectionalLight(0xfff2d8, 1.5);
 keyLight.position.set(6, 14, 8);
 scene.add(keyLight);
+const rim = new THREE.DirectionalLight(0x59f8ff, 1.0);
+rim.position.set(-4, 5, -14);
+scene.add(rim);
 
 const rng = makeRng(1);
 const track = createTrack(scene);
 const player = createPlayer(scene);
 const spawner = createSpawner(scene, rng);
-const game = createGame({ hud, player, spawner, track, camera, canvas, rng });
+
+const glow = glowTexture();
+const fx = {
+  sparks: createSparks(scene, { texture: glow, count: 500 }),
+  shards: createShatter(scene, { count: 140, geometry: new THREE.BoxGeometry(0.45, 0.45, 0.45) }),
+  rings: createRings(scene, { slots: 8 }),
+  impact: createImpactLight(scene, { distance: 11 }),
+};
+const streaks = createSpeedLines(scene, { count: 30, spread: 7.5, minY: 0.06, maxY: 4.5 });
+const audio = createAudio({ master: 0.3, delayMix: 0.14 });
+const sfx = audio.sfx;
+
+const game = createGame({ hud, player, spawner, track, camera, canvas, rng, fx, audio, sfx });
+
+const post = createPost(renderer, scene, camera, {
+  exposure: 1.06,
+  bloom: { strength: 0.55, radius: 0.5, threshold: 0.85, scale: 0.5 },
+  crt: { look: "cabinet" },
+});
+const fps = createFps(document.getElementById("fps"));
+window.addEventListener("keydown", (e) => {
+  if (crtKey(e.code, post.crt)) { sfx.select(); e.preventDefault(); return; }
+  if (audioKey(e.code, audio)) e.preventDefault();
+});
 
 function resize() {
   const w = Math.max(1, window.innerWidth);
   const h = Math.max(1, window.innerHeight);
-  renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
+  post.setSize(w, h);
 }
 window.addEventListener("resize", resize);
 resize();
 
+const clock = new THREE.Clock();
 let last = performance.now();
 renderer.setAnimationLoop(() => {
   const now = performance.now();
   const dt = Math.min((now - last) / 1000, 0.05);
   last = now;
   game.update(dt);
-  renderer.render(scene, camera);
+  fx.sparks.update(dt);
+  fx.shards.update(dt);
+  fx.rings.update(dt);
+  fx.impact.update(dt);
+  streaks.update(dt, game.state.speed, game.state.running);
+  post.update(clock.getElapsedTime());
+  post.render();
+  fps.tick(dt);
 });
