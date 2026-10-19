@@ -1,0 +1,1 @@
+We need answer short. Need identify line in lib/layer.js creating TracingChannel. It shows const requestChannel = dc.tracingChannel && dc.tracingChannel('express.router.request') line 34. Need answer format. Ensure exact.

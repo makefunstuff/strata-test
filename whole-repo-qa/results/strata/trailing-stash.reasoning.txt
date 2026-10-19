@@ -1,0 +1,16 @@
+We need answer question. Need inspect repository. User asks: In test/router.js, test 'should strip/restore with trailing stash', what value is expected in x-saw-1 header? Need reply ANSWER: <short answer>, CITATION: path:line. We need find line. In test/router.js lines around 1384-1395:
+
+1384|     it('should strip/restore with trailing stash', function (done) {
+1385|       const router = new Router()
+1386|       const server = createServer(router)
+1387| 
+1388|       router.use('/foo', setsaw(1))
+1389|       router.use(saw)
+1390| 
+1391|       request(server)
+1392|         .get('/foo/')
+1393|         .expect('x-saw-1', 'GET /')
+1394|         .expect(200, 'saw GET /foo/', done)
+1395|       })
+
+Answer GET /, citation line 1393. Ensure exact.

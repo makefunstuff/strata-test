@@ -1,0 +1,10 @@
+The question asks about test/types/request.ts, specifically which route path string is used to show that wildcard values are arrays.
+
+Looking at test/types/request.ts, line 25:
+```
+router.get('/files{/*splat}', (req, res) => {
+```
+
+The comment on line 24 says "Wildcard values are arrays, and optional parameters can be absent."
+
+So the route path string is `/files{/*splat}`.

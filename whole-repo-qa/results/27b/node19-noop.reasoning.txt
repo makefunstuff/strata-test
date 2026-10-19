@@ -1,0 +1,20 @@
+The question asks why test/tracing.js subscribes a permanent no-op subscriber when running on Node 19.
+
+Looking at the test/tracing.js file, lines 22-29:
+
+```
+22| // Node 19 drops a channel once its last subscriber leaves, orphaning the
+23| // router's cached channel. A permanent no-op subscriber keeps it alive.
+24| if (tracingChannel && process.version.startsWith('v19')) {
+25|   const noop = function () {}
+26|   tracingChannel(CHANNEL).subscribe({
+27|     start: noop, end: noop, asyncStart: noop, asyncEnd: noop, error: noop
+28|   })
+29| }
+```
+
+The comment on lines 22-23 explains: "Node 19 drops a channel once its last subscriber leaves, orphaning the router's cached channel. A permanent no-op subscriber keeps it alive."
+
+So the answer is: Node 19 drops a channel once its last subscriber leaves, which would orphan the router's cached channel. The permanent no-op subscriber keeps the channel alive.
+
+The citation should be the line that shows the answer. Line 22-23 has the explanation. I'll cite line 22 as it's the first line of the comment explaining why.

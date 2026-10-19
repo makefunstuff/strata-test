@@ -1,0 +1,10 @@
+The question asks about the OPTIONS test 'should respond with defined routes' and what Allow header value is expected for /users.
+
+Looking at test/auto-options.js, line 19-21:
+```
+request(server)
+  .options('/users')
+  .expect('Allow', 'GET, HEAD, POST, PUT')
+```
+
+So the expected Allow header value is 'GET, HEAD, POST, PUT'.

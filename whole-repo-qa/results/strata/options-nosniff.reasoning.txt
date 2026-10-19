@@ -1,0 +1,1 @@
+We need answer question: What value does router's automatic OPTIONS response set for X-Content-Type-Options header? Need cite one line. In index.js sendOptionsResponse line 713 sets header 'X-Content-Type-Options', 'nosniff'. Need final exactly format. Ensure citation line. Answer nosniff.

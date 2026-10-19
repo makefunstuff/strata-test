@@ -1,0 +1,180 @@
+{
+  "about": "Questions on pillarjs/router at target.json's commit. A reply is right when its CITATION path is one of `paths`, the cited line (in the pinned checkout) contains one of `expect`, and every regex in `answer` matches the ANSWER text (case-insensitive). `line` is the canonical line; `node scripts/check.ts` verifies it against the checkout. The position (start, middle, end) comes from where that line sits in the packed prompt.",
+  "questions": [
+    {
+      "id": "scorecard-cron",
+      "q": "On what cron schedule does the OpenSSF Scorecard GitHub workflow run?",
+      "paths": [".github/workflows/scorecard.yml"], "line": 14,
+      "expect": ["16 21 * * 1"],
+      "answer": ["16 21 \\* \\* 1"]
+    },
+    {
+      "id": "history-sync-hang",
+      "q": "According to the changelog, which router release fixed hanging on a large stack of sync routes?",
+      "paths": ["HISTORY.md"], "line": 91,
+      "expect": ["Fix hanging on large stack of sync routes"],
+      "answer": ["1\\.3\\.7"]
+    },
+    {
+      "id": "readme-strict-default",
+      "q": "Per the README, what is the default value of the Router `strict` option, and what does `false` mean for trailing slashes?",
+      "paths": ["README.md"], "line": 140,
+      "expect": ["`strict`"],
+      "answer": ["false", "optional"]
+    },
+    {
+      "id": "handle-sync-limit",
+      "q": "In Router.prototype.handle, after how many synchronous calls to next() does the router break the call stack by deferring with setImmediate?",
+      "paths": ["index.js"], "line": 219,
+      "expect": ["++sync > 100"],
+      "answer": ["\\b100\\b"]
+    },
+    {
+      "id": "options-nosniff",
+      "q": "What value does the router's automatic OPTIONS response set for the X-Content-Type-Options header?",
+      "paths": ["index.js"], "line": 713,
+      "expect": ["'X-Content-Type-Options', 'nosniff'"],
+      "answer": ["nosniff"]
+    },
+    {
+      "id": "layer-tracing-channel",
+      "q": "What is the name of the diagnostics_channel TracingChannel that lib/layer.js creates for request tracing?",
+      "paths": ["lib/layer.js"], "line": 34,
+      "expect": ["tracingChannel('express.router.request')"],
+      "answer": ["express\\.router\\.request"]
+    },
+    {
+      "id": "route-head-fallback",
+      "q": "In lib/route.js, when a route has no HEAD handler, which method name is a HEAD request treated as?",
+      "paths": ["lib/route.js"], "line": 65,
+      "expect": ["= 'get'"],
+      "answer": ["\\bget\\b"]
+    },
+    {
+      "id": "package-mocha",
+      "q": "Which exact version of mocha does package.json list in devDependencies?",
+      "paths": ["package.json"], "line": 32,
+      "expect": ["\"mocha\": \"10.8.2\""],
+      "answer": ["10\\.8\\.2"]
+    },
+    {
+      "id": "options-allow-header",
+      "q": "In the OPTIONS test 'should respond with defined routes', which Allow header value is expected for /users?",
+      "paths": ["test/auto-options.js"], "line": 20,
+      "expect": ["'GET, HEAD, POST, PUT'"],
+      "answer": ["GET, HEAD, POST, PUT"]
+    },
+    {
+      "id": "fqdn-strip",
+      "q": "In the FQDN test 'should strip/restore FQDN req.url', what value is expected in the x-saw-1 header?",
+      "paths": ["test/fqdn-url.js"], "line": 29,
+      "expect": ["'x-saw-1', 'GET http://example.com/post/1'"],
+      "answer": ["GET http://example\\.com/post/1"]
+    },
+    {
+      "id": "param-once",
+      "q": "In the param test 'should only invoke fn once per request', what response body is expected for GET /user/bob?",
+      "paths": ["test/param.js"], "line": 192,
+      "expect": ["'get user bob 1 times'"],
+      "answer": ["get user bob 1 times"]
+    },
+    {
+      "id": "merge-numeric",
+      "q": "In the req.params test 'should merge numeric properties by offsetting', what JSON is expected in the x-params-1 header?",
+      "paths": ["test/req.params.js"], "line": 144,
+      "expect": ["{\"0\":\"foo\",\"1\":\"bar\",\"2\":\"buzz\"}"],
+      "answer": ["\"?0\"?\\s*:\\s*\"foo\"", "\"?1\"?\\s*:\\s*\"bar\"", "\"?2\"?\\s*:\\s*\"buzz\""]
+    },
+    {
+      "id": "literal-parens",
+      "q": "In test/route.js, the test 'should work inside literal parentheses' sends one GET request. To which URL?",
+      "paths": ["test/route.js"], "line": 724,
+      "expect": [".get('/tj(edit)')"],
+      "answer": ["/tj\\(edit\\)"]
+    },
+    {
+      "id": "regexp-not-literal",
+      "q": "In test/route.js, which route path is expected to throw in the test 'should not treat regexp as literal regexp'?",
+      "paths": ["test/route.js"], "line": 890,
+      "expect": ["router.route('/([a-z]+:n[0-9]+)')"],
+      "answer": ["\\[a-z\\]\\+:n\\[0-9\\]\\+"]
+    },
+    {
+      "id": "splat-params",
+      "q": "In test/route.js, for the route '{/*foo}' (test 'should name a zero-or-more repeated parameter'), what params are expected for GET /fizz/buzz?",
+      "paths": ["test/route.js"], "line": 812,
+      "expect": ["{ foo: ['fizz', 'buzz'] }"],
+      "answer": ["\\[\\s*[\"']?fizz[\"']?\\s*,\\s*[\"']?buzz"]
+    },
+    {
+      "id": "router-skip-methods",
+      "q": "In test/router.js, the per-method tests skip one HTTP method on every Node version and another only on Node 21. Which method is skipped only on Node 21?",
+      "paths": ["test/router.js"], "line": 320,
+      "expect": ["method === 'query' && process.version.startsWith('v21')"],
+      "answer": ["\\bquery\\b"]
+    },
+    {
+      "id": "baseurl-altered",
+      "q": "In test/router.js, test 'should be altered correctly' (req.baseUrl), what value is expected in the x-saw-base-3 header?",
+      "paths": ["test/router.js"], "line": 1352,
+      "expect": ["'x-saw-base-3', '/foo/bar'"],
+      "answer": ["/foo/bar"]
+    },
+    {
+      "id": "trailing-stash",
+      "q": "In test/router.js, test 'should strip/restore with trailing stash', what value is expected in the x-saw-1 header?",
+      "paths": ["test/router.js"], "line": 1393,
+      "expect": ["'x-saw-1', 'GET /'"],
+      "answer": ["GET /(?![a-z])"]
+    },
+    {
+      "id": "rewrite-method",
+      "q": "In test/router.js, test 'should support altering req.method': which numbered hit handles (createHitHandle(n)) are expected to be hit?",
+      "paths": ["test/router.js"], "line": 1406,
+      "expect": ["req.method = 'PUT'", "shouldHitHandle(2)", "shouldHitHandle(4)"],
+      "answer": ["\\b2\\b", "\\b4\\b"]
+    },
+    {
+      "id": "hit-handle-header",
+      "q": "In test/support/utils.js, what response header name does createHitHandle(3) set, and to what value?",
+      "paths": ["test/support/utils.js"], "line": 21,
+      "expect": ["'x-fn-' + String(num)", "res.setHeader(name, 'hit')"],
+      "answer": ["x-fn-3", "\\bhit\\b"]
+    },
+    {
+      "id": "node19-noop",
+      "q": "Why does test/tracing.js subscribe a permanent no-op subscriber when running on Node 19?",
+      "paths": ["test/tracing.js"], "line": 22,
+      "expect": ["Node 19 drops a channel", "process.version.startsWith('v19')", "router's cached channel"],
+      "answer": ["(drop|orphan|last subscriber|garbage|collected|remov)"]
+    },
+    {
+      "id": "sync-phases",
+      "q": "In test/tracing.js, test 'should emit only start and end for a synchronous handler': how many phases are asserted for syncHandler?",
+      "paths": ["test/tracing.js"], "line": 921,
+      "expect": ["assert.equal(phases.length, 2"],
+      "answer": ["\\b(2|two)\\b"]
+    },
+    {
+      "id": "types-splat-route",
+      "q": "In test/types/request.ts, which route path string is used to show that wildcard values are arrays?",
+      "paths": ["test/types/request.ts"], "line": 25,
+      "expect": ["router.get('/files{/*splat}'"],
+      "answer": ["/files\\{/\\*splat\\}"]
+    },
+    {
+      "id": "types-augment-user",
+      "q": "In test/types/augmentation.ts, what type is declared for the `user` property added to the Request interface?",
+      "paths": ["test/types/augmentation.ts"], "line": 9,
+      "expect": ["user?: { id: string }"],
+      "answer": ["id\\s*:\\s*string"]
+    },
+    {
+      "id": "tsconfig-exclude",
+      "q": "Which file does the root tsconfig.json exclude from type checking?",
+      "paths": ["tsconfig.json"], "line": 4,
+      "expect": ["\"exclude\": [\"test/types/augmentation.ts\"]"],
+      "answer": ["augmentation\\.ts"]
+    }
+  ]
+}

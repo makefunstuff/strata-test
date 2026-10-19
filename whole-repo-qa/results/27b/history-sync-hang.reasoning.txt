@@ -1,0 +1,7 @@
+The user is asking about which router release fixed hanging on a large stack of sync routes. Let me look at the HISTORY.md file.
+
+Looking at HISTORY.md:
+- Line 88: "1.3.7 / 2022-04-28"
+- Line 91: "Fix hanging on large stack of sync routes"
+
+So the answer is version 1.3.7.

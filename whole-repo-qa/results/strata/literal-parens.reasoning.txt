@@ -1,0 +1,26 @@
+We need answer question: In test/route.js, test 'should work inside literal parentheses' sends one GET request. To which URL? Need find exact line citation. In test/route.js lines 716-725 maybe. Test code:
+
+it('should work inside literal parentheses', function (done) {
+  const router = new Router()
+  const route = router.route('/:user\\(:op\\)')
+  const server = createServer(router)
+
+  route.all(sendParams)
+
+  request(server)
+    .get('/tj(edit)')
+    .expect(200, { user: 'tj', op: 'edit' }, done)
+})
+
+Line number: in provided file, line 724 is `.get('/tj(edit)')`? Let's count: start 716: `        it('should work inside literal parentheses', function (done) {`? The file shows lines:
+716|         it('should work inside literal parentheses', function (done) {
+717|           const router = new Router()
+718|           const route = router.route('/:user\\(:op\\)')
+719|           const server = createServer(router)
+720| 
+721|           route.all(sendParams)
+722| 
+723|           request(server)
+724|             .get('/tj(edit)')
+725|             .expect(200, { user: 'tj', op: 'edit' }, done)
+So answer URL /tj(edit). Citation test/route.js:724. Need exact format. Ensure only answer. final no extra.

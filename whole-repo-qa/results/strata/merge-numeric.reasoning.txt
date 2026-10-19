@@ -1,0 +1,9 @@
+We need answer question: In test req.params, test 'should merge numeric properties by offsetting', what JSON is expected in x-params-1 header? Need provide answer and citation one line. Need locate in test/req.params.js around line 129? Let's inspect. File test/req.params.js lines:
+128 describe numeric properties
+129 it('should merge numeric properties by offsetting', ...
+... 140 router.get(...)
+141 request...
+142 .get('/buzz')
+143 .expect('x-params-1', '{"0":"foo","1":"bar","2":"buzz"}')
+144 .expect(200, ...)
+So expected JSON header value is {"0":"foo","1":"bar","2":"buzz"}. Citation line 143. Need format exactly.

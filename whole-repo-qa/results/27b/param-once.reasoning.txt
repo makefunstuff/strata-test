@@ -1,0 +1,29 @@
+The question asks about the test 'should only invoke fn once per request' in test/param.js, specifically what response body is expected for GET /user/bob.
+
+Looking at test/param.js, the test 'should only invoke fn once per request' starts at line 173:
+
+```
+it('should only invoke fn once per request', function (done) {
+  const router = new Router()
+  const server = createServer(router)
+
+  router.param('user', function parseUser (req, res, next, user) {
+    req.count = (req.count || 0) + 1
+    req.user = user
+    next()
+  })
+
+  router.get('/user/:user', sethit(1))
+  router.get('/user/:user', sethit(2))
+
+  router.use(function (req, res) {
+    res.end('get user ' + req.user + ' ' + req.count + ' times')
+  })
+
+  request(server)
+    .get('/user/bob')
+    .expect('get user bob 1 times', done)
+})
+```
+
+The expected response body is 'get user bob 1 times'. This is on line 192.

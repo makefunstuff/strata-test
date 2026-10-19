@@ -1,0 +1,12 @@
+The test "should support altering req.method" in test/router.js is at lines 1400-1421. Let me look at the expectations:
+
+Line 1416: `.expect(shouldNotHitHandle(1))`
+Line 1417: `.expect(shouldHitHandle(2))`
+Line 1418: `.expect(shouldNotHitHandle(3))`
+Line 1419: `.expect(shouldHitHandle(4))`
+
+So the hit handles expected to be hit are 2 and 4.
+
+The citation should point to a line that shows this. Line 1417 shows `.expect(shouldHitHandle(2))` and line 1419 shows `.expect(shouldHitHandle(4))`. I need to pick one line that shows the answer. Let me pick line 1419 since it shows shouldHitHandle(4), but really both 2 and 4 are hit. Let me cite line 1417 since it's the first "shouldHitHandle" in the test.
+
+Actually, the question asks "which numbered hit handles are expected to be hit?" The answer is 2 and 4. I'll cite line 1417 which shows `.expect(shouldHitHandle(2))`.

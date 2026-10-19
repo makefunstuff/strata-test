@@ -1,0 +1,33 @@
+The question asks about lib/route.js, specifically when a route has no HEAD handler, which method name is a HEAD request treated as?
+
+Looking at lib/route.js, I can see two relevant sections:
+
+1. In `Route.prototype._handlesMethod` (line 54-69):
+```
+if (name === 'head' && !this.methods.head) {
+    name = 'get'
+}
+```
+This is at lines 64-66.
+
+2. In `Route.prototype.dispatch` (line 98+):
+```
+if (method === 'head' && !this.methods.head) {
+    method = 'get'
+}
+```
+This is at lines 111-113.
+
+Both show that when there's no HEAD handler, the HEAD request is treated as a GET request.
+
+The most direct answer is "get". Let me pick the best citation. Line 65 shows `name = 'get'` in the `_handlesMethod` function, and line 112 shows `method = 'get'` in the dispatch function.
+
+I'll go with line 112 as it's in the dispatch method which is the actual routing logic, but line 65 is also valid. Let me use line 112 since it's the dispatch function that actually processes requests.
+
+Actually, looking more carefully:
+- Line 64: `if (name === 'head' && !this.methods.head) {`
+- Line 65: `name = 'get'`
+- Line 111: `if (method === 'head' && !this.methods.head) {`
+- Line 112: `method = 'get'`
+
+I'll cite line 112 as it's in the dispatch function.

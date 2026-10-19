@@ -1,0 +1,8 @@
+The question asks about the cron schedule for the OpenSSF Scorecard GitHub workflow. Let me look at the scorecard.yml file.
+
+In `.github/workflows/scorecard.yml`, line 14 shows:
+```
+    - cron: '16 21 * * 1'
+```
+
+This is the schedule for the Scorecard workflow.

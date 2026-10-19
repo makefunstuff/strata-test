@@ -1,0 +1,8 @@
+The user is asking for the exact version of mocha listed in devDependencies in package.json.
+
+Looking at package.json, line 32:
+```
+32|     "mocha": "10.8.2",
+```
+
+So the exact version is 10.8.2.

@@ -1,0 +1,200 @@
+We need answer question. Need find in test/route.js for route '{/*foo}' test 'should name a zero-or-more repeated parameter', what params expected for GET /fizz/buzz. Look at file test/route.js lines around 791-814. It has route '{/*foo}', route.all(sendParams), series requests. GET /fizz/buzz expects 200, { foo: ['fizz', 'buzz'] }, cb. Need citation likely line 812. Need answer short. Ensure format exactly ANSWER and CITATION. Could citation be line 812? The line: `                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)`. Let's verify numbering: lines 791 describe, 792 it, 793 router, 794 route = router.route('{/*foo}'), 795 server, 796 route.all(sendParams), 797 series, 798 function cb, 799 request(server), 800 .get('/'), 801 .expect(200, {}, cb), 804 .get('/bar')? Wait exact:
+791 describe('using "*name"', function () {
+792   it('should name a zero-or-more repeated parameter', function (done) {
+793     const router = new Router()
+794     const route = router.route('{/*foo}')
+795     const server = createServer(router)
+796     route.all(sendParams)
+797     series([
+798       function (cb) {
+799         request(server)
+800           .get('/')
+801           .expect(200, {}, cb)
+802         },
+803         function (cb) {
+804           request(server)
+805             .get('/bar')
+806             .expect(200, { foo: ['bar'] }, cb)
+807         },
+808         function (cb) {
+809           request(server)
+810             .get('/fizz/buzz')
+811             .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+812? Wait anchor says line 801 has 76? Let's count.
+
+Given file test/route.js 915 lines. Anchor line ----- test/route.js:76 ----- then line 76. Anchor line 876? Hmm. Let's rely on provided line numbers in file. Segment:
+791|       describe('using "*name"', function () {
+792|         it('should name a zero-or-more repeated parameter', function (done) {
+793|           const router = new Router()
+794|           const route = router.route('{/*foo}')
+795|           const server = createServer(router)
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+801|                 .get('/')
+802|                 .expect(200, {}, cb)
+803|             },
+804|             function (cb) {
+805|               request(server)
+806|                 .get('/bar')
+807|                 .expect(200, { foo: ['bar'] }, cb)
+808|             },
+809|             function (cb) {
+810|               request(server)
+811|                 .get('/fizz/buzz')
+812|                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+813|             }
+814|           ], done)
+815|         })
+But in user message, line 812? Let's see after line 801 anchor? Actually user text shows:
+791| ...
+792| ...
+...
+799| function (cb) {
+800| request(server)
+801| .get('/')
+----- test/route.js:826 -----? Wait no.
+Let's scroll user file for test/route.js:
+At 791: describe...
+792: it...
+793 router
+794 route route
+795 server
+796 blank
+797 route.all
+798 series([
+799 function (cb) {
+800 request(server)
+801 .get('/')
+-----? The user shows `----- test/route.js:826 -----` not near 801; anchors every 25 lines: 76, 101,126,151,176,201,226,251,276,301,326,351,376,401,426,451,476,501,526,551,576,601,626,651,676,701,726,751,776,801,826 etc. Wait user shows:
+791|       describe...
+792|         it...
+793|           const router...
+794|           const route...
+795|           const server...
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+801|                 .get('/')
+802|                 .expect(200, {}, cb)
+803|             },
+804|             function (cb) {
+805|               request(server)
+806|                 .get('/bar')
+807|                 .expect(200, { foo: ['bar'] }, cb)
+808|             },
+809|             function (cb) {
+810|               request(server)
+811|                 .get('/fizz/buzz')
+812|                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+813|             }
+814|           ], done)
+815|         })
+But user message around: 
+----- test/route.js:801 -----? Let's inspect. It says after 776 maybe:
+776 ...
+...
+790 
+791       describe('using "*name"', function () {
+792         it...
+793 ...
+...
+798           series([
+799             function (cb) {
+800               request(server)
+----- test/route.js:826 -----?? Wait anchor line before every 25th line. If line 776 is 25 multiple? 776. Then anchor line 776 appears before line 777? In provided:
+----- test/route.js:776 -----
+776| ...
+777 ...
+...
+801 is multiple of 25? Yes 801 should have anchor before line 801. But user segment:
+799| function (cb) {
+800| request(server)
+801| .get('/')
+802| .expect(200, {}, cb)
+...
+Actually the anchor `----- test/route.js:801 -----` would appear before line 801. But in provided, at line 798 there is `----- test/route.js:826 -----`? Let's re-read exact user text:
+...
+791|       describe('using "*name"', function () {
+792|         it('should name a zero-or-more repeated parameter', function (done) {
+793|           const router = new Router()
+794|           const route = router.route('{/*foo}')
+795|           const server = createServer(router)
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+----- test/route.js:801 -----? In user, I see after line 800? Let's scroll:
+```
+791|       describe('using "*name"', function () {
+792|         it('should name a zero-or-more repeated parameter', function (done) {
+793|           const router = new Router()
+794|           const route = router.route('{/*foo}')
+795|           const server = createServer(router)
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+----- test/route.js:826 -----? No, I must rely on line numbers not anchors.
+801|                 .expect(200, {}, cb)
+802|             },
+803|             function (cb) {
+804|               request(server)
+805|                 .get('/bar')
+806|                 .expect(200, { foo: ['bar'] }, cb)
+807|             },
+808|             function (cb) {
+809|               request(server)
+810|                 .get('/fizz/buzz')
+811|                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+812|             }
+813|           ], done)
+```
+Wait if line 800 request(server), line 801 .get('/'), line 802 .expect... The user line numbers:
+799 function
+800 request
+801 `----- test/route.js:801 -----`? They might have anchor line inserted before 801 but the actual line 801 is `.get('/')`, and line 802 `.expect(200, {}, cb)`. Then line 811 `.get('/fizz/buzz')`, line 812 `.expect(200, { foo: ['fizz', 'buzz'] }, cb)`. The exact citation likely test/route.js:812. Let's verify with user displayed lines around 801:
+```
+799|             function (cb) {
+800|               request(server)
+----- test/route.js:826 -----? Wait line numbers in prompt: after 800 there is `----- test/route.js:826 -----`? Let's look at the user content around 790-820:
+
+```
+791|       describe('using "*name"', function () {
+792|         it('should name a zero-or-more repeated parameter', function (done) {
+793|           const router = new Router()
+794|           const route = router.route('{/*foo}')
+795|           const server = createServer(router)
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+801|                 .get('/')
+802|                 .expect(200, {}, cb)
+803|             },
+804|             function (cb) {
+805|               request(server)
+806|                 .get('/bar')
+807|                 .expect(200, { foo: ['bar'] }, cb)
+808|             },
+809|             function (cb) {
+810|               request(server)
+811|                 .get('/fizz/buzz')
+812|                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+813|             }
+814|           ], done)
+815|         })
+816| 
+817|       it('should work in any segment', function (done) {
+...
+```
+But prompt shows anchor at 826 before 826? Maybe not relevant.
+
+Question: "In test/route.js, for the route '{/*foo}' (test 'should name a zero-or-more repeated parameter'), what params are expected for GET /fizz/buzz?" So answer: `{ foo: ['fizz', 'buzz'] }`. Citation one line shows answer. Could be test/route.js:812. If line 811 is get and 812 expectation. Which line should be cited? The line showing expected params is expectation. We'll cite 812. Need exact answer format.

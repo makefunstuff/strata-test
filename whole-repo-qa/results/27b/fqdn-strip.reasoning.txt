@@ -1,0 +1,7 @@
+The question asks about the FQDN test 'should strip/restore FQDN req.url' and what value is expected in the x-saw-1 header.
+
+Looking at test/fqdn-url.js, the test "should strip/restore FQDN req.url" is on lines 20-31.
+
+Line 29 shows: `.expect('x-saw-1', 'GET http://example.com/post/1')`
+
+So the expected value in the x-saw-1 header is 'GET http://example.com/post/1'.

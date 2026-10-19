@@ -1,0 +1,14 @@
+The test "should emit only start and end for a synchronous handler" in test/tracing.js checks the phases for syncHandler. Looking at lines 920-925:
+
+```
+const phases = events.filter(byLayer('syncHandler')).map(function (e) { return e.phase })
+assert.equal(phases.length, 2, 'a synchronous handler has no async phase')
+assert.equal(phases[0], 'start')
+assert.equal(phases[1], 'end')
+assert.ok(phases.indexOf('asyncStart') < 0 && phases.indexOf('asyncEnd') < 0,
+  'a synchronous handler should not emit asyncStart/asyncEnd')
+```
+
+So 2 phases are asserted: 'start' and 'end'.
+
+The key line showing the count is line 921: `assert.equal(phases.length, 2, 'a synchronous handler has no async phase')`

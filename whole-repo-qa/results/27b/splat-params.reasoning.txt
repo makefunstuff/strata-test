@@ -1,0 +1,35 @@
+The user is asking about the test in test/route.js for the route '{/*foo}' with the test 'should name a zero-or-more repeated parameter', specifically what params are expected for GET /fizz/buzz.
+
+Looking at test/route.js, I can find this test around line 791-815:
+
+```
+791|       describe('using "*name"', function () {
+792|         it('should name a zero-or-more repeated parameter', function (done) {
+793|           const router = new Router()
+794|           const route = router.route('{/*foo}')
+795|           const server = createServer(router)
+796| 
+797|           route.all(sendParams)
+798|           series([
+799|             function (cb) {
+800|               request(server)
+801|                 .get('/')
+802|                 .expect(200, {}, cb)
+803|             },
+804|             function (cb) {
+805|               request(server)
+806|                 .get('/bar')
+807|                 .expect(200, { foo: ['bar'] }, cb)
+808|             },
+809|             function (cb) {
+810|               request(server)
+811|                 .get('/fizz/buzz')
+812|                 .expect(200, { foo: ['fizz', 'buzz'] }, cb)
+813|             }
+814|           ], done)
+815|         })
+```
+
+So for GET /fizz/buzz, the expected params are `{ foo: ['fizz', 'buzz'] }`.
+
+The citation line is line 812: `.expect(200, { foo: ['fizz', 'buzz'] }, cb)`

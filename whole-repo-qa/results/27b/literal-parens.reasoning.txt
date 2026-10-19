@@ -1,0 +1,19 @@
+The question asks about the test 'should work inside literal parentheses' in test/route.js, specifically which URL the GET request is sent to.
+
+Looking at test/route.js, lines 716-726:
+
+```js
+it('should work inside literal parentheses', function (done) {
+  const router = new Router()
+  const route = router.route('/:user\\(:op\\)')
+  const server = createServer(router)
+
+  route.all(sendParams)
+
+  request(server)
+    .get('/tj(edit)')
+    .expect(200, { user: 'tj', op: 'edit' }, done)
+})
+```
+
+The GET request is sent to `/tj(edit)`.

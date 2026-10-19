@@ -1,0 +1,13 @@
+The question asks which file the root tsconfig.json excludes from type checking. Looking at the tsconfig.json file:
+
+```
+1| {
+2|   "extends": "@tsconfig/node18/tsconfig.json",
+3|   "include": ["index.d.ts", "lib/**/*.d.ts", "test/**/*.ts", "test/**/*.cts", "test/**/*.mts"],
+4|   "exclude": ["test/types/augmentation.ts"],
+5|   "compilerOptions": {
+```
+
+Line 4 shows: `"exclude": ["test/types/augmentation.ts"]`
+
+So the answer is `test/types/augmentation.ts`.

@@ -1,0 +1,10 @@
+The user asks about the type declared for the `user` property in the Request interface augmentation in test/types/augmentation.ts.
+
+Looking at the file test/types/augmentation.ts:
+```
+8|   interface Request {
+9|     user?: { id: string }
+10|   }
+```
+
+The `user` property is typed as `{ id: string }` (optional, with the `?`).

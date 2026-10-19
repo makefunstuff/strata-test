@@ -1,0 +1,7 @@
+The question asks about the X-Content-Type-Options header value in the router's automatic OPTIONS response.
+
+Looking at the `sendOptionsResponse` function in `index.js`, I can see:
+
+Line 713: `res.setHeader('X-Content-Type-Options', 'nosniff')`
+
+This is in the `sendOptionsResponse` function which is used to generate the automatic OPTIONS response.

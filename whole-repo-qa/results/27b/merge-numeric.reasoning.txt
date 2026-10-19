@@ -1,0 +1,28 @@
+The question asks about the test 'should merge numeric properties by offsetting' in the req.params test file, specifically what JSON is expected in the x-params-1 header.
+
+Looking at test/req.params.js, line 129-146:
+
+```
+it('should merge numeric properties by offsetting', function (done) {
+  const router = Router({ mergeParams: true })
+  const server = createServer(function (req, res, next) {
+    req.params = { 0: 'foo', 1: 'bar' }
+
+    router(req, res, function (err) {
+      if (err) return next(err)
+      sawParams(req, res)
+    })
+  })
+
+  router.get(/\/([^/]*)/, hitParams(1))
+
+  request(server)
+    .get('/buzz')
+    .expect('x-params-1', '{"0":"foo","1":"bar","2":"buzz"}')
+    .expect(200, '{"0":"foo","1":"bar"}', done)
+})
+```
+
+The expected JSON in the x-params-1 header is `{"0":"foo","1":"bar","2":"buzz"}`.
+
+The citation is line 144 of test/req.params.js.

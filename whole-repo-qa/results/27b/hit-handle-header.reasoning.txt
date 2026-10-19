@@ -1,0 +1,21 @@
+The question asks about `createHitHandle(3)` in test/support/utils.js. Looking at the code:
+
+```js
+function createHitHandle (num) {
+   const name = 'x-fn-' + String(num)
+   return function hit (req, res, next) {
+     res.setHeader(name, 'hit')
+     next()
+   }
+ }
+```
+
+So `createHitHandle(3)` sets the header `x-fn-3` to the value `'hit'`.
+
+The relevant line is line 23: `res.setHeader(name, 'hit')` but the name is computed on line 21. Let me find the best single line citation. Line 21 shows `const name = 'x-fn-' + String(num)` and line 23 shows `res.setHeader(name, 'hit')`. The most complete answer would cite line 23 since it shows both the header being set and the value. But actually line 21 shows how the name is constructed. Let me think about which single line best shows the answer.
+
+The question asks what header name and what value. Line 23 `res.setHeader(name, 'hit')` shows the value is 'hit' and that it sets a header called `name`. Line 21 shows name = 'x-fn-' + String(num). 
+
+I think the best citation is line 23 since it directly shows the setHeader call with the value 'hit'. But to fully answer, we need both lines. The format says "The citation is the one line of the repository that shows the answer." I'll go with line 23 as it shows the setHeader call with 'hit' value.
+
+Actually, let me reconsider. The header name is `x-fn-3` (constructed from line 21) and the value is `'hit'` (line 23). I'll cite line 23 as it's the line that actually performs the setting of the header to 'hit'.

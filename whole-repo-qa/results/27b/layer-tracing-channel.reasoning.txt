@@ -1,0 +1,8 @@
+The question asks about the name of the diagnostics_channel TracingChannel that lib/layer.js creates for request tracing.
+
+Looking at lib/layer.js, line 34:
+```
+const requestChannel = dc.tracingChannel && dc.tracingChannel('express.router.request')
+```
+
+The channel name is 'express.router.request'.

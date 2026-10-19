@@ -1,0 +1,6 @@
+{
+  "url": "https://github.com/pillarjs/router",
+  "commit": "4064f28a6cfa7ccb311c5c59b4bcb0fea4a18398",
+  "licence": "MIT",
+  "exclude": ["package-lock.json", "*.png", "*.gif", "*.jpg", "*.ico", "*.svg"]
+}

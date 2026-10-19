@@ -1,0 +1,38 @@
+The question asks about the test 'should be altered correctly' in test/router.js, specifically what value is expected in the x-saw-base-3 header.
+
+Looking at the test in test/router.js, lines 1327-1356:
+
+```
+it('should be altered correctly', function (done) {
+  const router = new Router()
+  const server = createServer(router)
+  const sub1 = new Router()
+  const sub2 = new Router()
+  const sub3 = new Router()
+
+  sub3.get('/zed', setsawBase(1))
+
+  sub2.use('/baz', sub3)
+
+  sub1.use('/', setsawBase(2))
+
+  sub1.use('/bar', sub2)
+  sub1.use('/bar', setsawBase(3))
+
+  router.use(setsawBase(4))
+  router.use('/foo', sub1)
+  router.use(setsawBase(5))
+  router.use(helloWorld)
+
+  request(server)
+    .get('/foo/bar/baz/zed')
+    .expect('x-saw-base-1', '/foo/bar/baz')
+    .expect('x-saw-base-2', '/foo')
+    .expect('x-saw-base-3', '/foo/bar')
+    .expect('x-saw-base-4', '')
+    .expect('x-saw-base-5', '')
+    .expect(200, done)
+})
+```
+
+The x-saw-base-3 header expects '/foo/bar'. This is on line 1352.

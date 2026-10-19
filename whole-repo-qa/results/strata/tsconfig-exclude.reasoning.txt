@@ -1,0 +1,1 @@
+We need answer question: Which file does root tsconfig.json exclude from type checking? Need cite one line. In tsconfig.json line 4: "exclude": ["test/types/augmentation.ts"]. Need output exactly ANSWER/CITATION. Short answer likely test/types/augmentation.ts. Ensure path exact. final only.

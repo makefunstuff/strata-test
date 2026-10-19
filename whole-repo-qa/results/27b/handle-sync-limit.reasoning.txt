@@ -1,0 +1,16 @@
+The question asks about how many synchronous calls to next() cause the router to break the call stack by deferring with setImmediate.
+
+Looking at index.js, in the `Router.prototype.handle` function, inside the `next` function:
+
+```js
+// max sync stack
+if (++sync > 100) {
+  return setImmediate(next, err)
+}
+```
+
+This is at line 219-221. The sync counter is incremented, and when it exceeds 100, it defers with setImmediate. So after 100 synchronous calls, the 101st call would break the stack.
+
+The question asks "after how many synchronous calls to next() does the router break the call stack". The condition is `++sync > 100`, meaning when sync reaches 101 (i.e., after 100 sync calls), the next call (the 101st) triggers the setImmediate. So the answer is 100.
+
+The citation is index.js:219 which shows `if (++sync > 100) {`.

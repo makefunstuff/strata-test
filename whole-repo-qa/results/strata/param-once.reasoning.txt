@@ -1,0 +1,25 @@
+We need answer question: In param test 'should only invoke fn once per request', what response body is expected for GET /user/bob? Need provide ANSWER and CITATION one line. Let's find relevant test file test/param.js. Around line 173 describes. Let's read:
+
+173| it('should only invoke fn once per request', function (done) {
+174|       const router = new Router()
+175|       const server = createServer(router)
+176| 
+177|       router.param('user', function parseUser (req, res, next, user) {
+178|         req.count = (req.count || 0) + 1
+179|         req.user = user
+180|         next()
+181|       })
+182| 
+183|       router.get('/user/:user', sethit(1))
+184|       router.get('/user/:user', sethit(2))
+185| 
+186|       router.use(function (req, res) {
+187|         res.end('get user ' + req.user + ' ' + req.count + ' times')
+188|       })
+189| 
+190|       request(server)
+191|         .get('/user/bob')
+192|         .expect('get user bob 1 times', done)
+193|     })
+
+Expected response body: 'get user bob 1 times'. Need maybe exact includes quotes? Short answer. Citation line likely test/param.js:192. Ensure path line shows expected body. Could be 191? The line shows .expect('get user bob 1 times', done). Good.

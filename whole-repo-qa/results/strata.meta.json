@@ -1,0 +1,28 @@
+{
+  "label": "strata",
+  "arm": "strata",
+  "base": "$STRATA_BASE_URL",
+  "model": "qwen3.8-flash-next-iq2_xs",
+  "ctx": 131072,
+  "max_tokens": 16384,
+  "warm": false,
+  "thinking": "chat_template_kwargs.enable_thinking: true, no effort field; server-default sampling",
+  "target": {
+    "url": "https://github.com/pillarjs/router",
+    "commit": "4064f28a6cfa7ccb311c5c59b4bcb0fea4a18398",
+    "licence": "MIT",
+    "exclude": [
+      "package-lock.json",
+      "*.png",
+      "*.gif",
+      "*.jpg",
+      "*.ico",
+      "*.svg"
+    ]
+  },
+  "corpus_chars": 290285,
+  "corpus_tokens_counted": 100578,
+  "token_count_via": "usage.prompt_tokens difference",
+  "truncated_files": [],
+  "started": "2026-10-19T08:43:14.653Z"
+}

@@ -1,0 +1,15 @@
+The question asks about the test 'should not treat regexp as literal regexp' in test/route.js. Let me find that test.
+
+Looking at test/route.js, line 887-892:
+```
+it('should not treat regexp as literal regexp', function () {
+  const router = new Router()
+  assert.throws(function () {
+    router.route('/([a-z]+:n[0-9]+)')
+  }, /TypeError: Unexpected \( at/)
+})
+```
+
+The route path that is expected to throw is '/([a-z]+:n[0-9]+)'.
+
+The citation should be the line that shows this path: test/route.js:890
