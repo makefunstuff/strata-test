@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marble Maze</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="hud">
+  <h1>Marble Maze</h1>
+  <div id="time">Time 0.0 s</div>
+  <div id="state">Ready — press an arrow key to start</div>
+  <div id="marble">Marble —</div>
+  <div id="tilt">Tilt 0.0° / 0.0°</div>
+  <div id="meta">Falls 0 · Best — · Keys 0</div>
+  <div id="help">Arrows / WASD tilt the board · R restarts</div>
+  <div id="panel">
+    <div id="score">Level complete</div>
+    <div class="sub">Press R to play again</div>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

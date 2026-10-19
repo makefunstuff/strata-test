@@ -1,0 +1,37 @@
+:root {
+  --fg: #e8eef6;
+  --dim: #8fa2b8;
+  --accent: #7fd6a1;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; height: 100%; overflow: hidden;
+  background: #0d1117; color: var(--fg);
+  font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+#view { display: block; width: 100%; height: 100%; }
+
+#hud {
+  position: fixed; left: 16px; top: 16px; width: 340px;
+  padding: 14px 16px; border-radius: 12px;
+  background: rgba(14, 19, 26, 0.72);
+  border: 1px solid rgba(143, 162, 184, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+#hud h1 { margin: 0 0 8px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+#hud div { color: var(--dim); }
+#hud #time { color: var(--fg); font-size: 17px; font-weight: 600; }
+#hud #state { color: var(--fg); margin-top: 2px; }
+#hud #help { margin-top: 8px; font-size: 12px; color: #6f8398; }
+
+#panel {
+  display: none; margin-top: 10px; padding: 10px 12px; border-radius: 10px;
+  background: rgba(47, 143, 95, 0.16); border: 1px solid rgba(127, 214, 161, 0.4);
+}
+#panel.show { display: block; }
+#panel #score { color: var(--accent); font-size: 16px; font-weight: 600; }
+#panel .sub { font-size: 12px; color: #9ec9b1; margin-top: 3px; }

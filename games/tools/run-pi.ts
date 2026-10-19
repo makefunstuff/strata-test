@@ -3,7 +3,7 @@
 // Needs STRATA_BASE_URL (with /v1) and STRATA_API_KEY. A throwaway PI_CODING_AGENT_DIR holds only the Strata
 // provider, so no user extensions, skills or settings leak in. Raw events go to tools/work/<game>/run-<k>.jsonl
 // (not committed: they hold absolute paths); stats are appended to <game-dir>/runs.json.
-import { spawn } from "node:child_process";
+import { spawn, execFileSync } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, rmSync, createWriteStream } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve, basename, dirname } from "node:path";
@@ -111,6 +111,26 @@ const memTimer = setInterval(() => {
     child.kill("SIGTERM");
   }
 }, 5000);
+// pi's bash tool has no timeout of its own: any process the agent started that is still running after
+// TOOL_TIMEOUT_MIN is killed, as a tool timeout would (game 3 ran an endless simulation loop for 21 min).
+const TOOL_TIMEOUT_MIN = Number(process.env.PI_TOOL_TIMEOUT_MIN ?? 10);
+const descendants = (pid: number): number[] => {
+  const kids = execFileSync("ps", ["-o", "pid=", "--ppid", String(pid)], { encoding: "utf8" }).split("\n")
+    .map((x) => Number(x.trim())).filter(Boolean);
+  return kids.flatMap((k) => [k, ...descendants(k)]);
+};
+const toolTimer = setInterval(() => {
+  try {
+    for (const pid of descendants(child.pid!)) {
+      const [etimes, ...cmd] = execFileSync("ps", ["-o", "etimes=,args=", "-p", String(pid)], { encoding: "utf8" })
+        .trim().split(/\s+/);
+      if (Number(etimes) > TOOL_TIMEOUT_MIN * 60 && !/^(bash|sh)$/.test(cmd[0]?.split("/").pop() ?? "")) {
+        process.kill(pid, "SIGKILL");
+        s.errors.push(`killed hung tool process after ${TOOL_TIMEOUT_MIN} min: ${cmd.join(" ").slice(0, 80)}`);
+      }
+    }
+  } catch { /* process gone between ps calls */ }
+}, 30000);
 const killTimer = setTimeout(() => { s.errors.push(`aborted: timeout ${TIMEOUT_MIN} min`); child.kill("SIGTERM"); },
   TIMEOUT_MIN * 60000);
 const progress = setInterval(() => {
@@ -119,7 +139,7 @@ const progress = setInterval(() => {
 }, 60000);
 
 const code: number = await new Promise((r) => child.on("close", r));
-clearInterval(memTimer); clearInterval(progress); clearTimeout(killTimer);
+clearInterval(memTimer); clearInterval(progress); clearInterval(toolTimer); clearTimeout(killTimer);
 log.end();
 rmSync(agentDir, { recursive: true, force: true });
 
