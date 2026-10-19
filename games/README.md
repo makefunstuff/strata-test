@@ -35,9 +35,9 @@ round to round on the same machine, one browser at a time.
 |---|---|---|---|---|---|---|---|
 | 1 | Breakout | 2 + phone | 9.5 / 8.5 / 8.7 | 9.0 / 8.5 / 8.7 | 11.5 / 11 / 10.7 | 3.5 → **4.5** | pastel bricks blew out to one colour under the key light; now deep chroma bases with real emissive, a lit grid floor, a paddle with a contact shadow, a tight bright trail, screen flashes |
 | 2 | Runner | 2 + phone | 11 / 10.5 / 10.7 | 11 / 12 / 12 | 15.5 / 16.5 / 16 | 3 → **4.5** | the fog, sky and env lifted the whole frame to a flat daytime wash; now a night motorway with a city skyline, a sun in the haze, and hazard bands painted on the road in the obstacle's colour |
-| 3 | Marble Maze | 2 + phone | 7.5 / 6.5 / 6.7 | 7.5 / 7 / 6.7 | 11.5 / 11.5 / 12 | 3.5 → **4** | the goal beacon bloomed a green streak down the left of the tube at the camera's grazing angle; dimming it changed nothing (additive with `toneMapped: false` sits above the bloom threshold at any opacity) — normal blending did; the wall shadows are at 0.55 so the maze floor is not blacked out |
-| 4 | Tower Defense | 2 + phone | 6.5 / 6.5 / 6.7 | 10 / 10.5 / 9.3 | 12.5 / 12.5 / 12 | 3 → **3.5** | flat bright turf with black holes under every tower; darker cooler turf, a warm lane that reads against it, shadows at half strength |
-| 5 | Flight | 2 + phone | 16 / 18.5 / 14.7 | 24.5 / 25 / 15.3 | 36 / 35 / 23.3 | 2.5 → **3.5** | turbidity 9 / rayleigh 1.9 scattered the sky to a pale wash and the play frame was empty sky; deeper scattering, and a shot sequence that flies level, so terrain and ring gates are in the picture |
+| 3 | Marble Maze | 2 + phone | 7.5 / 6.5 / 6.7 | 7.5 / 7 / 6.7 | 15 / 15 / 14.7 | 3.5 → **4** | the goal beacon bloomed a green streak down the left of the tube at the camera's grazing angle; dimming it changed nothing (additive with `toneMapped: false` sits above the bloom threshold at any opacity) — normal blending did; the wall shadows are at 0.55 so the maze floor is not blacked out |
+| 4 | Tower Defense | 2 + phone | 6.5 / 6.5 / 6.7 | 10 / 10.5 / 9.3 | 21 / 20 / 20 | 3 → **3.5** | flat bright turf with black holes under every tower; darker cooler turf, a warm lane that reads against it, shadows at half strength |
+| 5 | Flight | 2 + phone | 16 / 18.5 / 14.7 | 24.5 / 25 / 15.3 | 33.5 / 33 / 19.3 | 2.5 → **3.5** | turbidity 9 / rayleigh 1.9 scattered the sky to a pale wash and the play frame was empty sky; deeper scattering, and a shot sequence that flies level, so terrain and ring gates are in the picture |
 
 ### Phone support (all five)
 
@@ -54,9 +54,19 @@ round to round on the same machine, one browser at a time.
 - **Layout**: `viewport-fit=cover` with no pinch zoom, `touch-action: none` and
   `overscroll-behavior: none` (no page scroll, no rubber-banding during play), safe-area
   padding, a compact two-row HUD under 760px, the drawn cabinet switched off on phones, and the
-  keyboard legend replaced by the control layer. Portrait cameras: Breakout steepens its pitch
-  and caps its distance, the Maze/Defense/Flight open the vertical FOV, the Runner widens it so
-  all three lanes stay in frame.
+  keyboard legend replaced by the control layer. The whole phone type scale lives in that one
+  media query, because every size in the HUD kit is an em off `.hud`'s `font-size`: the base was
+  6px, which reads fine in a screenshot scaled up and is unreadable on a real 390px tube, so it
+  is 8px with 12px values. Landscape phones (844×390) get their own block — smaller chips, and the
+  stick tucked into the corner, because a 68px chip row plus a 96px stick costs a fifth of a
+  390px-tall tube. Portrait cameras — the rule that matters is that **three's fov is
+  vertical**, so a tall viewport narrows the *horizontal* view, which is the axis a board game
+  needs: opening the vertical fov does not make a board fit sideways, the camera has to move.
+  Breakout steepens its pitch and caps its distance; the Marble Maze and the Tower Defense pull
+  the camera back by `0.8 x (16/9) / aspect` (capped) and scale their fog with it, because fog is
+  a distance and the desktop fog buried the board at the portrait distance; the Runner multiplies
+  its chase fov by 1.34 so all three lanes stay in frame; the Flight opens its chase fov to 74°
+  and aims 7 m below the nose, because a level aim in a tall tube is a frame of empty sky.
 - **Cost**: `shared/mobile.js` caps the device pixel ratio (2 → 1.5 on a phone), lowers the
   bloom scale and strength, halves the particle pools, drops the shadow map to 512, and swaps in
   CRT uniforms without the four-tap phosphor bleed, the rolling beam, the grain or the flicker.
@@ -74,7 +84,9 @@ node tools/shrinkshots.mjs <g> …     # PNG → JPEG at quality 82, in place (7
 
 `smoke.ts` gained `--phone` (a portrait touch context; `browser.newPage()` touch flags are not
 enough in this Chromium, it needs `newContext({ isMobile, hasTouch })` plus
-`Emulation.setTouchEmulationEnabled`), `--overjs` (drive the game's own end verb, then shoot and
+`Emulation.setTouchEmulationEnabled`; `PHONE_MODE=landscape` in the environment turns it sideways
+at 844×390 — an environment variable, because an option that swallows the next argument is how
+`--phone landscape` once ate the game name and every phone sweep became a sweep of one game), `--overjs` (drive the game's own end verb, then shoot and
 read the end screen) and `--jpeg`. `tools/mobilecheck.mjs` measures the steering **while the
 finger is held down** — a stick only pushes while it is pushed — and reads the game's state back
 through `window.arcade`: tap to start, drag to steer, no scroll, no console errors. 5/5 pass.

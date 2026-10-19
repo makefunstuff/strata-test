@@ -9,7 +9,7 @@
     {
       "label": "2-runner",
       "ok": true,
-      "detail": "errors=0 fps=10.5/10.5 hud_moves=true shows\"STATE RUNNING\""
+      "detail": "errors=0 fps=10.5/11 hud_moves=true shows\"STATE RUNNING\""
     },
     {
       "label": "3-marble-maze",
@@ -19,12 +19,12 @@
     {
       "label": "4-tower-defense",
       "ok": true,
-      "detail": "errors=0 fps=10/10 hud_moves=true shows\"MONEY\""
+      "detail": "errors=0 fps=10.5/9 hud_moves=true shows\"MONEY\""
     },
     {
       "label": "5-flight",
       "ok": true,
-      "detail": "errors=0 fps=25.5/22 hud_moves=true shows\"STATE FLY\""
+      "detail": "errors=0 fps=23/22.5 hud_moves=true shows\"STATE FLY\""
     }
   ]
 }

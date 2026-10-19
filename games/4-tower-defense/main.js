@@ -34,11 +34,29 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
 scene.background = skyTexture("#16324f", "#05070d", "#3f6a96", 0.66);
-scene.fog = new THREE.Fog(0x0b1220, 20, 48);
+const FOG = { near: 20, far: 48 };   // the desktop framing; the portrait fit scales these
+scene.fog = new THREE.Fog(0x0b1220, FOG.near, FOG.far);
 setupEnvironment(renderer, scene, { intensity: 0.55 });
 
 const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.5, 90);
 const CAM = { x: 0, y: 10.3, z: 10.7 };
+// Portrait: the board has to fit SIDEWAYS, and three's fov is vertical - a tall viewport
+// narrows the horizontal view (horizontal = fov x aspect), which crops the maze. Widening
+// the vertical fov does not help: the horizontal is still the narrow one. The camera pulls
+// back by the ratio of the reference desktop aspect to this one, which frames exactly the
+// same world width as the desktop shot. The tube keeps its surround above and below. The fog
+// is a distance, so it moves with the camera: at the portrait distance the desktop fog buries
+// the whole board (measured: the first portrait frame of the maze was pure fog, board gone).
+let fitK = 1;
+const fitPull = () => {
+  // 0.8 fills the tube and leaves a margin, rather than matching the desktop width exactly
+  const k = Math.min(4.2, Math.max(1, 0.8 * (16 / 9) / Math.max(0.2, camera.aspect)));
+  scene.fog.near = FOG.near * k;
+  scene.fog.far = FOG.far * k;
+  return k;
+};
+fitK = fitPull();
+
 camera.position.set(CAM.x, CAM.y, CAM.z);
 camera.lookAt(0, 0, 0);
 
@@ -254,8 +272,8 @@ window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   // three's fov is vertical, so a tall viewport crops the board sideways: in portrait the fov
   // opens up and the whole lane is in frame again
-  camera.fov = camera.aspect < 1 ? 56 : 40;
   camera.updateProjectionMatrix();
+  fitK = fitPull();   // in portrait the camera pulls back so the whole lane fits sideways
   post.setSize(window.innerWidth, window.innerHeight);
 });
 
@@ -322,9 +340,9 @@ function frame() {
   shake = Math.max(0, shake - dt * 1.6);
   const drift = Math.sin(elapsed * 0.14) * 0.5;
   camera.position.set(
-    CAM.x + drift + (Math.random() - 0.5) * shake,
-    CAM.y + (Math.random() - 0.5) * shake,
-    CAM.z - drift * 0.35,
+    CAM.x * fitK + drift + (Math.random() - 0.5) * shake,
+    CAM.y * fitK + (Math.random() - 0.5) * shake,
+    CAM.z * fitK - drift * 0.35,
   );
   camera.lookAt(drift * 0.2, 0, 0);
 

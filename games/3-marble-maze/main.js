@@ -37,11 +37,29 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
 scene.background = skyTexture("#101d30", "#04060b");
-scene.fog = new THREE.Fog(0x0b1220, 4.2, 9.5);
+const FOG = { near: 4.2, far: 9.5 };   // the desktop framing; the portrait fit scales these
+scene.fog = new THREE.Fog(0x0b1220, FOG.near, FOG.far);
 setupEnvironment(renderer, scene, { intensity: 0.75 });
 
 const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 40);
 const CAM = { x: 0, y: 2.28, z: 2.66 };
+// Portrait: the board has to fit SIDEWAYS, and three's fov is vertical - a tall viewport
+// narrows the horizontal view (horizontal = fov x aspect), which crops the maze. Widening
+// the vertical fov does not help: the horizontal is still the narrow one. The camera pulls
+// back by the ratio of the reference desktop aspect to this one, which frames exactly the
+// same world width as the desktop shot. The tube keeps its surround above and below. The fog
+// is a distance, so it moves with the camera: at the portrait distance the desktop fog buries
+// the whole board (measured: the first portrait frame of the maze was pure fog, board gone).
+let fitK = 1;
+const fitPull = () => {
+  // 0.8 fills the tube and leaves a margin, rather than matching the desktop width exactly
+  const k = Math.min(4.2, Math.max(1, 0.8 * (16 / 9) / Math.max(0.2, camera.aspect)));
+  scene.fog.near = FOG.near * k;
+  scene.fog.far = FOG.far * k;
+  return k;
+};
+fitK = fitPull();
+
 camera.position.set(CAM.x, CAM.y, CAM.z);
 camera.lookAt(0, 0, 0);
 
@@ -478,8 +496,8 @@ window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   // three's fov is vertical, so a tall viewport crops the board sideways: in portrait the fov
   // opens up and the whole board is in frame again
-  camera.fov = camera.aspect < 1 ? 52 : 38;
   camera.updateProjectionMatrix();
+  fitK = fitPull();   // in portrait the camera pulls back so the board fits sideways
   post.setSize(window.innerWidth, window.innerHeight);
 });
 
@@ -549,9 +567,9 @@ function frame(now) {
   shake = Math.max(0, shake - dt * 0.6);
   const e = clock.getElapsedTime();
   camera.position.set(
-    CAM.x + tilt.z * 1.1 + (Math.random() - 0.5) * shake,
-    CAM.y + Math.sin(e * 0.5) * 0.02 + (Math.random() - 0.5) * shake,
-    CAM.z - tilt.x * 0.5,
+    CAM.x * fitK + tilt.z * 1.1 + (Math.random() - 0.5) * shake,
+    CAM.y * fitK + Math.sin(e * 0.5) * 0.02 + (Math.random() - 0.5) * shake,
+    CAM.z * fitK - tilt.x * 0.5,
   );
   camera.lookAt(tilt.z * 0.4, 0, -tilt.x * 0.4);
 

@@ -73,7 +73,13 @@ async function main() {
 
   for (const [game, keys, want] of GAMES) {
     const r = await run(game, "tools/smoke.ts",
-      [game, "--wait", "4", "--out", `screenshots/${game}`, "--keys", keys]);
+      [
+        game,
+        "--wait", "4",
+        "--out", `screenshots/${game}`,
+        "--keys", keys,
+        "--jpeg",   // the gallery is served on a public page: JPEG at 82 is ~1/8 the bytes of the PNG
+      ]);
     const d = r.data;
     if (!d) { report(game, false, `no JSON from smoke (code ${r.code})`); continue; }
     const changed = d.text_before !== d.text_after;

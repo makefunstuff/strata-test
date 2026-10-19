@@ -51,14 +51,19 @@ at a time; the darker sky is the obvious candidate and is not proven per-change.
 - **A virtual stick** for pitch and roll (it pushes the arrows the flight model already reads),
   **boost held** with a thumb (a chip that presses Shift for as long as it is held — a tap would
   set the boost and release it straight back to cruise), and R.
-- Portrait: the chase camera's fov opens 58° → 74° in a tall viewport, which is what keeps the
-  wings and the incoming rings inside the tube (three's fov is vertical, so a phone narrows the
-  sideways view exactly where the game needs it).
+- Portrait: the chase camera's fov opens 58° → 74° (a phone narrows the sideways view, and the
+  sideways view is where the rings come from) **and aims 7 m below the nose**. The fov alone left
+  the portrait frame a wall of sky: the flight is a forward view, so in a tall tube a level aim
+  puts the horizon at the bottom edge. A few metres of downward aim and the terrain, the ridge and
+  the rings are in the shot (`shots/phone-r5-play.jpg`).
 - Quality: DPR cap, bloom scale/strength, CRT overrides, the watchdog. No shadow map in this game.
 - The key legend and the attract card are hidden while flying (`body.playing`).
 
-fps on a portrait phone viewport (DPR 1, software): **36 / 35 / 23.3** — the highest of the five,
-because the tube is a third of the pixels and the scene is one big shader.
+fps on a portrait phone viewport (DPR 1, software): **33.5 / 33 / 19.3**, the highest of the five,
+because the tube is a third of the pixels. It is below the 36 / 35 / 23.3 measured before the
+portrait aim, and that is the honest exchange: the frame went from empty sky (cheap to shade) to
+terrain and rings (the game). In landscape (844×390) the same build runs at 37.5 fps with the
+stick in the corner and the chips on the short edges.
 `node tools/mobilecheck.mjs 5-flight` → the stick and the two chips are present, the chips reach
 the game (`ShiftLeft`, `KeyR` in its keydown listener), a stick pulled back for 0.8 s climbs
 **95 → 144.6 m measured while the finger is held down**, no page scroll, 0 console errors.

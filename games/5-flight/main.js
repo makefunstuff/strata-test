@@ -291,6 +291,9 @@ function frame() {
   camPos.lerp(scratch, k);
   camera.position.copy(camPos);
   scratch2.copy(fwd).multiplyScalar(26).add(pos);
+  // Portrait: the tube is tall and the flight is a forward view, so a level aim puts the whole
+  // frame in the sky. A few metres of downward aim keeps the horizon and the terrain in shot.
+  if (camera.aspect < 1) scratch2.y -= 7;
   camera.lookAt(scratch2);
 
   hudTick += dt;

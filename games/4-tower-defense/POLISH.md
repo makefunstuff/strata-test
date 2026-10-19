@@ -49,12 +49,16 @@ time" and the cause is inferred.
 - **The board is the control.** The game is already pointer-driven, and Chromium derives
   `pointerdown` from a real touch, so a tap on a tile builds — no parallel touch model was added.
   The keyboard-only verbs go on chips: ◀ ▶ (cursor), **build** (Space, at the cursor), wave (N), R.
-- Portrait: the vertical fov opens 40° → 56°, which is what puts the whole 12×12 lane in frame on
-  a tall viewport (three's fov is vertical, so a phone crops the board sideways).
+- Portrait: the camera **pulls back** by `0.8 x (16/9) / aspect` and the fog scales with it, which
+  is what puts the whole 12×12 lane in frame on a tall viewport. The first attempt opened the
+  vertical fov (40° → 56°) and the board was still cropped sideways: three's fov is vertical, so
+  the horizontal view is `fov x aspect`, and it is the horizontal that a square board needs. The
+  first pull-back frame was pure fog: fog is a distance, so it has to move with the camera.
 - Quality: DPR cap, bloom, shadow map 1024 → 512, CRT overrides, and the watchdog.
 - The wave card and the key legend are hidden during a wave (`body.playing`).
 
-fps on a portrait phone viewport (DPR 1, software): **12.5 / 12.5 / 12**.
+fps on a portrait phone viewport (DPR 1, software): **21 / 20 / 20** — the fit put the fog over
+the surround, which is the cheap part of the frame to shade.
 `node tools/mobilecheck.mjs 4-tower-defense` → 5 chips, all reaching the game's keydown listener
 (`ArrowLeft, Space, ArrowRight, KeyN, KeyR`); nine real touch taps on the board produce 14 pointer
 events in the page and spend the whole opening purse (money 100 → 0): a phone player builds by
@@ -76,4 +80,5 @@ the taps in `shots/mobile-play.jpg`.
   board, not the board.
 - The range ring is a flat additive disc at 0.17 that washes the tiles under it; a hatched ring
   (bands, not a filled disc — see the kit's note about thin bright curves) would read better.
-- In portrait the board is small; a camera that follows the cursor tile would be the phone answer.
+- In portrait the board fits but is modest on a 390px tube; a camera that eases toward the cursor
+  tile (and the wave ahead) would be the phone answer, and it has to keep the fog in step.

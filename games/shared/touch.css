@@ -147,29 +147,35 @@
    re-flows (two compact rows, tighter padding inside the tube aperture) and the attract copy
    gets room to wrap. Portrait and landscape are both handled by keying on the short edge. */
 @media (max-width: 760px), (max-height: 560px) {
+  /* The cabinet face is an 8px pixel font and every HUD size is an em off .hud's font-size, so
+     this block is the whole phone type scale. It used to be a 6px base — readable in a screenshot
+     scaled up, unreadable on a real 390px tube. Sized for arm's-length phone reading. */
   .hud {
     padding: calc(5% + env(safe-area-inset-top, 0px)) 5% 4%;
-    gap: 4px 8px;
-    font-size: 6px;
+    gap: 5px 10px;
+    font-size: 8px;
   }
   .hud .label,
-  .hud-label { font-size: 5px; letter-spacing: 0.5px; margin-right: 3px; }
+  .hud-label { font-size: 6.5px; letter-spacing: 0.6px; margin-right: 4px; }
   .hud .value,
-  .hud-value { font-size: 9px; letter-spacing: 0.5px; }
+  .hud-value { font-size: 12px; letter-spacing: 0.7px; }
   .hud .lives,
-  .hud-lives { font-size: 9px; }
-  .hud-fps { font-size: 6px; }
+  .hud-lives { font-size: 12px; }
+  .hud-fps { font-size: 7.5px; }
+  .hud-kicker { font-size: 8px; }
+  .hud-title { font-size: 18px; letter-spacing: 1.5px; }
+  .hud-sub { font-size: 8px; }
   .hud-msg {
-    top: 38%;
+    top: 36%;
     max-width: 88%;
     padding: 10px 14px;
-    font-size: clamp(11px, 4.2vw, 20px);
+    font-size: clamp(13px, 4.4vw, 22px);
     line-height: 1.7;
     letter-spacing: 1px;
   }
   .hud-hint {
     top: 55%;
-    font-size: 6px;
+    font-size: 8px;
     letter-spacing: 0.5px;
     white-space: normal;
     max-width: 92%;
@@ -194,6 +200,21 @@ body.touch .hud-controls { display: none; }
 @media (orientation: portrait) {
   .touch-row { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
   .touch-pad { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Landscape phones (844x390 and friends): height is the scarce axis here, and a 68px chip row at
+   the bottom plus a 96px stick plus the full HUD costs a fifth of the tube. Chips and stick
+   shrink, and the stick tucks into the corner beside the chips instead of above them. */
+@media (max-height: 520px) and (pointer: coarse) {
+  .hud { padding: calc(4% + env(safe-area-inset-top, 0px)) 4% 3%; gap: 3px 9px; }
+  .hud .value, .hud-value, .hud .lives, .hud-lives { font-size: 11px; }
+  .hud-msg { top: 32%; }
+  .touch-btn { width: 54px; height: 54px; font-size: 11px; }
+  .touch-pad { width: 92px; height: 92px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); left: 22px; }
+  .touch-pad__knob { width: 40px; height: 40px; }
+  .touch-pad__label { bottom: -11px; font-size: 7px; }
+  .touch-row { gap: 10px 22px; padding: 0 12px 8px; }
+  .touch-badge { bottom: 6px; right: 10px; }
 }
 
 /* No page scroll, no pinch zoom, no pull-to-refresh while playing. Every game links hud.css,

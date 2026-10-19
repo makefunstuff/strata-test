@@ -55,15 +55,22 @@ it not a light source" is the right one.
 
 - **A virtual stick** for the tilt: it pushes the arrow keys the board already reads, with a
   dead zone, so a thumb tilt and a key tilt go through the same damped spring. One chip: R.
-- Portrait: the camera's vertical fov opens 38° → 52° in a tall viewport, which is what keeps
-  the whole board in frame (three's fov is vertical, so a phone crops the board sideways).
+- Portrait: the camera **pulls back**, by `0.8 x (16/9) / aspect` (capped at 4.2), and the fog
+  near/far scale with the same factor. Opening the vertical fov was the first attempt and it is
+  the wrong knob: three's fov is vertical, so the horizontal view is `fov x aspect` and a phone's
+  narrow aspect crops the maze whatever the vertical fov is — at 52° the board was cropped on both
+  sides. Pulling back fits it. The first pull-back frame was then **pure fog with the board gone**,
+  because the fog distances are tuned for the desktop camera; fog is a distance, so it moves with
+  the camera. `shots/phone-after-play.jpg` is the frame where the whole maze, the stick and the
+  chip are all in the tube.
 - Quality: DPR cap, bloom scale/strength, shadow map 1024 → 512, CRT overrides, and
   `autoQuality()` dropping the bloom and the shadow map (to 256) if a phone cannot hold 45 fps
   for 2.5 s.
 - The keyboard legend and the attract card are hidden while rolling (`body.playing`).
 
-fps on a portrait phone viewport (DPR 1, software): **11.5 / 11.5 / 12** — nearly double the
-desktop number, because the tube is a third of the pixels.
+fps on a portrait phone viewport (DPR 1, software): **15 / 15 / 14.7**, double the desktop
+number — the tube is a third of the pixels, and at the portrait distance the fog covers the
+surround, which is cheap shading.
 `node tools/mobilecheck.mjs 3-marble-maze` → the control layer is present, the R chip reaches
 the game (`KeyR` in its keydown listener, `STATE ready → rolling`), and a stick swipe is measured
 **while the finger is down**: the marble's |velocity.x| moves off zero, by 0.0001–0.004 m/s across
