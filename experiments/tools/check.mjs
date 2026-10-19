@@ -32,9 +32,13 @@ const server = createServer(async (req, res) => {
     let file = join(root, p);
     if (!file.startsWith(root)) throw new Error("outside");
     if ((await stat(file)).isDirectory()) file = join(file, "index.html");
-    res.writeHead(200, { "content-type": types[extname(file)] ?? "application/octet-stream" });
-    res.end(await readFile(file));
-  } catch { res.writeHead(404).end("not found"); }
+    const body = await readFile(file);
+    res.writeHead(200, { "content-type": types[extname(file)] ?? "application/octet-stream", "cache-control": "no-store" });
+    res.end(body);
+  } catch {
+    if (!res.headersSent) res.writeHead(404, { "content-type": "text/plain" });
+    res.end("not found");
+  }
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const url = `http://127.0.0.1:${server.address().port}/${basename(target)}/`;
@@ -62,7 +66,7 @@ page.on("console", (m) => {
   if (/favicon\.ico$/.test(m.location().url)) return;
   if (m.type() === "error") errors.push(`console.error: ${m.text()}`);
 });
-page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
+page.on("pageerror", (e) => errors.push(`pageerror: ${e.message} @@ ${(e.stack || "").split("\n").slice(1, 5).join(" | ")}`));
 page.on("requestfailed", (r) => errors.push(`requestfailed: ${r.url()} ${r.failure()?.errorText}`));
 page.on("response", (r) => { if (r.status() >= 400 && !/favicon/.test(r.url())) errors.push(`http ${r.status()}: ${r.url()}`); });
 await page.addInitScript(() => {

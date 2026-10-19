@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3 · Cloth — verlet weave, gusts, tearing</title>
+<link rel="stylesheet" href="../shared/lab.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="stage-canvas"></canvas>
+<h1 class="title">Cloth &amp; tearing<small>verlet mass&ndash;spring weave · wind gusts with aerodynamic normal pressure · constraints snap when stretched · the cut tool severs the cloth</small></h1>
+<div id="hud" class="hud"></div>
+<div id="fps" class="fps"></div>
+<div id="hint" class="hint"></div>
+<a class="back" href="../index.html">all experiments</a>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
