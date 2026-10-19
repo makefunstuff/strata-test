@@ -4,11 +4,13 @@
 //   1. waits --wait seconds, screenshots <prefix>-start.png, reads the page text;
 //   2. plays the input (key:holdMs pairs, optional click at canvas-relative fractions), screenshots <prefix>-input.png;
 //   3. prints console errors, page errors, failed requests, frame rate and the page text before/after input.
-// Exit code 1 when there were errors. Chromium: CHROMIUM_PATH (default /usr/bin/chromium), GPU with SMOKE_GPU=1.
+// Exit code 1 when there were errors. Chromium: CHROMIUM_PATH (default: tools/chromium-capped.sh, a RAM-capped
+// /usr/bin/chromium); SMOKE_GPU=1 renders on the GPU at 1280x720 without the cap.
 import { chromium } from "playwright-core";
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { fileURLToPath } from "node:url";
 import { extname, join, resolve, normalize } from "node:path";
 
 const args = process.argv.slice(2);
@@ -58,7 +60,9 @@ if (!/^https?:/.test(target)) {
 
 const gpu = process.env.SMOKE_GPU === "1";
 const browser = await chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? "/usr/bin/chromium",
+  // Software mode runs beside Strata, so Chromium gets a RAM cap (chromium-capped.sh); GPU mode runs without it.
+  executablePath: process.env.CHROMIUM_PATH ??
+    (gpu ? "/usr/bin/chromium" : fileURLToPath(new URL("./chromium-capped.sh", import.meta.url))),
   headless: true,
   args: gpu
     ? ["--enable-gpu", "--ignore-gpu-blocklist", "--use-angle=vulkan", "--enable-features=Vulkan"]

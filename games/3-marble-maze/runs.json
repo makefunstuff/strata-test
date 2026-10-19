@@ -54,5 +54,33 @@
     "mem_min_gib": 7.95,
     "final_text": "",
     "note": "aborted by the harness: MemAvailable 7.95 GiB under the 8 GiB floor (headless Chromium beside Strata); smoke.ts then made leaner (single-process); files set aside, rebuilt from scratch in run 3"
+  },
+  {
+    "run": 3,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:42:51.799Z",
+    "exit_code": 143,
+    "wall_s": 445,
+    "turns": 19,
+    "tool_calls": 23,
+    "tool_errors": 3,
+    "tools": {
+      "bash": 10,
+      "read": 3,
+      "write": 7,
+      "edit": 3
+    },
+    "output_tokens": 35130,
+    "input_tokens": 28438,
+    "cache_read_tokens": 406271,
+    "decode_tok_s": 93,
+    "stop": "toolUse",
+    "errors": [
+      "aborted: MemAvailable 7.95 GiB below floor"
+    ],
+    "stderr": "",
+    "mem_min_gib": 7.95,
+    "final_text": "Now let me write the game files.",
+    "note": "aborted by the harness: MemAvailable 7.95 GiB during the agent smoke test; smoke.ts then ran Chromium in a RAM-capped systemd scope; files set aside, rebuilt from scratch in run 4"
   }
 ]
