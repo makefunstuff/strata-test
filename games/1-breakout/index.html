@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Breakout</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div id="hud">
+    <div id="stats">
+      <span class="label">Score</span><span id="score">0</span>
+      <span class="label">Lives</span><span id="lives">◑◑◑</span>
+      <span class="label">Bricks</span><span id="bricks">48</span>
+    </div>
+    <div id="message">3D Breakout</div>
+    <div id="hint">Space to start</div>
+    <div id="fps"></div>
+  </div>
+  <div id="stage"></div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

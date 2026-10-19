@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata Games</title>
+<style>
+  :root { --bg: #0f1115; --card: #181b22; --text: #e8e9ec; --muted: #9aa0ab; --accent: #6cb6ff; --line: #2a2f3a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f5f6f8; --card: #ffffff; --text: #1b1e24; --muted: #5d6470; --accent: #0b63c5; --line: #dde1e7; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { margin: 0 0 4px; font-size: 28px; }
+  p.lead { margin: 0 0 24px; color: var(--muted); max-width: 70ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  a.card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+           color: inherit; text-decoration: none; transition: border-color .15s; }
+  a.card:hover, a.card:focus-visible { border-color: var(--accent); }
+  .card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
+  .card div { padding: 12px 14px 14px; }
+  .card h2 { margin: 0 0 2px; font-size: 18px; }
+  .card span { color: var(--muted); font-size: 14px; }
+  footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Strata Games</h1>
+  <p class="lead">Five three.js games, each written by a headless pi agent running Qwen3.8-Flash-Next (IQ2_XS) on
+    Strata, from one short spec prompt. Complexity rises from 1 to 5. Click a game to play it.</p>
+  <div class="grid">
+    <a class="card" href="1-breakout/"><img src="screenshots/1-breakout-input.png" alt="Breakout screenshot" loading="lazy">
+      <div><h2>1 · Breakout</h2><span>Simple: paddle, ball, bricks. ←/→ to move, Space to start.</span></div></a>
+    <a class="card" href="2-runner/"><img src="screenshots/2-runner-input.png" alt="Endless runner screenshot" loading="lazy">
+      <div><h2>2 · Endless runner</h2><span>Arcade: three lanes, rising speed. ←/→ lanes, Space jumps.</span></div></a>
+    <a class="card" href="3-marble-maze/"><img src="screenshots/3-marble-maze-input.png" alt="Marble maze screenshot" loading="lazy">
+      <div><h2>3 · Marble maze</h2><span>Physics: cannon-es, shadows. Arrows/WASD tilt the board.</span></div></a>
+    <a class="card" href="4-tower-defense/"><img src="screenshots/4-tower-defense-input.png" alt="Tower defense screenshot" loading="lazy">
+      <div><h2>4 · Tower defense</h2><span>Strategy: pathfinding enemies, waves. Click tiles to build, N for the next wave.</span></div></a>
+    <a class="card" href="5-flight/"><img src="screenshots/5-flight-input.png" alt="Flight game screenshot" loading="lazy">
+      <div><h2>5 · Flight</h2><span>Showcase: procedural terrain, fog, sky, particles, bloom. Arrows/WASD fly, Shift boosts.</span></div></a>
+  </div>
+  <footer>How they were made, the stats and the ratings:
+    <a href="https://github.com/makefunstuff/strata-test/tree/main/games">games/README.md</a>.</footer>
+</main>
+</body>
+</html>
