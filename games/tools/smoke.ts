@@ -62,9 +62,13 @@ const browser = await chromium.launch({
   headless: true,
   args: gpu
     ? ["--enable-gpu", "--ignore-gpu-blocklist", "--use-angle=vulkan", "--enable-features=Vulkan"]
-    : ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
+    // Lean software mode: it runs beside Strata, where RAM headroom is only ~1 GiB above the 8 GiB floor.
+    : ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--single-process", "--no-zygote",
+       "--disable-dev-shm-usage", "--disable-extensions", "--disable-background-networking",
+       "--disable-component-update", "--js-flags=--max-old-space-size=256"],
 });
-const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+const view = gpu ? { width: 1280, height: 720 } : { width: 960, height: 540 };
+const page = await browser.newPage({ viewport: view });
 const errors: string[] = [];
 const warnings: string[] = [];
 page.on("console", (m) => {
@@ -104,7 +108,7 @@ await page.screenshot({ path: `${out}-start.png` });
 
 const box = await page.locator("canvas").first().boundingBox().catch(() => null);
 for (const [fx, fy] of clicks) {
-  const b = box ?? { x: 0, y: 0, width: 1280, height: 720 };
+  const b = box ?? { x: 0, y: 0, ...view };
   await page.mouse.click(b.x + fx * b.width, b.y + fy * b.height);
   await page.waitForTimeout(300);
 }

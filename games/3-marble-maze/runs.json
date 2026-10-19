@@ -1,0 +1,58 @@
+[
+  {
+    "run": 1,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:19:02.842Z",
+    "exit_code": 0,
+    "wall_s": 475,
+    "turns": 20,
+    "tool_calls": 17,
+    "tool_errors": 1,
+    "tools": {
+      "bash": 13,
+      "write": 4
+    },
+    "output_tokens": 41179,
+    "input_tokens": 10204,
+    "cache_read_tokens": 486000,
+    "decode_tok_s": 94.6,
+    "stop": "error",
+    "errors": [
+      "Connection error.",
+      "Connection error.",
+      "Connection error.",
+      "Connection error."
+    ],
+    "stderr": "",
+    "mem_min_gib": 8.02,
+    "final_text": "Now the main game module:",
+    "note": "aborted by the host: strata-memwatch stopped Strata (MemAvailable 7 GiB, a desktop browser opened); files set aside, game rebuilt from scratch in run 2"
+  },
+  {
+    "run": 2,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:31:26.321Z",
+    "exit_code": 143,
+    "wall_s": 280,
+    "turns": 9,
+    "tool_calls": 11,
+    "tool_errors": 0,
+    "tools": {
+      "bash": 5,
+      "write": 4,
+      "edit": 2
+    },
+    "output_tokens": 24929,
+    "input_tokens": 10854,
+    "cache_read_tokens": 172657,
+    "decode_tok_s": 94.6,
+    "stop": "toolUse",
+    "errors": [
+      "aborted: MemAvailable 7.95 GiB below floor"
+    ],
+    "stderr": "",
+    "mem_min_gib": 7.95,
+    "final_text": "",
+    "note": "aborted by the harness: MemAvailable 7.95 GiB under the 8 GiB floor (headless Chromium beside Strata); smoke.ts then made leaner (single-process); files set aside, rebuilt from scratch in run 3"
+  }
+]
