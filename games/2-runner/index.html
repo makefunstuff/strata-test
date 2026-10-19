@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Endless Runner — three lanes</title>
+<link rel="stylesheet" href="../shared/hud.css">
+<link rel="stylesheet" href="../shared/crt.css">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="hud" class="hud">
+      <span class="label">Score</span><b class="value" data-k="score">0</b>
+      <span class="label">Best</span><b class="value" data-k="best">0</b>
+      <span class="label">Speed</span><b class="value" data-k="speed">9.0</b>
+      <span class="label">Lane</span><b class="value" data-k="lane">2</b>
+      <span class="label">Passed</span><b class="value" data-k="passed">0</b>
+      <span class="label">State</span><b class="value" data-k="state">running</b>
+      <span class="label">Last</span><b class="value" data-k="last">start</b>
+      <span id="fps" class="hud-fps"></span>
+      <div id="hint" class="hud-hint blink">Space jumps &middot; arrows change lane</div>
+      <div id="screen" class="screen" hidden>
+        <h1 class="hud-msg" data-k="title">game over</h1>
+        <p class="hud-hint" data-k="msg">Press Space or R to run again</p>
+      </div>
+    </div>
+    <div class="hud-controls">
+      <span class="hud-key">&#9664;</span><span class="hud-key">&#9654;</span> lane
+      <span class="hud-key">Space</span> jump
+      <span class="hud-key">R</span> restart
+      <span class="hud-key">M</span> sound
+      <span class="hud-key">C</span> crt
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

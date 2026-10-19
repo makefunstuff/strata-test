@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flight — through the rings</title>
+<link rel="stylesheet" href="../shared/hud.css">
+<link rel="stylesheet" href="../shared/crt.css">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="hud" class="hud">
+      <span class="label">Score</span><b class="value" data-k="score">0</b>
+      <span class="label">Rings</span><b class="value lives" data-k="rings">0</b>
+      <span class="label">Speed</span><b class="value" data-k="speed">52</b>
+      <span class="label">Alt</span><b class="value" data-k="alt">110</b>
+      <span class="label">Ground</span><b class="value" data-k="ground">0</b>
+      <span class="label">Best</span><b class="value" data-k="best">0</b>
+      <span class="label">State</span><b class="value" data-k="state">flying</b>
+      <span class="label">Last</span><b class="value" data-k="last">airborne</b>
+      <span id="fps" class="hud-fps"></span>
+      <div id="hint" class="hud-hint blink">Arrows fly &middot; Shift boosts &middot; fly the rings, do not fly the ground</div>
+      <div id="screen" class="screen" hidden>
+        <h1 class="hud-msg" data-k="title">down</h1>
+        <p class="hud-hint" data-k="msg">Climbing again</p>
+      </div>
+    </div>
+    <div class="hud-controls">
+      <span class="hud-key">&#9664;</span><span class="hud-key">&#9654;</span> roll
+      <span class="hud-key">&#9650;</span><span class="hud-key">&#9660;</span> pitch
+      <span class="hud-key">Shift</span> boost
+      <span class="hud-key">R</span> restart
+      <span class="hud-key">M</span> sound
+      <span class="hud-key">C</span> crt
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

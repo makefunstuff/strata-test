@@ -1,0 +1,30 @@
+{
+  "mode": "quick",
+  "rows": [
+    {
+      "label": "1-breakout",
+      "ok": true,
+      "detail": "errors=0 fps=9/8.5 hud_moves=true shows\"SCORE\""
+    },
+    {
+      "label": "2-runner",
+      "ok": true,
+      "detail": "errors=0 fps=11/10.5 hud_moves=true shows\"STATE RUNNING\""
+    },
+    {
+      "label": "3-marble-maze",
+      "ok": true,
+      "detail": "errors=0 fps=7.5/7 hud_moves=true shows\"STATE ROLLING\""
+    },
+    {
+      "label": "4-tower-defense",
+      "ok": true,
+      "detail": "errors=0 fps=10/9 hud_moves=true shows\"MONEY\""
+    },
+    {
+      "label": "5-flight",
+      "ok": true,
+      "detail": "errors=0 fps=22/21 hud_moves=true shows\"STATE FLY\""
+    }
+  ]
+}

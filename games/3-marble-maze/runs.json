@@ -1,0 +1,115 @@
+[
+  {
+    "run": 1,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:19:02.842Z",
+    "exit_code": 0,
+    "wall_s": 475,
+    "turns": 20,
+    "tool_calls": 17,
+    "tool_errors": 1,
+    "tools": {
+      "bash": 13,
+      "write": 4
+    },
+    "output_tokens": 41179,
+    "input_tokens": 10204,
+    "cache_read_tokens": 486000,
+    "decode_tok_s": 94.6,
+    "stop": "error",
+    "errors": [
+      "Connection error.",
+      "Connection error.",
+      "Connection error.",
+      "Connection error."
+    ],
+    "stderr": "",
+    "mem_min_gib": 8.02,
+    "final_text": "Now the main game module:",
+    "note": "aborted by the host: strata-memwatch stopped Strata (MemAvailable 7 GiB, a desktop browser opened); files set aside, game rebuilt from scratch in run 2"
+  },
+  {
+    "run": 2,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:31:26.321Z",
+    "exit_code": 143,
+    "wall_s": 280,
+    "turns": 9,
+    "tool_calls": 11,
+    "tool_errors": 0,
+    "tools": {
+      "bash": 5,
+      "write": 4,
+      "edit": 2
+    },
+    "output_tokens": 24929,
+    "input_tokens": 10854,
+    "cache_read_tokens": 172657,
+    "decode_tok_s": 94.6,
+    "stop": "toolUse",
+    "errors": [
+      "aborted: MemAvailable 7.95 GiB below floor"
+    ],
+    "stderr": "",
+    "mem_min_gib": 7.95,
+    "final_text": "",
+    "note": "aborted by the harness: MemAvailable 7.95 GiB under the 8 GiB floor (headless Chromium beside Strata); smoke.ts then made leaner (single-process); files set aside, rebuilt from scratch in run 3"
+  },
+  {
+    "run": 3,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:42:51.799Z",
+    "exit_code": 143,
+    "wall_s": 445,
+    "turns": 19,
+    "tool_calls": 23,
+    "tool_errors": 3,
+    "tools": {
+      "bash": 10,
+      "read": 3,
+      "write": 7,
+      "edit": 3
+    },
+    "output_tokens": 35130,
+    "input_tokens": 28438,
+    "cache_read_tokens": 406271,
+    "decode_tok_s": 93,
+    "stop": "toolUse",
+    "errors": [
+      "aborted: MemAvailable 7.95 GiB below floor"
+    ],
+    "stderr": "",
+    "mem_min_gib": 7.95,
+    "final_text": "Now let me write the game files.",
+    "note": "aborted by the harness: MemAvailable 7.95 GiB during the agent smoke test; smoke.ts then ran Chromium in a RAM-capped systemd scope; files set aside, rebuilt from scratch in run 4"
+  },
+  {
+    "run": 4,
+    "prompt_file": "PROMPT.md",
+    "started": "2026-10-19T10:54:02.000Z",
+    "exit_code": null,
+    "wall_s": 4410,
+    "turns": 153,
+    "tool_calls": 154,
+    "tool_errors": 24,
+    "tools": {
+      "bash": 130,
+      "read": 5,
+      "write": 11,
+      "edit": 8
+    },
+    "output_tokens": 154337,
+    "input_tokens": 131768,
+    "cache_read_tokens": 9683868,
+    "decode_tok_s": 91.7,
+    "stop": "toolUse",
+    "errors": [
+      "session stopped by the operator at 73.5 min (runner killed with the session); stats rebuilt from the event log with tools/stats.ts"
+    ],
+    "interventions": [
+      "killed the agent hung node sim.mjs (endless loop, 21 min at 100% CPU) at 33 min",
+      "killed the agent hung node drive.mjs (16 min at 99% CPU; its own timeout 180 did not end it) at 73 min"
+    ],
+    "note": "game files were complete and working; the agent was still writing a bot to prove the level solvable"
+  }
+]

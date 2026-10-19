@@ -1,0 +1,9 @@
+{
+  "name": "games-tools",
+  "private": true,
+  "type": "module",
+  "description": "Harness for the Strata three.js games: run pi headless, smoke-test pages in headless Chromium.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}

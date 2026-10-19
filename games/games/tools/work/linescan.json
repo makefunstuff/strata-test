@@ -1,0 +1,46 @@
+[
+  {
+    "label": "asis",
+    "title": "Flight — through the rings",
+    "text": "SCORE 0 RINGS 0 SPEED 52 ALT 110 GROUND 0 BEST 0 STATE FLYING LAST AIRBORNE 23 FPS ARROWS FLY · SHIFT BOOSTS · FLY THE RINGS, DO NOT FLY THE GROUND ◀▶ ROLL ▲▼ P",
+    "lines": [
+      {
+        "y": 132,
+        "bright": 211.3,
+        "over": 45.8
+      },
+      {
+        "y": 129,
+        "bright": 201,
+        "over": 45.1
+      },
+      {
+        "y": 130,
+        "bright": 204.3,
+        "over": 44.8
+      }
+    ]
+  },
+  {
+    "label": "env_fly_pos_y_0_4",
+    "title": "Flight — through the rings",
+    "text": "SCORE 0 RINGS 0 SPEED 52 ALT 0 GROUND 0 BEST 0 STATE DOWN LAST CLIPPED THE GROUND 21 FPS ARROWS FLY · SHIFT BOOSTS · FLY THE RINGS, DO NOT FLY THE GROUND DOWN 0",
+    "lines": [
+      {
+        "y": 146,
+        "bright": 176.3,
+        "over": 37.1
+      },
+      {
+        "y": 145,
+        "bright": 173.6,
+        "over": 37
+      },
+      {
+        "y": 181,
+        "bright": 173.1,
+        "over": 35.7
+      }
+    ]
+  }
+]

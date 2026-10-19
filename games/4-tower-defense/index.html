@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tower Defense — hold the lane</title>
+<link rel="stylesheet" href="../shared/hud.css">
+<link rel="stylesheet" href="../shared/crt.css">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="hud" class="hud">
+      <span class="label">Money</span><b class="value" data-k="money">100</b>
+      <span class="label">Lives</span><b class="value lives" data-k="lives">10</b>
+      <span class="label">Wave</span><b class="value" data-k="wave">0</b>
+      <span class="label">Left</span><b class="value" data-k="left">0</b>
+      <span class="label">Towers</span><b class="value" data-k="towers">0</b>
+      <span class="label">Cost</span><b class="value" data-k="cost">25</b>
+      <span class="label">State</span><b class="value" data-k="state">build</b>
+      <span class="label">Last</span><b class="value" data-k="last">start</b>
+      <button id="wave-btn" class="hud-btn" type="button">Start wave (N)</button>
+      <span id="fps" class="hud-fps"></span>
+      <div id="hint" class="hud-hint blink">Click a tile to build &middot; the lane re-routes around your towers</div>
+      <div id="screen" class="screen" hidden>
+        <h1 class="hud-msg" data-k="title">the lane broke</h1>
+        <p class="hud-hint" data-k="msg">Press R to rebuild</p>
+      </div>
+    </div>
+    <div class="hud-controls">
+      <span class="hud-key">&#9664;</span><span class="hud-key">&#9654;</span><span class="hud-key">&#9650;</span><span class="hud-key">&#9660;</span> cursor
+      <span class="hud-key">Space</span> build
+      <span class="hud-key">N</span> wave
+      <span class="hud-key">R</span> restart
+      <span class="hud-key">M</span> sound
+      <span class="hud-key">C</span> crt
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

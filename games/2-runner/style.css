@@ -1,0 +1,6 @@
+/* page chrome only; the HUD look is shared (../shared/hud.css, ../shared/crt.css) */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0b1424; color: #eaf6ff; }
+body { font-family: "Press Start 2P", monospace; }
+#stage { position: fixed; inset: 0; }
+#game { display: block; width: 100%; height: 100%; }
