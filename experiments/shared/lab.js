@@ -173,3 +173,48 @@ export async function roomEnvironment(renderer, scene, { intensity = 0.7, blur =
   pmrem.dispose();
   return tex;
 }
+
+/**
+ * Gradient sky dome (top → horizon → ground haze) with an optional soft sun disc, added to the
+ * scene. Cheaper and calmer than the Sky shader when the mood, not the physics, is the point.
+ */
+export function skyDome(scene, { top = 0x1d3a63, horizon = 0xdfeaf2, ground = 0x2b2620, radius = 260, sun = null, sunColor = 0xfff0d0, sunSize = 0.03, glow = 0.4 } = {}) {
+  const mat = new THREE.ShaderMaterial({
+    side: THREE.BackSide, depthWrite: false, fog: false,
+    uniforms: {
+      uTop: { value: new THREE.Color(top) },
+      uHorizon: { value: new THREE.Color(horizon) },
+      uGround: { value: new THREE.Color(ground) },
+      uSun: { value: new THREE.Vector3(0.4, 0.25, -0.9) },
+      uSunColor: { value: new THREE.Color(sunColor) },
+      uSunSize: { value: sunSize },
+      uGlow: { value: glow },
+    },
+    vertexShader: /* glsl */`
+      varying vec3 vDir;
+      void main(){
+        vDir = normalize(position);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: /* glsl */`
+      precision highp float;
+      uniform vec3 uTop, uHorizon, uGround, uSun, uSunColor;
+      uniform float uSunSize, uGlow;
+      varying vec3 vDir;
+      void main(){
+        vec3 d = normalize(vDir);
+        float h = d.y;
+        vec3 col = mix(uHorizon, uTop, pow(clamp(h, 0.0, 1.0), 0.55));
+        col = mix(col, uGround, pow(clamp(-h, 0.0, 1.0), 0.4));
+        float sd = max(dot(d, normalize(uSun)), 0.0);
+        col += uSunColor * (pow(sd, 1.0 / max(1e-4, uSunSize * uSunSize)) * 2.4 + pow(sd, 8.0) * uGlow * 0.5);
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 20), mat);
+  mesh.frustumCulled = false;
+  mesh.name = "skyDome";
+  scene.add(mesh);
+  if (sun) mat.uniforms.uSun.value.copy(sun).normalize();
+  return { mesh, material: mat, uniforms: mat.uniforms, setSun(v) { mat.uniforms.uSun.value.copy(v).normalize(); } };
+}

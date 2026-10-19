@@ -14,16 +14,16 @@ body {
 }
 #stage-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
 
-.hud, .fps, .hint, .title { position: fixed; z-index: 10; pointer-events: none; }
-.title { top: 14px; left: 18px; font-size: 13px; letter-spacing: 0.06em; color: #fff;
+.hud, .fps, .hint, h1.title { position: fixed; z-index: 10; pointer-events: none; }
+h1.title { top: 14px; left: 18px; font-size: 13px; letter-spacing: 0.06em; color: #fff;
   text-shadow: 0 0 12px rgba(111, 216, 255, 0.45); margin: 0; font-weight: 600; }
-.title small { display: block; font-size: 10px; color: var(--dim); letter-spacing: 0.02em; font-weight: 400; margin-top: 4px; }
+h1.title small { display: block; font-size: 10px; color: var(--dim); letter-spacing: 0.02em; font-weight: 400; margin-top: 4px; }
 
-.hud { top: 52px; left: 18px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11px; max-width: 46vw; }
+.hud { top: 78px; left: 18px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11px; max-width: 46vw; }
 .hud .k { color: var(--dim); margin-right: 5px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
 .hud b { color: var(--accent); font-weight: 600; }
 
-.fps { top: 14px; right: 18px; font-size: 11px; color: var(--dim);
+.fps { bottom: 18px; right: 18px; font-size: 11px; color: var(--dim);
   background: rgba(6, 10, 16, 0.55); border: 1px solid rgba(111, 216, 255, 0.16);
   padding: 4px 8px; border-radius: 4px; backdrop-filter: blur(6px); }
 
