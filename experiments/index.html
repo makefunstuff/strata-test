@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>strata-test — five graphics experiments</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
+<style>
+:root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--bg:#04060a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:
+  radial-gradient(120% 80% at 50% 0%, #101c2c 0%, #070b12 45%, #04060a 100%) #04060a;
+  color:var(--ink);font-family:"Press Start 2P",monospace;font-size:10px;line-height:1.9;
+  -webkit-font-smoothing:antialiased}
+main{max-width:1180px;margin:0 auto;padding:34px 22px 60px}
+h1{font-size:19px;margin:0 0 8px;letter-spacing:2px;color:#fff;
+  text-shadow:0 0 10px rgba(142,232,255,.5),0 0 34px rgba(53,208,255,.28)}
+p.lead{color:var(--dim);margin:0 0 22px;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+a.card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(142,232,255,.18);
+  background:linear-gradient(180deg,rgba(16,28,44,.92),rgba(6,10,16,.94));padding:10px;
+  transition:transform .12s, box-shadow .12s, border-color .12s}
+a.card:hover{transform:translateY(-3px);border-color:rgba(142,232,255,.5);
+  box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 22px rgba(53,208,255,.22)}
+a.card img.hero{display:block;width:100%;height:180px;object-fit:cover;
+  border:1px solid rgba(142,232,255,.14);filter:saturate(1.06)}
+.thumbs{display:flex;gap:6px;margin-top:6px}
+.thumbs img{width:33%;height:58px;object-fit:cover;border:1px solid rgba(142,232,255,.1);opacity:.85}
+h2{font-size:11px;margin:10px 0 4px;color:var(--cyan);letter-spacing:1px}
+p.why{color:var(--dim);font-size:8px;margin:0 0 8px}
+kbd{display:inline-block;border:1px solid rgba(142,232,255,.45);border-bottom-width:2px;border-radius:3px;
+  padding:2px 5px;font-size:7px;color:var(--cyan);background:rgba(53,208,255,.08)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:7px;color:var(--dim)}
+.tag{font-size:7px;color:var(--amber);border:1px solid rgba(255,180,92,.35);padding:2px 5px;
+  background:rgba(255,180,92,.07)}
+footer{margin-top:30px;border-top:1px solid rgba(142,232,255,.14);padding-top:14px;font-size:8px;
+  color:var(--dim)}
+footer a{color:var(--cyan)}
+code{color:var(--amber)}
+.scan{pointer-events:none;position:fixed;inset:0;z-index:60;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 3px)}
+</style>
+</head>
+<body>
+<div class="scan"></div>
+<main>
+  <h1>FIVE GRAPHICS EXPERIMENTS</h1>
+  <p class="lead">Water, demolition, cloth, flocking, fire — five three.js motion pieces, each in one
+  folder of plain static files. Three.js 0.170.0 and lil-gui come from a pinned CDN importmap: no build
+  step, no npm, no server. Every page carries a control panel, a quality preset and interaction hints,
+  and every one was checked in headless Chromium. <a href="../index.html" style="color:var(--cyan)">← the five games</a></p>
+
+  <div class="grid">
+    <a class="card" href="1-water/index.html">
+      <img class="hero" src="1-water/shots/hero.jpg" alt="Water: GPU wave heightfield, floating crates, spray" loading="lazy">
+      <div class="thumbs">
+        <img src="1-water/shots/alt1.jpg" alt="Rain on the pool" loading="lazy">
+        <img src="1-water/shots/alt2.jpg" alt="Calm water with reflections" loading="lazy">
+        <img src="1-water/shots/play-after.jpg" alt="Waves with foam after splats" loading="lazy">
+      </div>
+      <h2>1 · Water</h2>
+      <p class="why">GPU height-field waves (ping-pong float textures, stable leapfrog update), planar
+      mirror reflection, screen-space refraction, Fresnel, depth tint, foam field, caustics on the pool
+      floor, and crates, balls and barrels that bob on the same waves and kick them back. Click and drag
+      to shove water, drop stones, turn on rain.</p>
+      <div class="row"><span class="tag">GPGPU</span><span class="tag">reflection</span><span class="tag">refraction</span>
+      <kbd>Drag</kbd> splash <kbd>Space</kbd> stone <kbd>R</kbd> rain <kbd>C</kbd> calm</div>
+    </a>
+
+    <a class="card" href="2-voxel-demolition/index.html">
+      <img class="hero" src="2-voxel-demolition/shots/hero.jpg" alt="Voxel wall with a shell hole, debris and dust" loading="lazy">
+      <div class="thumbs">
+        <img src="2-voxel-demolition/shots/alt1.jpg" alt="Shattered voxel house" loading="lazy">
+        <img src="2-voxel-demolition/shots/alt2.jpg" alt="Partly demolished tower" loading="lazy">
+        <img src="2-voxel-demolition/shots/play-after.jpg" alt="Wall collapse and dust" loading="lazy">
+      </div>
+      <h2>2 · Voxel demolition</h2>
+      <p class="why">842 rigid-body voxels in Rapier (WASM, CDN): one instanced mesh, CCD shells, impact
+      events, a shatter threshold that retires blocks into chipped debris, dust puffs, a flash light and
+      camera shake. Wall, house, tower and arch rebuild on a key; aim with the pointer, charge with the
+      click.</p>
+      <div class="row"><span class="tag">Rapier physics</span><span class="tag">instancing</span>
+      <kbd>Click</kbd> charge &amp; fire <kbd>1-4</kbd> structure <kbd>R</kbd> rebuild</div>
+    </a>
+
+    <a class="card" href="3-cloth-tearing/index.html">
+      <img class="hero" src="3-cloth-tearing/shots/hero.jpg" alt="Flag streaming on a pole in the wind" loading="lazy">
+      <div class="thumbs">
+        <img src="3-cloth-tearing/shots/alt1.jpg" alt="Flag torn by pulling and cutting" loading="lazy">
+        <img src="3-cloth-tearing/shots/alt2.jpg" alt="Plaid curtain with cut holes" loading="lazy">
+        <img src="3-cloth-tearing/shots/torn-after.jpg" alt="Ragged banner" loading="lazy">
+      </div>
+      <h2>3 · Cloth &amp; tearing</h2>
+      <p class="why">A Verlet mass–spring weave (structural, shear and bend constraints, Gauss–Seidel)
+      with gusting wind and aerodynamic normal pressure, so the sheet snaps and flutters. Constraints snap
+      when overload persists, so a yank rips the body and the cut tool severs the weave — quads with a
+      broken edge stop being drawn, which is the ragged tear.</p>
+      <div class="row"><span class="tag">Verlet</span><span class="tag">tearing</span>
+      <kbd>Drag</kbd> grab &amp; pull <kbd>Shift-drag</kbd> cut <kbd>Space</kbd> gust <kbd>R</kbd> re-weave</div>
+    </a>
+
+    <a class="card" href="4-gpu-flocking/index.html">
+      <img class="hero" src="4-gpu-flocking/shots/hero.jpg" alt="Flock of boids streaming around glowing spheres" loading="lazy">
+      <div class="thumbs">
+        <img src="4-gpu-flocking/shots/alt1.jpg" alt="Dense murmuration with trails" loading="lazy">
+        <img src="4-gpu-flocking/shots/alt2.jpg" alt="Flock scattered by the hawk" loading="lazy">
+        <img src="4-gpu-flocking/shots/dense.jpg" alt="16k boids with long trails" loading="lazy">
+      </div>
+      <h2>4 · GPU flocking</h2>
+      <p class="why">Up to 25 600 boids as position and velocity float textures run through
+      GPUComputationRenderer; each boid samples a pseudo-random slice of the flock as its neighbourhood,
+      so the cost is O(n·taps). One instanced draw call reads those textures in the vertex shader and
+      stretches a dart along the velocity. Fog, afterimage trails, obstacle spheres and a hawk that rides
+      the pointer.</p>
+      <div class="row"><span class="tag">GPGPU</span><span class="tag">instancing</span><span class="tag">trails</span>
+      <kbd>Pointer</kbd> hawk <kbd>Click</kbd> scatter <kbd>H</kbd> hawk mode <kbd>T</kbd> trails</div>
+    </a>
+
+    <a class="card" href="5-volumetric-fire/index.html">
+      <img class="hero" src="5-volumetric-fire/shots/hero.jpg" alt="Campfire: raymarched flame, embers, stone circle" loading="lazy">
+      <div class="thumbs">
+        <img src="5-volumetric-fire/shots/alt1.jpg" alt="Stoked fire with a tall flame" loading="lazy">
+        <img src="5-volumetric-fire/shots/alt2.jpg" alt="Doused fire, logs glowing" loading="lazy">
+        <img src="5-volumetric-fire/shots/gust-after.jpg" alt="Flame and embers leaning in a gust" loading="lazy">
+      </div>
+      <h2>5 · Volumetric fire</h2>
+      <p class="why">A raymarched density field: a fBm-carved teardrop flame with a temperature ramp
+      (white core, orange licks, dark red edges), a spreading smoke plume lit only by the fire itself,
+      wind shear on both. The march runs at reduced resolution in a custom composer pass and composites
+      over the scene, so it is cheap; embers, a flickering point light and bloom do the rest.</p>
+      <div class="row"><span class="tag">raymarching</span><span class="tag">volumetrics</span><span class="tag">custom pass</span>
+      <kbd>Click</kbd> stoke <kbd>Space</kbd> gust <kbd>D</kbd> douse</div>
+    </a>
+  </div>
+
+  <footer>
+    Every page is checked in RAM-capped headless Chromium on SwiftShader (software, so the numbers are a
+    floor: the model server on this machine holds the GPU): no console, page or network errors;
+    interaction verified by scripted drags, clicks and calls into each page's
+    <code>window.experiment</code> hook; FPS sampled idle and after the interaction. One command per
+    experiment: <code>node experiments/tools/check.mjs 1-water</code>. The table with the measured numbers
+    is in <a href="README.md">README.md</a>; the harness is <code>experiments/tools/</code>.
+    <br><br>Shared kit in <code>experiments/shared/</code>: renderer, bloom composer, orbit camera, fps
+    readout, hint card, lil-gui panel, quality presets and GLSL noise chunks.
+    <br><br>Built by Strata, running pi headless, on task TST-6.
+  </footer>
+</main>
+</body>
+</html>

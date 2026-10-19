@@ -311,5 +311,18 @@ lab.expose({
   }),
   api: { fire, build, params: P, world, RAPIER, field: () => field, shots, debris, dust, shake,
     setStructure: (k) => { P.structure = k; return build(k); },
-    aimAt: (fx, fy) => pointer.ndc.set(fx * 2 - 1, -(fy * 2 - 1)) },
+    aimAt: (fx, fy) => pointer.ndc.set(fx * 2 - 1, -(fy * 2 - 1)),
+    // headless checks: fire at a world point, force a shatter, read the numbers the HUD shows
+    fireAt: (point) => {
+      const pos = new THREE.Vector3(0, 1.6, 12);
+      const target = new THREE.Vector3(point.x, point.y, point.z);
+      shots.fire(pos, target.sub(pos).normalize());
+    },
+    shatterAt: (point, r) => impacts.shatter(new THREE.Vector3(point.x, point.y, point.z), r || 2),
+    stats: () => ({
+      blocks: field.count, built: field.count, displaced: field.displaced(), awake: field.awake(),
+      shells: shots.live.length, fired: shots.fired, shattered: impacts.shattered,
+      chips: debris.count, dust: dust.count, lastImpact: +lastImpact.toFixed(0),
+      contacts: contacts.length, contactsHit: contactsHits, maxImpact: +maxImpact.toFixed(0),
+    }) },
 });

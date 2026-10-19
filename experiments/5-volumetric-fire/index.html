@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 · Volumetric fire — raymarched flame and smoke</title>
+<link rel="stylesheet" href="../shared/lab.css">
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+  "lil-gui":"https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+}}
+</script>
+</head>
+<body>
+<canvas id="stage-canvas"></canvas>
+<h1 class="title">Volumetric fire<small>raymarched fBm density · fBm domain-warped turbulence · wind shear on flame and plume · fire as the only light · half-resolution volume pass · embers, bloom, fog</small></h1>
+<div id="hud" class="hud"></div>
+<div id="fps" class="fps"></div>
+<div id="hint" class="hint"></div>
+<a class="back" href="../index.html">all experiments</a>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
