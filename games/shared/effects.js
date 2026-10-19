@@ -18,7 +18,11 @@ const sparkFrag = /* glsl */`
   varying float vLife;
   void main() {
     vec4 t = texture2D(map, gl_PointCoord);
-    gl_FragColor = vec4(color * (0.6 + vLife), t.a * vLife);
+    // a spark is a hot filament: white at birth, its own colour as it dies, and the alpha
+    // falls off a curve (a linear fade reads as a slow dimming dot)
+    float e = vLife * vLife;
+    vec3 c = mix(color, vec3(1.0, 0.96, 0.9), e * 0.85);
+    gl_FragColor = vec4(c * (0.35 + vLife * 1.75), t.a * e);
   }`;
 
 /**
@@ -197,6 +201,39 @@ export function createRings(scene, { slots = 10, inner = 0.18, outer = 0.26 }) {
   }
   function clear() { for (const r of list) { r.life = 0; r.mesh.visible = false; } }
   return { burst, update, clear };
+}
+
+/**
+ * A screen flash: a full-viewport tint that pops and decays. DOM, so it costs nothing in the
+ * render loop, and it sits under the CRT glass so it inherits the scanlines like everything else.
+ * `flash({ color, power, dur })` at an impact; call update(dt) every frame.
+ */
+export function createScreenFlash({ id = "flash", max = 0.5 } = {}) {
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement("div");
+    el.id = id;
+    el.className = "crt-flash";
+    document.body.appendChild(el);
+  }
+  let life = 0, power = 0, dur = 0.25;
+  function flash({ color = "#ffffff", power: p = 0.35, dur: d = 0.25 } = {}) {
+    el.style.display = "block";   // out of the layer tree between hits: a full-screen blended
+    el.style.background =
+      `radial-gradient(120% 90% at 50% 55%, ${color} 0%, ${color} 40%, rgba(0,0,0,0) 100%)`;
+    power = Math.min(max, p);
+    dur = Math.max(0.05, d);
+    life = 1;
+  }
+  function update(dt) {
+    if (life <= 0) return;
+    life = Math.max(0, life - dt / dur);
+    // ease-out: the pop is instant, the fade is the long tail
+    el.style.opacity = (power * life * life).toFixed(3);
+    if (life === 0) el.style.display = "none";
+  }
+  function clear() { life = 0; el.style.opacity = "0"; el.style.display = "none"; }
+  return { flash, update, clear, el };
 }
 
 /** A single coloured impact light that fades out (cheap: one dynamic point light). */

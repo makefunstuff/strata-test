@@ -4,6 +4,8 @@ import * as THREE from "three";
 import { Sky } from "three/addons/objects/Sky.js";
 
 import { createPost, setupEnvironment } from "../shared/post.js";
+import { quality, autoQuality } from "../shared/mobile.js";
+import { addTouchControls } from "../shared/touch.js";
 import { crtKey } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
@@ -38,7 +40,7 @@ const fps = createFps(document.getElementById("fps"), { label: "FPS" });
 // ---------------------------------------------------------------- renderer
 const canvas = document.getElementById("game");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(quality({ pixelRatio: 2 }).pixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMappingExposure = 0.62;          // the Sky shader is HDR-bright; the kit sets ACES
 
@@ -48,11 +50,13 @@ scene.fog = new THREE.Fog(0x9dc6e8, 150, 640);
 
 const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.5, 2600);
 
+const Q = quality({ pixelRatio: 2, bloomScale: 0.5, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
   exposure: 0.62,
-  bloom: { strength: 0.42, radius: 0.5, threshold: 1.05, scale: 0.5 },
-  crt: { look: "cabinet", bezel: { label: "FLIGHT", accent: "#8ee8ff" } },
+  bloom: { strength: 0.42 * Q.bloomStrength, radius: 0.5, threshold: 1.05, scale: Q.bloomScale },
+  crt: { look: "cabinet", overrides: Q.crt, bezel: { label: "FLIGHT", accent: "#8ee8ff" } },
 });
+const auto = autoQuality({ floor: 45, onDrop: () => { if (post.bloom) post.bloom.enabled = false; } });
 
 // sky + sun
 const sky = new Sky();
@@ -61,10 +65,13 @@ scene.add(sky);
 const sunDir = new THREE.Vector3();
 {
   const u = sky.material.uniforms;
-  u.turbidity.value = 9;
-  u.rayleigh.value = 1.9;
-  u.mieCoefficient.value = 0.006;
-  u.mieDirectionalG.value = 0.82;
+  // The first version of the frame was a pale grey-blue wash: at turbidity 9 and rayleigh 1.9
+  // the whole sky is scattering close to white, and a jet at floor+95 has nothing in frame but
+  // sky. Deeper scattering, tighter sun: the sky reads as sky and the horizon has a place.
+  u.turbidity.value = 5.5;
+  u.rayleigh.value = 1.1;
+  u.mieCoefficient.value = 0.0045;
+  u.mieDirectionalG.value = 0.86;
   const elev = 15, azim = 118;
   const phi = THREE.MathUtils.degToRad(90 - elev), theta = THREE.MathUtils.degToRad(azim);
   sunDir.setFromSphericalCoords(1, phi, theta);
@@ -176,8 +183,21 @@ function firstGesture() {
 }
 window.addEventListener("pointerdown", () => { audio.ensure(); }, { once: true });
 
+// ---- touch: a stick for pitch and roll, boost held with a thumb, launch/restart on a chip.
+// The stick pushes the arrow keys the flight model already reads.
+addTouchControls({
+  pad: { label: "fly" },
+  buttons: [
+    { label: "boost", code: "ShiftLeft", accent: true },
+    { label: "R", code: "KeyR", tap: true, side: "right" },
+  ],
+});
+
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
+  // three's fov is vertical: in portrait the sideways view narrows and the rings come in at the
+  // edge of the tube, so the chase camera opens up
+  camera.fov = camera.aspect < 1 ? 74 : 58;
   camera.updateProjectionMatrix();
   post.setSize(window.innerWidth, window.innerHeight);
 });
@@ -194,6 +214,7 @@ function refresh() {
   set("ground", Math.round(terrain.floor(pos.x, pos.z)));
   set("best", best);
   set("state", state === "flying" ? (target > CRUISE ? "boost" : "flying") : "down");
+  document.body.classList.toggle("playing", state === "flying");
   set("last", last);
 }
 
@@ -270,10 +291,14 @@ function frame() {
   camPos.lerp(scratch, k);
   camera.position.copy(camPos);
   scratch2.copy(fwd).multiplyScalar(26).add(pos);
+  // Portrait: the tube is tall and the flight is a forward view, so a level aim puts the whole
+  // frame in the sky. A few metres of downward aim keeps the horizon and the terrain in shot.
+  if (camera.aspect < 1) scratch2.y -= 7;
   camera.lookAt(scratch2);
 
   hudTick += dt;
   if (hudTick > 0.1) { hudTick = 0; refresh(); }
+  auto.tick(dt);
   fps.tick(dt);
 
   // a soft warning tick as the ground rush builds

@@ -30,7 +30,11 @@ last reported are in the shelf READMEs.
 
 - TypeScript or shell only, no Python. Drive the model through headless pi (`pi -p --mode json`) where an agent
   is involved.
-- Switch back to the router when you're done (`local-ai-mode router`).
+- **Never switch modes from inside an agent run.** An agent working on this box is served by
+  `strata.service` itself, so `local-ai-mode router` stops the model that is answering: the run
+  dies mid-task (it killed a games task on 2026-10-19). Leave Strata up and walk away. Switching
+  to the router is the human's call, made from a shell, after the agent is finished.
+  `local-ai-mode status` is safe to read at any time.
 
 ## Public repo
 

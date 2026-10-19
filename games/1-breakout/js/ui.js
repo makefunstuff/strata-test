@@ -29,6 +29,14 @@ export const ui = {
     this.set("hint", this.hint);
   },
 
+  pop(key) {
+    const el = els[key];
+    if (!el) return;
+    el.classList.remove("pop");
+    void el.offsetWidth;          // reflow, so the same value popping twice still animates
+    el.classList.add("pop");
+  },
+
   addScore(points) {
     this.score += points;
     this.set("score", this.score);
