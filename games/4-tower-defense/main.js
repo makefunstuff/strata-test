@@ -312,7 +312,7 @@ function frame() {
 // exposed for the headless tools (tools/smoke.ts, tools/audiotest.ts, tools/linescan.mjs)
 // place/money expose the game's own rules to the headless tools, so a tower can be placed and
 // the kill/leak accounting read back without scripting the mouse through a software renderer.
-window.arcade = { post, scene, camera, renderer, audio, grid, towers, enemies, wave, place: tryPlace, state: () => state, stats: () => ({ money, lives, kills, leaked }) };
+window.arcade = { post, scene, camera, renderer, audio, grid, towers, enemies, wave, place: tryPlace, state: () => state, stats: () => ({ money, lives, kills, leaked }), over: gameOver, restart };
 window.arcadeAudio = audio;
 
 grid.show(cursorTile.col, cursorTile.row, true);

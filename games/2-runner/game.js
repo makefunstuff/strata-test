@@ -194,5 +194,5 @@ export function createGame({ hud, player, spawner, track, camera, canvas, rng, f
 
   start();
 
-  return { update, state };
+  return { update, state, crash };
 }

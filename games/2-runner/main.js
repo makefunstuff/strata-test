@@ -60,6 +60,18 @@ const streaks = createSpeedLines(scene, { count: 30, spread: 7.5, minY: 0.06, ma
 const audio = createAudio({ master: 0.42, delayMix: 0.14 });
 const sfx = audio.sfx;
 window.arcadeAudio = audio;   // exposed for tools/audiotest.ts
+// exposed for the harness: state for the rule checks, and the game's own crash path so a
+// game-over screen can be shot (tools/smoke.ts --overjs) without faking one.
+// exposed for the harness: state for the rule checks, and the game's own crash path so a
+// game-over screen can be shot (tools/smoke.ts --overjs) without faking one. Getters, because
+// `game` and `post` are built below.
+window.arcade = {
+  scene, camera, renderer, audio, player, spawner, streaks, fx,
+  get post() { return post; },
+  get state() { return game.state; },
+  score: () => Math.floor(game.state.distance),
+  crash: () => game.crash(spawner.list.find((o) => o.active) ?? { mesh: player.group, jumpable: false }),
+};
 
 const game = createGame({ hud, player, spawner, track, camera, canvas, rng, fx, audio, sfx });
 
