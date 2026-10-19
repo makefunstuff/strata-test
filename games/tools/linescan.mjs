@@ -34,7 +34,7 @@ function traceRows(img, band, xr, step = 8) {
 const args = process.argv.slice(2);
 const target = args[0];
 if (!target) { console.error("usage: node linescan.mjs <game-dir|file.png> [expr ...]"); process.exit(2); }
-const flags = new Set(["--shot", "--band", "--x", "--trace"]);
+const flags = new Set(["--shot", "--band", "--x", "--trace", "--wait"]);
 const exprs = args.filter((a, i) => i > 0 && !a.startsWith("--") && !flags.has(args[i - 1]));
 const shot = args.includes("--shot") ? args[args.indexOf("--shot") + 1] : null;
 
@@ -165,13 +165,19 @@ try {
     if (i > 0) {
       const e = exprs[i - 1];
       await page.evaluate((src) => { new Function("env", src)(window.arcade ?? { post: window.arcadePost }); }, e);
+      if (args.includes("--wait")) await page.waitForTimeout(+args[args.indexOf("--wait") + 1]);
     }
     const label = i === 0 ? "asis" : exprs[i - 1].replace(/[^a-z0-9]+/gi, "_").slice(0, 36);
     const buf = await page.screenshot({ path: shot ?? `/tmp/linescan-${label}.png` });
     const img = decodePng(buf);
     if (args.includes("--trace")) { shots.push({ label, trace: traceRows(img, band, xr) }); continue; }
     const all = rowPeaksAll(img, xr);
-    shots.push({ label, title: await page.title(), lines: all.filter((r) => r.y >= band[0] && r.y <= band[1]).slice(0, 3) });
+    shots.push({
+      label,
+      title: await page.title(),
+      text: (await page.evaluate(() => document.body.innerText)).replace(/\s+/g, " ").slice(0, 160),
+      lines: all.filter((r) => r.y >= band[0] && r.y <= band[1]).slice(0, 3),
+    });
     await page.waitForTimeout(400);
   }
   await mkdir("games/tools/work", { recursive: true }).catch(() => {});
