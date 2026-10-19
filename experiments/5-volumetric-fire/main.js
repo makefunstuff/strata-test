@@ -161,7 +161,9 @@ function applyQuality(q) {
 }
 lab.onQuality(applyQuality);
 lab.setSize();
-applyQuality(lab.quality());     // start on the preset's settings, not on raw defaults
+// a raymarch is the heaviest thing on this page, so it starts on medium, not on the kit's high
+lab.q.quality = "medium";
+applyQuality("medium");
 const size = lab.renderer.getSize(new THREE.Vector3());
 volPass.setSize(size.x, size.y);
 window.addEventListener("resize", () => { const s = renderer.getSize(new THREE.Vector3()); volPass.setSize(s.x, s.y); });

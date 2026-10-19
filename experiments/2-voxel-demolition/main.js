@@ -312,17 +312,38 @@ lab.expose({
   api: { fire, build, params: P, world, RAPIER, field: () => field, shots, debris, dust, shake,
     setStructure: (k) => { P.structure = k; return build(k); },
     aimAt: (fx, fy) => pointer.ndc.set(fx * 2 - 1, -(fy * 2 - 1)),
-    // headless checks: fire at a world point, force a shatter, read the numbers the HUD shows
-    fireAt: (point) => {
-      const pos = new THREE.Vector3(0, 1.6, 12);
-      const target = new THREE.Vector3(point.x, point.y, point.z);
-      shots.fire(pos, target.sub(pos).normalize());
+    // headless checks: aim at a world point and fire, force a shatter, read the numbers the HUD shows
+    fireAt: (point, power) => {
+      const v = new THREE.Vector3(point.x, point.y, point.z).project(camera);
+      pointer.ndc.set(v.x, v.y);
+      fire(power === undefined ? 1 : power);
     },
-    shatterAt: (point, r) => impacts.shatter(new THREE.Vector3(point.x, point.y, point.z), r || 2),
+    shatterAt: (point, r) => {
+      const c = new THREE.Vector3(point.x, point.y, point.z);
+      const rad = r || 2.2;
+      let n = 0;
+      for (const b of field.byHandle.values()) {
+        if (b.dead) continue;
+        const t = b.body.translation();
+        const d = Math.hypot(t.x - c.x, t.y - c.y, t.z - c.z);
+        if (d > rad) continue;
+        const p = new THREE.Vector3(t.x, t.y, t.z);
+        const push = p.clone().sub(c).normalize().multiplyScalar((1 - d / rad) * 24);
+        b.body.wakeUp();
+        b.body.setLinvel({ x: push.x, y: push.y + 4, z: push.z }, true);
+        destroyed++;
+        field.destroy(b);
+        debris.spawn(p, 10, { color: `#${b.color.getHexString()}`, speed: 6, size: 0.24, spread: 0.5 });
+        n++;
+      }
+      dust.puff(c, Math.round(26 * P.dust), { color: 0xe0d3bb, speed: 3.6, size: 1.2, rise: 2, life: 1.9, spread: 0.6 });
+      shake.add(P.shake * 0.8);
+      field.wakeNear(c, rad + 2.5);
+      return n;
+    },
     stats: () => ({
-      blocks: field.count, built: field.count, displaced: field.displaced(), awake: field.awake(),
-      shells: shots.live.length, fired: shots.fired, shattered: impacts.shattered,
-      chips: debris.count, dust: dust.count, lastImpact: +lastImpact.toFixed(0),
-      contacts: contacts.length, contactsHit: contactsHits, maxImpact: +maxImpact.toFixed(0),
+      blocks: field.items.filter((i) => !i.dead).length, built: field.count, displaced: moved, awake,
+      shells: shots.length, fired: shotsFired, shattered: destroyed, chips: debris.alive, dust: dust.alive,
+      lastImpact: Math.round(lastImpact), contacts, contactsHit, maxImpact: Math.round(maxImpact),
     }) },
 });

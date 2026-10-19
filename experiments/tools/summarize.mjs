@@ -14,9 +14,9 @@ const [label, dir, file] = process.argv.slice(2);
 const txt = readFileSync(file, "utf8");
 let j;
 try {
-  j = JSON.parse(txt.slice(txt.lastIndexOf("{\n  \"root\"")));
+  j = JSON.parse(txt.slice(txt.lastIndexOf("\n{\n")));
 } catch {
-  const at = txt.indexOf("{\n  \"root\"") >= 0 ? txt.indexOf("{\n  \"root\"") : txt.indexOf("{");
+  const at = Math.max(txt.lastIndexOf("\n{\n"), txt.indexOf("{"));
   try { j = JSON.parse(txt.slice(at)); } catch (e) { console.log(label, dir, "PARSE FAIL", String(e).slice(0, 80)); process.exit(0); }
 }
 const bad = (j.errors || []).length + (j.page_errors || []).length + (j.failed_requests || []).length;

@@ -13,5 +13,5 @@ run() { # label  dir  extra-args...
 run water   1-water             --drag 0.5,0.6:0.62,0.5 --click 0.4,0.55 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.dropStone(0.1);return 1;}"
 run vox     2-voxel-demolition  --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.fireAt({x:0,y:2.5,z:4});await new Promise(r=>setTimeout(r,1500));e.api.fireAt({x:-1.5,y:5,z:3});e.api.shatterAt({x:2,y:6,z:2},3.5);return 1;}"
 run cloth   3-cloth-tearing     --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.gust(1.6);e.api.cutScreen(0.5,0.55,0.08);e.api.grabScreen(0.35,0.5);e.api.dragTo(0.58,0.34);e.api.endDrag();return 1;}"
-run flock   4-gpu-flocking      --click 0.4,0.5 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.setHawk('chase');e.api.scatter();return 1;}"
+run flock   4-gpu-flocking      --click 0.4,0.5 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.setHawkMode('chase');e.api.scatter();return 1;}"
 run fire    5-volumetric-fire   --click 0.5,0.6 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.stoke(0.9);e.api.gust(0.8,0.3);return 1;}"
