@@ -107,7 +107,22 @@ async function runActions(page, actions = []) {
         if (v !== undefined) log.push("eval: " + String(JSON.stringify(v)).slice(0, 400));
       }
       else if (kind === "scroll") { await page.evaluate(`window.scrollTo(0, ${arg})`); }
-      else if (kind === "reveal") { const el = await page.$(arg); if (el) await el.evaluate((n) => window.scrollTo(0, Math.max(0, n.getBoundingClientRect().top + window.scrollY - 64))); }
+      else if (kind === "reveal") {
+        const el = await page.$(arg);
+        if (el) await el.evaluate((n) => {
+          // honour the page's own scroll-margin-top (the standard answer to a sticky bar),
+          // then clear any full-width sticky bar that the page did not account for
+          n.scrollIntoView({ block: "start", behavior: "auto" });
+          const bar = Math.max(0, ...[...document.querySelectorAll("*")].filter((x) => {
+            const p = getComputedStyle(x);
+            const r = x.getBoundingClientRect();
+            return (p.position === "sticky" || p.position === "-webkit-sticky")
+              && r.top <= 1 && x.offsetHeight > 20 && x.offsetHeight < 240 && r.width >= innerWidth * 0.9;
+          }).map((x) => x.offsetHeight));
+          const gap = bar + 28 - n.getBoundingClientRect().top;
+          if (gap > 0) window.scrollBy(0, gap);
+        });
+      }
       else { await page.waitForTimeout(Math.min(+arg || 300, 4000)); }
       log.push(a);
     } catch (e) { log.push(`${a} -> FAILED ${String(e).split("\n")[0]}`); }
@@ -194,6 +209,11 @@ const audit = async () => {
     h1: document.querySelectorAll("h1").length,
     lang: document.documentElement.lang || "",
     title: document.title || "",
+    // a stylesheet link that never produced a sheet is invisible damage: the page renders
+    // and screenshots fine, unstyled. A malformed attribute can swallow the link entirely
+    // (a data-URI favicon with an unclosed quote ate the next tag, quietly).
+    stylesheetsMissing: [...document.querySelectorAll('link[rel~="stylesheet"]')]
+      .filter((l) => !l.sheet).map((l) => (l.getAttribute("href") || "").split("/").pop()),
     landmarks: ["header", "main", "footer", "nav", "aside"].filter((t) => document.querySelector(t)).join("+") || "none",
     labelledControlsMissing: controls,
     unnamedButtons: iconOnly,
@@ -261,7 +281,11 @@ for (const job of jobs) {
       rec.bytes = (await readFile(jpg)).length;
       rec.px = `${imgW}x${imgH}`;
       await unlink(png).catch(() => {});
-      rec.actions_failed = (rec.actions || []).filter((a) => a.includes("FAILED"));
+      rec.actions_failed = (rec.actions || []).filter((a) => (a.includes && a.includes("FAILED")));
+      // a page that scrolls sideways on a phone is a layout defect, and a full-page capture
+      // hides it by widening the image: measure it, do not photograph around it
+      rec.hOverflow = await p.evaluate("document.documentElement.scrollWidth - innerWidth").catch(() => 0);
+      if (rec.hOverflow <= 1) delete rec.hOverflow;
     } catch (e) {
       rec.ok = false; rec.why = String(e).split("\n")[0].slice(0, 200);
     }
@@ -274,6 +298,8 @@ for (const job of jobs) {
       + ` ${rec.px || ""}`
       + ` contrast ${(a.lowContrast || []).length}`
       + ` unlabelled ${(a.labelledControlsMissing || []).length + (a.unnamedButtons || []).length}`
+      + ((a.stylesheetsMissing || []).length ? ` CSS-MISSING[${a.stylesheetsMissing.join(",")}]` : "")
+      + (rec.hOverflow ? ` h-overflow +${rec.hOverflow}px` : "")
       +(rec.why?" | WHY "+rec.why:"")+(rec.errs.length ? " | " + rec.errs[0].slice(0, 90) : ""),
     );
   }
@@ -287,11 +313,11 @@ const md = ["# design screenshot run", "",
   "| shot | size | console errors | low contrast | unlabelled | focus ring | notes |", "|--|--|--|--|--|--|--|",
   ...results.map((r) => `| ${r.label} | ${r.bytes ? (r.bytes / 1024).toFixed(0) + " KB" : "-"} | ${r.errs.length}`
     + ` | ${(r.audit?.lowContrast || []).length} | ${(r.audit?.labelledControlsMissing || []).length + (r.audit?.unnamedButtons || []).length}`
-    + ` | ${r.audit?.focusRing || "-"} | ${(r.ok ? (r.actions_failed || []).join(" ") || "clean" : r.why + " " + r.errs.slice(0, 1)).slice(0, 120)} |`), "",
+    + ` | ${r.audit?.focusRing || "-"} | ${(r.ok ? (((r.actions_failed || []).join(" ") + " " + ((r.audit?.stylesheetsMissing || []).length ? "stylesheets missing: " + r.audit.stylesheetsMissing.join(",") : "") + " " + (r.hOverflow ? "h-overflow +" + r.hOverflow + "px" : "")).trim()) || "clean" : r.why + " " + r.errs.slice(0, 1)).slice(0, 120)} |`), "",
   ...results.filter((r) => r.errs.length).map((r) => `- ${r.label}\n${r.errs.map((e) => "  - " + e).join("\n")}`),
 ];
 await writeFile(join(reportDir, "latest.json"), JSON.stringify(results, null, 1));
 await writeFile(join(reportDir, "latest.md"), md.join("\n") + "\n");
-const bad = results.filter((r) => !r.ok || r.errs.length).length;
+const bad = results.filter((r) => !r.ok || r.errs.length || (r.audit?.stylesheetsMissing || []).length).length;
 console.log(`\nwrote tools/work/shoot/latest.md — ${results.length} shots, ${bad} with problems`);
 process.exit(0);

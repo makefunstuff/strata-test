@@ -817,5 +817,189 @@
         "full": true
       }
     ]
+  },
+  {
+    "task": "07-dataviz",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "full": true,
+        "settle": 700
+      },
+      {
+        "name": "claim",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "claim-cursor",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-claim",
+          "eval:document.querySelector(\"#claim svg\").__cursor.set(26)"
+        ]
+      },
+      {
+        "name": "gauges",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-gauges"
+        ]
+      },
+      {
+        "name": "gauges-cross",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-gauges",
+          "eval:document.querySelector(\"#gauges svg\").__hover(34)"
+        ]
+      },
+      {
+        "name": "boxes",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-boxes"
+        ]
+      },
+      {
+        "name": "stack",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-stack",
+          "eval:document.querySelector(\"#stack svg\").__cursor.set(10)"
+        ]
+      },
+      {
+        "name": "slope",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-slope",
+          "eval:const g=[...document.querySelectorAll(\"#slope .slope\")];g[0].dispatchEvent(new PointerEvent(\"pointerenter\",{bubbles:true}));"
+        ]
+      },
+      {
+        "name": "calendar",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-calendar"
+        ]
+      },
+      {
+        "name": "numbers",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "click:#nums button[data-set=\"numbers\"]",
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "feet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "click:#units button[data-unit=\"ft\"]",
+          "click:#nums button[data-set=\"numbers\"]",
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "feet-slope",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "click:#units button[data-unit=\"ft\"]",
+          "reveal:#fig-slope"
+        ]
+      },
+      {
+        "name": "reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#fig-claim",
+          "eval:document.querySelector(\"#claim svg\").__cursor.set(4)"
+        ]
+      },
+      {
+        "name": "keyboard",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-boxes",
+          "eval:document.querySelector(\"#boxes svg\").focus()",
+          "eval:document.querySelector(\"#boxes svg\").__cursor.set(9)"
+        ]
+      },
+      {
+        "name": "lied",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#lied"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "settle": 700,
+        "actions": []
+      },
+      {
+        "name": "print",
+        "page": "index.html",
+        "width": 1100,
+        "height": 900,
+        "print": true,
+        "full": true,
+        "settle": 500
+      }
+    ]
   }
 ]

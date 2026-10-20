@@ -1,0 +1,221 @@
+/* Harrow Estuary — a data story. Source Serif for the argument, mono for the numbers,
+   Okabe-Ito for the series, and enough rule that the eye knows where one figure ends. */
+@property --x { syntax: "<length>"; inherits: false; initial-value: 0px }
+
+*, *::before, *::after { box-sizing: border-box }
+[hidden] { display: none !important }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth }
+html, body { margin: 0 }
+
+body {
+  --paper: #f7f4ee; --paper-2: #fffdf8; --paper-3: #efeade;
+  --ink: #16181c; --ink-2: #414952; --ink-3: #5f6771;
+  --rule: #d9d3c7; --rule-2: #c3bcae;
+  --s1: #0b6b78; --s2: #c8402f; --s3: #a8770f; --s4: #3a5f8a;
+  --sea: #0b6b78; --flood: #c8402f;
+  --f-display: "Source Serif 4", Georgia, serif;
+  --f-text: "Source Serif 4", Georgia, serif;
+  --f-ui: "Inter", system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, monospace;
+  --dur: 150ms; --ease: cubic-bezier(.2, .7, .3, 1);
+  --pad: clamp(16px, 4vw, 40px);
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-text); font-size: 16px; line-height: 1.6;
+  font-feature-settings: "kern" 1;
+}
+body[data-motion="reduced"], body[data-motion="reduced"] * {
+  animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 0ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 0ms !important }
+  html { scroll-behavior: auto }
+}
+
+.skip {
+  position: fixed; left: 10px; top: -60px; z-index: 99; background: var(--ink); color: #fff;
+  padding: 10px 14px; border-radius: 4px; font: 600 13px var(--f-ui); text-decoration: none; transition: top var(--dur)
+}
+.skip:focus { top: 10px }
+:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap }
+.synth { font: 600 10.5px/1 var(--f-ui); letter-spacing: .1em; text-transform: uppercase; color: #8a4a12; border: 1px solid #d9c3aa; background: #f6ead9; padding: 3px 6px; border-radius: 3px }
+
+/* ── masthead ───────────────────────────────────────────────────────── */
+.mast { border-bottom: 3px double var(--rule-2); padding: 0 var(--pad) 26px }
+.mast-in { max-width: 1060px; margin: 0 auto; padding-top: 34px }
+.kicker { font: 600 11px/1.4 var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3) }
+.mast h1 { font: 600 clamp(29px, 5.2vw, 54px)/1.06 var(--f-display); letter-spacing: -.02em; margin: 14px 0 0; max-width: 20ch }
+.stand { font: 400 clamp(16px, 1.6vw, 19.5px)/1.62 var(--f-text); color: var(--ink-2); max-width: 62ch; margin: 18px 0 0 }
+.stand b { color: var(--ink); font-weight: 600 }
+.byline { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 20px; font: 500 11px var(--f-ui); letter-spacing: .04em; color: var(--ink-3); border-top: 1px solid var(--rule); padding-top: 12px }
+.byline span::before { content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--rule-2); margin-right: 8px; vertical-align: 2px }
+.byline span:first-child::before { display: none }
+
+/* ── control bar ────────────────────────────────────────────────────── */
+.bar { position: sticky; top: 0; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--rule) }
+.bar-in { max-width: 1060px; margin: 0 auto; padding: 10px var(--pad); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px }
+.grp { display: flex; align-items: center; gap: 9px }
+.grp-lab { font: 600 10px var(--f-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3) }
+.seg { display: inline-flex; border: 1px solid var(--rule-2); border-radius: 5px; overflow: hidden; background: var(--paper-2) }
+.seg button { font: 600 11.5px var(--f-ui); padding: 7px 11px; background: transparent; border: 0; border-right: 1px solid var(--rule); color: var(--ink-2); cursor: pointer; letter-spacing: .02em }
+.seg button:last-child { border-right: 0 }
+.seg button[aria-pressed="true"] { background: var(--ink); color: #fff }
+.seg button:hover { background: var(--paper-3) }
+.seg button[aria-pressed="true"]:hover { background: #262a30; color: #fff }
+.hint { margin: 0; margin-left: auto; font: 400 11.5px/1.5 var(--f-ui); color: var(--ink-3); max-width: 34ch }
+kbd { font: 500 10.5px var(--f-num); border: 1px solid var(--rule-2); border-bottom-width: 2px; border-radius: 3px; padding: 1px 4px; background: var(--paper-2); color: var(--ink-2) }
+
+/* ── page frame ─────────────────────────────────────────────────────── */
+.page { max-width: 1060px; margin: 0 auto; padding: 10px var(--pad) 0 }
+.sec { padding: 34px 0 8px; border-bottom: 1px solid var(--rule) }
+.sec-h { font: 600 26px/1.25 var(--f-display); letter-spacing: -.01em; margin: 0 0 18px; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px 12px }
+.sec-h .num { font: 500 11px/1.6 var(--f-num); color: var(--ink-3); letter-spacing: .04em }
+.sec-h .sec-lede { grid-column: 2; font: 400 15px/1.55 var(--f-text); color: var(--ink-2); margin-top: 8px; max-width: 68ch }
+.fig { margin: 0; scroll-margin-top: 150px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px 12px }
+.fig-cap { font: 600 12.5px/1.4 var(--f-ui); color: var(--ink); letter-spacing: .01em; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 12px }
+.src { font: 400 11.5px/1.55 var(--f-ui); color: var(--ink-3); margin: 10px 0 0; max-width: 78ch }
+.plot { width: 100%; overflow: hidden }
+.readout { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; border-bottom: 1px solid var(--rule); padding: 6px 0 8px; margin-bottom: 8px; font: 400 11px var(--f-num); color: var(--ink-2) }
+.readout .d { font-family: var(--f-ui); font-weight: 600; font-size: 11.5px; color: var(--ink); letter-spacing: .02em; padding-right: 6px; border-right: 1px solid var(--rule); margin-right: 2px }
+.readout .k b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums }
+.readout .k.over b { color: var(--flood) }
+.readout .k.dark b { color: var(--ink-3); font-weight: 400 }
+.readout .k.dark::after { content: " ·dark"; font-size: 8px; color: var(--ink-3) }
+.readout .k.over::after { content: " ▲"; font-size: 8px; color: var(--flood) }
+.plot svg { display: block }
+.plot svg[tabindex="0"]:focus-visible { outline: 2px solid var(--sea); outline-offset: 3px }
+
+.callouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; margin-top: 16px }
+.co { border: 1px solid var(--rule); border-left: 3px solid var(--s1); background: var(--paper-2); padding: 11px 13px; border-radius: 4px }
+.co b { display: block; font: 500 22px/1.1 var(--f-num); letter-spacing: -.02em; color: var(--sea) }
+.co span { display: block; font: 400 12.5px/1.5 var(--f-ui); color: var(--ink-2); margin-top: 6px }
+.co:nth-child(2) { border-left-color: var(--flood) } .co:nth-child(2) b { color: var(--flood) }
+.co:nth-child(3) { border-left-color: var(--s3) } .co:nth-child(3) b { color: var(--s3) }
+
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 16px }
+.panel { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px 16px; margin-bottom: 16px }
+.panel h3 { font: 600 15px var(--f-ui); margin: 0 0 10px; letter-spacing: .01em }
+.rules { margin: 0; padding-left: 18px; font: 400 13.5px/1.62 var(--f-ui); color: var(--ink-2) }
+.rules li { margin-bottom: 8px }
+.rules b { color: var(--ink) }
+.rules a { color: var(--sea); text-decoration-color: var(--rule-2); text-underline-offset: 2px }
+
+/* ── the numbers ────────────────────────────────────────────────────── */
+.numbers { width: 100%; border-collapse: collapse; font: 400 11.5px/1.5 var(--f-num); margin-top: 12px }
+.numbers caption { font: 600 11px var(--f-ui); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); text-align: left; padding-bottom: 6px }
+.numbers th, .numbers td { border-bottom: 1px solid var(--rule); padding: 4px 7px; text-align: right; font-variant-numeric: tabular-nums }
+.numbers th:first-child, .numbers td:first-child { text-align: left }
+.numbers thead th { font-family: var(--f-ui); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); border-bottom-color: var(--rule-2) }
+.tabwrap { max-height: 300px; overflow: auto }
+/* The numbers are always in the DOM for assistive tech; the chart mode clips the wrapper,
+   not the table: a table box cannot be squeezed to 1 px, so its layout box would widen the
+   root scroller and the phone page would scroll sideways. */
+body[data-nums="charts"] .tabwrap {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; max-height: none
+}
+body[data-nums="numbers"] .tabwrap { border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; background: var(--paper) }
+
+/* ── chart ink ──────────────────────────────────────────────────────── */
+.chart { font-family: var(--f-ui) }
+.chart .grid { stroke: var(--rule); stroke-width: 1 }
+.chart .axis { stroke: var(--rule-2); stroke-width: 1 }
+.chart .tick { font: 400 10px var(--f-num); fill: var(--ink-3); font-variant-numeric: tabular-nums }
+.chart .tick.b { font-weight: 500; fill: var(--ink-2) }
+.chart .axis-label { font: 600 10px var(--f-ui); fill: var(--ink-3); letter-spacing: .08em; text-transform: uppercase }
+.chart .note { font: 400 10.5px var(--f-ui); fill: var(--ink-3) }
+.chart .note-strong { font: 600 10.5px var(--f-ui); fill: var(--ink-2); letter-spacing: .02em }
+.chart .line { fill: none; stroke: var(--sea); stroke-width: 1.8 }
+.chart .dot { fill: var(--paper-2); stroke: var(--sea); stroke-width: 1.5 }
+.chart .dot.spike { fill: var(--flood); stroke: var(--flood) }
+.chart .trend { stroke: var(--s2); stroke-width: 1.6; stroke-dasharray: 6 4 }
+.chart .trend-label { font: 600 10.5px var(--f-num); fill: var(--s2) }
+.chart .datum-rule { stroke: var(--s2); stroke-width: 1.2; stroke-dasharray: 3 3 }
+.chart .cross { stroke: var(--ink-2); stroke-width: 1 }
+.chart .knob { fill: var(--ink); stroke: var(--paper-2); stroke-width: 1.5 }
+.chart.tracking .line { stroke-width: 2.2 }
+.chart .flood { stroke: var(--flood); stroke-width: 1.2; stroke-dasharray: 4 3 }
+.chart .sm-area { fill: #cfe0e6 }
+.chart .sm-line { fill: none; stroke: var(--sea); stroke-width: 1.4 }
+.chart .peak { fill: var(--flood); stroke: var(--paper-2); stroke-width: 1 }
+.chart .peak-lab { fill: var(--flood); font-weight: 500 }
+.chart .cell-title { font: 600 10.5px var(--f-ui); fill: var(--ink-2) }
+.chart .sm-cross { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 2 }
+.chart .pt { fill: var(--ink-3); opacity: .38 }
+.chart .whisk, .chart .whisk-cap { stroke: var(--ink-2); stroke-width: 1.2 }
+.chart .box-rect { fill: #cfe0e6; stroke: var(--sea); stroke-width: 1.2 }
+.chart .median { stroke: var(--ink); stroke-width: 2 }
+.chart .band { stroke: var(--paper-2); stroke-width: .6 }
+.chart .band-lab { font: 600 9.5px var(--f-ui); fill: #10222a; letter-spacing: .04em }
+.chart .band.b4 + .band-lab, .chart .band-lab { paint-order: stroke; stroke: rgba(255, 253, 248, .72); stroke-width: 2.4px }
+.chart .slope-line { stroke: var(--rule-2); stroke-width: 2.4 }
+.chart .slope:hover .slope-line, .chart .slope:focus .slope-line { stroke: var(--sea) }
+.chart .then { fill: var(--paper-2); stroke: var(--ink-2); stroke-width: 1.6 }
+.chart .now { fill: var(--sea) }
+.chart .row-lab { font: 500 11.5px var(--f-ui); fill: var(--ink) }
+.chart .val { font: 400 10.5px var(--f-num); fill: var(--ink-3) }
+.chart .val.b { fill: var(--ink); font-weight: 500 }
+.chart .rise { font: 500 10.5px var(--f-num); fill: var(--flood) }
+.chart .day { stroke: var(--paper); stroke-width: 1 }
+.chart .day.over { stroke: var(--flood); stroke-width: 1.8 }
+.chart .day:hover { stroke: var(--ink); stroke-width: 1.8 }
+.b1 { fill: #cfe0e6 } .b2 { fill: #8fbcc7 } .b3 { fill: #3f8b9b } .b4 { fill: #0b6b78 }
+
+/* ── the four lies ──────────────────────────────────────────────────── */
+.lied { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px; margin-top: 4px }
+.lie { border: 1px solid var(--rule); border-radius: 5px; padding: 10px; background: var(--paper) }
+.lie svg { display: block; width: 100%; height: auto }
+.lie .lie-lab { font: 600 11px var(--f-ui); color: var(--flood); margin: 8px 0 3px; letter-spacing: .02em }
+.lie p { margin: 0; font: 400 11.5px/1.5 var(--f-ui); color: var(--ink-2) }
+
+/* ── tooltip ────────────────────────────────────────────────────────── */
+.tip {
+  position: absolute; z-index: 70; pointer-events: none; opacity: 0; transform: translateY(4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  background: var(--ink); color: #f8f6f1; border-radius: 5px; padding: 8px 10px; max-width: 250px;
+  font: 400 11.5px/1.5 var(--f-ui); box-shadow: 0 6px 22px rgba(22, 24, 28, .22)
+}
+.tip b { display: block; font: 600 12.5px var(--f-ui); margin-bottom: 3px }
+.tip span { display: block; font-family: var(--f-num); font-size: 11px; font-variant-numeric: tabular-nums; color: #ded9cf }
+.tip em { font-style: normal; font-weight: 600 }
+.tip em.s { color: #f0a08f }
+.tip small { display: block; margin-top: 5px; font-size: 10px; color: #b9b3a8 }
+.tip i.sw { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px }
+
+/* ── footer ─────────────────────────────────────────────────────────── */
+.foot { border-top: 3px double var(--rule-2); margin-top: 30px; padding: 22px var(--pad) 40px; background: var(--paper-3) }
+.foot-in { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 8px 26px }
+.foot p { margin: 0; font: 400 12.5px/1.6 var(--f-ui); color: var(--ink-2) }
+.foot b { color: var(--ink) }
+.foot code { font-family: var(--f-num); font-size: 11.5px }
+.foot .fine { font-size: 11.5px; color: var(--ink-3) }
+
+/* ── phone ──────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  body { font-size: 15.5px }
+  .mast { padding-bottom: 20px }
+  .sec { padding: 26px 0 6px }
+  .sec-h { grid-template-columns: 1fr; gap: 2px }
+  .sec-h .sec-lede { grid-column: 1; font-size: 14px }
+  .bar-in { gap: 8px 14px }
+  .hint { max-width: none; margin-left: 0; order: 3 }
+  .seg button { min-height: 40px }
+  .fig { padding: 12px 12px 10px }
+  .co b { font-size: 19px }
+}
+@media (max-width: 520px) {
+  .plot { overflow-x: auto }
+  .plot svg { min-width: 620px }
+  .fig-cap { font-size: 12px }
+}
+
+/* ── print: one figure per page, no tooltip layer ───────────────────── */
+@media print {
+  body { background: #fff; font-size: 10.5pt }
+  .bar, .skip, .tip, .hint { display: none !important }
+  .sec { page-break-inside: avoid; break-inside: avoid }
+  .fig { border-color: #bbb; page-break-inside: avoid }
+  .tabwrap { position: static !important; width: auto !important; height: auto !important; max-height: none !important; clip-path: none !important; overflow: visible !important; white-space: normal !important }
+  .mast h1 { font-size: 26pt }
+  a { text-decoration: none; color: inherit }
+}

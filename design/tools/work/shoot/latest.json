@@ -1,48 +1,53 @@
 [
  {
-  "label": "06-identity/grid",
+  "label": "07-dataviz/feet",
   "ok": true,
   "errs": [],
   "actions": [
-   "reveal:#grid"
+   "click:#units button[data-unit=\"ft\"]",
+   "click:#nums button[data-set=\"numbers\"]",
+   "reveal:#fig-claim"
   ],
   "audit": {
    "h1": 1,
    "lang": "en",
-   "title": "Meridian — mark, lockups and a 32-icon set",
-   "landmarks": "header+nav",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
-   "focusRing": "outline"
+   "focusRing": "none"
   },
-  "jpg": "06-identity/shots/grid.jpg",
-  "bytes": 343930,
-  "px": "2600x1520",
+  "jpg": "07-dataviz/shots/feet.jpg",
+  "bytes": 214771,
+  "px": "2800x1640",
   "actions_failed": []
  },
  {
-  "label": "06-identity/misuse",
+  "label": "07-dataviz/feet-slope",
   "ok": true,
   "errs": [],
   "actions": [
-   "reveal:#misuse"
+   "click:#units button[data-unit=\"ft\"]",
+   "reveal:#fig-slope"
   ],
   "audit": {
    "h1": 1,
    "lang": "en",
-   "title": "Meridian — mark, lockups and a 32-icon set",
-   "landmarks": "header+nav",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
-   "focusRing": "outline"
+   "focusRing": "none"
   },
-  "jpg": "06-identity/shots/misuse.jpg",
-  "bytes": 275639,
-  "px": "2600x1640",
+  "jpg": "07-dataviz/shots/feet-slope.jpg",
+  "bytes": 197235,
+  "px": "2800x1520",
   "actions_failed": []
  }
 ]
