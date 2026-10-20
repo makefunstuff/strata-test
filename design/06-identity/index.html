@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meridian — mark, lockups and a 32-icon set</title>
+<meta name="description" content="An identity system drawn as geometry: one mark, five lockups, a 32-icon set on a 24 px grid, and the tests that decide whether any of it survives.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/instrument-serif@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="identity.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav" aria-label="Sections">
+    <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#m-mark-glyph"/></svg></div>
+    <div class="wm">Meridian</div>
+    <div class="ver mono">identity · v1.2 · 32 icons</div>
+    <h4>The mark</h4>
+    <a href="#construction">Construction</a>
+    <a href="#lockups">Lockups</a>
+    <a href="#scale">Scale &amp; minimum</a>
+    <a href="#onebit">One colour</a>
+    <h4>The kit</h4>
+    <a href="#grid">The 24 px grid</a>
+    <a href="#icons">32 icons</a>
+    <a href="#inuse">In use</a>
+    <a href="#misuse">Misuse</a>
+    <a href="#files">Files</a>
+    <div class="note" style="margin-top:20px">Every glyph on this page is drawn from
+      the same six radii. Nothing here is a picture of a logo; it is the logo,
+      at the size it will be used.</div>
+  </nav>
+
+  <div class="main">
+    <header class="mast">
+      <div class="mast-top">
+        <div class="lockup">
+          <svg class="lg-mark" viewBox="0 0 48 48" role="img" aria-label="The Meridian mark: a rising meridian inside a horizon ring">
+            <use href="#m-mark-glyph" width="48" height="48"/>
+          </svg>
+          <div class="lg-type">
+            <div class="lg-name">Meridian</div>
+            <div class="lg-sub mono">HYDROGRAPHIC · 54°04′N 4°44′W</div>
+          </div>
+        </div>
+        <div class="mast-copy">
+          <h1>An identity you can<br>draw with a ruler</h1>
+          <p>Meridian surveys coastlines and sells the charts. The mark is one circle,
+            one horizon, one rising line and three radii. It is the same drawing at
+            512 px and at 16 px, and the 32 icons in it are built on the 24 px grid
+            with a 1.5 stroke that does not fill in when it is shrunk.</p>
+          <div class="mast-spec mono">
+            <span>viewBox 0 0 48 48</span><span>unit r = 24</span><span>horizon at y = 30</span>
+            <span>radii 6 · 12 · 18</span><span>stroke 3 / 1.5</span><span>ink #14161a</span><span>signal #c8402f</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="construction">
+      <div class="sec-head"><span class="n">01</span><h2>Construction</h2>
+        <p>The mark is drawn, not traced. Every point sits on a radius of 6, 12, 18 or 24,
+          on the horizon at y = 30, or on the 15° meridian. The grid is the legal evidence;
+          the mark is what is left when you remove it.</p></div>
+      <div class="two">
+        <div class="panel">
+          <div class="panel-hd"><b>The grid</b><span class="mono tag">48 × 48, 8 divisions</span></div>
+          <div class="panel-bd build">
+            <svg class="build-grid" viewBox="0 0 48 48" role="img" aria-label="Construction grid: a 48 by 48 field with eight divisions, three concentric radii, a horizon line at y 30 and a meridian tilted 15 degrees, with the mark drawn over it">
+              <g class="g-lines">
+                <path d="M0 6h48M0 12h48M0 18h48M0 24h48M0 30h48M0 36h48M0 42h48"/>
+                <path d="M6 0v48M12 0v48M18 0v48M24 0v48M30 0v48M36 0v48M42 0v48"/>
+              </g>
+              <g class="g-circles"><circle cx="24" cy="24" r="24"/><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="6"/></g>
+              <path class="g-horizon" d="M0 30h48"/>
+              <path class="g-meridian" d="M24 0v48" transform="rotate(15 24 24)"/>
+              <g class="g-marks"><circle cx="24" cy="24" r="1.2"/><circle cx="24" cy="6" r="1.2"/><circle cx="24" cy="30" r="1.2"/></g>
+              <g class="g-final"><use href="#m-mark-glyph" width="48" height="48"/></g>
+            </svg>
+            <div class="build-notes">
+              <div><b>0 0 48 48</b><span>the field; every construction point is an integer</span></div>
+              <div><b>r 6 · 12 · 18 · 24</b><span>four concentric circles; the ring is r 18, the sun is r 6</span></div>
+              <div><b>y 30</b><span>the horizon, at five eighths of the field, so the sky outweighs the sea</span></div>
+              <div><b>15°</b><span>the meridian, tilted once, which is the whole idea: a line that knows where it is</span></div>
+              <div class="rule">No curve in the mark has a radius outside that set. If a change cannot be
+                stated in these numbers, it is not a change to the mark.</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><b>What the mark carries</b><span class="mono tag">reading order</span></div>
+          <div class="panel-bd reading">
+            <div class="read-row"><span class="k mono">01</span><div><b>A ring, open at the bottom</b>
+              <p>A survey instrument's field of view, and a horizon that does not close: the coast continues past the frame.</p></div></div>
+            <div class="read-row"><span class="k mono">02</span><div><b>A horizon at five eighths</b>
+              <p>Below the line is water (the field), above is sky (the reading). The line is the product.</p></div></div>
+            <div class="read-row"><span class="k mono">03</span><div><b>A meridian, tilted 15°</b>
+              <p>The longitude that fixes a chart. Tilted, because a true meridian on a Mercator sheet is a straight vertical — the tilt is the observation, not the map.</p></div></div>
+            <div class="read-row"><span class="k mono">04</span><div><b>A sun at the intersection</b>
+              <p>Rising out of the horizon, at the point where the meridian crosses it. One dot, r 6, in signal red — the only colour in the mark.</p></div></div>
+            <div class="rule">Test it as a brand should be tested: read it at arm's length, then at 16 px, then
+              in one colour, then embroidered. If it survives all four it is a mark, not an illustration.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lockups">
+      <div class="sec-head"><span class="n">02</span><h2>Lockups</h2>
+        <p>Five lockups, no more. The name is set in Instrument Serif with the
+          final s left unpointed; the mark never touches the type, the clear space is
+          one sun-diameter (12 units) on every side.</p></div>
+      <div class="lock-grid">
+        <figure class="lk">
+          <div class="lk-stage"><svg viewBox="0 0 48 48" class="lm" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
+            <div class="lt"><div class="lt-n">Meridian</div><div class="lt-s mono">HYDROGRAPHIC SURVEY</div></div></div>
+          <figcaption><b>Horizontal</b><span>The default: web header, invoice, hull. Mark height = cap height × 1.9.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage col"><svg viewBox="0 0 48 48" class="lm" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
+            <div class="lt" style="text-align:center"><div class="lt-n">Meridian</div><div class="lt-s mono">HYDROGRAPHIC SURVEY</div></div></div>
+          <figcaption><b>Stacked</b><span>Square placements: app icon plate, market stall, buoy plaque.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage solo"><svg viewBox="0 0 48 48" class="lm big" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg></div>
+          <figcaption><b>Mark alone</b><span>Legal only above 24 px, where the sun is still a dot and not a smudge.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage dark"><svg viewBox="0 0 48 48" class="lm" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
+            <div class="lt inv"><div class="lt-n">Meridian</div><div class="lt-s mono">CHART 214 · CORRECTION 41</div></div></div>
+          <figcaption><b>Inverse</b><span>On ink, on sea, on a wetsuit. The sun keeps its red; red on ink is the brand's voice.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage"><svg viewBox="0 0 48 48" class="lm" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
+            <div class="lt"><div class="lt-n">Meridian</div><div class="lt-s mono">54°04′N</div></div></div>
+          <figcaption><b>With a position</b><span>The only variable text: a station, a chart number, a latitude. Set in mono, never in the serif.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage tiny">
+            <span class="stamp"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>Meridian</span>
+            <span class="stamp sm"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>Meridian</span>
+            <span class="stamp xs mono"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>MER</span>
+          </div>
+          <figcaption><b>At the small end</b><span>104, 64, 28 px: below 64 the descriptor goes, below 40 the word goes, and the mark becomes a favicon.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="scale">
+      <div class="sec-head"><span class="n">03</span><h2>Scale &amp; minimum</h2>
+        <p>The mark is drawn once and shrunk honestly: 256, 96, 48, 32, 24, 16 px at 1:1.
+          Below 16 the sun disappears at a stroke width below one device pixel, so the
+          favicon uses the reduced mark — ring, horizon, meridian, no sun.</p></div>
+      <div class="panel">
+        <div class="panel-hd"><b>The ladder</b><span class="mono tag">rendered at 1:1, no zoom</span></div>
+        <div class="panel-bd ladder" id="ladder"></div>
+      </div>
+      <div class="two">
+        <div class="panel">
+          <div class="panel-hd"><b>16 px, eight times larger</b><span class="mono tag">the same pixels</span></div>
+          <div class="panel-bd pixel">
+            <div class="px16"><svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true"><use href="#m-mark-reduced" width="48" height="48"/></svg></div>
+            <div class="px8"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#m-mark-reduced" width="48" height="48"/></svg></div>
+            <div class="rule">Left: the favicon as it will land on the tab. Right: the same 16 × 16 grid,
+              magnified — the ring closes, the horizon holds, and the meridian is the only diagonal.</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><b>Clear space &amp; the rule of the sun</b><span class="mono tag">12 units</span></div>
+          <div class="panel-bd clear">
+            <div class="clear-box"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
+              <span class="cs cs-t"></span><span class="cs cs-r"></span><span class="cs cs-b"></span><span class="cs cs-l"></span>
+              <i class="mono">12</i></div>
+            <div class="rule">Clear space is one sun-diameter on all four sides, measured from the ring, not the box.
+              Nothing — type, rule, photograph edge, the other lockup — enters it. A mark with a crowd around it is
+              not a mark, it is furniture.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="onebit">
+      <div class="sec-head"><span class="n">04</span><h2>One colour</h2>
+        <p>The mark has to work in one ink: etched on brass, screen-printed on a canvas
+          bag, embroidered on a cap, stamped on a crate, cut from vinyl at 20 mm. Red is
+          a preference, never a requirement.</p></div>
+      <div class="bits" id="bits"></div>
+      <div class="rule" style="margin-top:14px">The 1-bit versions drop the sun's disc and keep its
+        ring: a solid dot at 3 mm of embroidery becomes a black hole in the middle of the mark. The
+        stencil cuts the horizon where the meridian crosses it, so the crossing reads on a rough surface.</div>
+    </section>
+
+    <section id="grid">
+      <div class="sec-head"><span class="n">05</span><h2>The 24 px grid</h2>
+        <p>Every icon lives in a 24 × 24 box with a 2 px gutter, a 20 px live area, a
+          1.5 stroke, round caps and joins, and a 30° step for every diagonal. Two icons
+          are shown with the grid on: the compass rose and the tide clock.</p></div>
+      <div class="two">
+        <div class="panel">
+          <div class="panel-hd"><b>Keylines</b><span class="mono tag">24 box · 20 live · 1.5 stroke</span></div>
+          <div class="panel-bd keylines" id="keylines"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><b>The rules that make a set, not a pile</b><span class="mono tag">6 rules</span></div>
+          <div class="panel-bd ic-rules">
+            <ul>
+              <li><b>One stroke, always 1.5.</b> Weight is not an emphasis tool in an icon set; a bold icon reads as a mistake at 16 px.</li>
+              <li><b>Round caps and joins, 2 px gutter.</b> Shapes stop 2 px from the box edge so a row of icons reads as a row, not a fence.</li>
+              <li><b>Diagonals in 30° steps.</b> Free angles break the pixel grid at 16 px and the set looks drunk.</li>
+              <li><b>Optical, not mathematical, centring.</b> The compass rose is drawn 0.25 px high: a 24-circle is optically small in a 24 box.</li>
+              <li><b>16 px is a second drawing.</b> Stroke 1.25, the two innermost details dropped — the 16 px row is not a scale, it is an edit.</li>
+              <li><b>An icon never carries the only meaning.</b> Every icon in the product has a label beside it; icons are signposts, not the sentence.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="icons">
+      <div class="sec-head"><span class="n">06</span><h2>32 icons</h2>
+        <p>Drawn for the product, not for the showcase: the survey toolbar, the chart
+          list, the tide panel, the account. Names in mono, keyboard letters in the corner,
+          and the same glyph at 24, 20, 16 with the 16 px redraw.</p></div>
+      <div class="panel">
+        <div class="panel-hd"><b>The wall</b><span class="mono tag">24 px · 1.5 stroke · 32 glyphs</span></div>
+        <div class="panel-bd wall" id="wall"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-hd"><b>24 · 20 · 16</b><span class="mono tag">the 16 px column is redrawn, not shrunk</span></div>
+        <div class="panel-bd sizes" id="sizes"></div>
+      </div>
+    </section>
+
+    <section id="inuse">
+      <div class="sec-head"><span class="n">07</span><h2>In use</h2>
+        <p>The identity is not the page above. It is a toolbar at 28 px, a chart list at
+          20 px, a tab bar at 24 px on a phone, and a browser tab — the sizes where a
+          mark is decided.</p></div>
+      <div class="two">
+        <div class="panel">
+          <div class="panel-hd"><b>The survey toolbar</b><span class="mono tag">28 px targets, 44 px on touch</span></div>
+          <div class="panel-bd">
+            <div class="toolbar" role="toolbar" aria-label="Chart tools" id="toolbar"></div>
+            <div class="tool-status" id="toolStatus" role="status">Soundings · <span class="mono">40 m</span></div>
+            <div class="chartline" aria-hidden="true">
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none">
+                <path d="M0 74 L28 66 L52 70 L84 44 L112 52 L142 30 L170 38 L206 20 L240 30 L276 14 L320 24" fill="none" stroke="var(--sea)" stroke-width="1.5"/>
+                <path d="M0 74 L28 66 L52 70 L84 44 L112 52 L142 30 L170 38 L206 20 L240 30 L276 14 L320 24 L320 96 L0 96 Z" fill="var(--sea-soft)"/>
+                <g class="sds"><text x="30" y="60">7</text><text x="70" y="40">12</text><text x="128" y="27">19</text><text x="196" y="17">24</text><text x="266" y="11">31</text></g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><b>Chart list</b><span class="mono tag">20 px icons, labels always present</span></div>
+          <div class="panel-bd">
+            <ul class="chartlist" id="chartlist"></ul>
+            <div class="note">The icon is a signpost, the words are the meaning. A list of icons alone is a
+              puzzle, and users do not pay to solve puzzles at work.</div>
+          </div>
+        </div>
+      </div>
+      <div class="two">
+        <div class="panel">
+          <div class="panel-hd"><b>Tab bar, 390 px wide</b><span class="mono tag">24 px icons, 44 px targets</span></div>
+          <div class="panel-bd">
+            <div class="phone" aria-label="Meridian app, phone">
+              <div class="ph-bar"><span class="mono">06:12</span><span class="grow"></span><span class="mono">▮ 84 %</span></div>
+              <div class="ph-title">Porthcadew<span class="mono">HW +0120 · 4.1 m</span></div>
+              <div class="ph-rows">
+                <div class="ph-row"><span class="ic" data-ic="tide"></span><span>Tide now</span><b class="mono">+2.1 m</b></div>
+                <div class="ph-row"><span class="ic" data-ic="soundings"></span><span>Soundings</span><b class="mono">17 402</b></div>
+                <div class="ph-row"><span class="ic" data-ic="warning"></span><span>Notices</span><b class="mono">2 new</b></div>
+              </div>
+              <nav class="ph-tabs" aria-label="Sections">
+                <button type="button" aria-current="page"><span class="ic" data-ic="chart"></span><b>Chart</b></button>
+                <button type="button"><span class="ic" data-ic="tide"></span><b>Tide</b></button>
+                <button type="button"><span class="ic" data-ic="waypoint"></span><b>Pins</b></button>
+                <button type="button"><span class="ic" data-ic="account"></span><b>You</b></button>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><b>The tab, at the size it lives</b><span class="mono tag">16 px, on a real chrome bar</span></div>
+          <div class="panel-bd">
+            <div class="chrome">
+              <div class="tab active"><svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true"><use href="#m-mark-reduced" width="48" height="48"/></svg><span>Meridian — Chart 214</span><button type="button" aria-label="Close tab" class="ic" data-ic="close"></button></div>
+              <div class="tab"><svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true"><use href="#m-mark-reduced" width="48" height="48"/></svg><span>Tide tables</span><button type="button" aria-label="Close tab" class="ic" data-ic="close"></button></div>
+            </div>
+            <div class="apps" id="apps"></div>
+            <div class="note">Top: the favicon in a tab, at 16 px, with the reduced mark. Below: the app
+              icon at 64, 48 and 32 px on a light and a dark home screen — the ring is the thing that
+              survives a launcher, so the launcher tile keeps the ring and the sun, and drops nothing.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="misuse">
+      <div class="sec-head"><span class="n">08</span><h2>Misuse</h2>
+        <p>Six ways the mark dies, shown as the mark, not described. Each pair is the same
+          file with one crime done to it.</p></div>
+      <div class="misuse" id="misuse-grid"></div>
+    </section>
+
+    <section id="files">
+      <div class="sec-head"><span class="n">09</span><h2>Files</h2>
+        <p>What ships, and the size each file is allowed to be the answer to.</p></div>
+      <div class="files">
+        <div class="file"><b class="mono">favicon.svg</b><span>16–32 px in a browser tab. The reduced mark: ring, horizon, meridian, no sun, stroke 3 for a sub-pixel-safe line.</span></div>
+        <div class="file"><b class="mono">mark.svg</b><span>The full mark, 48 × 48, one file, currentColor + one var(--signal). Every other file is derived from this one.</span></div>
+        <div class="file"><b class="mono">lockup.svg</b><span>Horizontal lockup with the word set as outlines, so a PDF of a survey report never falls back to a system serif.</span></div>
+        <div class="file"><b class="mono">icons.svg</b><span>One sprite, 32 symbols, <span class="mono">&lt;use&gt;</span> by name. 5.5 kB, 1.9 kB gzipped; every icon on this page is drawn from the same data.</span></div>
+        <div class="file"><b class="mono">appicon.svg</b><span>512, 180, 96, 48: the ring and sun on ink, with the safe-area grid the stores demand.</span></div>
+        <div class="file"><b class="mono">identity.css</b><span>The tokens the identity needs: ink, paper, sea, signal, and the two type roles. Nothing else is a brand decision.</span></div>
+      </div>
+      <div class="note" style="margin-top:14px">This page <em>is</em> the deliverable: every glyph
+        above is inline SVG drawn from the construction, the favicon in the tab is the shipped file,
+        the sprite is <span class="mono">icons.svg</span>, generated from <span class="mono">icons.js</span> by <span class="mono">tools/sprite.mjs</span> — one source, page and files both.</div>
+    </section>
+  </div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- the mark: one ring, one horizon, one meridian, one sun. All points on 6/12/18/24. -->
+    <symbol id="m-mark-glyph" viewBox="0 0 48 48">
+      <path d="M7.7 33.6A18 18 0 1 1 40.3 33.6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M2.4 30h43.2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M24 4.6 24 24" transform="rotate(15 24 24)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="24" cy="30" r="5.4" fill="var(--signal, #c8402f)" stroke="none"/>
+    </symbol>
+    <symbol id="m-mark-reduced" viewBox="0 0 48 48">
+      <path d="M7.7 33.6A18 18 0 1 1 40.3 33.6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <path d="M2.4 30h43.2" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <path d="M24 6v18" transform="rotate(15 24 24)" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+<script type="module" src="identity.js"></script>
+</body>
+</html>

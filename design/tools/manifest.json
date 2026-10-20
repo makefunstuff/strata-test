@@ -674,5 +674,148 @@
         "full": false
       }
     ]
+  },
+  {
+    "task": "06-identity",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "full": true,
+        "dpr": 1
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": []
+      },
+      {
+        "name": "construction",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#construction"
+        ]
+      },
+      {
+        "name": "lockups",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#lockups"
+        ]
+      },
+      {
+        "name": "scale",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#scale"
+        ]
+      },
+      {
+        "name": "onebit",
+        "page": "index.html",
+        "width": 1300,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#onebit"
+        ]
+      },
+      {
+        "name": "grid",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#grid"
+        ]
+      },
+      {
+        "name": "wall",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1180,
+        "dpr": 2,
+        "actions": [
+          "reveal:#icons"
+        ]
+      },
+      {
+        "name": "sizes",
+        "page": "index.html",
+        "width": 1200,
+        "height": 620,
+        "dpr": 2,
+        "actions": [
+          "reveal:#icons",
+          "scroll:+1100"
+        ]
+      },
+      {
+        "name": "inuse",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse"
+        ]
+      },
+      {
+        "name": "inuse-tabs",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse",
+          "scroll:+620"
+        ]
+      },
+      {
+        "name": "misuse",
+        "page": "index.html",
+        "width": 1300,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#misuse"
+        ]
+      },
+      {
+        "name": "toolbar-on",
+        "page": "index.html",
+        "width": 1200,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse",
+          "click:#toolbar .tb:nth-child(3)"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "full": true
+      }
+    ]
   }
 ]

@@ -243,6 +243,13 @@ for (const job of jobs) {
       const png = join(outDir, `${job.task}__${shot.name}.png`);
       // full-page shots render at CSS scale: a 1440x4000 page at dpr 2 is a 2880x8000 canvas,
       // which is a lot of memory next to Strata
+      // Headless single-process Chromium sometimes skips a region of the page in the
+      // capture (a 90 px cell in an icon wall paints as background). One pixel of scroll
+      // plus a compositing hint forces a repaint; the position is restored before the shot.
+      await p.evaluate("window.scrollBy(0, 1); document.body.style.transform = 'translateZ(0)'; void document.body.offsetHeight;").catch(() => {});
+      await p.waitForTimeout(90);
+      await p.evaluate("window.scrollBy(0, -1); document.body.style.transform = '';").catch(() => {});
+      await p.waitForTimeout(70);
       await p.screenshot({ path: png, fullPage: !!shot.full, scale: shot.full ? "css" : "device", timeout: 30000 });
       rec.audit = await p.evaluate(`(${audit.toString()})()`).catch((e) => ({ auditError: String(e).slice(0, 120) }));
       // re-encode PNG -> JPEG (see encode())
