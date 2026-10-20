@@ -1176,5 +1176,217 @@
         "actions": []
       }
     ]
+  },
+  {
+    "task": "09-motion",
+    "shots": [
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2
+      },
+      {
+        "name": "system",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#system"
+        ]
+      },
+      {
+        "name": "rules",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:.rules"
+        ]
+      },
+      {
+        "name": "sheet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-sheet"
+        ]
+      },
+      {
+        "name": "modal",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-modal"
+        ]
+      },
+      {
+        "name": "toast",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-toast"
+        ]
+      },
+      {
+        "name": "insert",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-insert"
+        ]
+      },
+      {
+        "name": "reorder",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-reorder"
+        ]
+      },
+      {
+        "name": "tabs",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-tabs"
+        ]
+      },
+      {
+        "name": "skeleton",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-skeleton"
+        ]
+      },
+      {
+        "name": "like",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-like"
+        ]
+      },
+      {
+        "name": "button",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-button",
+          "eval:return (function(){const el=document.createElement(\"div\");el.style.opacity=\"0.5\";document.body.append(el);const a=el.animate([{opacity:1,offset:0},{opacity:0,offset:0.2},{opacity:0,offset:0.66},{opacity:1,offset:1}],{duration:1000,fill:\"both\",easing:\"cubic-bezier(0.2,0.7,0.3,1)\"});a.pause();const out=[];for(const t of [0,0.2,0.3,0.45,0.66,0.8,1]){a.currentTime=t*1000;out.push(t+\"=\"+getComputedStyle(el).opacity)}a.cancel();el.remove();return out.join(\" \")})()"
+        ]
+      },
+      {
+        "name": "accordion",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-accordion"
+        ]
+      },
+      {
+        "name": "reveal",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-reveal"
+        ]
+      },
+      {
+        "name": "pointer",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-pointer"
+        ]
+      },
+      {
+        "name": "reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#reduced"
+        ]
+      },
+      {
+        "name": "reduced-sheet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-sheet"
+        ]
+      },
+      {
+        "name": "reduced-button",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-button"
+        ]
+      },
+      {
+        "name": "audit",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#audit"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1400,
+        "full": true,
+        "height": 900
+      }
+    ]
   }
 ]
