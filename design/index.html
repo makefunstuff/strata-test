@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design gallery — eleven briefs, built and measured</title>
+<meta name="description" content="Eleven design briefs built as plain static files and judged with measurements: ratings, the strongest fact from each, the weakest point, and an honest verdict on range and taste.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23ffffff'/%3E%3Crect x='3' y='4' width='18' height='2' fill='%2315161a'/%3E%3Crect x='3' y='8' width='18' height='2' fill='%2315161a'/%3E%3Crect x='3' y='12' width='11' height='2' fill='%2315161a'/%3E%3Crect x='3' y='16' width='14' height='2' fill='%231f4fd8'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+<a class="skip" href="#tasks">Skip to the eleven tasks</a>
+
+<header class="mast">
+  <p class="crumbs"><a href="../index.html">strata-test</a> · design gallery</p>
+  <h1>Eleven design briefs, built and measured</h1>
+  <p class="lede">Every page in this folder was built by the same model, from a written brief, as plain
+    static files with no build step, screenshotted in headless Chromium, inspected against its own
+    screenshots, then fixed and re-shot. Each folder carries a <code>NOTES.md</code> with a
+    self-critique, a list of remaining weak points, and ratings out of five. This page is the summary:
+    what was made, what the numbers say, and where the work is weak.</p>
+  <dl class="facts">
+    <div><dt>Briefs</dt><dd id="fact-tasks">—</dd></div>
+    <div><dt>Shots</dt><dd id="fact-shots">—</dd></div>
+    <div><dt>Checks per shot</dt><dd>console, page and network errors, contrast, named controls, landmarks, focus, image alts, sideways overflow</dd></div>
+    <div><dt>Not tested</dt><dd>a real reader, a screen reader, a keyboard-only walkthrough, a second browser, a second box</dd></div>
+  </dl>
+</header>
+
+<main id="main">
+  <section id="method-top" aria-labelledby="mt-h">
+    <h2 id="mt-h">What every task had to be</h2>
+    <ul class="rules">
+      <li>Plain static files, relative paths, no build step — GitHub Pages compatible. Fonts only from
+        pinned <code>@fontsource</code> packages on a CDN, or vendored. TypeScript or shell, no Python.</li>
+      <li>A real subject with real constraints, invented but consistent: a map app, a depot control
+        tower, an offline birding log, a terminal tool, a design system, a hydrographic firm, an
+        estuary's flood data, a grant application, a motion system, a flood portal, one page in nine styles.</li>
+      <li>Screenshots desktop and phone, plus the states that matter (empty, error, offline, filtered,
+        reduced motion, dark, print), through a RAM-capped headless Chromium:
+        <code>tools/shoot.mjs</code>.</li>
+      <li>One round of self-critique at least, against the screenshots, with the fixes stated as numbers
+        that moved.</li>
+      <li>Ratings out of five on five axes, and a section listing what is still wrong.</li>
+    </ul>
+  </section>
+
+  <section id="table" aria-labelledby="t-h">
+    <h2 id="t-h">The summary table</h2>
+    <p class="note">Scores are the model's own, from each task's <code>NOTES.md</code>; the notes beside
+      them are the model's too, including the unflattering ones. The averages at the foot are computed
+      here, not asserted.</p>
+    <div class="table-wrap"><table id="score-table"></table></div>
+    <p class="note" id="avg-note"></p>
+  </section>
+
+  <section id="tasks" aria-labelledby="k-h">
+    <h2 id="k-h">The eleven, one at a time</h2>
+    <p class="note">One card per brief: the thumbnail is a real screenshot, the strongest fact is a
+      measurement, the weakest point is the task's own admission.</p>
+    <div id="range"></div>
+    <div id="cards"></div>
+  </section>
+
+  <section id="verdict" aria-labelledby="v-h">
+    <h2 id="v-h">Verdict on range and taste</h2>
+    <div id="verdict-body"></div>
+  </section>
+
+  <section id="harness" aria-labelledby="h-h">
+    <h2 id="h-h">The harness, and the time it was blind</h2>
+    <p>Every number on this page that is not an opinion came from <code>tools/</code>:
+      <code>shoot.mjs</code> (screenshots plus the audit), <code>rendered.mjs</code> (the text a browser
+      rendered, and computed styles), <code>overflow.mjs</code> (which element is wider than the phone),
+      and one <code>measure.mjs</code> per task that needs its own measurement (the system's contrast
+      pairs, the motion audit, the redesign's before/after diff, the style study's content parity).</p>
+    <p>The audit ran per <em>element</em> and skipped any element that had children. Emphasis lives in
+      inline elements — the <code>em</code> in a headline, the <code>strong</code> in a paragraph — so
+      the coloured words that carry the meaning were exactly what it never read; and it parsed
+      <code>rgba(0, 0, 0, 0)</code> as black, so gradient-clipped text was measured as a colour it does
+      not have. Task 11's <a href="11-styles/index.html#before">before/after pair</a> is the proof: the
+      glass page with a gradient headline passed with zero findings under the old rule and reports one
+      under the new one. <code>shoot.mjs</code> now walks text nodes and reports a near-transparent
+      foreground as unmeasurable. <strong>Contrast counts for tasks 01–10 were produced by the element
+      rule and are looser than the ones for 11.</strong></p>
+    <p class="note">A tool that clears 40 shots and cannot see the loudest failure on the page is the
+      main lesson of this folder: the measurements are worth keeping only when you can see what they
+      measure.</p>
+  </section>
+
+  <section id="limits" aria-labelledby="l-h">
+    <h2 id="l-h">Limits of the whole exercise</h2>
+    <ul class="rules">
+      <li><strong>No readers.</strong> Every subject is invented. No one was interviewed, no task was
+        observed, no analytics were consulted. The measurements are real and the users are not.</li>
+      <li><strong>No assistive technology, no second browser, no second machine.</strong> Chromium 152,
+        software rendering, one Linux box. Names, landmarks, roles, focus rings and contrast are
+        measured; being read is not.</li>
+      <li><strong>Self-assessment.</strong> The ratings, the "remaining weak points" and the verdict on
+        this page are all written by the thing being judged. The scores are the least reliable numbers here.</li>
+      <li><strong>One drop.</strong> A twelfth brief — four conflicting-constraint problems with written
+        decision records (dense data at AA on a 390 px phone; a brand palette that fails contrast; a
+        playful brand in a clinical form; one console for beginners and experts) — was dropped by the
+        owner before it was built. Trade-off reasoning is present inside the eleven tasks (each
+        <code>NOTES.md</code> has a round-1→round-2 and a weights section), but it was never isolated
+        and rated as its own exercise.</li>
+    </ul>
+    <p class="back"><a href="../index.html">← strata-test</a> · <a href="README.md">README.md</a> · <a href="tools/work/shoot/latest.md">the last screenshot run</a></p>
+  </section>
+</main>
+
+<footer>
+  <p>Eleven design tasks, <span id="foot-shots">—</span> screenshots, one headless harness.
+    Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>,
+    branch work/7-strata-design-capability-evalu. Built by Strata, running pi headless.</p>
+</footer>
+
+<script src="gallery.js" type="module"></script>
+</body>
+</html>

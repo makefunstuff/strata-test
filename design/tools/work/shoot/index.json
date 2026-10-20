@@ -1,0 +1,188 @@
+[
+ {
+  "label": "./masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/masthead.jpg",
+  "bytes": 367450,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "./range",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#range"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/range.jpg",
+  "bytes": 410964,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "./table",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#table"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/table.jpg",
+  "bytes": 289969,
+  "px": "2880x2100",
+  "actions_failed": []
+ },
+ {
+  "label": "./cards",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#cards"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/cards.jpg",
+  "bytes": 683114,
+  "px": "2880x2800",
+  "actions_failed": []
+ },
+ {
+  "label": "./verdict",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#verdict"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/verdict.jpg",
+  "bytes": 810248,
+  "px": "2880x2800",
+  "actions_failed": []
+ },
+ {
+  "label": "./limits",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#limits"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/limits.jpg",
+  "bytes": 467051,
+  "px": "2880x2100",
+  "actions_failed": []
+ },
+ {
+  "label": "./full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/full.jpg",
+  "bytes": 1522912,
+  "px": "1440x8741",
+  "actions_failed": []
+ },
+ {
+  "label": "./phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/phone.jpg",
+  "bytes": 1383927,
+  "px": "390x17922",
+  "actions_failed": []
+ }
+]
