@@ -1388,5 +1388,337 @@
         "height": 900
       }
     ]
+  },
+  {
+    "task": "10-redesign",
+    "shots": [
+      {
+        "name": "before-full",
+        "page": "before.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 1200
+      },
+      {
+        "name": "after-full",
+        "page": "after.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 1200
+      },
+      {
+        "name": "before-phone",
+        "page": "before.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "after-phone",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "c-01b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-faq"
+        ]
+      },
+      {
+        "name": "c-01a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-02b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:[data-sl]"
+        ]
+      },
+      {
+        "name": "c-02a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-03b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-table"
+        ]
+      },
+      {
+        "name": "c-03a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#tides"
+        ]
+      },
+      {
+        "name": "c-04b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-nav"
+        ]
+      },
+      {
+        "name": "c-04a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:.nav"
+        ]
+      },
+      {
+        "name": "c-05b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-news"
+        ]
+      },
+      {
+        "name": "c-05a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#news"
+        ]
+      },
+      {
+        "name": "c-06b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-side"
+        ]
+      },
+      {
+        "name": "c-06a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:.rail"
+        ]
+      },
+      {
+        "name": "c-07b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-banner"
+        ]
+      },
+      {
+        "name": "c-07a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-08b",
+        "page": "before.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "c-08a",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000
+      },
+      {
+        "name": "measures",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1300,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#measures"
+        ]
+      },
+      {
+        "name": "pages",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#pages"
+        ]
+      },
+      {
+        "name": "log1",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-1"
+        ]
+      },
+      {
+        "name": "log2",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-10"
+        ]
+      },
+      {
+        "name": "log3",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-16"
+        ]
+      },
+      {
+        "name": "kept",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1000,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#kept"
+        ]
+      },
+      {
+        "name": "method",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#method"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 4000
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "settle": 4000
+      },
+      {
+        "name": "phone-tides",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#tideTable"
+        ]
+      },
+      {
+        "name": "phone-top",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": []
+      }
+    ]
   }
 ]

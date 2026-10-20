@@ -1,0 +1,256 @@
+/* 10 · the redesign. The civic paper language of the Authority's other pages
+   (tasks 07 and 08): Fraunces for the headings that carry a warning, Inter for
+   the reading, IBM Plex Mono for the numbers, and no colour that is not a fact. */
+:root {
+  --ink: #16262b;
+  --ink-2: #3d5259;
+  --ink-3: #5d6f75;
+  --paper: #ffffff;
+  --paper-2: #f4f7f4;
+  --paper-3: #eaf0ec;
+  --line: #d5ddd6;
+  --line-2: #9fada4;
+  --accent: #167057;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3f0e9;
+  --danger: #a13327;
+  --danger-soft: #fbe9e5;
+  --flood: #8a5300;
+  --flood-soft: #fbf0dd;
+  --info: #24567f;
+  --focus: #167057;
+  --display: "Fraunces Variable", Fraunces, Georgia, serif;
+  --text: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 4px;
+  --dur: 180ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+html { background: #ffffff }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px/1.55 var(--text);
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-spacing: -0.015em }
+h1 { font-size: clamp(24px, 3.4vw, 34px); line-height: 1.16 }
+h2 { font-size: 21px; line-height: 1.2 }
+h3 { font-size: 17px; line-height: 1.3 }
+p { margin: 0 0 12px }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px }
+a:hover { text-decoration-thickness: 2px }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px }
+.mono, .num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.95em }
+.tiny { font-size: 13px; color: var(--ink-3) }
+.skip {
+  position: absolute; left: 12px; top: -60px; background: var(--ink); color: #fff;
+  padding: 10px 14px; border-radius: var(--r); z-index: 60; text-decoration: none;
+}
+.skip:focus { top: 12px }
+hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0 }
+
+/* masthead ---------------------------------------------------------------- */
+.mast { border-bottom: 1px solid var(--line); background: var(--paper) }
+.mast-in {
+  max-width: 1160px; margin: 0 auto; padding: 14px 20px;
+  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+}
+.brand { display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--ink) }
+.brand svg { width: 38px; height: 38px; color: var(--accent); flex: none }
+.brand b { display: block; font-family: var(--display); font-size: 19px; line-height: 1.1 }
+.brand small { display: block; font-size: 12.5px; color: var(--ink-3); margin-top: 2px }
+.mast-actions { margin-left: auto; display: flex; gap: 18px; align-items: center; flex-wrap: wrap }
+.urgent {
+  margin: 0; font-size: 14px; color: var(--ink-2); background: var(--danger-soft);
+  border: 1px solid #eccbc4; border-left: 3px solid var(--danger); padding: 7px 11px; border-radius: var(--r);
+}
+.urgent b { color: var(--danger) }
+.urgent a { color: var(--danger); font-family: var(--mono); font-size: 13px; white-space: nowrap }
+.search { display: flex; gap: 6px; align-items: end }
+.search label { font-size: 12px; color: var(--ink-3); display: block; margin-bottom: 3px }
+.search input { border: 1px solid var(--line-2); border-radius: var(--r); padding: 8px 10px; font: 400 15px var(--text); min-width: 180px; background: #fff }
+.search button { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); border-radius: var(--r); padding: 8px 13px; font: 500 14px var(--text); cursor: pointer }
+.nav { border-top: 1px solid var(--line); background: var(--paper-2) }
+.nav ul { max-width: 1160px; margin: 0 auto; padding: 0 12px; list-style: none; display: flex; gap: 2px; flex-wrap: wrap }
+.nav a {
+  display: block; padding: 11px 12px; text-decoration: none; color: var(--ink-2);
+  font-size: 14.5px; font-weight: 500; border-bottom: 2px solid transparent;
+}
+.nav a:hover { color: var(--ink); border-bottom-color: var(--line-2) }
+.nav a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent) }
+
+/* the answer, first ------------------------------------------------------- */
+.status { border-bottom: 1px solid var(--line); background: var(--paper-2) }
+.stat-grid {
+  max-width: 1160px; margin: 0 auto; padding: 22px 20px 26px;
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr); gap: 22px;
+}
+.warn-card {
+  background: #fff; border: 1px solid #e6cdc7; border-left: 4px solid var(--danger);
+  border-radius: var(--r); padding: 18px 20px;
+}
+.badge { display: flex; gap: 8px; align-items: center; color: var(--danger); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px }
+.badge .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--danger); flex: none }
+.lede { font-size: 17px; line-height: 1.5; margin: 10px 0 16px }
+.do { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px }
+.do h2 { font-size: 15px; font-family: var(--text); font-weight: 600; margin: 0 0 8px }
+.do ol { margin: 0; padding-left: 20px }
+.do li { margin: 5px 0 }
+.ref { font-size: 13.5px; color: var(--ink-2); margin: 14px 0 0; border-top: 1px solid var(--line); padding-top: 10px }
+.check { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px }
+.check h2 { font-size: 16px; font-family: var(--text); font-weight: 600; margin: 0 0 6px }
+.check p { font-size: 14px; color: var(--ink-2) }
+.check form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 10px 0 }
+.check label { width: 100%; font-size: 12.5px; color: var(--ink-3); margin: 0 }
+.check input { flex: 1 1 150px; border: 1px solid var(--line-2); border-radius: var(--r); padding: 9px 10px; font: 400 15px var(--text); background: #fff }
+.check button { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); border-radius: var(--r); padding: 9px 14px; font: 500 14px var(--text); cursor: pointer }
+.verdict { font-size: 14.5px; padding: 10px 12px; border-radius: var(--r); background: var(--paper-2); border: 1px solid var(--line); min-height: 42px }
+.verdict.on-red { background: var(--danger-soft); border-color: #eccbc4; color: #6d2118 }
+.verdict.on-ok { background: var(--accent-soft); border-color: #c4ddd0; color: #0e4b3a }
+.verdict.on-flood { background: var(--flood-soft); border-color: #e6d3ae; color: #5c3700 }
+.now { margin: 10px 0 0; display: grid; gap: 6px }
+.now > div { display: flex; gap: 10px; justify-content: space-between; border-bottom: 1px dotted var(--line-2); padding: 4px 0 }
+.now dt { color: var(--ink-3); font-size: 13.5px }
+.now dd { margin: 0; font-size: 14.5px; text-align: right }
+.upd { font-size: 12.5px; color: var(--ink-3); margin: 10px 0 0 }
+
+/* one column plus one rail ------------------------------------------------ */
+.cols {
+  max-width: 1160px; margin: 0 auto; padding: 8px 20px 40px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 34px;
+}
+.col-main { min-width: 0 }
+.col-main > section { padding: 22px 0 6px; border-bottom: 1px solid var(--line) }
+.col-main > section:last-child { border-bottom: 0 }
+.col-main h2 { margin: 0 0 8px }
+.col-main section > p { max-width: 68ch; color: var(--ink-2) }
+.tw { overflow-x: auto }
+table.tides { border-collapse: collapse; width: 100%; margin: 14px 0 6px; font-size: 14.5px }
+table.tides caption { text-align: left; font-size: 13px; color: var(--ink-3); padding-bottom: 6px }
+table.tides th, table.tides td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line) }
+table.tides thead th { border-bottom: 2px solid var(--line-2); font-size: 12.5px; color: var(--ink-2); font-weight: 600; white-space: nowrap }
+table.tides tbody td { white-space: nowrap }
+table.tides thead tr:last-child th { padding-bottom: 6px }
+table.tides thead .ch { font: 400 12px var(--text); color: var(--ink-3); text-transform: none }
+table.tides tbody th { font-weight: 500 }
+table.tides tr.over td, table.tides tr.over th { background: var(--flood-soft) }
+table.tides tr.over th { font-weight: 600 }
+.note { font-size: 14px; background: var(--paper-2); border-left: 3px solid var(--flood); padding: 10px 12px; border-radius: 0 var(--r) var(--r) 0; margin: 14px 0 }
+.row-btns { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+  border-radius: var(--r); padding: 10px 14px; font: 500 14.5px var(--text); cursor: pointer;
+}
+.btn.sec { background: #fff; color: var(--accent); border-color: var(--line-2) }
+.btn.sec:hover { border-color: var(--accent) }
+.btn.wide { width: 100%; justify-content: center }
+ul.notices, ul.news { list-style: none; margin: 12px 0 0; padding: 0 }
+ul.notices > li, ul.news > li { padding: 12px 0; border-top: 1px solid var(--line) }
+ul.notices h3 a, ul.news h3 a { color: var(--ink); text-decoration: none }
+ul.notices h3 a:hover, ul.news h3 a:hover { color: var(--accent) }
+.meta { font-size: 13px; color: var(--ink-3); margin: 2px 0 6px }
+.notices p:not(.meta) { font-size: 14.5px; margin: 0 0 6px }
+.fmt { font-size: 13.5px; margin: 0 !important }
+.fmt a { margin-right: 14px }
+dl.gl { margin: 12px 0 0; display: grid; gap: 10px }
+dl.gl > div { border-left: 2px solid var(--line-2); padding-left: 12px }
+dl.gl dt { font-weight: 600; font-size: 15px }
+dl.gl dd { margin: 3px 0 0; color: var(--ink-2); font-size: 15px }
+.src { font-size: 13.5px; color: var(--ink-3); margin-top: 16px }
+
+.rail { padding-top: 22px }
+.box { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 15px; margin-bottom: 16px; background: #fff }
+.box h2 { font-size: 14px; font-family: var(--text); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin: 0 0 8px }
+.box p { font-size: 14px; color: var(--ink-2) }
+.box ul { list-style: none; margin: 0; padding: 0 }
+.box li { border-bottom: 1px solid var(--line) }
+.box li:last-child { border-bottom: 0 }
+.box li a { display: block; padding: 9px 0; text-decoration: none; color: var(--accent); font-size: 15px }
+.box li a:hover { text-decoration: underline }
+.box.act li a { display: flex; flex-direction: column; gap: 2px }
+.box.act b { font-weight: 600 }
+.box.act span { font-size: 12.5px; color: var(--ink-3); font-weight: 400 }
+.nlf { display: flex; flex-wrap: wrap; gap: 8px; align-items: end }
+.nlf label { width: 100%; font-size: 12.5px; color: var(--ink-3) }
+.nlf input { flex: 1 1 140px; border: 1px solid var(--line-2); border-radius: var(--r); padding: 9px 10px; font: 400 15px var(--text); background: #fff }
+.nlf button { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); border-radius: var(--r); padding: 9px 13px; font: 500 14px var(--text); cursor: pointer }
+.box.nl { background: var(--paper-2) }
+
+.foot { border-top: 1px solid var(--line); background: var(--paper-2) }
+.foot-in { max-width: 1160px; margin: 0 auto; padding: 24px 20px 30px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px }
+.foot h2 { font-size: 13px; font-family: var(--text); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin: 0 0 8px }
+.foot ul { list-style: none; margin: 0; padding: 0 }
+.foot li { padding: 4px 0 }
+.foot a { font-size: 14.5px }
+.foot p { font-size: 13.5px; color: var(--ink-2) }
+
+.ck { position: fixed; left: 0; right: 0; bottom: 0; background: #14252a; color: #dbe4e2; z-index: 50 }
+.ck-in { max-width: 1160px; margin: 0 auto; padding: 14px 20px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap }
+.ck p { margin: 0; font-size: 14px; max-width: 62ch }
+.ck-btns { display: flex; gap: 10px; align-items: center; margin-left: auto; flex-wrap: wrap }
+.ck button { border-radius: var(--r); padding: 10px 13px; font: 500 14px var(--text); cursor: pointer; border: 1px solid #7fa8a0; background: transparent; color: #eaf3f0 }
+.ck button:first-child { background: #cfe9df; border-color: #cfe9df; color: #12332c }
+.ck a { color: #a8c9c2; font-size: 14px }
+
+@media (max-width: 1000px) {
+  .stat-grid { grid-template-columns: 1fr }
+  .cols { grid-template-columns: 1fr; gap: 8px }
+  .rail { padding-top: 0; border-top: 1px solid var(--line) }
+  .foot-in { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+}
+@media (max-width: 700px) {
+  body { font-size: 16.5px }
+  .mast-in { padding: 12px 14px; gap: 12px }
+  .mast-actions { width: 100%; margin-left: 0; gap: 12px }
+  .search { flex: 1 1 200px }
+  .search input { min-width: 0; width: 100% }
+  .stat-grid { padding: 16px 14px 20px }
+  .cols { padding: 8px 14px 32px }
+  .nav ul { padding: 0 6px }
+  .nav a { padding: 12px 10px; font-size: 15px; min-height: 44px; display: flex; align-items: center }
+  /* The tide table becomes one card a day, every cell labelled. The column heads are
+     the same words as the cell labels, so on a phone they are gone, not hidden: an
+     sr-only table-header-group is not clipped by overflow and pushes the page wide. */
+  table.tides thead { display: none }
+  table.tides, table.tides tbody, table.tides tr, table.tides th { display: block; width: 100% }
+  table.tides tr { border: 1px solid var(--line); border-radius: var(--r); margin: 10px 0; padding: 8px 12px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px; row-gap: 8px; align-items: baseline; max-width: 100% }
+  table.tides tr.over { border-color: #e0b96f; background: var(--flood-soft) }
+  table.tides tbody th { border-bottom: 1px solid var(--line); font-size: 15.5px; padding: 0 0 7px; grid-column: 1 / -1; width: auto }
+  table.tides td { border-bottom: 0; padding: 0 }
+  table.tides td::before { content: attr(data-l); color: var(--ink-3); font: 400 13px var(--text) }
+  table.tides td:nth-of-type(2n)::before { content: none }
+  table.tides td:nth-of-type(2n-1) { display: flex; justify-content: space-between; gap: 14px; grid-column: 1; white-space: nowrap; font-weight: 500 }
+  table.tides td:nth-of-type(2n) { grid-column: 2; text-align: right; white-space: nowrap }
+  table.tides td:nth-of-type(2n)::after { content: " m"; color: var(--ink-3); font: 400 12px var(--text) }
+  table.tides td.miss::after { content: "" }
+  table.tides td:last-of-type { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px;
+    border-top: 1px solid var(--line); padding-top: 9px; margin-top: 3px }
+  .tw { overflow: visible }
+  .foot-in { grid-template-columns: 1fr }
+  .ck-in { flex-direction: column; align-items: stretch }
+  .ck-btns { margin-left: 0 }
+  .ck button, .ck a { min-height: 44px }
+}
+@media (pointer: coarse) {
+  .btn, .check button, .search button, .nlf button { min-height: 44px }
+  .box li a { padding: 12px 0 }
+}
+@media print {
+  .mast, .nav, .rail, .foot, .ck, .row-btns, .skip { display: none !important }
+  body { font-size: 11pt; color: #000 }
+  .cols, .stat-grid { display: block; padding: 0 }
+  .warn-card, .check { border: 1px solid #999 }
+  a { text-decoration: none; color: #000 }
+  table.tides { font-size: 10pt }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0ms !important; transition-duration: 0ms !important }
+  html { scroll-behavior: auto }
+}

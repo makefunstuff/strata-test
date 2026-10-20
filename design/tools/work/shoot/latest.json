@@ -1,27 +1,1925 @@
 [
  {
-  "label": "09-motion/button",
+  "label": "10-redesign/before-full",
+  "ok": true,
+  "errs": [
+   "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Search"
+    },
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Modern Slavery",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Welig",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/before-full.jpg",
+  "bytes": 233535,
+  "px": "1400x1614",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/after-full",
   "ok": true,
   "errs": [],
-  "actions": [
-   "reveal:#study-button",
-   "eval:(function(){const el=document.createElement('div');el.style.opacity='0.5';document.body.append(el);const a=el.animate([{opacity:1,offset:0},{opacity:0,offset:0.2},{opacity:0,offset:0.66},{opacity:1,offset:1}],{duration:1000,fill:'both',easing:'cubic-bezier(0.2,0.7,0.3,1)'});a.pause();const out=[];for(const t of [0,0.2,0.3,0.45,0.66,0.8,1]){a.currentTime=t*1000;out.push(t+'='+getComputedStyle(el).opacity)}a.cancel();el.remove();return out.join(' ')})()"
-  ],
+  "actions": [],
   "audit": {
    "h1": 1,
    "lang": "en",
-   "title": "Motion study — Halyard in motion",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
    "stylesheetsMissing": [],
-   "landmarks": "header+main+footer",
+   "landmarks": "header+main+footer+nav+aside",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
    "focusRing": "outline"
   },
-  "jpg": "09-motion/shots/button.jpg",
-  "bytes": 192528,
-  "px": "2800x1400",
+  "jpg": "10-redesign/shots/after-full.jpg",
+  "bytes": 591261,
+  "px": "1400x3681",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/before-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Flood Risk Management & Tidal Navigation",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/before-phone.jpg",
+  "bytes": 224461,
+  "px": "962x1614",
+  "actions_failed": [],
+  "hOverflow": 572
+ },
+ {
+  "label": "10-redesign/after-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/after-phone.jpg",
+  "bytes": 588608,
+  "px": "390x8628",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-01b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-faq"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "16:12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "0.86",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "7.2",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "CD",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-01b.jpg",
+  "bytes": 271598,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-01a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-01a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-02b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:[data-sl]"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-02b.jpg",
+  "bytes": 253785,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-02a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-02a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-03b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-table"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "16:12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "0.86",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "7.2",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "CD",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-03b.jpg",
+  "bytes": 271598,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-03a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tides"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-03a.jpg",
+  "bytes": 380147,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-04b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-nav"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-04b.jpg",
+  "bytes": 316613,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-04a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.nav"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-04a.jpg",
+  "bytes": 354422,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-05b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-news"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-05b.jpg",
+  "bytes": 308948,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-05a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#news"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-05a.jpg",
+  "bytes": 269394,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-06b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-side"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-06b.jpg",
+  "bytes": 310043,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-06a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.rail"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-06a.jpg",
+  "bytes": 380147,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-07b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-banner"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-07b.jpg",
+  "bytes": 302440,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-07a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-07a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-08b",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Flood Risk Management & Tidal Navigation",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-08b.jpg",
+  "bytes": 167182,
+  "px": "780x1688",
+  "actions_failed": [],
+  "hOverflow": 572
+ },
+ {
+  "label": "10-redesign/c-08a",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-08a.jpg",
+  "bytes": 151315,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/masthead.jpg",
+  "bytes": 378546,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/measures",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#measures"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/measures.jpg",
+  "bytes": 394812,
+  "px": "2800x2600",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/pages",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#pages"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/pages.jpg",
+  "bytes": 524022,
+  "px": "2800x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log1",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-1"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log1.jpg",
+  "bytes": 421196,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log2",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-10"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log2.jpg",
+  "bytes": 408121,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log3",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-16"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log3.jpg",
+  "bytes": 407721,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/kept",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#kept"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/kept.jpg",
+  "bytes": 567448,
+  "px": "2800x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/method",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#method"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/method.jpg",
+  "bytes": 403725,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/full.jpg",
+  "bytes": 3196868,
+  "px": "1400x25961",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/phone.jpg",
+  "bytes": 168602,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone-tides",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tideTable"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/phone-tides.jpg",
+  "bytes": 107523,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone-top",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/phone-top.jpg",
+  "bytes": 151315,
+  "px": "780x1688",
   "actions_failed": []
  }
 ]

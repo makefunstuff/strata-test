@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flood warning for Harrowmouth — Harrow Estuary Authority</title>
+<meta name="description" content="The flood warning in force for Harrowmouth, Lower Sandbar and Upcerne: what it means, what to do, the tide times, and the notices.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20rx='4'%20fill='%2316262b'/%3E%3Cpath%20d='M3%2016c3%200%203-4%206-4s3%204%206%204%203-4%206-4'%20fill='none'%20stroke='%2357c98d'%20stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="after.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the main content</a>
+
+<header class="mast">
+  <div class="mast-in">
+    <a class="brand" href="#" aria-label="Harrow Estuary Authority, home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.6 14.6c2.6 0 2.6-3.4 5.2-3.4s2.6 3.4 5.2 3.4 2.6-3.4 5.2-3.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7.2" r="1.6" fill="currentColor"/></svg>
+      <span><b>Harrow Estuary Authority</b><small>Flood warnings, tide times and estuary notices</small></span>
+    </a>
+    <div class="mast-actions">
+      <p class="urgent"><b>Flooding now?</b> <a href="tel:03001234567">Call 0300&nbsp;123&nbsp;4567</a> — out of hours, the same number.</p>
+      <form class="search" role="search" onsubmit="return false">
+        <label for="q">Search this site</label>
+        <input id="q" type="search" autocomplete="off" placeholder="tide, grant, notice…">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Main">
+    <ul>
+      <li><a href="#status" aria-current="page">Flood status</a></li>
+      <li><a href="#tides">Tide times</a></li>
+      <li><a href="#notices">Notices</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#help">Help</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- The answer is the first thing on the page: am I affected, and what do I do. -->
+  <section class="status" id="status" aria-labelledby="status-h">
+    <div class="stat-grid">
+      <div class="warn-card">
+        <p class="badge"><span class="dot" aria-hidden="true"></span>Flood warning in force</p>
+        <h1 id="status-h">Harrowmouth, Lower Sandbar and Upcerne</h1>
+        <p class="lede">The tide is expected to rise above the flood line of
+          <b>4.20&nbsp;metres</b> between <b>21:30 on 3 December</b> and
+          <b>06:12 on 5 December</b>. The forecast peak is <b>4.61&nbsp;m</b> at
+          <b>22:14 on 3 December</b> — 41 cm above the flood line.</p>
+        <div class="do">
+          <h2>What to do</h2>
+          <ol>
+            <li>Put the flood barriers up, and move insurance documents and your medicines to somewhere dry and high.</li>
+            <li>Turn the gas off at the meter if water is coming in. Do not touch the meter if it is already wet.</li>
+            <li>Tell a neighbour who may not have seen this, especially one who lives alone.</li>
+            <li>Do not drive through flood water, and do not walk it. Fifteen centimetres of moving water can knock you over.</li>
+          </ol>
+        </div>
+        <p class="ref"><b>Legal reference</b> <span class="mono">TID/2024/1187</span> — issued 3 December 2024 at 16:40,
+          next review at 06:00 on 4 December. The <a href="#notice-1187">official notice (PDF)</a> is the legal
+          record; this page is the reading copy.</p>
+      </div>
+
+      <div class="check">
+        <h2>Am I affected?</h2>
+        <p>Type your address, or the two-letter code on your flood line marker.</p>
+        <form onsubmit="return false">
+          <label for="addr">Your address or code</label>
+          <input id="addr" type="text" autocomplete="street-address" placeholder="2 Quay Wall, or QR1">
+          <button type="button" id="addrGo">Check</button>
+        </form>
+        <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
+        <hr>
+        <h2>Right now at Harrowmouth</h2>
+        <dl class="now">
+          <div><dt>Tide</dt><dd><b class="num">3.94 m</b> and rising</dd></div>
+          <div><dt>Next high water</dt><dd><b class="num">22:14</b> · 4.48 m</dd></div>
+          <div><dt>Flood line</dt><dd>4.20 m · <b>above it from 21:30</b></dd></div>
+          <div><dt>Wind</dt><dd>South 6, gusting 9, veering west</dd></div>
+          <div><dt>Ferry</dt><dd>Suspended until 06:00 on 4 December</dd></div>
+        </dl>
+        <p class="upd">Updated 3 December 2024 at 16:40, from the Estuary Gauge Array and the Nautilus model run.
+          <a href="#help">Where these numbers come from</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- One column of content, one rail. The tide table is the reason people come. -->
+  <div class="cols">
+    <div class="col-main">
+      <section id="tides" aria-labelledby="tides-h">
+        <h2 id="tides-h">Tide times, Harrowmouth</h2>
+        <p>Heights are in metres above Chart Datum, as determined in 2011. Times are UTC; add an hour in British
+          Summer Time. A row is tinted amber when its tide reaches the flood line of 4.20 m. These times are for
+          planning, not for navigation.</p>
+        <div class="tw">
+          <table class="tides" id="tideTable">
+            <caption>Tide times and heights at Harrowmouth, 3 to 9 December 2024, in metres above Chart Datum. The four waters of each day, in the order they happen.</caption>
+            <thead>
+              <tr><th scope="col" class="ch">Date</th><th scope="col" colspan="2">First low water</th>
+                <th scope="col" colspan="2">First high water</th>
+                <th scope="col" colspan="2">Second low water</th><th scope="col" colspan="2">Second high water</th>
+                <th scope="col">Range (m)</th></tr>
+            </thead>
+            <tbody>
+              <tr class="over"><th scope="row">Tue 3 December</th><td class="num" data-l="First low water">04:26</td><td class="num" data-l="Height (m)">1.02</td><td class="num" data-l="First high water">10:42</td><td class="num" data-l="Height (m)">4.31</td><td class="num" data-l="Second low water">16:12</td><td class="num" data-l="Height (m)">0.86</td><td class="num" data-l="Second high water">22:14</td><td class="num" data-l="Height (m)">4.48</td><td class="num" data-l="Spring range (m)">7.2</td></tr>
+              <tr class="over"><th scope="row">Wed 4 December</th><td class="num" data-l="First low water">05:11</td><td class="num" data-l="Height (m)">1.11</td><td class="num" data-l="First high water">11:26</td><td class="num" data-l="Height (m)">4.24</td><td class="num" data-l="Second low water">16:57</td><td class="num" data-l="Height (m)">0.94</td><td class="num" data-l="Second high water">22:58</td><td class="num" data-l="Height (m)">4.39</td><td class="num" data-l="Spring range (m)">7.0</td></tr>
+              <tr class="over"><th scope="row">Thu 5 December</th><td class="num" data-l="First low water">05:54</td><td class="num" data-l="Height (m)">1.24</td><td class="num" data-l="First high water">12:08</td><td class="num" data-l="Height (m)">4.10</td><td class="num" data-l="Second low water">17:41</td><td class="num" data-l="Height (m)">1.05</td><td class="num" data-l="Second high water">23:41</td><td class="num" data-l="Height (m)">4.22</td><td class="num" data-l="Spring range (m)">6.6</td></tr>
+              <tr><th scope="row">Fri 6 December</th><td class="num" data-l="First low water">06:36</td><td class="num" data-l="Height (m)">1.38</td><td class="num" data-l="First high water">12:49</td><td class="num" data-l="Height (m)">3.92</td><td class="num" data-l="Second low water">18:24</td><td class="num" data-l="Height (m)">1.18</td><td class="num miss" data-l="Second high water">&mdash;</td><td class="num miss" data-l="Height (m)">&mdash;</td><td class="num" data-l="Spring range (m)">6.1</td></tr>
+              <tr><th scope="row">Sat 7 December</th><td class="num" data-l="First low water">07:17</td><td class="num" data-l="Height (m)">1.52</td><td class="num" data-l="First high water">13:29</td><td class="num" data-l="Height (m)">3.71</td><td class="num" data-l="Second low water">19:07</td><td class="num" data-l="Height (m)">1.31</td><td class="num" data-l="Second high water">00:22</td><td class="num" data-l="Height (m)">4.01</td><td class="num" data-l="Spring range (m)">5.5</td></tr>
+              <tr><th scope="row">Sun 8 December</th><td class="num" data-l="First low water">07:57</td><td class="num" data-l="Height (m)">1.65</td><td class="num" data-l="First high water">14:08</td><td class="num" data-l="Height (m)">3.52</td><td class="num" data-l="Second low water">19:50</td><td class="num" data-l="Height (m)">1.44</td><td class="num" data-l="Second high water">01:02</td><td class="num" data-l="Height (m)">3.78</td><td class="num" data-l="Spring range (m)">4.9</td></tr>
+              <tr><th scope="row">Mon 9 December</th><td class="num" data-l="First low water">08:37</td><td class="num" data-l="Height (m)">1.76</td><td class="num" data-l="First high water">14:47</td><td class="num" data-l="Height (m)">3.36</td><td class="num" data-l="Second low water">20:33</td><td class="num" data-l="Height (m)">1.55</td><td class="num" data-l="Second high water">01:41</td><td class="num" data-l="Height (m)">3.56</td><td class="num" data-l="Spring range (m)">4.3</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><b>This estuary has four waters a day — two highs and two lows — and all four are listed, in the order they happen.</b> Rows tinted amber are days
+          when a high water reaches the flood line of 4.20 m; the last is the evening of 5 December, at 4.22 m. The
+          second high water on 6 December is shown as <span class="kv mono">—</span> because the gauge at the mouth was
+          out of service that evening, and it is not estimated for you. Full tables for 2025 are
+          <a href="#notices">on the notices page</a> and at the Estuary Centre.</p>
+        <div class="row-btns">
+          <button type="button" class="btn" id="printTides">Print these seven days</button>
+          <a class="btn sec" href="#notices">Tide tables 2025 (PDF)</a>
+          <a class="btn sec" href="#tides">Other gauges</a>
+        </div>
+      </section>
+
+      <section id="notices" aria-labelledby="not-h">
+        <h2 id="not-h">Notices</h2>
+        <p>Every notice is a web page first, with the official PDF beside it. The date is the date it was issued, and
+          the line under each title says who it is for.</p>
+        <ul class="notices">
+          <li id="notice-1187">
+            <h3><a href="#notices">Flood warning TID/2024/1187</a></h3>
+            <p class="meta"><time datetime="2024-12-03">3 December 2024</time> · in force</p>
+            <p>If you are in Harrowmouth, Lower Sandbar or Upcerne at or above 4.20 m, this is the notice for you.
+              It sets out the area, the times, and what the Authority and you are each required to do.</p>
+            <p class="fmt"><a href="#notices">Read it on this page</a> · <a href="#notices">The official notice (PDF, 1.2 MB)</a></p>
+          </li>
+          <li>
+            <h3><a href="#notices">Property Flood Resilience grant: guidance</a></h3>
+            <p class="meta"><time datetime="2024-11-14">14 November 2024</time> · applications open</p>
+            <p>Up to £5,000 towards flood resistance for a home in a designated area. You need two quotations only when
+              the works cost more than £1,500.</p>
+            <p class="fmt"><a href="#notices">Apply (26 questions, save and return)</a> · <a href="#notices">Guidance (PDF, 640 KB)</a></p>
+          </li>
+          <li>
+            <h3><a href="#notices">Sea defence maintenance: what the works mean for you</a></h3>
+            <p class="meta"><time datetime="2024-11-28">28 November 2024</time> · starts 13 January</p>
+            <p>Twenty-six weeks of works along the Quay Wall section. Access to your property is kept; the hours of
+              noise are listed, and there is a number to call if access is blocked.</p>
+            <p class="fmt"><a href="#notices">Read the plan</a> · <a href="#notices">Notice under Regulation 14 (PDF, 1.8 MB)</a></p>
+          </li>
+          <li>
+            <h3><a href="#notices">Designated Areas Order 2019</a></h3>
+            <p class="meta"><time datetime="2019-06-11">11 June 2019</time> · the map of the flood zones</p>
+            <p>Which streets are in a designated area, drawn on the map and listed street by street. If you are buying
+              or insuring a property, this is the legal definition.</p>
+            <p class="fmt"><a href="#notices">Search the street list</a> · <a href="#notices">The Order (PDF, 2.4 MB)</a></p>
+          </li>
+          <li>
+            <h3><a href="#notices">Estuary Gauge Array: annual report 2023/24</a></h3>
+            <p class="meta"><time datetime="2024-09-30">30 September 2024</time> · the numbers behind this page</p>
+            <p>How the twelve gauges are sited, verified and maintained, what the 2011 datum change means, and the gaps
+              in the record.</p>
+            <p class="fmt"><a href="#notices">Read the summary</a> · <a href="#notices">Full report (PDF, 3.1 MB)</a></p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="news" aria-labelledby="news-h">
+        <h2 id="news-h">News</h2>
+        <ul class="news">
+          <li><h3><a href="#news">The estuary strategy for the next 25 years is out for consultation</a></h3>
+            <p class="meta"><time datetime="2024-12-03">3 December 2024</time></p>
+            <p>The draft plan and the indicative flood map are on display at the Estuary Centre. Comments close at
+              17:00 on 28 February 2025, and there are two open evenings in January.</p></li>
+          <li><h3><a href="#news">A new gauge at Salt Pits reports every six minutes</a></h3>
+            <p class="meta"><time datetime="2024-11-21">21 November 2024</time></p>
+            <p>The Salt Pits gauge now sends a reading every six minutes, so a rising tide shows up sooner. Salt Pits
+              has 41 days with no record in 2024; those days are shown as gaps, not joined up.</p></li>
+          <li><h3><a href="#news">Volunteer monitors: 92 classes, and the places still open</a></h3>
+            <p class="meta"><time datetime="2024-11-21">21 November 2024</time></p>
+            <p>Training is provided, and the role is two readings a day during the spring tides. Six places are open
+              on the north shore.</p></li>
+        </ul>
+      </section>
+
+      <section id="help" aria-labelledby="help-h">
+        <h2 id="help-h">Help with the words on this page</h2>
+        <dl class="gl">
+          <div><dt>Chart Datum</dt><dd>The height the tide tables use: the lowest level a tide is expected to reach.
+            It is not the datum used before 2011, so a height from an older document is not comparable with one on
+            this page.</dd></div>
+          <div><dt>Flood line</dt><dd>The height at which water starts to reach properties at this gauge. Every gauge
+            has its own. Harrowmouth's is 4.20 m.</dd></div>
+          <div><dt>Designated area</dt><dd>A place named in the Designated Areas Order 2019. Being in one changes what
+            you must do, and what you can claim.</dd></div>
+          <div><dt>Spring range</dt><dd>The difference between the highest high and the lowest low over the spring
+            tides around that date. A bigger number means a bigger tide.</dd></div>
+        </dl>
+        <p class="src">The heights on this page come from the twelve gauges of the Estuary Gauge Array and from the
+          Nautilus model run. A gauge with no reading shows a gap, never a guess.
+          <a href="#notices">How the gauges are verified</a>.</p>
+      </section>
+    </div>
+
+    <aside class="rail" aria-label="Actions and current information">
+      <section class="box act">
+        <h2>Actions</h2>
+        <ul>
+          <li><a href="#status"><b>Report a flood</b><span>out of hours, the same number</span></a></li>
+          <li><a href="#notices"><b>Apply for a resilience grant</b><span>up to £5,000, save and return</span></a></li>
+          <li><a href="#help"><b>Find your flood line</b><span>the height for your street</span></a></li>
+          <li><a href="#notices"><b>Buy a works permit</b><span>for anything in the estuary</span></a></li>
+          <li><a href="#notices"><b>Report a broken barrier</b><span>photograph it, we go and look</span></a></li>
+        </ul>
+      </section>
+      <section class="box">
+        <h2>Prepare before the water</h2>
+        <ul>
+          <li><a href="#status">Make a flood plan (5 minutes)</a></li>
+          <li><a href="#status">What to put in a flood kit</a></li>
+          <li><a href="#status">Sign up for a warning by text or phone call</a></li>
+          <li><a href="#help">Protect your property: what works and what does not</a></li>
+        </ul>
+      </section>
+      <section class="box">
+        <h2>Warnings for you</h2>
+        <p>Get a text or a phone call when a warning is issued for your address. It is free, and it is the only
+          channel that reaches a phone in minutes.</p>
+        <a class="btn wide" href="#status">Sign up for warnings</a>
+      </section>
+      <section class="box nl">
+        <h2>Estuary update</h2>
+        <p>One email every fortnight: the works, the consultations, the tide tables for the next season.
+          Not a warning list — warnings are a separate, free service above.</p>
+        <form onsubmit="return false" class="nlf">
+          <label for="nl">Email address</label>
+          <input id="nl" type="email" autocomplete="email" placeholder="you@example.com">
+          <button type="button" id="nlGo">Subscribe</button>
+        </form>
+        <p class="tiny" id="nlMsg" role="status" aria-live="polite"></p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <h2>Services</h2>
+      <ul><li><a href="#status">Report a flood</a></li><li><a href="#notices">Permits and works</a></li>
+        <li><a href="#notices">Resilience grants</a></li><li><a href="#tides">Tide times</a></li>
+        <li><a href="#help">Find your flood line</a></li></ul>
+    </div>
+    <div>
+      <h2>The Authority</h2>
+      <ul><li><a href="#news">Our role and the committee</a></li><li><a href="#news">Minutes and budgets</a></li>
+        <li><a href="#notices">Documents and data</a></li><li><a href="#help">Freedom of information</a></li>
+        <li><a href="#news">Jobs</a></li></ul>
+    </div>
+    <div>
+      <h2>Carnmar District Council</h2>
+      <p>Housing, bins, council tax and roads are the district council's, not the Authority's.
+        <a href="#notices">Carnmar District Council — services</a>.</p>
+    </div>
+    <div>
+      <h2>Estuary Centre</h2>
+      <p>Quay Wall, Harrowmouth<br><a href="tel:03001234567">0300 123 4567</a><br>Monday to Friday, 09:00–17:00.
+        Tides and warnings: this page, and the number above, at any hour.</p>
+      <p><a href="#status">Accessibility</a> · <a href="#status">Privacy</a> · <a href="#status">Cookies</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- A banner, not a wall: nothing is blocked, and the least-tracking choice is first. -->
+<div class="ck" id="ck" role="region" aria-label="Cookies">
+  <div class="ck-in">
+    <p><b>Cookies.</b> We use one cookie to remember what you searched for. Analytics and the weather widget's
+      cookies are off unless you say yes.</p>
+    <div class="ck-btns">
+      <button type="button" id="ckMin">Only what you asked for</button>
+      <button type="button" id="ckAll">Accept analytics too</button>
+      <a href="#help">Decide later</a>
+    </div>
+  </div>
+</div>
+<script src="after.js"></script>
+</body>
+</html>
