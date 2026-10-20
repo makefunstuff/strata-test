@@ -144,7 +144,7 @@ function cards(counts) {
       <figure>
         <img src="thumbs/${t.folder}.jpg" width="640" height="400" loading="lazy"
           alt="${esc(t.title)}: ${esc(t.kind)} — screenshot of the top of the page">
-        <figcaption>${t.folder}/shots/ · thumb: top 400 px of the page at 640 px wide</figcaption>
+        <figcaption>${t.folder}/shots/</figcaption>
       </figure>
       <div>
         <h3>${esc(t.title)} <span>${t.n} · ${esc(t.kind)}</span></h3>
