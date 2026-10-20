@@ -1,0 +1,53 @@
+/* Shared look for the five experiments: full-bleed canvas, a small readout HUD, the fps badge,
+   the interaction hint card and a dark lil-gui panel. */
+:root {
+  --ink: #eaf4ff;
+  --dim: #8ea4bb;
+  --accent: #6fd8ff;
+  --bg: #05070c;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); }
+body {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  color: var(--ink); -webkit-font-smoothing: antialiased;
+}
+#stage-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+.hud, .fps, .hint, h1.title { position: fixed; z-index: 10; pointer-events: none; }
+h1.title { top: 14px; left: 18px; font-size: 13px; letter-spacing: 0.06em; color: #fff;
+  text-shadow: 0 0 12px rgba(111, 216, 255, 0.45); margin: 0; font-weight: 600; }
+h1.title small { display: block; font-size: 10px; color: var(--dim); letter-spacing: 0.02em; font-weight: 400; margin-top: 4px; }
+
+.hud { top: 78px; left: 18px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11px; max-width: 46vw; }
+.hud .k { color: var(--dim); margin-right: 5px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+.hud b { color: var(--accent); font-weight: 600; }
+
+.fps { bottom: 18px; right: 18px; font-size: 11px; color: var(--dim);
+  background: rgba(6, 10, 16, 0.55); border: 1px solid rgba(111, 216, 255, 0.16);
+  padding: 4px 8px; border-radius: 4px; backdrop-filter: blur(6px); }
+
+.hint { left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; flex-wrap: wrap;
+  gap: 6px 10px; justify-content: center; font-size: 11px; color: var(--ink);
+  background: rgba(6, 10, 16, 0.62); border: 1px solid rgba(111, 216, 255, 0.18);
+  padding: 8px 14px; border-radius: 6px; max-width: 92vw; transition: opacity 1.4s; }
+.hint span { white-space: nowrap; }
+.hint span + span::before { content: "·"; color: var(--dim); margin-right: 10px; }
+.hint.fade { opacity: 0; }
+
+a.back { position: fixed; z-index: 11; left: 18px; bottom: 16px; color: var(--dim); font-size: 10px;
+  text-decoration: none; border-bottom: 1px dotted rgba(142, 164, 187, 0.4); }
+a.back:hover { color: var(--accent); border-color: var(--accent); }
+
+/* lil-gui: compact, dark, out of the picture */
+.lab-gui.lil-gui { --background-color: rgba(8, 13, 20, 0.82); --title-background-color: rgba(14, 24, 36, 0.9);
+  --widget-color: rgba(20, 34, 50, 0.9); --hover-color: rgba(38, 66, 96, 0.9); --focus-color: rgba(52, 92, 130, 0.9);
+  --number-color: #7fe3b0; --string-color: #ffcf7a; --font-size: 11px; --widget-height: 20px;
+  --name-width: 52%; border: 1px solid rgba(111, 216, 255, 0.16); border-radius: 5px; overflow: hidden; }
+.lab-gui.lil-gui .title { letter-spacing: 0.04em; }
+
+@media (max-width: 640px) {
+  .hud { max-width: 70vw; font-size: 10px; }
+  .hint { font-size: 10px; bottom: 12px; }
+  .lab-gui.lil-gui { --width: 200px; }
+}

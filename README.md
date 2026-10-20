@@ -5,6 +5,20 @@ experiments that run Qwen3.8-Flash-Next on a home GPU box through Strata, to fin
 
 Each mini project lives in its own folder with a short README: what it tries, how to run it, and what came out.
 
+## What's in here
+
+Two shelves of browser work, both plain static files (no build step, no npm, no server), both published
+to GitHub Pages, the layout on Pages mirroring this repo:
+
+| shelf | what | live |
+|---|---|---|
+| [`games/`](games/) | five three.js arcade games on one shared kit (CRT bezel, particles, bloom, WebAudio) | [/games/](https://makefunstuff.github.io/strata-test/games/) |
+| [`experiments/`](experiments/) | five three.js graphics/motion experiments: GPU water, Rapier voxel demolition, tearing cloth, GPU flocking, volumetric fire | [/experiments/](https://makefunstuff.github.io/strata-test/experiments/) |
+
+The site root is [`index.html`](index.html), the hub that links both. Each folder carries its own
+headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`); the numbers they
+last reported are in the shelf READMEs.
+
 ## Setup on this machine
 
 - Strata runs as `strata.service` (IQ2_XS, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).

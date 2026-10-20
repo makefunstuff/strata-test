@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><path d=%27M1 11q2.5-3 4.5 0t4.5 0 5-1%27 fill=%27none%27 stroke=%27%238ee8ff%27 stroke-width=%271.6%27/><circle cx=%2711.5%27 cy=%274.5%27 r=%272.2%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.4%27/></svg>">
+<title>3 · Cloth — verlet weave, gusts, tearing</title>
+<link rel="stylesheet" href="../shared/lab.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="stage-canvas"></canvas>
+<h1 class="title">Cloth &amp; tearing<small>verlet mass&ndash;spring weave · wind gusts with aerodynamic normal pressure · constraints snap when stretched · the cut tool severs the cloth</small></h1>
+<div id="hud" class="hud"></div>
+<div id="fps" class="fps"></div>
+<div id="hint" class="hint"></div>
+<a class="back" href="../index.html">all experiments</a>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "experiments-tools",
+  "private": true,
+  "type": "module",
+  "description": "Headless checks for the three.js graphics experiments.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}
