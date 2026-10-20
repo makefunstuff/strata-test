@@ -1,0 +1,6 @@
+# Laid over the live strata.json by the patched template (strata-config-overrides.patch):
+# two batch slots, each verifying one MTP proposal per window, in serial windows
+# (docs/BATCHING.md: the better choice for about two streams on a two-GPU layer split).
+local_ai_strata_overrides:
+  parallel: 2
+  extra_args: ["--batch-mtp", "--batch-groups", "1"]

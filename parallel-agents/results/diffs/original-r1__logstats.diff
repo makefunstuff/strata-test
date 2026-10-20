@@ -1,0 +1,215 @@
+ 2 files changed, 181 insertions(+), 7 deletions(-)
+diff --git c/logstats/parser.py i/logstats/parser.py
+index d664386..1a10028 100644
+--- c/logstats/parser.py
++++ i/logstats/parser.py
+@@ -1,22 +1,102 @@
+ """Parse access-log lines of the form:
+ 
+     2026-10-01T12:00:00+03:00 GET /api/items 200 123ms
++
++The timestamp may carry an explicit UTC offset (``+03:00``) or the UTC
++designator ``Z``.  It is always normalised to a timezone-aware datetime in
++UTC; timestamps given without an offset are assumed to already be UTC.
+ """
+-from datetime import datetime
++from datetime import datetime, timezone
++
++# A valid line has exactly: <timestamp> <method> <path> <status> <latency>
++FIELD_COUNT = 5
++
++_TIMESTAMP_FORMATS = (
++    # (format, offset_aware) - tried in order, first match wins.
++    ("%Y-%m-%dT%H:%M:%S%z", True),
++    ("%Y-%m-%dT%H:%M:%S.%f%z", True),
++    ("%Y-%m-%dT%H:%M:%S", False),
++    ("%Y-%m-%dT%H:%M:%S.%f", False),
++)
+ 
+ 
+ def parse_line(line):
++    """Parse a single access-log line into a dict.
++
++    The returned "time" value is always a timezone-aware datetime in UTC.
++
++    Raises ValueError (with a helpful message) for malformed lines.
++    """
++    if not isinstance(line, str):
++        raise ValueError(f"expected a log line of type str, got {type(line).__name__}")
++
+     parts = line.split()
+-    ts = datetime.strptime(parts[0][:19], "%Y-%m-%dT%H:%M:%S")
++    if len(parts) != FIELD_COUNT:
++        raise ValueError(
++            f"malformed log line (expected {FIELD_COUNT} fields, got "
++            f"{len(parts)}): {line!r}"
++        )
++
++    timestamp = _parse_timestamp(parts[0], line)
++
++    try:
++        status = int(parts[3])
++    except ValueError:
++        raise ValueError(f"malformed status code {parts[3]!r} in line {line!r}") from None
++
+     return {
+-        "time": ts,
++        "time": timestamp,
+         "method": parts[1],
+         "path": parts[2],
+-        "status": int(parts[3]),
+-        "latency_ms": int(parts[4].rstrip("ms")),
++        "status": status,
++        "latency_ms": _parse_latency_ms(parts[4], line),
+     }
+ 
+ 
+ def p95_latency(lines):
+-    values = sorted(parse_line(l)["latency_ms"] for l in lines)
+-    return values[int(len(values) * 0.95)]
++    """Return the 95th percentile latency (ms) of the given log lines.
++
++    Uses the nearest-rank method: the latencies are sorted and the value at
++    1-based rank ceil(0.95 * n) is returned.
++
++    Raises ValueError if there are no samples.
++    """
++    values = sorted(parse_line(line)["latency_ms"] for line in lines)
++    if not values:
++        raise ValueError("p95_latency() requires at least one sample")
++
++    # Nearest-rank, 1-based.  0.95 is exactly 19/20, so the rank is computed
++    # with integer arithmetic to avoid binary floating-point drift.
++    rank = -(-19 * len(values) // 20)
++    return values[rank - 1]
++
++
++def _parse_timestamp(token, line):
++    """Parse the timestamp field and normalise it to an aware UTC datetime.
++
++    Timestamps with a UTC offset are converted to UTC; timestamps given
++    without an offset are assumed to already be UTC.
++    """
++    # Normalise the 'Z' designator to an explicit offset so parsing does not
++    # depend on strptime's (newer) support for it.
++    text = token[:-1] + "+00:00" if token.endswith("Z") else token
++
++    for fmt, offset_aware in _TIMESTAMP_FORMATS:
++        try:
++            timestamp = datetime.strptime(text, fmt)
++        except ValueError:
++            continue
++        if not offset_aware:
++            return timestamp.replace(tzinfo=timezone.utc)
++        return timestamp.astimezone(timezone.utc)
++
++    raise ValueError(f"malformed timestamp {token!r} in line {line!r}")
++
++
++def _parse_latency_ms(token, line):
++    """Parse the latency field (e.g. '123ms') as an int number of milliseconds."""
++    text = token[: -len("ms")] if token.endswith("ms") else token
++    try:
++        return int(text)
++    except ValueError:
++        raise ValueError(f"malformed latency {token!r} in line {line!r}") from None
+diff --git c/tests/test_parser_regressions.py i/tests/test_parser_regressions.py
+new file mode 100644
+index 0000000..b79223f
+--- /dev/null
++++ i/tests/test_parser_regressions.py
+@@ -0,0 +1,94 @@
++"""Regression tests for the two reported parser bugs."""
++import unittest
++from datetime import datetime, timezone
++
++from logstats.parser import parse_line, p95_latency
++
++
++def line(latency_ms, ts="2026-10-01T12:00:00Z"):
++    return f"{ts} GET /api/items 200 {latency_ms}ms"
++
++
++class TimestampTest(unittest.TestCase):
++    def test_z_is_utc(self):
++        r = parse_line("2026-10-01T12:00:00Z GET /a 200 15ms")
++        self.assertEqual(r["time"], datetime(2026, 10, 1, 12, 0, 0, tzinfo=timezone.utc))
++
++    def test_positive_offset_converted_to_utc(self):
++        r = parse_line("2026-10-01T12:00:00+03:00 GET /a 200 15ms")
++        self.assertEqual(r["time"].tzinfo, timezone.utc)
++        self.assertEqual(r["time"], datetime(2026, 10, 1, 9, 0, 0, tzinfo=timezone.utc))
++
++    def test_negative_offset_converted_to_utc(self):
++        r = parse_line("2026-10-01T12:00:00-05:00 GET /a 200 15ms")
++        self.assertEqual(r["time"].tzinfo, timezone.utc)
++        self.assertEqual(r["time"], datetime(2026, 10, 1, 17, 0, 0, tzinfo=timezone.utc))
++
++    def test_offset_crossing_day_boundary(self):
++        r = parse_line("2026-10-01T00:30:00+03:00 GET /a 200 15ms")
++        self.assertEqual(r["time"], datetime(2026, 9, 30, 21, 30, tzinfo=timezone.utc))
++
++    def test_timestamp_without_offset_assumed_utc(self):
++        r = parse_line("2026-10-01T12:00:00 GET /a 200 15ms")
++        self.assertEqual(r["time"].tzinfo, timezone.utc)
++        self.assertEqual(r["time"], datetime(2026, 10, 1, 12, 0, 0, tzinfo=timezone.utc))
++
++    def test_fields_are_parsed(self):
++        r = parse_line("2026-10-01T12:00:00+03:00 POST /a 404 17ms")
++        self.assertEqual(
++            {k: r[k] for k in ("method", "path", "status", "latency_ms")},
++            {"method": "POST", "path": "/a", "status": 404, "latency_ms": 17},
++        )
++
++
++class MalformedLineTest(unittest.TestCase):
++    def test_all_malformed_lines_raise_value_error(self):
++        bad_lines = [
++            "",
++            "   ",
++            "garbage",
++            "2026-10-01T12:00:00Z",
++            "2026-10-01T12:00:00Z GET /a 200",
++            "2026-10-01T12:00:00Z GET /a 200 15ms extra",
++            "not-a-timestamp GET /a 200 15ms",
++            "2026-13-45T99:99:99Z GET /a 200 15ms",
++            "2026-10-01T12:00:00Z GET /a abc 15ms",
++            "2026-10-01T12:00:00Z GET /a 200 fast",
++            None,
++            42,
++        ]
++        for bad in bad_lines:
++            with self.subTest(line=bad):
++                with self.assertRaises(ValueError):
++                    parse_line(bad)
++
++
++class P95LatencyTest(unittest.TestCase):
++    def test_empty_input_raises_value_error(self):
++        with self.assertRaises(ValueError):
++            p95_latency([])
++
++    def test_single_sample(self):
++        self.assertEqual(p95_latency([line(42)]), 42)
++
++    def test_small_sample_uses_nearest_rank(self):
++        # n=10 -> rank ceil(9.5) = 10 -> largest value.
++        self.assertEqual(p95_latency([line(v) for v in range(1, 11)]), 10)
++        # n=20 -> rank ceil(19) = 19.
++        self.assertEqual(p95_latency([line(v) for v in range(1, 21)]), 19)
++        # n=100 -> rank 95.
++        self.assertEqual(p95_latency([line(v) for v in range(1, 101)]), 95)
++
++    def test_input_order_does_not_matter(self):
++        self.assertEqual(p95_latency([line(v) for v in (500, 1, 3, 2)]), 500)
++
++    def test_accepts_iterables(self):
++        self.assertEqual(p95_latency(line(v) for v in range(1, 101)), 95)
++
++    def test_bad_line_propagates_value_error(self):
++        with self.assertRaises(ValueError):
++            p95_latency(["nonsense"])
++
++
++if __name__ == "__main__":
++    unittest.main()

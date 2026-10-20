@@ -1,0 +1,261 @@
+ 4 files changed, 240 insertions(+)
+diff --git c/__pycache__/presets.cpython-311.pyc i/__pycache__/presets.cpython-311.pyc
+new file mode 100644
+index 0000000..3b010a8
+Binary files /dev/null and i/__pycache__/presets.cpython-311.pyc differ
+diff --git c/presets.py i/presets.py
+new file mode 100644
+index 0000000..82c008d
+--- /dev/null
++++ i/presets.py
+@@ -0,0 +1,125 @@
++"""Reader for llama.cpp router preset files (see ``sample.ini``).
++
++The dialect is INI-like, but deliberately parsed by hand: configparser
++lowercases/splits keys, chokes on values containing ``=``, and rejects (or
++silently merges) duplicate sections, none of which is what the router wants.
++
++Grammar:
++  * ``key = value`` -- whitespace around key and value is stripped, the value
++    may contain ``=`` (only the first ``=`` splits).
++  * lines whose first non-space char is ``#`` or ``;`` are comments.
++  * blank lines are ignored.
++  * keys before the first ``[section]`` are global defaults inherited by every
++    section; a section's own key wins.
++  * a duplicate section name, or a non-blank/non-comment line that is neither a
++    section header nor contains ``=``, raises ``ValueError`` naming the 1-based
++    line number.
++"""
++
++from __future__ import annotations
++
++import os
++import re
++import sys
++
++__all__ = ["load_presets", "parse_presets", "format_preset", "main"]
++
++COMMENT_CHARS = "#;"
++SECTION_RE = re.compile(r"\[([^\[\]]*)\]")
++DEFAULT_SPLIT_MODE = "layer"
++CTX_KEY = "ctx-size"
++DEVICE_KEY = "device"
++SPLIT_KEY = "split-mode"
++DRAFT_KEY = "spec-draft-model"
++
++
++def _error(lineno: int, message: str) -> ValueError:
++    return ValueError(f"line {lineno}: {message}")
++
++
++def parse_presets(text: str) -> dict[str, dict[str, str]]:
++    """Parse preset text into ``{preset name: {key: value}}``.
++
++    Keys are kept verbatim (case sensitive), values are always strings, and
++    presets are returned in file order with global defaults merged in.
++    """
++    text = text.lstrip("\ufeff")  # BOM (if any) sits on line 1
++    defaults: dict[str, str] = {}
++    sections: dict[str, dict[str, str]] = {}
++    current: str | None = None  # None while still in the global preamble
++
++    for lineno, raw in enumerate(text.splitlines(), start=1):
++        line = raw.strip()
++
++        if not line:
++            continue
++        if line[0] in COMMENT_CHARS:
++            continue
++
++        match = SECTION_RE.fullmatch(line)
++        if match:
++            name = match.group(1).strip()
++            if not name:
++                raise _error(lineno, "section header has no name")
++            if name in sections:
++                raise _error(lineno, f"duplicate section name {name!r}")
++            sections[name] = {}
++            current = name
++            continue
++
++        if "=" not in line:
++            raise _error(
++                lineno, f"expected [section] or key = value, got {line!r}"
++            )
++
++        key, _, value = line.partition("=")
++        key, value = key.strip(), value.strip()
++        if not key:
++            raise _error(lineno, f"missing key in {line!r}")
++
++        target = defaults if current is None else sections[current]
++        target[key] = value  # duplicate key: last one wins
++
++    return {name: {**defaults, **own} for name, own in sections.items()}
++
++
++def load_presets(path) -> dict[str, dict[str, str]]:
++    """Read ``path`` and return preset name -> merged keys (all strings)."""
++    with open(path, "r", encoding="utf-8-sig", newline="") as fh:
++        return parse_presets(fh.read())
++
++
++def format_preset(name: str, keys: dict[str, str]) -> str:
++    """One report line for a preset."""
++    ctx = keys.get(CTX_KEY) or "-"
++    devices = keys.get(DEVICE_KEY) or "-"
++    split = keys.get(SPLIT_KEY) or DEFAULT_SPLIT_MODE
++    draft = "yes" if DRAFT_KEY in keys else "no"
++    return f"{name} ctx={ctx} devices={devices} split={split} draft={draft}"
++
++
++def main(argv) -> int:
++    prog = os.path.basename(argv[0]) if argv else "presets.py"
++    args = list(argv[1:])
++    usage = f"usage: python3 {prog} FILE"
++
++    if args and args[0] in ("-h", "--help"):
++        print(usage)
++        return 0
++    if len(args) != 1:
++        print(usage, file=sys.stderr)
++        return 2
++
++    try:
++        presets = load_presets(args[0])
++    except (OSError, ValueError) as exc:
++        print(f"{prog}: error: {exc}", file=sys.stderr)
++        return 1
++
++    for name, keys in presets.items():
++        print(format_preset(name, keys))
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main(sys.argv))
+diff --git c/tests/__pycache__/test_presets_spec.cpython-311.pyc i/tests/__pycache__/test_presets_spec.cpython-311.pyc
+new file mode 100644
+index 0000000..e448fc8
+Binary files /dev/null and i/tests/__pycache__/test_presets_spec.cpython-311.pyc differ
+diff --git c/tests/test_presets_spec.py i/tests/test_presets_spec.py
+new file mode 100644
+index 0000000..d6cf847
+--- /dev/null
++++ i/tests/test_presets_spec.py
+@@ -0,0 +1,115 @@
++"""Spec coverage for presets.py (hand-written parser + report CLI)."""
++
++import io
++import os
++import sys
++import tempfile
++import unittest
++
++import presets
++
++HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++SAMPLE = os.path.join(HERE, "sample.ini")
++
++
++def parse(text):
++    return presets.parse_presets(text)
++
++
++def parse_file(text):
++    with tempfile.TemporaryDirectory() as tmp:
++        path = os.path.join(tmp, "p.ini")
++        with open(path, "w", encoding="utf-8") as fh:
++            fh.write(text)
++        return presets.load_presets(path)
++
++
++class ParseTest(unittest.TestCase):
++    def test_sample_file_order_and_override(self):
++        p = presets.load_presets(SAMPLE)
++        self.assertEqual(list(p), ["qwen3.8-27b", "zeta-2.1-q4"])
++        self.assertEqual(p["zeta-2.1-q4"]["temp"], "0.0")
++        # global defaults inherited
++        self.assertEqual(p["zeta-2.1-q4"]["top-p"], "0.95")
++        self.assertEqual(p["qwen3.8-27b"]["temp"], "1.0")
++
++    def test_strip_and_first_equals_only(self):
++        p = parse("[a]\n  model  =  /x/y=1=v  \n")
++        self.assertEqual(p["a"]["model"], "/x/y=1=v")
++
++    def test_comments_and_blanks(self):
++        p = parse("# c1\n\n   \n  ; c2\n[a]\n\tk = v\n")
++        self.assertEqual(p, {"a": {"k": "v"}})
++
++    def test_keys_before_section_are_defaults(self):
++        p = parse("temp = 1.0\n[a]\nmodel = m\n[b]\ntemp = 0.5\n")
++        self.assertEqual(p["a"], {"temp": "1.0", "model": "m"})
++        self.assertEqual(p["b"], {"temp": "0.5"})
++
++    def test_key_case_preserved_and_last_duplicate_wins(self):
++        p = parse("[A]\nCtx-Size = 1\nctx-size = 2\nCtx-Size = 3\n")
++        self.assertEqual(list(p), ["A"])
++        self.assertEqual(p["A"]["Ctx-Size"], "3")
++        self.assertEqual(p["A"]["ctx-size"], "2")
++
++    def test_values_keep_inline_hashes(self):
++        p = parse("[a]\nk = v # not a comment\n")
++        self.assertEqual(p["a"]["k"], "v # not a comment")
++
++    def test_empty_section_gets_defaults(self):
++        self.assertEqual(parse("k = v\n[empty]\n"), {"empty": {"k": "v"}})
++
++    def test_values_are_strings(self):
++        for value in parse("[a]\nk = 1\n")["a"].values():
++            self.assertIsInstance(value, str)
++
++    def test_duplicate_section_reports_line(self):
++        with self.assertRaises(ValueError) as cm:
++            parse("[a]\n\n[a]\n")
++        self.assertIn("3", str(cm.exception))
++
++    def test_garbage_line_reports_line(self):
++        with self.assertRaises(ValueError) as cm:
++            parse("# c\n\nbogus line\n")
++        self.assertIn("3", str(cm.exception))
++
++    def test_malformed_section_is_error(self):
++        with self.assertRaises(ValueError):
++            parse("[a\n")
++
++
++class MainTest(unittest.TestCase):
++    def run_main(self, argv):
++        out, err = io.StringIO(), io.StringIO()
++        old_out, old_err = sys.stdout, sys.stderr
++        sys.stdout, sys.stderr = out, err
++        try:
++            rc = presets.main(["presets.py"] + argv)
++        finally:
++            sys.stdout, sys.stderr = old_out, old_err
++        return rc, out.getvalue(), err.getvalue()
++
++    def test_sample_report(self):
++        rc, out, _ = self.run_main([SAMPLE])
++        self.assertEqual(rc, 0)
++        self.assertEqual(
++            out.splitlines(),
++            [
++                "qwen3.8-27b ctx=131072 devices=CUDA0,CUDA1 split=tensor draft=yes",
++                "zeta-2.1-q4 ctx=16384 devices=CUDA0 split=layer draft=no",
++            ],
++        )
++
++    def test_missing_file_is_nonzero(self):
++        rc, _, err = self.run_main([os.path.join(HERE, "nope.ini")])
++        self.assertNotEqual(rc, 0)
++        self.assertIn("nope.ini", err)
++
++    def test_no_args_is_usage(self):
++        rc, _, err = self.run_main([])
++        self.assertNotEqual(rc, 0)
++        self.assertIn("usage", err)
++
++
++if __name__ == "__main__":
++    unittest.main()

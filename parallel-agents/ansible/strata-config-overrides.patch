@@ -1,0 +1,30 @@
+diff --git i/roles/local_ai/templates/strata-config.json.j2 w/roles/local_ai/templates/strata-config.json.j2
+index 6d2b2f3..19ed493 100644
+--- i/roles/local_ai/templates/strata-config.json.j2
++++ w/roles/local_ai/templates/strata-config.json.j2
+@@ -1,5 +1,6 @@
+ {# strata_model (optional): one entry of local_ai_strata_models, laid over local_ai_strata #}
+-{% set s = local_ai_strata | combine(strata_model | default({})) %}
++{# local_ai_strata_overrides (optional, -e): laid over the live strata.json only, e.g. {"parallel": 2, "extra_args": [...]} #}
++{% set s = local_ai_strata | combine(strata_model | default({})) | combine(local_ai_strata_overrides | default({}) if strata_model is not defined else {}) %}
+ {{ {
+   "exe": s.src_dir ~ "/engine/strata",
+   "args": [
+@@ -16,7 +17,7 @@
+     "--kv", "int8",
+     "--resident-experts",
+     "--kv-resident", s.kv_resident | string
+-  ] + (["--vision"] if s.mmproj | default('') else []),
++  ] + (["--vision"] if s.mmproj | default('') else []) + (s.extra_args | default([])),
+   "cwd": s.src_dir,
+   "tokenizer": s.pack_dir ~ "/tokenizer",
+   "model_name": s.model_name,
+@@ -26,7 +27,7 @@
+   "gpu": s.gpus,
+   "gpus_asked": true,
+   "layer_split": "auto"
+-} | combine({"vision": {
++} | combine({"parallel": s.parallel | int} if s.parallel | default(0) | int > 1 else {}) | combine({"vision": {
+     "exe": s.src_dir ~ "/engine/strata-vision",
+     "mmproj": s.mmproj,
+     "model": s.gguf,

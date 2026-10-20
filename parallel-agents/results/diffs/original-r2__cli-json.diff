@@ -1,0 +1,163 @@
+ 3 files changed, 100 insertions(+), 8 deletions(-)
+diff --git c/README.md i/README.md
+index 7adcc7a..290a7a1 100644
+--- c/README.md
++++ i/README.md
+@@ -4,4 +4,12 @@ Report stock levels from a CSV file with columns `name,qty,price`.
+ 
+ ## Usage
+ 
+-    python3 inventory.py items.csv [--min-qty N]
++    python3 inventory.py items.csv [--min-qty N] [--format {table,json}]
++
++- `--min-qty N` only lists rows with `qty >= N` (applies to both formats).
++- `--format table` (default) prints one aligned line per row: name, qty, price.
++- `--format json` prints a JSON array of `{"name": ..., "qty": ..., "price": ...}`
++  objects sorted by name, and nothing else on stdout.
++- Rows whose `qty` or `price` cannot be parsed are skipped, with one warning line
++  per skipped row on stderr (`skipping row N: ...`, N is the 1-based data row number).
++- An unknown `--format` value is a usage error and exits with status 2.
+diff --git c/inventory.py i/inventory.py
+index db71afe..c6cc32d 100644
+--- c/inventory.py
++++ i/inventory.py
+@@ -1,21 +1,57 @@
+ import argparse
+ import csv
++import json
+ import sys
+ 
++FORMATS = ("table", "json")
++
+ 
+ def load(path):
+     with open(path, newline="") as f:
+         return list(csv.DictReader(f))
+ 
+ 
++def parse_rows(raw_rows, min_qty=0, warn=None):
++    """Convert raw CSV rows into records, applying the min_qty filter.
++
++    Rows with an unparsable qty or price are skipped; one warning line per
++    skipped row is sent to stderr (N is the 1-based data row number).
++    """
++    if warn is None:
++        warn = lambda msg: print(msg, file=sys.stderr)
++    rows = []
++    for n, raw in enumerate(raw_rows, start=1):
++        try:
++            row = {"name": raw["name"], "qty": int(raw["qty"]), "price": float(raw["price"])}
++        except (KeyError, TypeError, ValueError) as exc:
++            warn(f"skipping row {n}: {exc}")
++            continue
++        if row["qty"] >= min_qty:
++            rows.append(row)
++    rows.sort(key=lambda r: r["name"])
++    return rows
++
++
++def render_table(rows):
++    for r in rows:
++        print(f"{r['name']:<20} {r['qty']:>6} {r['price']:>10.2f}")
++
++
++def render_json(rows):
++    print(json.dumps(rows, indent=2))
++
++
+ def main(argv=None):
+     ap = argparse.ArgumentParser(description="Report stock levels")
+     ap.add_argument("csv")
+     ap.add_argument("--min-qty", type=int, default=0)
++    ap.add_argument("--format", choices=FORMATS, default="table", help="output format (default: table)")
+     a = ap.parse_args(argv)
+-    rows = [r for r in load(a.csv) if int(r["qty"]) >= a.min_qty]
+-    for r in sorted(rows, key=lambda r: r["name"]):
+-        print(f"{r['name']:<20} {int(r['qty']):>6} {float(r['price']):>10.2f}")
++    rows = parse_rows(load(a.csv), min_qty=a.min_qty)
++    if a.format == "json":
++        render_json(rows)
++    else:
++        render_table(rows)
+     return 0
+ 
+ 
+diff --git c/tests/test_inventory.py i/tests/test_inventory.py
+index 4103e16..baaa95e 100644
+--- c/tests/test_inventory.py
++++ i/tests/test_inventory.py
+@@ -1,5 +1,5 @@
+-import io, os, tempfile, unittest
+-from contextlib import redirect_stdout
++import io, json, os, tempfile, unittest
++from contextlib import redirect_stdout, redirect_stderr
+ import inventory
+ 
+ CSV = "name,qty,price\nwidget,5,2.50\nbolt,100,0.10\n"
+@@ -10,9 +10,13 @@ class InventoryTest(unittest.TestCase):
+         fd, self.path = tempfile.mkstemp(suffix=".csv")
+         with os.fdopen(fd, "w") as f:
+             f.write(CSV)
++        self.addCleanup(os.unlink, self.path)
+ 
+-    def tearDown(self):
+-        os.unlink(self.path)
++    def run_main(self, argv):
++        out, err = io.StringIO(), io.StringIO()
++        with redirect_stdout(out), redirect_stderr(err):
++            code = inventory.main(argv)
++        return code, out.getvalue(), err.getvalue()
+ 
+     def test_table(self):
+         out = io.StringIO()
+@@ -21,6 +25,50 @@ class InventoryTest(unittest.TestCase):
+         self.assertIn("widget", out.getvalue())
+         self.assertLess(out.getvalue().index("bolt"), out.getvalue().index("widget"))
+ 
++    def test_json_output(self):
++        code, out, err = self.run_main([self.path, "--format", "json"])
++        self.assertEqual(code, 0)
++        self.assertEqual(err, "")
++        self.assertEqual(
++            json.loads(out),
++            [
++                {"name": "bolt", "qty": 100, "price": 0.10},
++                {"name": "widget", "qty": 5, "price": 2.50},
++            ],
++        )
++
++    def test_min_qty_applies_to_both_formats(self):
++        _, table, _ = self.run_main([self.path, "--min-qty", "10"])
++        self.assertIn("bolt", table)
++        self.assertNotIn("widget", table)
++        _, out, _ = self.run_main([self.path, "--min-qty", "10", "--format", "json"])
++        self.assertEqual([r["name"] for r in json.loads(out)], ["bolt"])
++
++    def test_unknown_format_exits_2(self):
++        err = io.StringIO()
++        with redirect_stderr(err), self.assertRaises(SystemExit) as cm:
++            inventory.main([self.path, "--format", "yaml"])
++        self.assertEqual(cm.exception.code, 2)
++
++    def test_bad_rows_are_skipped_with_warning(self):
++        with open(self.path, "w") as f:
++            f.write("name,qty,price\nwidget,oops,2.50\nbolt,10,n/a\nnut,7,1.00\n")
++        for fmt in ("table", "json"):
++            code, out, err = self.run_main([self.path, "--format", fmt])
++            self.assertEqual(code, 0)
++            lines = err.splitlines()
++            self.assertEqual(len(lines), 2)
++            self.assertTrue(lines[0].startswith("skipping row 1:"))
++            self.assertTrue(lines[1].startswith("skipping row 2:"))
++            self.assertNotIn("oops", out)
++            self.assertNotIn("n/a", out)
++
++    def test_json_stdout_is_only_json(self):
++        with open(self.path, "w") as f:
++            f.write("name,qty,price\nwidget,5,2.50\nbolt,bad,0.10\n")
++        _, out, _ = self.run_main([self.path, "--format", "json"])
++        self.assertEqual(json.loads(out), [{"name": "widget", "qty": 5, "price": 2.50}])
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

@@ -1,0 +1,178 @@
+ 3 files changed, 113 insertions(+), 6 deletions(-)
+diff --git c/README.md i/README.md
+index 7adcc7a..00b8419 100644
+--- c/README.md
++++ i/README.md
+@@ -4,4 +4,13 @@ Report stock levels from a CSV file with columns `name,qty,price`.
+ 
+ ## Usage
+ 
+-    python3 inventory.py items.csv [--min-qty N]
++    python3 inventory.py items.csv [--min-qty N] [--format {table,json}]
++
++`--format` defaults to `table` (fixed-width columns). `--format json` prints a JSON
++array of `{"name": str, "qty": int, "price": float}` objects sorted by name, and
++nothing else on stdout. `--min-qty N` keeps only rows with `qty >= N` in both formats.
++An unknown format is a usage error and exits with status 2.
++
++Rows whose `qty` or `price` cannot be parsed are skipped in both formats; each skipped
++row produces one warning line on stderr, e.g. `skipping row 3: bad qty: ...` (row
++numbers are 1-based over the data rows, excluding the header).
+diff --git c/inventory.py i/inventory.py
+index db71afe..71a0d3d 100644
+--- c/inventory.py
++++ i/inventory.py
+@@ -1,5 +1,6 @@
+ import argparse
+ import csv
++import json
+ import sys
+ 
+ 
+@@ -8,14 +9,46 @@ def load(path):
+         return list(csv.DictReader(f))
+ 
+ 
++def parse_rows(rows, warn=None):
++    """Turn raw CSV rows into records.
++
++    Rows whose qty or price cannot be parsed are skipped, with one warning
++    line per skipped row sent to warn (defaults to sys.stderr). Row numbers
++    are 1-based over the data rows (the header is not counted).
++    """
++    if warn is None:
++        warn = lambda msg: print(msg, file=sys.stderr)
++    records = []
++    for n, r in enumerate(rows, start=1):
++        try:
++            qty = int(r["qty"])
++        except (TypeError, ValueError, KeyError) as exc:
++            warn(f"skipping row {n}: bad qty: {exc}")
++            continue
++        try:
++            price = float(r["price"])
++        except (TypeError, ValueError, KeyError) as exc:
++            warn(f"skipping row {n}: bad price: {exc}")
++            continue
++        records.append({"name": r["name"] or "", "qty": qty, "price": price})
++    return records
++
++
+ def main(argv=None):
+     ap = argparse.ArgumentParser(description="Report stock levels")
+     ap.add_argument("csv")
+     ap.add_argument("--min-qty", type=int, default=0)
++    ap.add_argument("--format", choices=["table", "json"], default="table",
++                    dest="format", help="output format (default: table)")
+     a = ap.parse_args(argv)
+-    rows = [r for r in load(a.csv) if int(r["qty"]) >= a.min_qty]
+-    for r in sorted(rows, key=lambda r: r["name"]):
+-        print(f"{r['name']:<20} {int(r['qty']):>6} {float(r['price']):>10.2f}")
++    rows = [r for r in parse_rows(load(a.csv)) if r["qty"] >= a.min_qty]
++    rows.sort(key=lambda r: r["name"])
++    if a.format == "json":
++        json.dump(rows, sys.stdout)
++        sys.stdout.write("\n")
++    else:
++        for r in rows:
++            print(f"{r['name']:<20} {r['qty']:>6} {r['price']:>10.2f}")
+     return 0
+ 
+ 
+diff --git c/tests/test_inventory.py i/tests/test_inventory.py
+index 4103e16..af945d4 100644
+--- c/tests/test_inventory.py
++++ i/tests/test_inventory.py
+@@ -1,8 +1,9 @@
+-import io, os, tempfile, unittest
+-from contextlib import redirect_stdout
++import io, json, os, tempfile, unittest
++from contextlib import redirect_stdout, redirect_stderr
+ import inventory
+ 
+ CSV = "name,qty,price\nwidget,5,2.50\nbolt,100,0.10\n"
++BAD_CSV = "name,qty,price\nwidget,5,2.50\ngadget,abc,1.00\nbolt,3,nope\nnut,7,0.25\n"
+ 
+ 
+ class InventoryTest(unittest.TestCase):
+@@ -10,9 +11,19 @@ class InventoryTest(unittest.TestCase):
+         fd, self.path = tempfile.mkstemp(suffix=".csv")
+         with os.fdopen(fd, "w") as f:
+             f.write(CSV)
++        fd, self.bad_path = tempfile.mkstemp(suffix=".csv")
++        with os.fdopen(fd, "w") as f:
++            f.write(BAD_CSV)
+ 
+     def tearDown(self):
+         os.unlink(self.path)
++        os.unlink(self.bad_path)
++
++    def run_main(self, argv):
++        out, err = io.StringIO(), io.StringIO()
++        with redirect_stdout(out), redirect_stderr(err):
++            code = inventory.main(argv)
++        return code, out.getvalue(), err.getvalue()
+ 
+     def test_table(self):
+         out = io.StringIO()
+@@ -21,6 +32,60 @@ class InventoryTest(unittest.TestCase):
+         self.assertIn("widget", out.getvalue())
+         self.assertLess(out.getvalue().index("bolt"), out.getvalue().index("widget"))
+ 
++    def test_json_format(self):
++        code, out, err = self.run_main([self.path, "--format", "json"])
++        self.assertEqual(code, 0)
++        self.assertEqual(err, "")
++        self.assertEqual(
++            json.loads(out),
++            [
++                {"name": "bolt", "qty": 100, "price": 0.10},
++                {"name": "widget", "qty": 5, "price": 2.50},
++            ],
++        )
++        self.assertEqual(list(json.loads(out)[0]), ["name", "qty", "price"])
++        self.assertIsInstance(json.loads(out)[0]["qty"], int)
++        self.assertIsInstance(json.loads(out)[0]["price"], float)
++
++    def test_json_respects_min_qty(self):
++        _, out, _ = self.run_main([self.path, "--format", "json", "--min-qty", "10"])
++        self.assertEqual([r["name"] for r in json.loads(out)], ["bolt"])
++
++    def test_table_respects_min_qty(self):
++        _, out, _ = self.run_main([self.path, "--min-qty", "10"])
++        self.assertNotIn("widget", out)
++
++    def test_unknown_format_exits_2(self):
++        with self.assertRaises(SystemExit) as cm:
++            self.run_main([self.path, "--format", "yaml"])
++        self.assertEqual(cm.exception.code, 2)
++
++    def test_bad_rows_skipped_with_warnings_in_json(self):
++        code, out, err = self.run_main([self.bad_path, "--format", "json"])
++        self.assertEqual(code, 0)
++        self.assertEqual(
++            [r["name"] for r in json.loads(out)], ["nut", "widget"]
++        )
++        lines = [ln for ln in err.splitlines() if ln]
++        self.assertEqual(len(lines), 2)
++        self.assertTrue(lines[0].startswith("skipping row 2:"))
++        self.assertTrue(lines[1].startswith("skipping row 3:"))
++
++    def test_bad_rows_skipped_with_warnings_in_table(self):
++        code, out, err = self.run_main([self.bad_path])
++        self.assertEqual(code, 0)
++        self.assertNotIn("gadget", out)
++        self.assertNotIn("bolt", out)
++        self.assertIn("nut", out)
++        lines = [ln for ln in err.splitlines() if ln]
++        self.assertEqual(len(lines), 2)
++        self.assertTrue(lines[0].startswith("skipping row 2:"))
++        self.assertTrue(lines[1].startswith("skipping row 3:"))
++
++    def test_min_qty_applies_to_bad_row_filtering(self):
++        _, out, _ = self.run_main([self.bad_path, "--format", "json", "--min-qty", "6"])
++        self.assertEqual([r["name"] for r in json.loads(out)], ["nut"])
++
+ 
+ if __name__ == "__main__":
+     unittest.main()
