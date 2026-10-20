@@ -1,0 +1,59 @@
+{
+  "brand": "Ternmark",
+  "brandNote": "a field log that works in the mud",
+  "kicker": "Field log — release 4.2",
+  "h1": "Every bird you saw, in the place you saw it, with no signal.",
+  "lede": "Ternmark writes your sighting into a local database the moment you name it, and syncs when you get home. The estuary, the marsh and the eleven hours in between are all inside the app.",
+  "ctaPrimary": "Start a log",
+  "ctaSecondary": "See a whole season (3.1 MB)",
+  "features": [
+    {
+      "n": "01",
+      "t": "Offline first",
+      "b": "The species list, your map and your last four seasons are on the phone. Nothing asks for a network. Records queue, then merge, and a conflict is a row you can read."
+    },
+    {
+      "n": "02",
+      "t": "Sound to species",
+      "b": "Press and hold: six seconds of the marsh becomes a shortlist of nine species with the part of the call that matched, in a box you can reject."
+    },
+    {
+      "n": "03",
+      "t": "Your own records",
+      "b": "One folder of CSV and GeoJSON on your machine, plus a plain-text export of every note. The app is a window onto it, not the only door."
+    }
+  ],
+  "stats": [
+    { "v": "0", "u": "bars of signal", "n": "between the car park and the hide" },
+    { "v": "41 208", "u": "calls matched", "n": "on the device, in six seconds" },
+    { "v": "3 s", "u": "to a new record", "n": "name, count, note, and it is written" }
+  ],
+  "quote": {
+    "q": "I filled in the whole tide in the blackest part of the season, on a phone with no signal, in gloves. It was all there when I got back to the car, and it was all mine.",
+    "by": "Halley Rouesler",
+    "role": "county recorder, the Sandbar estuary, 11 seasons"
+  },
+  "plans": [
+    {
+      "t": "Free",
+      "p": "£0",
+      "per": "one season",
+      "l": ["300 records a season", "Offline maps and species list", "CSV export, current season"]
+    },
+    {
+      "t": "Ternmark Pro",
+      "p": "£24",
+      "per": "a year",
+      "best": true,
+      "l": ["Unlimited records, all seasons", "Six-second sound identification", "Sync between three devices", "Every export, every year"]
+    }
+  ],
+  "foot": {
+    "made": "Ternmark is made by two people in a room above a boatyard at Upcerne.",
+    "lines": ["Field guide", "Import a legacy log", "Offline maps", "Your data"],
+    "legal": "Ternmark 2025. No trackers, no analytics, one cookie for your own settings.",
+    "inputLabel": "Get the release notes",
+    "inputHint": "About ten times a year, on the day they are published.",
+    "inputButton": "Send them"
+  }
+}

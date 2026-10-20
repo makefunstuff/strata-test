@@ -1720,5 +1720,418 @@
         "actions": []
       }
     ]
+  },
+  {
+    "task": "11-styles",
+    "title": "Style range — one page, nine styles",
+    "shots": [
+      {
+        "name": "swiss-hero",
+        "page": "s01-swiss.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "swiss-full",
+        "page": "s01-swiss.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "swiss-phone",
+        "page": "s01-swiss.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "brutalism-hero",
+        "page": "s02-brutalism.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "brutalism-full",
+        "page": "s02-brutalism.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "brutalism-phone",
+        "page": "s02-brutalism.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "editorial-hero",
+        "page": "s03-editorial.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "editorial-full",
+        "page": "s03-editorial.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "editorial-phone",
+        "page": "s03-editorial.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "glass-hero",
+        "page": "s04-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "glass-full",
+        "page": "s04-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "glass-phone",
+        "page": "s04-glass.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "neumorph-hero",
+        "page": "s05-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "neumorph-full",
+        "page": "s05-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "neumorph-phone",
+        "page": "s05-neumorph.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "pixel-hero",
+        "page": "s06-pixel.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "pixel-full",
+        "page": "s06-pixel.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "pixel-phone",
+        "page": "s06-pixel.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "japanese-hero",
+        "page": "s07-japanese.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "japanese-full",
+        "page": "s07-japanese.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "japanese-phone",
+        "page": "s07-japanese.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "cyber-hero",
+        "page": "s08-cyber.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "cyber-full",
+        "page": "s08-cyber.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "cyber-phone",
+        "page": "s08-cyber.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "luxury-hero",
+        "page": "s09-luxury.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "luxury-full",
+        "page": "s09-luxury.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "luxury-phone",
+        "page": "s09-luxury.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "brief",
+        "page": "index.html",
+        "width": 1440,
+        "height": 820,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#brief"
+        ]
+      },
+      {
+        "name": "heroes",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#strip"
+        ]
+      },
+      {
+        "name": "towers",
+        "page": "index.html",
+        "width": 1440,
+        "height": 820,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#towers"
+        ]
+      },
+      {
+        "name": "card-swiss",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#swiss"
+        ]
+      },
+      {
+        "name": "card-neumorph",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#neumorph"
+        ]
+      },
+      {
+        "name": "card-cyber",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#cyber"
+        ]
+      },
+      {
+        "name": "audit-pairs",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1250,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#before"
+        ]
+      },
+      {
+        "name": "parity",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#parity"
+        ]
+      },
+      {
+        "name": "measures",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#measure"
+        ]
+      },
+      {
+        "name": "ratings",
+        "page": "index.html",
+        "width": 1440,
+        "height": 800,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#ratings"
+        ]
+      },
+      {
+        "name": "verdict",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#verdict"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "settle": 1500,
+        "full": true
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "settle": 1500,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "before-glass",
+        "page": "before-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "before-neumorph",
+        "page": "before-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500
+      }
+    ]
   }
 ]

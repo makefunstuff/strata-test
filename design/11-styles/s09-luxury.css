@@ -1,0 +1,143 @@
+/* 11 · s09 — Luxury / house of distinction.
+   The rules: a hairline frame that keeps the page inside a margin of air; centred
+   symmetry on a single axis; a light-weight serif at a size that forces the eye to
+   slow down, and a geometric sans in small capitals at wide tracking for everything
+   that labels; rules and ornaments, never boxes; one gold, used for lines and
+   ornaments only — where gold must be read, it is darkened to 5.2:1. Motion is a
+   400 ms colour change, and it is removed on request. */
+:root {
+  --paper: #f7f5f1;
+  --paper-2: #f1eee8;
+  --ink: #16181d;
+  --ink-2: #3c4048;
+  --ink-3: #6a655c;
+  --hair: #d5cec2;
+  --gold: #a9834f;
+  --gold-ink: #7a5c33; /* the readable gold: 5.7:1 on the paper. Decorative gold (#a9834f) is 3.2:1,
+                       which is fine on a rule and not fine on a word. */
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+}
+* { box-sizing: border-box }
+body {
+  margin: 0; background-color: var(--paper); color: var(--ink);
+  font: 300 17px/1.85 var(--sans); letter-spacing: 0.01em;
+}
+h1, h2, h3, p, ul, blockquote { margin: 0 }
+ul { list-style: none; padding: 0 }
+a { color: inherit }
+.frame { position: fixed; inset: 12px; border: 1px solid var(--gold); pointer-events: none; z-index: 30 }
+.skip { position: absolute; left: 20px; top: -70px; z-index: 40; background: var(--ink); color: var(--paper); padding: 11px 18px; text-decoration: none; font: 400 12px var(--sans); letter-spacing: 0.18em; text-transform: uppercase }
+.skip:focus { top: 20px }
+:focus-visible { outline: 1px solid var(--gold-ink); outline-offset: 4px }
+main, .mast, footer { max-width: 1040px; margin: 0 auto; padding-left: 26px; padding-right: 26px }
+
+/* the ornament: two rules and a stone, used between every section */
+.orn { display: flex; align-items: center; gap: 16px; justify-content: center; margin: 22px auto }
+.orn i { height: 1px; width: 90px; background: var(--gold) }
+.orn b { color: var(--gold); font-size: 12px; font-weight: 400 }
+
+.mast { padding-top: 60px; text-align: center }
+.mono {
+  width: 58px; height: 58px; margin: 0 auto 22px; border: 1px solid var(--gold); border-radius: 50%;
+  display: grid; place-items: center; font: 300 26px var(--serif); color: var(--gold-ink);
+}
+.mono.end { width: 42px; height: 42px; font-size: 19px; margin: 30px auto 0 }
+.wordmark { font: 300 clamp(30px, 4.6vw, 46px)/1.1 var(--serif); letter-spacing: 0.28em; text-transform: uppercase; text-indent: 0.28em }
+.sub { margin-top: 12px; font: 400 11px var(--sans); letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-3); text-indent: 0.32em }
+.nav {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 34px; margin-top: 26px;
+  border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  font: 400 11px var(--sans); letter-spacing: 0.24em; text-transform: uppercase;
+}
+.nav a { text-decoration: none; color: var(--ink-2); padding: 16px 4px; min-height: 48px; display: inline-flex; align-items: center; transition: color 400ms ease }
+.nav a:hover { color: var(--gold-ink) }
+
+.hero { padding: 66px 26px 30px; text-align: center }
+.kicker { font: 400 11px var(--sans); letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-ink); text-indent: 0.32em }
+.hed { font: 300 clamp(30px, 4.4vw, 56px)/1.28 var(--serif); max-width: 20ch; margin: 26px auto 0; letter-spacing: 0.005em }
+.hed em { font-style: italic }
+.lede { color: var(--ink-2); font-size: 17.5px; max-width: 46ch; margin: 26px auto 0 }
+.cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 36px }
+.cta-a, .cta-b {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 32px;
+  text-decoration: none; font: 400 11px var(--sans); letter-spacing: 0.26em; text-transform: uppercase; text-indent: 0.26em;
+  border: 1px solid var(--ink); transition: background-color 400ms ease, color 400ms ease;
+}
+.cta-a { background: var(--ink); color: var(--paper) }
+.cta-a:hover { background: transparent; color: var(--ink) }
+.cta-b { background: transparent; color: var(--ink) }
+.cta-b:hover { background: var(--ink); color: var(--paper) }
+.plate { max-width: 460px; margin: 54px auto 0; padding: 20px; border: 1px solid var(--gold) }
+.plate svg { width: 100%; height: auto; display: block }
+.cap { margin-top: 16px; font: 400 10.5px var(--sans); letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-3); text-indent: 0.24em }
+
+.sec { padding: 40px 26px 46px; text-align: center }
+.sec-h { font: 300 clamp(24px, 3vw, 34px) var(--serif); letter-spacing: 0.02em }
+.svc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 26px }
+.svc article { padding: 0 30px; border-left: 1px solid var(--hair) }
+.svc article:first-child { border-left: 0 }
+.svc .n { font: 300 italic 20px var(--serif); color: var(--gold-ink) }
+.svc h3 { font: 300 22px var(--serif); margin: 12px 0 12px; letter-spacing: 0.02em }
+.svc p { color: var(--ink-2); font-size: 16px; max-width: 30ch; margin: 0 auto }
+
+.measures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 20px }
+.measure { padding: 0 26px; border-left: 1px solid var(--hair) }
+.measure:first-child { border-left: 0 }
+.measure b { display: block; font: 300 clamp(34px, 4vw, 52px)/1.1 var(--serif); letter-spacing: 0.01em }
+.measure .u { display: block; margin-top: 14px; font: 400 10.5px var(--sans); letter-spacing: 0.26em; text-transform: uppercase; text-indent: 0.26em }
+.measure em { display: block; margin-top: 10px; font: 300 italic 15.5px var(--serif); color: var(--ink-3); max-width: 22ch; margin-left: auto; margin-right: auto }
+
+blockquote { max-width: 640px; margin: 0 auto }
+blockquote p { font: 300 italic clamp(22px, 3vw, 34px)/1.5 var(--serif) }
+blockquote footer { margin-top: 24px; display: grid }
+blockquote footer b { font: 400 11px var(--sans); letter-spacing: 0.26em; text-transform: uppercase; text-indent: 0.26em }
+blockquote footer i { font: 300 italic 15px var(--serif); color: var(--ink-3); margin-top: 8px }
+
+.terms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; margin-top: 26px; align-items: start }
+.terms article { border: 1px solid var(--hair); padding: 34px 26px 32px; text-align: center }
+.terms article.best { border-color: var(--gold) }
+.flag { font: 400 10.5px var(--sans); letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 16px; text-indent: 0.24em }
+.terms h3 { font: 300 24px var(--serif); letter-spacing: 0.02em }
+.price { font: 300 42px/1.2 var(--serif); margin: 14px 0 22px }
+.price em { display: block; font: 400 10.5px var(--sans); font-style: normal; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-3); margin-top: 8px; text-indent: 0.24em }
+.terms ul { margin-bottom: 26px; color: var(--ink-2); font-size: 16px }
+.terms li { padding: 12px 0; border-bottom: 1px solid var(--hair) }
+.terms li:last-child { border-bottom: 0 }
+
+footer { padding-bottom: 60px; text-align: center }
+.foot { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr); gap: 34px; text-align: left; border-top: 1px solid var(--hair); padding-top: 34px }
+.made { color: var(--ink-2); max-width: 30ch; margin-bottom: 22px }
+.foot label { display: block; font: 400 10.5px var(--sans); letter-spacing: 0.26em; text-transform: uppercase }
+.hint { font: 300 italic 15.5px var(--serif); color: var(--ink-3); margin: 8px 0 14px }
+.field { display: flex; gap: 12px; flex-wrap: wrap }
+.field input {
+  flex: 1 1 190px; min-width: 0; height: 52px; padding: 0 14px; border: 1px solid var(--ink); background: #fff;
+  font: 300 16px var(--sans); color: var(--ink); border-radius: 0;
+}
+.field input::placeholder { color: #999286 }
+.field input:focus-visible { outline: 1px solid var(--gold-ink); outline-offset: 2px }
+.field button {
+  min-height: 52px; padding: 0 24px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); cursor: pointer;
+  font: 400 11px var(--sans); letter-spacing: 0.24em; text-transform: uppercase; transition: background-color 400ms ease;
+}
+.field button:hover { background: var(--gold-ink); border-color: var(--gold-ink) }
+.status { font: 300 italic 15.5px var(--serif); color: var(--gold-ink); min-height: 1.9em; margin-top: 12px }
+.foot-b { display: grid; gap: 6px; align-content: start; font: 400 11px var(--sans); letter-spacing: 0.2em; text-transform: uppercase }
+.foot-b a { text-decoration: none; color: var(--ink-2); padding: 14px 0; min-height: 48px; display: inline-flex; align-items: center; border-bottom: 1px solid var(--hair); transition: color 400ms ease }
+.foot-b a:hover { color: var(--gold-ink) }
+.legal { font: 300 15px/1.9 var(--serif); color: var(--ink-3); align-self: end }
+
+@media (max-width: 900px) {
+  .frame { inset: 8px }
+  .mast { padding-top: 40px }
+  .hero { padding-top: 40px }
+  .svc, .measures { grid-template-columns: 1fr; gap: 26px }
+  .svc article, .measure { border-left: 0; padding: 22px 0; border-top: 1px solid var(--hair) }
+  .terms { grid-template-columns: 1fr }
+  .foot { grid-template-columns: 1fr; gap: 26px }
+  .legal { align-self: auto }
+  .hed { font-size: 30px; line-height: 1.4 }
+  .orn i { width: 54px }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }

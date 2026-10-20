@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Pixel</title>
+<meta name="description" content="The Ternmark home page as an 8-bit screen: a pixel grid, hard colours, a scanline overlay, no anti-aliasing in the graphics.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Crect%20width='16'%20height='16'%20fill='%230d0d0d'/%3E%3Crect%20x='4'%20y='4'%20width='8'%20height='8'%20fill='%2333ff66'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vt323@5.3.0/400.css">
+<link rel="stylesheet" href="s06-pixel.css">
+</head>
+<body data-style="s06-pixel">
+<a class="skip" href="#main">SKIP TO CONTENT</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+/* a bird on a 16x16 grid, drawn as 1-unit rects so it scales by whole pixels */
+const sprite = () => {
+  const px = [
+    "................",
+    "................",
+    ".....#####......",
+    "....##o####.....",
+    "....######yy....",
+    "....######......",
+    "...########.....",
+    "..##########....",
+    ".############...",
+    "#############...",
+    "..####..####....",
+    "......####......",
+    "......##.##.....",
+    "................",
+    "................",
+    "................",
+  ];
+  let out = "";
+  px.forEach((row, y) => {
+    [...row].forEach((ch, x) => {
+      if (ch === ".") return;
+      const fill = ch === "o" ? "#0d0d0d" : ch === "y" ? "#ffd93d" : "#33ff66";
+      out += `<rect x="${x}" y="${y}" width="1" height="1" fill="${fill}"/>`;
+    });
+  });
+  return `<svg class="sprite" viewBox="0 0 16 16" role="img" aria-label="An 8-bit bird." shape-rendering="crispEdges">${out}</svg>`;
+};
+
+const tpl = (c) => `
+<div class="boot"><span>&gt;&gt; ${esc(c.kicker)} &nbsp; LOAD OK &nbsp; MEM 41 208 RECORDS FREE &nbsp; NO CARRIER &nbsp; KEEP LOGGING</span></div>
+<header class="bar">
+  <p class="logo">${esc(c.brand)}</p>
+  <p class="ver">v4.2 · ${esc(c.brandNote)}</p>
+  <nav class="nav" aria-label="Sections">
+    <a href="#feat">[1] FEATURES</a><a href="#stats">[2] STATS</a><a href="#plans">[3] PLANS</a><a href="#foot">[4] CONTACT</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="hud">
+      <p class="kicker">▸ ${esc(c.kicker)}</p>
+      <h1>${esc(c.h1)}<span class="cursor" aria-hidden="true">_</span></h1>
+      <p class="lede">${esc(c.lede)}</p>
+      <p class="cta">
+        <a class="btn" href="#plans">▶ ${esc(c.ctaPrimary)}</a>
+        <a class="btn alt" href="#stats">◆ ${esc(c.ctaSecondary)}</a>
+      </p>
+      <p class="hint-line">1 PLAYER · 0 SIGNAL · SCORE SAVED LOCALLY</p>
+    </div>
+    <div class="screen">
+      <p class="scr-top">SCREEN 1-1 · THE SANDBAR HIDE</p>
+      ${sprite()}
+      <ul class="log">
+        <li><b>21:04</b><span>COMMON TERN</span><em>×14</em></li>
+        <li><b>21:11</b><span>SANDWICH TERN</span><em>×3</em></li>
+        <li><b>21:19</b><span>AVOCET</span><em>×41</em></li>
+        <li class="pend"><b>21:26</b><span>LITTLE TERN · CALL 6S</span><em>SAVED</em></li>
+      </ul>
+      <p class="scr-bot">NO CARRIER ▸ RECORD IS WRITTEN ANYWAY ▸ 0 BYTES SENT</p>
+    </div>
+  </section>
+
+  <section class="sec" id="feat" aria-labelledby="feat-h">
+    <h2 class="sec-h" id="feat-h">▸ WHAT IT DOES</h2>
+    <div class="feat">
+      ${c.features.map((f, i) => `<article class="box">
+        <p class="lvl">LEVEL ${f.n}</p>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+        <p class="bar-line" aria-hidden="true"><span style="width:${[80, 62, 94][i]}%"></span></p>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="stats" aria-labelledby="stats-h">
+    <h2 class="sec-h" id="stats-h">▸ HIGH SCORES</h2>
+    <div class="stats">
+      ${c.stats.map((s, i) => `<div class="box stat">
+        <p class="rank">${["1ST", "2ND", "3RD"][i]}</p>
+        <b>${esc(s.v)}</b>
+        <p class="u">${esc(s.u)}</p>
+        <p class="n">${esc(s.n)}</p>
+      </div>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="quote" aria-labelledby="quote-h">
+    <h2 class="sec-h" id="quote-h">▸ DIALOGUE</h2>
+    <blockquote class="box say">
+      <p class="who">${esc(c.quote.by).toUpperCase()} · ${esc(c.quote.role).toUpperCase()}</p>
+      <p>${esc(c.quote.q)}</p>
+      <p class="more" aria-hidden="true">▼ PRESS A</p>
+    </blockquote>
+  </section>
+
+  <section class="sec" id="plans" aria-labelledby="plans-h">
+    <h2 class="sec-h" id="plans-h">▸ SELECT YOUR PLAN</h2>
+    <div class="plans">
+      ${c.plans.map((p, i) => `<article class="box plan ${p.best ? "best" : ""}">
+        <p class="p1">${["PLAYER 1", "PLAYER 2"][i]}${p.best ? " ◂ P1 WINS" : ""}</p>
+        <h3>${esc(p.t).toUpperCase()}</h3>
+        <p class="price">${esc(p.p)}<span>/ ${esc(p.per)}</span></p>
+        <ul>${p.l.map((l) => `<li>▸ ${esc(l)}</li>`).join("")}</ul>
+        <a class="btn sm ${p.best ? "" : "alt"}" href="#foot">▶ ${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+<footer id="foot" class="sec">
+  <div class="foot">
+    <div class="box foot-a">
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">▸ ${esc(c.foot.inputLabel)}</label>
+        <p class="hint">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org"><button type="submit">▶ ${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <nav class="flinks" aria-label="Footer">${c.foot.lines.map((l) => `<a href="#main">▸ ${esc(l)}</a>`).join("")}</nav>
+    <p class="legal">${esc(c.foot.legal)} · ${esc(c.brand)} ${esc(c.kicker)}<br>INSERT COIN TO CONTINUE</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — PIXEL (8-bit screen)` });
+</script>
+</body>
+</html>

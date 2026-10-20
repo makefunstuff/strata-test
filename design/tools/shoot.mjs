@@ -181,20 +181,35 @@ const audit = async () => {
     .map((el) => el.tagName.toLowerCase() + ":" + (el.className?.toString?.().slice(0, 30) || ""));
   const imgs = [...document.querySelectorAll("img")].filter(vis)
     .filter((el) => !el.hasAttribute("alt")).map((el) => el.getAttribute("src")?.split("/").pop() || "img");
+  /* Contrast runs over TEXT NODES, not elements. Emphasis lives in inline elements, and the
+     first version of this audit skipped any element that had children — so the coloured words that
+     carry the meaning (an em in a headline, a strong in a paragraph) were exactly what it never
+     read. A foreground with alpha under 0.5 is transparent or gradient-clipped type: there is no
+     text colour to measure, and that is reported as a finding, not passed in silence. */
   const contrast = [];
   const seen = new Set();
-  for (const el of [...document.querySelectorAll("p,h1,h2,h3,h4,h5,h6,li,td,th,label,button,a,span,small,figcaption,dd,dt,summary,legend")]) {
-    const txt = (el.textContent || "").trim();
-    if (txt.length < 2 || !vis(el) || el.children.length) continue;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const txt = (node.textContent || "").replace(/\s+/g, " ").trim();
+    const el = node.parentElement;
+    if (txt.length < 2 || !el || !vis(el) || el.closest("[aria-hidden=true]")) continue;
     const cs = getComputedStyle(el);
     const size = parseFloat(cs.fontSize);
     const bold = (+cs.fontWeight >= 700 && size >= 18.66) || (size >= 24);
     const need = bold ? 3 : 4.5;
-    const r = ratio(parse(cs.color), bgOf(el));
     const key = txt.slice(0, 24) + cs.color + Math.round(size);
     if (seen.has(key)) continue;
     seen.add(key);
-    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need, fg: cs.color, bg: "rgb(" + bgOf(el).map(Math.round).join(", ") + ")", sel: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(/\s+/).slice(0, 2).join(".") : "") });
+    const bg = bgOf(el);
+    const bgStr = "rgb(" + bg.map(Math.round).join(", ") + ")";
+    const sel = el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(/\s+/).slice(0, 2).join(".") : "");
+    const a = alpha(cs.color);
+    if (a < 0.5) {
+      contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: 1, need, fg: cs.color, bg: bgStr, sel, why: "foreground alpha " + a + ": transparent or gradient-clipped text, no colour to measure" });
+      continue;
+    }
+    const r = ratio(parse(cs.color), bg);
+    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need, fg: cs.color, bg: bgStr, sel });
   }
   let focusRing = "none";
   try {

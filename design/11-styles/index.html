@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11 · Style range — one brief, nine visual styles</title>
+<meta name="description" content="The same home page rendered in nine distinct visual styles, with the measurements that show how far apart they are.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20fill='%23ffffff'/%3E%3Crect x='3' y='4' width='18' height='3' fill='%23141414'/%3E%3Crect x='3' y='9' width='12' height='2' fill='%23141414'/%3E%3Crect x='3' y='13' width='16' height='2' fill='%23141414'/%3E%3Crect x='3' y='17' width='8' height='2' fill='%23141414'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+<a class="skip" href="#styles">Skip to the nine styles</a>
+
+<header class="mast">
+  <p class="crumbs"><a href="../index.html">Design gallery</a> · study 11</p>
+  <h1>One brief, nine visual styles</h1>
+  <p class="lede">The same product copy, the same sections, the same order, the same form —
+    set nine times over. The point is not a mood board: it is to see how far a page can be
+    pushed before it stops being usable, and to measure, not assert, that the nine pages are
+    really nine styles and one piece of writing.</p>
+  <dl class="facts">
+    <div><dt>Content</dt><dd id="fact-content">—</dd></div>
+    <div><dt>One file</dt><dd id="fact-file">—</dd></div>
+    <div><dt>Renderer</dt><dd id="fact-render">—</dd></div>
+    <div><dt>Shots</dt><dd id="fact-shots">—</dd></div>
+  </dl>
+</header>
+
+<main id="main">
+  <section id="brief" aria-labelledby="brief-h">
+    <h2 id="brief-h">The brief, fixed once</h2>
+    <p>One product, one audience, one set of sentences, written before any style was chosen and
+      never edited afterwards. Every page below renders it from
+      <code>content.json</code> through <code>render.js</code>; a style may choose the typeface,
+      the grid, the colour, the motion and the shape of a control, and it may add the words a
+      style needs (a nav label, a section name, a numeral). It may not add, drop, reorder or
+      rewrite a fact. <a href="content.json">content.json</a> is the contract.</p>
+    <div class="brief-grid">
+      <p class="b-hed" id="b-hed">—</p>
+      <p class="b-lede" id="b-lede">—</p>
+      <ul class="b-list" id="b-list"></ul>
+    </div>
+  </section>
+
+  <section id="strip" aria-labelledby="strip-h">
+    <h2 id="strip-h">Nine heroes, same width</h2>
+    <p class="note">Each is the top of the page at 1440 × 900, scaled by the same factor. Click any
+      one to open the live page.</p>
+    <div class="hero-strip" id="hero-strip"></div>
+  </section>
+
+  <section id="towers" aria-labelledby="towers-h">
+    <h2 id="towers-h">Nine whole pages, same scale</h2>
+    <p class="note">Full-page captures, all at 1440 px wide and all scaled to the same height, so
+      the length of a page is a comparable number.</p>
+    <div class="towers" id="towers-strip"></div>
+  </section>
+
+  <section id="styles" aria-labelledby="styles-h">
+    <h2 id="styles-h">The nine, one at a time</h2>
+    <p class="note">Each card states the rules the sheet obeys, then the numbers that fall out of
+      them, then a judgement. The numbers come from
+      <code>measure.mjs</code>: the rendered text of the page, its own CSS, and the screenshot
+      harness's audit of it.</p>
+    <div id="cards"></div>
+  </section>
+
+  <section id="before" aria-labelledby="before-h">
+    <h2 id="before-h">The fixes, and the audit that could not see one of them</h2>
+    <p>Two failures the audit caught, put back on purpose in
+      <a href="before-fixes.css">before-fixes.css</a>, and shot with the same harness. The
+      neumorphism pair is a normal result: the idiom is soft grey ink on a soft grey surface, twelve
+      places measured under the ratio a word needs, and every grey had to be darkened. The
+      glassmorphism pair is not: the gradient-clipped headline passed the old audit with
+      <strong>zero</strong> findings, because the audit read elements, skipped anything with children
+      (so an <code>em</code> in a headline was never read), and parsed a transparent colour as black.
+      The harness now walks text nodes and reports a near-transparent foreground as
+      <em>no colour to measure</em> — which is why the "before" shot reports exactly one finding.
+      The fix was never to satisfy the check; the check was blind.</p>
+    <div class="pairs">
+      <figure><img src="shots/before-neumorph.jpg" alt="The neumorphism page before the contrast fixes" loading="lazy"><figcaption><b>Before</b> — 12 contrast findings: body text 3.4:1, secondary 3.0:1, accent 3.1:1.</figcaption></figure>
+      <figure><img src="shots/neumorph-hero.jpg" alt="The neumorphism page after the contrast fixes" loading="lazy"><figcaption><b>After</b> — 0 findings: lightest text 5.0:1, accent 5.1:1, the surface unchanged.</figcaption></figure>
+      <figure><img src="shots/before-glass.jpg" alt="The glassmorphism page with a gradient-clipped headline and the base colour on body" loading="lazy"><figcaption><b>Before</b> — gradient-clipped headline, and the base colour on <code>body</code>, which buries the <code>z-index: -1</code> mesh, so the glass has nothing to blur. Old audit: 0 findings. New audit: 1.</figcaption></figure>
+      <figure><img src="shots/glass-hero.jpg" alt="The glassmorphism page after the fixes" loading="lazy"><figcaption><b>After</b> — the base colour on <code>html</code>, a solid fill under the gradient buttons, the emphasis in a solid colour with a halo: 0 findings.</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="parity" aria-labelledby="parity-h">
+    <h2 id="parity-h">Is it the same page? Measuring the content</h2>
+    <p id="parity-intro">Two checks, both run over the text a browser has rendered (not the
+      template source, which contains placeholders). The first asks whether every sentence of
+      the content file appears in the page. The second counts the words a style <em>added</em>:
+      nav labels, section names, numerals, its own connective sentences. A style that writes a
+      sentence of its own has stopped being an arrangement of the brief, and the count is where
+      that shows.</p>
+    <div class="table-wrap"><table id="parity-table"></table></div>
+    <p class="note" id="parity-note"></p>
+  </section>
+
+  <section id="measure" aria-labelledby="measure-h">
+    <h2 id="measure-h">How far apart are they?</h2>
+    <p class="note">Typefaces in use are the first family of the computed
+      <code>font-family</code> on the heading and the body, read from the live page. “Inks”
+      counts distinct rendered text colours. Radius, motion and weight are the page's own
+      numbers.</p>
+    <div class="table-wrap"><table id="measure-table"></table></div>
+    <p class="note" id="measure-note"></p>
+  </section>
+
+  <section id="ratings" aria-labelledby="ratings-h">
+    <h2 id="ratings-h">The judgements</h2>
+    <p><strong>Fidelity</strong> is how faithfully the page performs its style: does it keep the
+      conventions that style was built on, and does it keep them where they are expensive.
+      <strong>Craft</strong> is how good the page is as a page — hierarchy, rhythm, scanning,
+      the form at the end — judged the same way for all nine, including the styles that suit the
+      subject better.</p>
+    <div class="table-wrap"><table id="rating-table"></table></div>
+  </section>
+
+  <section id="verdict" aria-labelledby="verdict-h">
+    <h2 id="verdict-h">What this shows</h2>
+    <div id="verdict-body"></div>
+  </section>
+
+  <section id="method" aria-labelledby="method-h">
+    <h2 id="method-h">Method, and what it does not cover</h2>
+    <ul class="method">
+      <li>Nine pages, plain HTML + CSS + a module that renders the shared content; no build step.
+        Fonts are pinned <code>@fontsource</code> packages from jsDelivr, CSS-only.</li>
+      <li>Each page was screenshotted at 1440 × 900 (hero), full page, and at 390 × 844 in phone
+        portrait, through a RAM-capped Chromium, by <code>tools/shoot.mjs</code>.</li>
+      <li>Every shot records console errors, page errors and failed requests, and an audit of
+        contrast (text colour against its nearest opaque background), unnamed controls,
+        landmarks, images without alt text and language. Those numbers are in the tables above.</li>
+      <li>Each page carries a <code>prefers-reduced-motion</code> block; the count of running
+        animations is measured with and without it in <a href="NOTES.md">NOTES.md</a>.</li>
+      <li><strong>Not covered:</strong> no real user testing, no screen-reader run, no keyboard-only
+        walkthrough, no Lighthouse budget, no cross-browser check (Chromium 152 only), and no
+        judgement of whether the subject <em>should</em> be dressed this way — a grant form in
+        brutalism is a real page for real people, and this study cannot tell you whether it is a
+        good one.</li>
+      <li>Open this folder over http (any static server) — the pages are ES modules and the tables
+        read a generated file, both of which browsers refuse on <code>file://</code>.</li>
+    </ul>
+    <p class="back"><a href="../index.html">← Design gallery</a> · <a href="NOTES.md">NOTES.md</a> · <a href="s01-swiss.html">first style</a></p>
+  </section>
+</main>
+
+<footer>
+  <p>Study 11 of the design gallery · strata-test/7 · nine styles, one content file, measured by
+    <code>tools/rendered.mjs</code> + <code>measure.mjs</code> + <code>tools/shoot.mjs</code>.</p>
+</footer>
+
+<script src="stats.js"></script>
+<script src="gallery.js" type="module"></script>
+</body>
+</html>

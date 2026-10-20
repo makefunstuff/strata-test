@@ -1,0 +1,29 @@
+/* The two failures the contrast audit caught, put back on purpose.
+   Nothing in the study links this file except the two `before-*.html` pages, which exist only to
+   show a before/after in NOTES.md and in the gallery. Do not ship these. */
+
+/* 1 · glassmorphism. The base colour was on `body`. A body background paints above a
+     `z-index: -1` fixed layer, so the mesh — the only thing the glass had to blur — was buried,
+     and the page was a flat navy rectangle with translucent cards on it.
+     (The fix moves the colour to `html` and leaves `body` transparent.) */
+body.before-glass { background: var(--base) }
+
+/* 2 · glassmorphism. The headline emphasis was gradient-clipped text:
+     `color: transparent` with a gradient background clipped to the glyphs. It looks strong and it
+     is unauditable: the computed text colour is transparent, so no contrast checker — this one or
+     any other — can clear it, and some assistive tech reads the layering as decoration. */
+body.before-glass .hero h1 em {
+  color: transparent;
+  background: linear-gradient(96deg, #7cc4ff, #ff9ad6 58%, #56e6c8);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* 3 · neumorphism. The idiom is soft grey ink on a soft grey surface, which is the style's known
+     accessibility failure. These are the values a first pass reaches for: body 3.4:1, secondary
+     3.0:1, accent 3.1:1 — all under the 4.5:1 a normal-size word needs. */
+body.before-neumorph {
+  --ink-2: #7c8797;
+  --ink-3: #6f7d92;
+  --accent: #4d84d4;
+}

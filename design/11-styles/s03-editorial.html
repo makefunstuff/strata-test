@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Editorial</title>
+<meta name="description" content="The Ternmark home page set as a magazine feature: a masthead, columns, a drop cap and a pull quote.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20fill='%23fbf8f1'/%3E%3Ctext%20x='4'%20y='18'%20font-family='Georgia,serif'%20font-size='16'%20fill='%231c1a17'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/instrument-serif@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/source-serif-4@5.3.0/index.css">
+<link rel="stylesheet" href="s03-editorial.css">
+</head>
+<body data-style="s03-editorial">
+<a class="skip" href="#main">Skip to the feature</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const tpl = (c) => `
+<header class="mast">
+  <p class="rule-top" aria-hidden="true"></p>
+  <div class="mast-in">
+    <p class="folio">The Field Quarterly</p>
+    <h1 class="wordmark">${esc(c.brand)}</h1>
+    <p class="folio right">${esc(c.kicker)}</p>
+    <p class="strap">${esc(c.brandNote)} · no. 4.2 · ${esc(c.foot.legal)}</p>
+  </div>
+  <nav class="nav" aria-label="Sections">
+    <a href="#feat">The machinery</a><a href="#stats">By the numbers</a><a href="#plans">The two editions</a><a href="#foot">Letters</a>
+  </nav>
+</header>
+
+<main id="main">
+  <article>
+    <header class="head">
+      <p class="kicker">Field software · a review</p>
+      <h2 class="hed">${esc(c.h1)}</h2>
+      <p class="dek">${esc(c.lede)}</p>
+      <p class="byline">By the editor · photographs none · 6 minute read</p>
+      <p class="cta">
+        <a class="cta-a" href="#plans">${esc(c.ctaPrimary)} <span aria-hidden="true">→</span></a>
+        <a class="cta-b" href="#stats">${esc(c.ctaSecondary)}</a>
+      </p>
+    </header>
+
+    <section class="body">
+      <p class="first">${esc(c.features[0].b)}</p>
+      <p>${esc(c.features[1].b)}</p>
+      <p>${esc(c.features[2].b)}</p>
+    </section>
+
+    <section id="feat" aria-labelledby="feat-h">
+      <h3 class="sec-h" id="feat-h"><span>In this issue</span><em>the index</em></h3>
+      <ol class="index">
+        ${c.features.map((f, i) => `<li>
+          <span class="n">${f.n}</span>
+          <h4>${esc(f.t)}</h4>
+          <span class="dots" aria-hidden="true"></span>
+          <p class="lead">${esc(c.stats[i].u)} — ${esc(c.stats[i].n)}</p>
+        </li>`).join("")}
+        ${c.foot.lines.map((l, i) => `<li>
+          <span class="n">${String(c.features.length + i + 1).padStart(2, "0")}</span>
+          <h4>${esc(l)}</h4>
+          <span class="dots" aria-hidden="true"></span>
+          <p class="lead">${esc(c.plans[i % c.plans.length].t)} · ${esc(c.plans[i % c.plans.length].p)}</p>
+        </li>`).join("")}
+      </ol>
+    </section>
+
+    <section id="stats" class="numbers" aria-labelledby="stats-h">
+      <h4 class="num-h" id="stats-h">By the numbers</h4>
+      <div class="num-grid">
+        ${c.stats.map((s) => `<div class="num">
+          <b>${esc(s.v)}</b>
+          <span class="u">${esc(s.u)}</span>
+          <em>${esc(s.n)}</em>
+        </div>`).join("")}
+      </div>
+    </section>
+
+    <section id="quote" aria-labelledby="quote-h">
+      <h4 class="visually-hidden" id="quote-h">A letter from a reader</h4>
+      <blockquote>
+        <p>${esc(c.quote.q)}</p>
+        <footer><span>${esc(c.quote.by)}</span>, ${esc(c.quote.role)}</footer>
+      </blockquote>
+    </section>
+
+    <section id="plans" aria-labelledby="plans-h">
+      <h3 class="sec-h" id="plans-h"><span>The two editions</span><em>prices as printed</em></h3>
+      <div class="plans">
+        ${c.plans.map((p) => `<article class="${p.best ? "best" : ""}">
+          ${p.best ? `<p class="flag">Editor's choice</p>` : ""}
+          <h4>${esc(p.t)}</h4>
+          <p class="price">${esc(p.p)}<em>${esc(p.per)}</em></p>
+          <ul>${p.l.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+          <a class="cta-a" href="#foot">${esc(c.ctaPrimary)} <span aria-hidden="true">→</span></a>
+        </article>`).join("")}
+      </div>
+    </section>
+  </article>
+</main>
+
+<footer id="foot">
+  <div class="foot-in">
+    <div class="col">
+      <h5>Correspondence</h5>
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">${esc(c.foot.inputLabel)}</label>
+        <p class="hint">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org"><button type="submit">${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <div class="col">
+      <h5>Also in this issue</h5>
+      <nav aria-label="Footer">${c.foot.lines.map((l) => `<a href="#main">${esc(l)}</a>`).join("")}</nav>
+    </div>
+    <div class="col">
+      <h5>Colophon</h5>
+      <p class="legal">${esc(c.foot.legal)}</p>
+      <p class="legal">${esc(c.brand)} — ${esc(c.kicker)}. Set in Instrument Serif and Source Serif.</p>
+    </div>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — The Field Quarterly (Editorial)` });
+</script>
+</body>
+</html>

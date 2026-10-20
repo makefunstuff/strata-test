@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Swiss / International Typographic Style</title>
+<meta name="description" content="The Ternmark home page set in the International Typographic Style: a modular grid, one red, no ornament.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='4'%20width='16'%20height='16'%20fill='none'%20stroke='%23111'%20stroke-width='2'/%3E%3Ccircle%20cx='12'%20cy='12'%20r='4'%20fill='%23dd0324'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/archivo@5.3.0/index.css">
+<link rel="stylesheet" href="s01-swiss.css">
+</head>
+<body data-style="s01-swiss">
+<a class="skip" href="#main">Skip to content</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const diagram = () => `
+  <svg class="fig" viewBox="0 0 400 300" role="img" aria-label="A diagram of the app: a square, a circle on a rule, and a rising line of records.">
+    <rect x=".5" y=".5" width="399" height="299" fill="none" stroke="#111"/>
+    <line x1="0" y1="210" x2="400" y2="210" stroke="#111"/>
+    <line x1="133" y1="0" x2="133" y2="300" stroke="#111" stroke-dasharray="4 6"/>
+    <line x1="266" y1="0" x2="266" y2="300" stroke="#111" stroke-dasharray="4 6"/>
+    <circle cx="200" cy="120" r="62" fill="none" stroke="#111" stroke-width="2"/>
+    <circle cx="200" cy="120" r="9" fill="#dd0324"/>
+    <polyline points="20,258 96,236 172,244 248,196 324,150 380,120" fill="none" stroke="#111" stroke-width="3"/>
+    <circle cx="324" cy="150" r="4" fill="#dd0324"/>
+    <text x="20" y="290" font-family="Archivo, sans-serif" font-size="11" fill="#111" letter-spacing="1.4">RECORDS · SEASON 4.2</text>
+    <text x="20" y="34" font-family="Archivo, sans-serif" font-size="11" fill="#111" letter-spacing="1.4">FIG. 1 — LOCAL FIRST</text>
+  </svg>`;
+
+const tpl = (c) => `
+<header class="bar">
+  <div class="brand"><span class="mark" aria-hidden="true"></span><b>${esc(c.brand)}</b><span>${esc(c.brandNote)}</span></div>
+  <nav aria-label="Sections">
+    <a href="#features">Fonctions</a><a href="#stats">Chiffres</a><a href="#plans">Prix</a><a href="#foot">Contact</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">${esc(c.kicker)}</p>
+        <h1>${esc(c.h1)}</h1>
+        <p class="lede">${esc(c.lede)}</p>
+        <p class="cta">
+          <a class="btn" href="#plans">${esc(c.ctaPrimary)}</a>
+          <a class="btn out" href="#stats">${esc(c.ctaSecondary)}</a>
+        </p>
+      </div>
+      <div class="hero-fig">${diagram()}</div>
+    </div>
+  </section>
+
+  <section class="block" id="features" aria-labelledby="features-h">
+    <div class="block-head"><h2 id="features-h">Fonctions</h2><span>01 — 03</span></div>
+    <div class="feat-grid">
+      ${c.features.map((f) => `<article>
+        <span class="n">${f.n}</span>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="block" id="stats" aria-labelledby="stats-h">
+    <div class="block-head"><h2 id="stats-h">Chiffres</h2><span>mesuré sur l’appareil</span></div>
+    <div class="stat-grid">
+      ${c.stats.map((s) => `<div class="stat">
+        <b>${esc(s.v)}</b>
+        <span class="u">${esc(s.u)}</span>
+        <span class="n">${esc(s.n)}</span>
+      </div>`).join("")}
+    </div>
+  </section>
+
+  <section class="block quote" id="quote" aria-labelledby="quote-h">
+    <div class="block-head"><h2 id="quote-h">Témoignage</h2><span>un utilisateur</span></div>
+    <blockquote>
+      <p>${esc(c.quote.q)}</p>
+      <footer><b>${esc(c.quote.by)}</b> — ${esc(c.quote.role)}</footer>
+    </blockquote>
+  </section>
+
+  <section class="block" id="plans" aria-labelledby="plans-h">
+    <div class="block-head"><h2 id="plans-h">Prix</h2><span>deux offres</span></div>
+    <div class="plan-grid">
+      ${c.plans.map((p) => `<article class="${p.best ? "best" : ""}">
+        <header><h3>${esc(p.t)}</h3><p class="price">${esc(p.p)}<small> ${esc(p.per)}</small></p></header>
+        <ul>${p.l.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+        <a class="btn ${p.best ? "" : "out"}" href="#foot">${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+
+<footer id="foot">
+  <div class="foot-grid">
+    <div class="foot-about">
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">${esc(c.foot.inputLabel)}</label>
+        <p class="hint" id="em-h">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org" aria-describedby="em-h"><button type="submit">${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      ${c.foot.lines.map((l) => `<a href="#main">${esc(l)}</a>`).join("")}
+    </nav>
+    <p class="legal">${esc(c.foot.legal)}<br>${esc(c.brand)} · ${esc(c.kicker)}</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — Fig. 1, local first (Swiss)` });
+</script>
+</body>
+</html>
