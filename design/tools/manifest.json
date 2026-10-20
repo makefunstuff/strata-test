@@ -235,5 +235,153 @@
         ]
       }
     ]
+  },
+  {
+    "task": "03-mobile",
+    "title": "Ternmark — birding log, nine screens",
+    "shots": [
+      {
+        "name": "board",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "board-full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true
+      },
+      {
+        "name": "board-phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "today",
+        "page": "app.html?screen=today&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-1",
+        "page": "app.html?screen=log&step=1&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-2",
+        "page": "app.html?screen=log&step=2&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-3",
+        "page": "app.html?screen=log&step=3&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "detail",
+        "page": "app.html?screen=detail&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list",
+        "page": "app.html?screen=list&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "trip",
+        "page": "app.html?screen=trip&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "onboard",
+        "page": "app.html?screen=onboard&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "offline",
+        "page": "app.html?screen=today&state=offline&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "empty",
+        "page": "app.html?screen=today&state=empty&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "loading",
+        "page": "app.html?screen=today&state=loading&nobar=1",
+        "motion": "reduce"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "no-location",
+        "page": "app.html?screen=today&state=denied&nobar=1"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list-search",
+        "page": "app.html?screen=list&nobar=1",
+        "actions": [
+          "type:#listSearch:avocet"
+        ]
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list-empty",
+        "page": "app.html?screen=list&nobar=1",
+        "actions": [
+          "type:#listSearch:goldfinch"
+        ]
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "saved-toast",
+        "page": "app.html?screen=log&step=3&nobar=1",
+        "actions": [
+          "click:#saveSighting"
+        ]
+      },
+      {
+        "name": "app-standalone",
+        "page": "app.html",
+        "width": 1440,
+        "height": 900
+      }
+    ]
   }
 ]

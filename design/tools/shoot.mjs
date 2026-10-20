@@ -205,7 +205,7 @@ for (const job of jobs) {
   const shotsDir = join(taskDir, "shots");
   await mkdir(shotsDir, { recursive: true });
   for (const shot of job.shots) {
-    const page = join(taskDir, shot.page);
+    const page = join(taskDir, shot.page.split("?")[0]);   // the shot page may carry a query
     const label = `${job.task}/${shot.name}`;
     if (!existsSync(page)) { results.push({ label, ok: false, errs: [], why: "page missing" }); continue; }
     const ctx = await ctxFor(shot);
