@@ -1,6 +1,95 @@
 [
-  { "task": "00-probe", "shots": [
-    { "name": "desktop", "page": "index.html", "width": 1440, "height": 900 },
-    { "name": "phone", "page": "index.html", "width": 390, "height": 844, "phone": true }
-  ]}
+  {
+    "task": "01-landing",
+    "title": "Foldline — landing page",
+    "shots": [
+      {
+        "name": "hero",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true
+      },
+      {
+        "name": "features",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('features').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+        ]
+      },
+      {
+        "name": "fold",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('how').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+        ]
+      },
+      {
+        "name": "pricing-annual",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:.billing .seg[data-cycle=annual]",
+          "eval:document.getElementById('pricing').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+        ]
+      },
+      {
+        "name": "faq-open",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:.faq li:nth-child(2) summary",
+          "eval:document.getElementById('faq').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+        ]
+      },
+      {
+        "name": "form-error",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('get').scrollIntoView({block:'center'})",
+          "type:#email:mairi at kestrel",
+          "click:#signup button[type=submit]"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true
+      },
+      {
+        "name": "phone-full",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "phone-menu",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "click:.navtoggle"
+        ]
+      }
+    ]
+  }
 ]

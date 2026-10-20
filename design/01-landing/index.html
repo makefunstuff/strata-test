@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foldline — offline topographic maps that print like paper</title>
+<meta name="description" content="Foldline downloads whole regions of survey-grade topo maps: contours, rights of way, GPX routes and a print-at-home sheet. No signal needed.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27><rect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2317231d%27/><path d=%27M4 24 12 8l6 9 4-5 6 12z%27 fill=%27none%27 stroke=%27%23e8dcc4%27 stroke-width=%272.2%27 stroke-linejoin=%27round%27/><path d=%27M4 20c4-3 7 2 10-1s6 3 14-2%27 fill=%27none%27 stroke=%27%23c2410c%27 stroke-width=%271.8%27/></svg>">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5.3.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5.3.0/900.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Foldline, home">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="var(--ink)"/>
+        <path d="M4 24 12 8l6 9 4-5 6 12z" fill="none" stroke="#e8dcc4" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M4 20c4-3 7 2 10-1s6 3 14-2" fill="none" stroke="#c2410c" stroke-width="1.8"/>
+      </svg>
+      <span>Foldline</span>
+    </a>
+    <nav id="nav" class="nav" aria-label="Main">
+      <a href="#features">Maps</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#notes">Field notes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="bar-cta">
+      <a class="btn btn-quiet" href="#get">Sign in</a>
+      <a class="btn" href="#get">Get Foldline</a>
+    </div>
+    <button class="navtoggle btn btn-quiet" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Survey-grade contours · 4,218 regions</p>
+        <h1 id="hero-h">Maps that fold,<br> not fade.</h1>
+        <p class="lede">Foldline packs a whole region of Ordnance-Survey-quality topography into
+        38&nbsp;MB: ten-metre contours, rights of way, wall and fence lines, the little footpath
+        that cuts the corner. It works in the corrie with no signal, and it prints a paper sheet
+        for the kitchen table.</p>
+        <div class="cta-row">
+          <a class="btn btn-lg" href="#get">Download the app</a>
+          <a class="btn btn-lg btn-ghost" href="#how">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+            Watch the 90-second film
+          </a>
+        </div>
+        <dl class="stats">
+          <div><dt>Contour interval</dt><dd>10&nbsp;m</dd></div>
+          <div><dt>Region size</dt><dd>38&nbsp;MB</dd></div>
+          <div><dt>Battery per day</dt><dd>4&nbsp;%</dd></div>
+          <div><dt>Bars needed</dt><dd>0</dd></div>
+        </dl>
+      </div>
+
+      <figure class="map" id="map">
+        <div class="map-sheet">
+          <canvas id="terrain" aria-hidden="true"></canvas>
+          <svg id="overlay" viewBox="0 0 1200 760" role="img"
+               aria-label="A Foldline map sheet: contour lines around the 812-metre peak of Stob Bàn, with a red route climbing from the loch to the summit.">
+            <defs>
+              <filter id="halo" x="-30%" y="-30%" width="160%" height="160%">
+                <feMorphology operator="dilate" radius="2.4" in="SourceAlpha" result="d"/>
+                <feFlood flood-color="#f7f2e8" flood-opacity="0.85"/><feComposite in2="d" operator="in"/>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g id="contours" fill="none" stroke="#7d7157" stroke-width="0.9" opacity="0.55"></g>
+            <g id="index" fill="none" stroke="#5d533e" stroke-width="1.7" opacity="0.75"></g>
+            <g id="water"></g>
+            <g id="route"></g>
+            <g id="marks"></g>
+            <g id="labels" font-family="Inter, sans-serif"></g>
+          </svg>
+          <div class="sheet-legend">
+            <span><i class="sw sw-route" aria-hidden="true"></i> route, 11.4&nbsp;km</span>
+            <span><i class="sw sw-index" aria-hidden="true"></i> index contour 50&nbsp;m</span>
+            <span><i class="sw sw-way" aria-hidden="true"></i> waypoint</span>
+          </div>
+        </div>
+        <figcaption>Stob Bàn from the loch, as Foldline draws it. Grid, scale bar and magnetic
+        variation are printed on the sheet.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ── trust bar ────────────────────────────────────────────────────── -->
+  <section class="trust" aria-label="Clubs and groups carrying Foldline">
+    <div class="wrap trust-inner">
+        <p>Carried by</p>
+        <ul class="marks">
+          <li>Kestrel Mountaineering Club</li>
+          <li>Saltmarsh Ramblers</li>
+          <li>Cairn &amp; Compass Co-op</li>
+          <li>Nordkapp Vandrelag</li>
+          <li>Audit &amp; Access Trust</li>
+        </ul>
+    </div>
+  </section>
+
+  <!-- ── features ─────────────────────────────────────────────────────── -->
+  <section id="features" aria-labelledby="features-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> What is in the pack</p>
+        <h2 id="features-h">Cartography, not a map tile cache</h2>
+        <p class="sec-lede">Every layer is drawn from survey data, so the map answers the question
+        you are actually asking: where does the fence end, is that a path or a drain, and how steep
+        is the last 200&nbsp;metres.</p>
+      </header>
+      <ul class="grid features">
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M2 24c4-4 6 2 9-2s5 3 9-1 5 3 10-1"/><path d="M3 18c4-4 6 2 9-2s5 3 9-1 5 3 10-1"/><path d="M4 12c4-4 6 2 9-2s5 3 9-1 5 3 9-1"/><circle cx="19" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+          <h3>10-metre contours, 50-metre index</h3>
+          <p>Derived from a 1&nbsp;m LiDAR terrain model, simplified the way a cartographer
+          simplifies: folds kept, spurs smoothed, noise dropped.</p>
+        </li>
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v24M4 16h24" stroke-dasharray="3 3"/><rect x="9" y="9" width="14" height="14" rx="2.5"/><path d="M12 20l3-5 3 4 2-2 2 3z"/></svg></span>
+          <h3>Whole regions offline</h3>
+          <p>Download by county, by mountain range, or by drawing a box. A region keeps its contours,
+          paths, buildings, names and elevation together — 38&nbsp;MB for a national park.</p>
+        </li>
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 26c3-9 8-13 10-13s3 3 6 1 5-8 7-9"/><circle cx="6" cy="26" r="2.2"/><circle cx="29" cy="5" r="2.2"/><path d="M13 27h9M13 22h6" stroke-dasharray="2 3"/></svg></span>
+          <h3>GPX, FIT and a route planner</h3>
+          <p>Drop a file on the app and it draws on the map with elevation profile. Tap to plan:
+          distance, ascent, estimated time on Naismith with a rough-ground factor.</p>
+        </li>
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M16 5v3M16 24v3M5 16h3M24 16h3"/><path d="M16 16l6-6" stroke-width="2.4"/><path d="M16 16l-3 5"/><circle cx="16" cy="16" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Sun, tide and wind on the map</h3>
+          <p>A sun-angle overlay shows when the ridge leaves shadow, and coastal sheets carry tide
+          times against the footpath that floods at high water.</p>
+        </li>
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="6" y="9" width="18" height="14" rx="3"/><path d="M24 14h3v4h-3"/><path d="M10 13v6M14 13v6" stroke-width="2.6"/><path d="M19 15l-3 3h3l-3 3" stroke-linejoin="round"/></svg></span>
+          <h3>Two days of GPS on 4&nbsp;%</h3>
+          <p>Position runs on the coarse motion core, the map stays in memory, the screen is off.
+          Track recording costs about 2&nbsp;% an hour.</p>
+        </li>
+        <li>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 4h13l5 5v19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M20 4v5h5"/><path d="M9 14h13M9 19h13M9 24h8" stroke-dasharray="2 2"/></svg></span>
+          <h3>The kitchen-table sheet</h3>
+          <p>Export an A3 or A2 sheet at 300&nbsp;dpi with grid, scale bar, magnetic variation and a
+          fold line marked, so the paper folds the way it goes in the bag.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── how it works ─────────────────────────────────────────────────── -->
+  <section class="how" id="how" aria-labelledby="how-h">
+    <div class="wrap how-grid">
+      <div>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Three steps, on the kitchen table</p>
+        <h2 id="how-h">Pack the map on Sunday, walk it on Monday</h2>
+        <ol class="steps">
+          <li>
+            <span class="num" aria-hidden="true">1</span>
+            <h3>Draw the box</h3>
+            <p>Pan to the ground you want and drag a box. Foldline shows the pack size before you
+            commit — a national park is 38&nbsp;MB, a whole coast-to-coast is 210&nbsp;MB.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">2</span>
+            <h3>Mark the plan</h3>
+            <p>Import the GPX from the club website, or tap the route in. Add a car park, a water
+            point, the bail-out path. Notes stay attached to the waypoint.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">3</span>
+            <h3>Print the sheet, then go dark</h3>
+            <p>Export the folded sheet for the bag, put the phone in airplane mode, and the map is
+            the same map: contours, track log, and a compass that does not need a tower.</p>
+          </li>
+        </ol>
+      </div>
+      <figure class="fold" aria-label="Diagram: a printed sheet with its contours and route, folding twice into a pocket-sized strip">
+        <svg viewBox="0 0 420 386" role="img" aria-labelledby="fold-t">
+          <title id="fold-t">A map sheet with contours and a route, folding along marked creases into a pocket strip</title>
+          <defs>
+            <path id="ridge" d="M0 132C42 96 74 150 116 112S188 150 230 108 300 146 344 104 392 128 400 118" fill="none"/>
+            <path id="ariver" d="M0 168C46 142 88 176 132 152S214 176 258 148 340 172 400 150" fill="none"/>
+            <path id="aroute" d="M14 178C60 150 96 158 132 128S206 138 240 104 316 116 350 78 380 86 392 62" fill="none"/>
+            <clipPath id="sheet"><rect x="0" y="0" width="400" height="196"/></clipPath>
+            <clipPath id="half"><rect x="0" y="0" width="200" height="96"/></clipPath>
+            <clipPath id="pocket"><rect x="0" y="0" width="86" height="96"/></clipPath>
+          </defs>
+
+          <g transform="translate(10 34)" color="#2b3230">
+            <g clip-path="url(#sheet)" stroke-width="1.3">
+              <use href="#ridge" y="-70" stroke="#b3a888"/>
+              <use href="#ridge" y="-52" stroke="#a99e80"/>
+              <use href="#ridge" y="-34" stroke="#b3a888"/>
+              <use href="#ridge" y="-16" stroke="#a99e80"/>
+              <use href="#ridge" y="2" stroke="#b3a888"/>
+              <use href="#ridge" y="20" stroke="#a99e80"/>
+              <use href="#ridge" y="38" stroke="#b3a888"/>
+              <use href="#ridge" y="56" stroke="#a99e80"/>
+              <use href="#ridge" y="74" stroke="#b3a888"/>
+              <use href="#ridge" y="92" stroke="#a99e80"/>
+              <use href="#ariver" stroke="#7ba7b2" stroke-width="2.2"/>
+              <use href="#aroute" stroke="#c2410c" stroke-width="2.6"/>
+              <circle cx="14" cy="178" r="4" fill="#16563f"/>
+              <circle cx="392" cy="62" r="4" fill="#15191b"/>
+            </g>
+            <g stroke="currentColor" fill="none">
+              <rect x="0" y="0" width="400" height="196" rx="5" stroke-width="1.5"/>
+              <path d="M133 0v196M266 0v196" stroke-dasharray="5 7" stroke-width="1.2" opacity="0.55"/>
+              <path d="M0 98h400" stroke-dasharray="5 7" stroke-width="1.2" opacity="0.55"/>
+            </g>
+            <text x="0" y="-12" font-size="11.5" fill="currentColor" opacity="0.8" font-family="Inter, sans-serif" letter-spacing="0.06em">1 · THE SHEET, A2</text>
+          </g>
+
+          <g transform="translate(100 268)" color="#2b3230">
+            <g clip-path="url(#half)">
+              <g transform="scale(0.5 0.49)" stroke-width="2.6">
+                <use href="#ridge" y="-60" stroke="#b3a888"/>
+                <use href="#ridge" y="-40" stroke="#a99e80"/>
+                <use href="#ridge" y="-20" stroke="#b3a888"/>
+                <use href="#ridge" y="0" stroke="#a99e80"/>
+                <use href="#ridge" y="20" stroke="#b3a888"/>
+                <use href="#ridge" y="40" stroke="#a99e80"/>
+                <use href="#ridge" y="60" stroke="#b3a888"/>
+                <use href="#ridge" y="80" stroke="#a99e80"/>
+                <use href="#ariver" stroke="#7ba7b2" stroke-width="3"/>
+                <use href="#aroute" stroke="#c2410c" stroke-width="4"/>
+              </g>
+            </g>
+            <rect x="0" y="0" width="200" height="96" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M100 0v96" stroke="currentColor" stroke-dasharray="5 7" stroke-width="1.2" opacity="0.55"/>
+            <text x="0" y="-12" font-size="11.5" fill="currentColor" opacity="0.8" font-family="Inter, sans-serif" letter-spacing="0.06em">2 · FOLDED IN THIRDS</text>
+          </g>
+
+          <g transform="translate(330 268)" color="#2b3230">
+            <g clip-path="url(#pocket)">
+              <g transform="scale(0.215 0.49)" stroke-width="6">
+                <use href="#ridge" y="-60" stroke="#b3a888"/>
+                <use href="#ridge" y="-30" stroke="#a99e80"/>
+                <use href="#ridge" y="0" stroke="#b3a888"/>
+                <use href="#ridge" y="30" stroke="#a99e80"/>
+                <use href="#ridge" y="60" stroke="#b3a888"/>
+                <use href="#aroute" stroke="#c2410c" stroke-width="7"/>
+              </g>
+            </g>
+            <rect x="0" y="0" width="86" height="96" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <text x="86" y="-12" font-size="11.5" fill="currentColor" opacity="0.8" font-family="Inter, sans-serif" letter-spacing="0.06em" text-anchor="end">3 · IN THE POCKET</text>
+          </g>
+
+          <g stroke="#8a5a12" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M152 234c6 22 18 32 34 30"/>
+            <path d="M180 260l7 7-9 4"/>
+            <path d="M308 318h18"/>
+            <path d="M322 313l7 5-7 5"/>
+          </g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ── quote band ───────────────────────────────────────────────────── -->
+  <section class="band" id="notes" aria-labelledby="notes-h">
+    <div class="wrap quote-grid">
+      <figure class="quote">
+        <blockquote>
+          <p id="notes-h">“We stopped carrying two maps. The sheet goes in the bag for the
+          route, the phone goes in the pocket for the track, and the two of them agree — which is
+          more than I can say for the two paper maps we used to carry.”</p>
+        </blockquote>
+        <figcaption>
+          <span class="avatar" aria-hidden="true">MR</span>
+          <span><b>Mairi Robertson</b> — leader, Kestrel Mountaineering Club; 41 Foldline regions downloaded</span>
+        </figcaption>
+      </figure>
+      <ul class="numbers">
+        <li><b>4,218</b><span>regions mapped</span></li>
+        <li><b>1.9 M</b><span>waypoints marked</span></li>
+        <li><b>0.4 s</b><span>map pan, on a 2017 phone</span></li>
+        <li><b>4.8 / 5</b><span>from 12,300 reviews</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── pricing ──────────────────────────────────────────────────────── -->
+  <section id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Pricing</p>
+        <h2 id="pricing-h">Free for one region. Paid when you go further.</h2>
+        <div class="billing" role="group" aria-label="Billing period">
+          <button class="seg" type="button" data-cycle="monthly" aria-pressed="true">Monthly</button>
+          <button class="seg" type="button" data-cycle="annual" aria-pressed="false">Annual<span>−20 %</span></button>
+        </div>
+      </header>
+      <ul class="grid plans">
+        <li class="plan">
+          <h3>Daywalker</h3>
+          <p class="price"><b data-monthly="£0" data-annual="£0">£0</b><span>free, forever</span></p>
+          <p class="pitch">One region at a time, for the hill you live under.</p>
+          <ul class="inc">
+            <li>1 downloaded region</li>
+            <li>10&nbsp;m contours, paths, names</li>
+            <li>Track recording</li>
+            <li>A3 export, watermark-free</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="#get">Start free</a>
+        </li>
+        <li class="plan feature">
+          <p class="flag">Most walkers</p>
+          <h3>Pathfinder</h3>
+          <p class="price"><b data-monthly="£4" data-annual="£3.20">£4</b><span data-monthly="per month" data-annual="per month, billed yearly">per month</span></p>
+          <p class="pitch">Every region, plus the route planner.</p>
+          <ul class="inc">
+            <li>Unlimited regions (≈ 2 GB on the phone)</li>
+            <li>GPX import and elevation profile</li>
+            <li>Sun, tide and wind overlays</li>
+            <li>Sheet export at A2, 300&nbsp;dpi</li>
+            <li>Track export to GPX and FIT</li>
+          </ul>
+          <a class="btn btn-block" href="#get">Get Pathfinder</a>
+        </li>
+        <li class="plan">
+          <h3>Surveyor</h3>
+          <p class="price"><b data-monthly="£9" data-annual="£7.20">£9</b><span data-monthly="per month" data-annual="per month, billed yearly">per month</span></p>
+          <p class="pitch">For clubs, courses and anyone surveying.</p>
+          <ul class="inc">
+            <li>Everything in Pathfinder</li>
+            <li>1&nbsp;m terrain model and hillshade</li>
+            <li>Shared club waypoints, edit history</li>
+            <li>Bulk sheet export, 12 seats</li>
+            <li>Print proofing before the season</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="#get">Get Surveyor</a>
+        </li>
+      </ul>
+      <p class="fine">Prices include VAT. Clubs and outdoor centres: eight seats or more is the
+      Surveyor group rate, <a href="#get">ask for a quote</a>.</p>
+    </div>
+  </section>
+
+  <!-- ── faq ──────────────────────────────────────────────────────────── -->
+  <section class="faq" id="faq" aria-labelledby="faq-h">
+    <div class="wrap faq-grid">
+      <div>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Straight answers</p>
+        <h2 id="faq-h">Before you download</h2>
+      </div>
+      <ul>
+        <li>
+          <details name="faq" open>
+            <summary>Where does the map data come from?</summary>
+            <p>Lidar terrain models and open rights-of-way registers, plus our own survey of 6,400&nbsp;km
+            of path. Every region shows its source and the year it was last surveyed.</p>
+          </details>
+        </li>
+        <li>
+          <details name="faq">
+            <summary>Does it work with no signal at all?</summary>
+            <p>Yes. Download, then airplane mode. Nothing in the map, the compass, the track log or the
+            sheet export touches the network; the only thing that does is sync, and you can leave that off.</p>
+          </details>
+        </li>
+        <li>
+          <details name="faq">
+            <summary>How much phone does a region take?</summary>
+            <p>A national park is 38&nbsp;MB of contours, paths, buildings and names; with the 1&nbsp;m terrain
+            model it is 190&nbsp;MB. Pathfinder keeps about 60 regions on a 2&nbsp;GB budget.</p>
+          </details>
+        </li>
+        <li>
+          <details name="faq">
+            <summary>I already carry paper. Why a phone?</summary>
+            <p>You keep the paper. Foldline prints the sheet you would have ordered — grid, scale,
+            magnetic variation, fold line — and keeps the track log for the day after.</p>
+          </details>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── get it ───────────────────────────────────────────────────────── -->
+  <section class="cta" id="get" aria-labelledby="get-h">
+    <div class="wrap cta-grid">
+      <div>
+        <h2 id="get-h">Get the region you live under</h2>
+        <p>Free while you walk one hill. No card, no account, no adverts — the map is the product.</p>
+      </div>
+      <form class="signup" id="signup" novalidate>
+        <label for="email">Email for the region list — one message when your hills get a new survey</label>
+        <div class="row">
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.org" required
+                 aria-describedby="email-help">
+          <button class="btn btn-lg" type="submit">Send it</button>
+        </div>
+        <p class="help" id="email-help">We write about twice a year. Unsubscribe in one click.</p>
+        <p class="sent" id="sent" role="status" hidden>On the list. The next note goes out in November.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#top" aria-label="Foldline, home">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="var(--ink)"/>
+          <path d="M4 24 12 8l6 9 4-5 6 12z" fill="none" stroke="#e8dcc4" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M4 20c4-3 7 2 10-1s6 3 14-2" fill="none" stroke="#c2410c" stroke-width="1.8"/>
+        </svg>
+        <span>Foldline</span>
+      </a>
+      <p>Made in a drawing office in Inverness by five people, two of whom walk the paths they draw.</p>
+    </div>
+    <nav aria-label="Product">
+      <h3>Product</h3>
+      <a href="#features">Maps</a><a href="#how">Offline packs</a><a href="#pricing">Pricing</a><a href="#get">Sheet export</a>
+    </nav>
+    <nav aria-label="Ground">
+      <h3>The ground</h3>
+      <a href="#notes">Field notes</a><a href="#faq">Data sources</a><a href="#faq">Survey log</a><a href="#notes">Access notes</a>
+    </nav>
+    <nav aria-label="Company">
+      <h3>Company</h3>
+      <a href="#top">About the five</a><a href="#get">Newsletter</a><a href="#get">Support</a><a href="#top">Press sheet</a>
+    </nav>
+  </div>
+  <div class="wrap legal">
+    <p>© <span id="year">2026</span> Foldline Maps, a fictional company invented for this design study.</p>
+    <p>Contour interval 10&nbsp;m · grid 1&nbsp;km · variation 3°&nbsp;W</p>
+  </div>
+</footer>
+
+<script type="module" src="terrain-boot.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

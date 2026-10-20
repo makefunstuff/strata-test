@@ -25,11 +25,33 @@ await mkdir(outDir, { recursive: true });
 await mkdir(reportDir, { recursive: true });
 
 const argv = process.argv.slice(2);
-const only = argv[argv.indexOf("--only") + 1];
+const oi = argv.indexOf("--only");
+const only = oi < 0 ? null : argv[oi + 1];
 const want = argv.filter((a) => !a.startsWith("-") && a !== only);
 const manifest = JSON.parse(await readFile(join(toolsDir, "manifest.json"), "utf8"));
-const jobs = manifest.filter((t) => !want.length || want.includes(t.task));
+const jobs = manifest.filter((t) => !want.length || want.includes(t.task)).map((t) => ({ ...t, shots: t.shots.filter((s) => !only || s.name === only) }));
 if (!jobs.length) { console.error(`no such task in manifest: ${want.join(",")}`); process.exit(1); }
+
+// A local static server, so pages load the same way they will on GitHub Pages:
+// ES modules and fetch are blocked by CORS on file://, which would hide real errors.
+const { createServer } = await import("node:http");
+const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".json": "application/json" };
+const server = createServer(async (req, res) => {
+  const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "");
+  const { readFile, stat } = await import("node:fs/promises");
+  const { join: j } = await import("node:path");
+  try {
+    let f = j(designDir, rel);
+    if ((await stat(f)).isDirectory()) f = j(f, "index.html");
+    const body = await readFile(f);
+    res.writeHead(200, { "content-type": TYPES[f.slice(f.lastIndexOf("."))] || "application/octet-stream" });
+    res.end(body);
+  } catch {
+    res.writeHead(404, { "content-type": "text/plain" }); res.end("404 " + rel);
+  }
+});
+await new Promise((r) => server.listen(0, "127.0.0.1", r));
+const origin = `http://127.0.0.1:${server.address().port}`;
 
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH ?? join(toolsDir, "chromium-capped.sh"),
@@ -69,6 +91,8 @@ const encode = async (pngPath) => {
 /** actions: "click:sel" "type:sel:text" "key:Key" "hover:sel" "eval:js" "wait:ms" "scroll:y" */
 async function runActions(page, actions = []) {
   const log = [];
+  // scroll jumps must land, not animate: screenshots are taken right after the actions
+  await page.evaluate("document.documentElement.style.scrollBehavior = 'auto'").catch(() => {});
   for (const a of actions) {
     const i = a.indexOf(":");
     const kind = i < 0 ? a : a.slice(0, i);
@@ -96,7 +120,17 @@ const audit = async () => {
     return r.width > 1 && r.height > 1 && cs.visibility !== "hidden" && +cs.opacity > 0.05
       && r.bottom > 0 && r.top < innerHeight * 3 && r.right > 0 && r.left < innerWidth;
   };
-  const parse = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+  // Chromium serialises colours as rgb()/rgba() and, for color-mix() and wide-gamut
+  // colours, as color(srgb r g b / a) with 0..1 components — normalise both to 0..255.
+  const parse = (c) => {
+    const nums = (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return /^color\(/.test(c.trim()) ? nums.map((v) => v * 255) : nums;
+  };
+  const alpha = (c) => {
+    const n = [...c.matchAll(/[\d.]+/g)].map(Number);
+    if (/^color\(/.test(c.trim())) return n.length >= 4 ? n[3] : 1;
+    return /rgba\(|\}\s*;?/.test(c) && n.length >= 4 ? n[3] : 1;
+  };
   const lum = (rgb) => {
     const [r, g, b] = rgb.map((v) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; });
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
@@ -105,9 +139,8 @@ const audit = async () => {
     for (let n = el; n; n = n.parentElement) {
       const b = getComputedStyle(n).backgroundColor;
       if (!b || b === "transparent") continue;
-      const nums = [...b.matchAll(/[\d.]+/g)].map(Number);
-      if (nums.length >= 4 && nums[3] < 0.35) continue;   // near-transparent overlay
-      return nums.slice(0, 3);
+      if (alpha(b) < 0.35) continue;   // near-transparent overlay
+      return parse(b).slice(0, 3);
     }
     return [255, 255, 255];
   };
@@ -174,7 +207,7 @@ for (const job of jobs) {
   for (const shot of job.shots) {
     const page = join(taskDir, shot.page);
     const label = `${job.task}/${shot.name}`;
-    if (!existsSync(page)) { results.push({ label, ok: false, why: "page missing" }); continue; }
+    if (!existsSync(page)) { results.push({ label, ok: false, errs: [], why: "page missing" }); continue; }
     const ctx = await ctxFor(shot);
     const p = await ctx.newPage();
     await p.emulateMedia({ reducedMotion: shot.motion === "reduce" ? "reduce" : "no-preference", media: shot.print ? "print" : "screen" });
@@ -182,10 +215,10 @@ for (const job of jobs) {
     const errs = [];
     p.on("console", (m) => { if (m.type() === "error") errs.push("console: " + m.text().slice(0, 200)); });
     p.on("pageerror", (e) => errs.push("pageerror: " + String(e).slice(0, 200)));
-    p.on("requestfailed", (r) => errs.push("requestfailed: " + r.url().replace(/^file:\/\/.*?design\//, "") + " " + (r.failure()?.errorText || "")));
+    p.on("requestfailed", (r) => errs.push("requestfailed: " + r.url().replace(origin + "/", "") + " " + (r.failure()?.errorText || "")));
     let rec = { label, ok: true, errs };
     try {
-      await p.goto(pathToFileURL(page).href, { waitUntil: "load", timeout: 30000 });
+      await p.goto(`${origin}/${job.task}/${shot.page}`, { waitUntil: "load", timeout: 30000 });
       await p.evaluate("document.fonts.ready.then(() => 1)").catch(() => 1);
       await p.waitForTimeout(350);
       rec.actions = await runActions(p, shot.actions || []);
@@ -222,6 +255,7 @@ for (const job of jobs) {
   }
 }
 await browser.close().catch(() => {});
+server.close();
 
 const md = ["# design screenshot run", "",
   `shots: ${results.length} · clean: ${results.filter((r) => r.ok && !r.errs.length).length}`
