@@ -10,11 +10,16 @@
 */
 import path from "node:path";
 import { readFile, writeFile, stat } from "node:fs/promises";
+import { existsSync } from "node:fs";
 
 const here = import.meta.dirname;
 const content = JSON.parse(await readFile(path.join(here, "content.json"), "utf8"));
 const rendered = JSON.parse(await readFile(path.join(here, "rendered.json"), "utf8"));
-const audit = JSON.parse(await readFile(path.join(here, "..", "tools", "work", "shoot", "latest.json"), "utf8"));
+const shootDir = path.join(here, "..", "tools", "work", "shoot");
+/* The audit for THIS task. Prefer the per-task report: latest.* is only the last run,
+   so measuring 11-styles after shooting any other task used to null every audit field. */
+const report = ["11-styles.json", "latest.json"].map((f) => path.join(shootDir, f)).find((p) => existsSync(p));
+const audit = JSON.parse(await readFile(report, "utf8"));
 
 const norm = (s) =>
   String(s)
@@ -162,7 +167,7 @@ for (let i = 0; i < STYLES.length; i += 1) {
 }
 
 const out = {
-  generatedFrom: "content.json + rendered.json (tools/rendered.mjs) + tools/work/shoot/latest.json",
+  generatedFrom: `content.json + rendered.json (tools/rendered.mjs) + tools/work/shoot/${path.basename(report)}`,
   contentStrings: strings.length,
   contentWords: contentWords.size,
   content,

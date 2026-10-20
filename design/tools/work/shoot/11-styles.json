@@ -1,0 +1,1090 @@
+[
+ {
+  "label": "11-styles/swiss-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-hero.jpg",
+  "bytes": 281990,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/swiss-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-full.jpg",
+  "bytes": 240126,
+  "px": "1440x2149",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/swiss-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-phone.jpg",
+  "bytes": 173372,
+  "px": "390x3568",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-hero.jpg",
+  "bytes": 254589,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-full.jpg",
+  "bytes": 356748,
+  "px": "1440x2832",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-phone.jpg",
+  "bytes": 251171,
+  "px": "390x4490",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-hero.jpg",
+  "bytes": 238702,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-full.jpg",
+  "bytes": 348678,
+  "px": "1440x3348",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-phone.jpg",
+  "bytes": 251696,
+  "px": "390x5281",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-hero.jpg",
+  "bytes": 289445,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-full.jpg",
+  "bytes": 286557,
+  "px": "1440x2959",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-phone.jpg",
+  "bytes": 210950,
+  "px": "390x4592",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-hero.jpg",
+  "bytes": 238889,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-full.jpg",
+  "bytes": 238957,
+  "px": "1440x2701",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-phone.jpg",
+  "bytes": 187342,
+  "px": "390x4998",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-hero.jpg",
+  "bytes": 405604,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-full.jpg",
+  "bytes": 389673,
+  "px": "1440x2940",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-phone.jpg",
+  "bytes": 317552,
+  "px": "390x5606",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-hero.jpg",
+  "bytes": 151049,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-full.jpg",
+  "bytes": 201067,
+  "px": "1440x3151",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-phone.jpg",
+  "bytes": 162004,
+  "px": "390x5077",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-hero.jpg",
+  "bytes": 287461,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-full.jpg",
+  "bytes": 303516,
+  "px": "1440x2777",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-phone.jpg",
+  "bytes": 229833,
+  "px": "390x5151",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-hero.jpg",
+  "bytes": 159901,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-full.jpg",
+  "bytes": 225965,
+  "px": "1440x3742",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-phone.jpg",
+  "bytes": 163726,
+  "px": "390x5436",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/masthead.jpg",
+  "bytes": 266386,
+  "px": "2880x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brief",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#brief"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brief.jpg",
+  "bytes": 296327,
+  "px": "2880x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/heroes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#strip"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/heroes.jpg",
+  "bytes": 425083,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/towers",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#towers"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/towers.jpg",
+  "bytes": 300056,
+  "px": "2880x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-swiss",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#swiss"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-swiss.jpg",
+  "bytes": 497513,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-neumorph",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#neumorph"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-neumorph.jpg",
+  "bytes": 443380,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-cyber",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#cyber"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-cyber.jpg",
+  "bytes": 493145,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/audit-pairs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#before"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/audit-pairs.jpg",
+  "bytes": 503044,
+  "px": "2880x2500",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/parity",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#parity"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/parity.jpg",
+  "bytes": 321536,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/measures",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#measure"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/measures.jpg",
+  "bytes": 342318,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/ratings",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ratings"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/ratings.jpg",
+  "bytes": 369844,
+  "px": "2880x1600",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/verdict",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#verdict"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/verdict.jpg",
+  "bytes": 529611,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/full.jpg",
+  "bytes": 2753396,
+  "px": "1440x20883",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/phone.jpg",
+  "bytes": 2037203,
+  "px": "390x41911",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/before-glass",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "with no signal.",
+     "size": 64,
+     "ratio": 1,
+     "need": 3,
+     "fg": "rgba(0, 0, 0, 0)",
+     "bg": "rgb(11, 18, 32)",
+     "sel": "em",
+     "why": "foreground alpha 0: transparent or gradient-clipped text, no colour to measure"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/before-glass.jpg",
+  "bytes": 213218,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/before-neumorph",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "a field log that works in the mud",
+     "size": 13,
+     "ratio": 3.43,
+     "need": 4.5,
+     "fg": "rgb(111, 125, 146)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "i"
+    },
+    {
+     "text": "Features",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Numbers",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Plans",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Field log — release 4.2",
+     "size": 13,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "p.badge.inset"
+    },
+    {
+     "text": "Ternmark writes your sighting into a loc",
+     "size": 18,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "p.lede"
+    },
+    {
+     "text": "See a whole season (3.1 MB)",
+     "size": 16,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a.inset.btn"
+    },
+    {
+     "text": "tonight · the Sandbar hide",
+     "size": 13,
+     "ratio": 3.43,
+     "need": 4.5,
+     "fg": "rgb(111, 125, 146)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "span"
+    },
+    {
+     "text": "×14",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    },
+    {
+     "text": "×3",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    },
+    {
+     "text": "×41",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/before-neumorph.jpg",
+  "bytes": 225755,
+  "px": "2880x1800",
+  "actions_failed": []
+ }
+]

@@ -10,7 +10,8 @@
 // the PNG to JPEG (quality 82) into <task>/shots/<name>.jpg, and records console
 // errors, page errors, failed requests and an accessibility audit.
 //
-// Output: tools/work/shoot/latest.json + latest.md (committed: the evidence travels).
+// Output: tools/work/shoot/latest.json + latest.md (committed: the evidence travels),
+// plus <task>.json/.md for every task the run covered completely.
 import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -344,17 +345,32 @@ for (const job of jobs) {
 await browser.close().catch(() => {});
 server.close();
 
-const md = ["# design screenshot run", "",
-  `shots: ${results.length} · clean: ${results.filter((r) => r.ok && !r.errs.length).length}`
-  + ` · failed: ${results.filter((r) => !r.ok).length} · with console/page/request errors: ${results.filter((r) => r.ok && r.errs.length).length}`, "",
+const mdFor = (rows) => ["# design screenshot run", "",
+  `shots: ${rows.length} · clean: ${rows.filter((r) => r.ok && !r.errs.length).length}`
+  + ` · failed: ${rows.filter((r) => !r.ok).length} · with console/page/request errors: ${rows.filter((r) => r.ok && r.errs.length).length}`, "",
   "| shot | size | console errors | low contrast | unlabelled | focus ring | notes |", "|--|--|--|--|--|--|--|",
-  ...results.map((r) => `| ${r.label} | ${r.bytes ? (r.bytes / 1024).toFixed(0) + " KB" : "-"} | ${r.errs.length}`
+  ...rows.map((r) => `| ${r.label} | ${r.bytes ? (r.bytes / 1024).toFixed(0) + " KB" : "-"} | ${r.errs.length}`
     + ` | ${(r.audit?.lowContrast || []).length} | ${(r.audit?.labelledControlsMissing || []).length + (r.audit?.unnamedButtons || []).length}`
     + ` | ${r.audit?.focusRing || "-"} | ${(r.ok ? (((r.actions_failed || []).join(" ") + " " + ((r.audit?.stylesheetsMissing || []).length ? "stylesheets missing: " + r.audit.stylesheetsMissing.join(",") : "") + " " + (r.hOverflow ? "h-overflow +" + r.hOverflow + "px" : "")).trim()) || "clean" : r.why + " " + r.errs.slice(0, 1)).slice(0, 120)} |`), "",
-  ...results.filter((r) => r.errs.length).map((r) => `- ${r.label}\n${r.errs.map((e) => "  - " + e).join("\n")}`),
+  ...rows.filter((r) => r.errs.length).map((r) => `- ${r.label}\n${r.errs.map((e) => "  - " + e).join("\n")}`),
 ];
+const md = mdFor(results);
 await writeFile(join(reportDir, "latest.json"), JSON.stringify(results, null, 1));
 await writeFile(join(reportDir, "latest.md"), md.join("\n") + "\n");
+
+/* Per-task reports, so a task's own measure script can read its own audit without the
+   last run in the repo having to be that task (latest.* is only the last run). Written
+   only for a task this run covered completely: a --only run is a spot check. */
+const slugs = [];
+for (const j of jobs) {
+  if (onlyList || !j.shots.length) continue;
+  const rows = results.filter((r) => r.label.startsWith(`${j.task}/`));
+  if (rows.length !== j.shots.length) continue;
+  const slug = String(j.task).replace(/[^a-z0-9.]+/gi, "-").replace(/^[-.]+|[-.]+$/g, "") || "index";
+  await writeFile(join(reportDir, `${slug}.json`), JSON.stringify(rows, null, 1));
+  await writeFile(join(reportDir, `${slug}.md`), mdFor(rows).join("\n") + "\n");
+  slugs.push(slug);
+}
 const bad = results.filter((r) => !r.ok || r.errs.length || (r.audit?.stylesheetsMissing || []).length).length;
-console.log(`\nwrote tools/work/shoot/latest.md — ${results.length} shots, ${bad} with problems`);
+console.log(`\nwrote tools/work/shoot/latest.md${slugs.length ? " + " + slugs.map((s) => s + ".md").join(", ") : ""} — ${results.length} shots, ${bad} with problems`);
 process.exit(0);
