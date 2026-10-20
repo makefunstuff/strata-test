@@ -1,0 +1,58 @@
+{
+ "args": [
+  "--pack",
+  "/vm/local-ai-models/strata-packs/swift-iq3_s",
+  "--native",
+  "/data/hfmodels/gguf/swift15-flash-next-gsq-rco-iq3s/Swift-Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00001-of-00002.gguf",
+  "--ple-gguf",
+  "/data/hfmodels/gguf/swift15-flash-next-gsq-rco-iq3s/Swift-Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00001-of-00002.gguf",
+  "--expert-profile",
+  "/data/src/Strata/data/expert-profile.bin",
+  "--expert-cache",
+  "auto",
+  "--prefill",
+  "auto",
+  "--spec",
+  "4",
+  "--spec-min-p",
+  "0.5",
+  "--mtp",
+  "/data/src/Strata-data/mtp/rt",
+  "--max-context",
+  "196608",
+  "--kv",
+  "int8",
+  "--resident-experts",
+  "--kv-resident",
+  "32768",
+  "--vision",
+  "--batch-mtp",
+  "--batch-groups",
+  "1"
+ ],
+ "cwd": "/data/src/Strata",
+ "exe": "/data/src/Strata/engine/strata",
+ "gpu": [
+  0,
+  1
+ ],
+ "gpus_asked": true,
+ "layer_split": "auto",
+ "lib_dirs": [
+  "/opt/cuda/bin",
+  "/opt/cuda/lib64"
+ ],
+ "log": "/srv/local-ai/state/strata/strata.log",
+ "model_name": "swift-1.5-flash-next-iq3_s",
+ "parallel": 2,
+ "port": 18097,
+ "tokenizer": "/vm/local-ai-models/strata-packs/swift-iq3_s/tokenizer",
+ "vision": {
+  "exe": "/data/src/Strata/engine/strata-vision",
+  "gpu": false,
+  "max_tokens": 300,
+  "mmproj": "/vm/local-ai-models/gguf/swift15-flash-next-gsq-rco-iq3xxs/mmproj-Swift-Qwen3.8-Flash-Next-BF16.gguf",
+  "model": "/data/hfmodels/gguf/swift15-flash-next-gsq-rco-iq3s/Swift-Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00001-of-00002.gguf",
+  "threads": 3
+ }
+}

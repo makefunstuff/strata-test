@@ -1,0 +1,18 @@
+strata generate: memory guard: limit 60.4 GiB (source: meminfo), current 13.1 GiB, reclaimable cache credited 0.0 GiB; available 47.2 GiB (MemAvailable 47.2 GiB), floor 2560 MiB
+strata generate: KV streaming: 32768 of 196608 cells per QSA layer in VRAM, the K/V in 1.74 GiB of pinned RAM
+strata generate: --batch: 2 slot sessions on CUDA0 (0.65 GiB each); 9.73 GiB free
+strata generate: --batch: 2 slot sessions on CUDA1 (0.24 GiB each); 10.47 GiB free
+strata generate: --batch 2: the slot sessions take 1.30 GiB of VRAM on CUDA0 that the expert cache would otherwise hold
+strata generate: --batch-mtp: 2 slot drafters on CUDA1 (50 MiB of private K/V state and buffers each, sharing the solo drafter's weights); 9.54 GiB free there
+strata generate: expert cache auto: 9.73 GiB free, 700 MiB reserved (+0 MiB for the draft head) -> 3648 slots
+strata generate: expert cache 4871 slots, 9.04 GiB of VRAM; policy is
+strata generate: layer split: CUDA1 runs layers 39-47, expert cache 4170 slots (8.77 GiB), 4170 of its 4608 profiled pairs; slot 0 verified
+FileExpertSource: mapped pinned cache complement ready: resident 34.42 GiB, pinned 34.42 GiB in 43 s; 34.42 GiB page-locked after taking the pages in steps; 
+strata serve: the prompt path borrows 1949 CUDA0 cache slots (3.60 GiB)
+strata serve:   CUDA1 prompt path borrows 1712 of its 4170 slots (3.60 GiB)
+strata serve: lend sizing: the prompt path borrows 3661 slots (ring 96 slots at chunk 8192), 2801 of them keep their experts in RAM too
+strata serve: WARNING: 860 of the 3661 borrowed slots have no RAM copy: their experts are streamed from the model file during every chunk
+strata verify: batch windows of up to 2 sequences (layers [0, 39))
+strata verify: batch windows of up to 2 sequences (layers [39, 48))
+strata serve: 243 MiB of VRAM free with everything loaded - LOW: requests may stall; add --vram-reserve-mib 969 to the config's args (or lower --max-context)
+strata serve: CUDA1: 107 MiB of VRAM free with everything loaded - LOW: its window graphs are captured on first use and need room too, and a full card can stall a request; add --vram-reserve-later-mib 1361 to the config's args (or lower --max-context)

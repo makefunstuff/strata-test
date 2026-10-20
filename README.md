@@ -19,6 +19,11 @@ The site root is [`index.html`](index.html), the hub that links both. Each folde
 headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`); the numbers they
 last reported are in the shelf READMEs.
 
+Benchmarks of Strata itself, one folder each with its README (what, how to run, results, verdict):
+
+- [`whole-repo-qa/`](whole-repo-qa/): whole-repo Q&A with citations at ~100K tokens (TST-1).
+- [`parallel-agents/`](parallel-agents/): can one Strata box serve two pi agents at once with `"parallel": 2`? Not in this RAM (TST-3).
+
 ## Setup on this machine
 
 - Strata runs as `strata.service` (IQ2_XS, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).

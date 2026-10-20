@@ -1,0 +1,2 @@
+{"config": "original", "time": "2026-10-20T11:58:32+03:00", "load_s": 66.1, "concurrency": {"serving":1,"requested":1}, "mem_available_gib": 6.61}
+{"config": "original", "time": "2026-10-20T12:16:24+03:00", "load_s": 70.3, "concurrency": {"serving":1,"requested":1}, "mem_available_gib": 7.04}

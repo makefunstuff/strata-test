@@ -1,0 +1,132 @@
+ 1 file changed, 125 insertions(+)
+diff --git c/presets.py i/presets.py
+new file mode 100644
+index 0000000..613ca02
+--- /dev/null
++++ i/presets.py
+@@ -0,0 +1,125 @@
++"""Reader for llama.cpp router preset files.
++
++Format (see sample.ini):
++
++    # global default, inherited by every section
++    temp = 1.0
++
++    [preset-name]
++    model = /models/x.gguf
++    ctx-size = 131072
++
++* `key = value`, split on the first `=` only (values may contain `=`).
++* Whitespace around keys and values is stripped.
++* Blank lines and lines whose first non-space character is `#` or `;` are ignored.
++* Keys before the first `[section]` are global defaults; a section's own key wins.
++* Duplicate section names and lines that are neither a section header, a comment,
++  a blank line, nor a `key = value` pair are errors mentioning the 1-based line number.
++
++configparser is deliberately not used: it lowercases/cases keys, mangles values
++containing `%`, and collapses duplicates in ways we do not want.  The parser here
++is hand written: keys are case sensitive, values are verbatim, and a duplicate key
++in the same section means "last one wins".
++"""
++
++from __future__ import annotations
++
++import sys
++
++DEFAULT_SPLIT_MODE = "layer"
++
++
++def _is_section_header(line: str) -> bool:
++    """A section header is `[name]` with a non-empty name."""
++    return len(line) >= 3 and line.startswith("[") and line.endswith("]")
++
++
++def parse_presets(text: str) -> dict[str, dict[str, str]]:
++    """Parse preset text into `preset name -> merged keys` in file order."""
++    defaults: dict[str, str] = {}
++    sections: dict[str, dict[str, str]] = {}
++    # Keys of the section currently being read; None before the first header.
++    current: dict[str, str] | None = None
++
++    for lineno, raw in enumerate(text.splitlines(), start=1):
++        line = raw.strip()
++        if not line:
++            continue
++        if line[0] in "#;":
++            continue
++
++        if _is_section_header(line):
++            name = line[1:-1].strip()
++            if not name:
++                raise ValueError(f"line {lineno}: empty section name in {line!r}")
++            if name in sections:
++                raise ValueError(f"line {lineno}: duplicate section name {name!r}")
++            current = {}
++            sections[name] = current
++            continue
++
++        if "=" not in line:
++            raise ValueError(
++                f"line {lineno}: expected [section] header or key = value, got {line!r}"
++            )
++
++        key, value = line.split("=", 1)
++        key = key.strip()
++        value = value.strip()
++        if not key:
++            raise ValueError(f"line {lineno}: empty key in {line!r}")
++        target = current if current is not None else defaults
++        target[key] = value
++
++    return {name: {**defaults, **keys} for name, keys in sections.items()}
++
++
++def load_presets(path) -> dict[str, dict[str, str]]:
++    """Load preset file `path` -> `preset name -> merged keys` (values are strings)."""
++    with open(path, "r", encoding="utf-8-sig") as fh:
++        return parse_presets(fh.read())
++
++
++def describe(name: str, keys: dict[str, str]) -> str:
++    """One-line report for a preset, as printed by the CLI."""
++    ctx = keys.get("ctx-size") or "-"
++    devices = keys.get("device") or "-"
++    split = keys.get("split-mode") or DEFAULT_SPLIT_MODE
++    draft = "yes" if "spec-draft-model" in keys else "no"
++    return f"{name} ctx={ctx} devices={devices} split={split} draft={draft}"
++
++
++USAGE = "usage: presets.py FILE [FILE...]"
++
++
++def main(argv=None) -> int:
++    argv = list(sys.argv[1:] if argv is None else argv)
++    # Be forgiving of being handed full sys.argv (script name included).
++    if argv and argv[0].endswith(".py"):
++        argv = argv[1:]
++    if not argv:
++        print(USAGE, file=sys.stderr)
++        return 2
++    if argv[0] in ("-h", "--help"):
++        print(USAGE)
++        return 0
++
++    status = 0
++    for arg in argv:
++        try:
++            presets = load_presets(arg)
++        except OSError as exc:
++            print(f"presets.py: {exc}", file=sys.stderr)
++            status = 2
++            continue
++        except ValueError as exc:
++            print(f"presets.py: {arg}: {exc}", file=sys.stderr)
++            status = 2
++            continue
++        for name, keys in presets.items():
++            print(describe(name, keys))
++    return status
++
++
++if __name__ == "__main__":
++    sys.exit(main(sys.argv[1:]))
