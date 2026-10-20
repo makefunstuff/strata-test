@@ -31,7 +31,7 @@ scripts, 43 screenshots.
 | `index.html`, `gallery.css`, `gallery.js` | the study page: nine heroes, nine whole pages, nine cards, three tables, the verdict |
 | `measure.mjs` → `stats.js` | the measurement: rendered text, the page's own CSS, the harness audit |
 | `../tools/rendered.mjs` | reads a browser's rendered text and computed styles for every page in a task |
-| `shots/` | 27 style shots (hero, whole page, phone) + 13 study-page shots + 2 "before" shots |
+| `shots/` | 43 shots: 27 style (hero, whole page, phone) + 14 study-page shots + 2 "before" shots |
 
 Static, no build step, relative paths, pinned `@fontsource` packages from
 jsDelivr. Fonts are never duplicated: 9 display faces and 8 text faces across
@@ -106,6 +106,7 @@ folder, shot with the same harness.
 | Contrast findings, 27 style shots | 5 → 12 depending on the audit rule (see below) | **0** |
 | Console errors, 43 shots | 1 (`const JUDGEMENT` used before it was declared — the cards silently did not render) | **0** |
 | Colour pairs cited in comments | three CSS comments claimed 4.8:1, 4.9:1, 5.2:1 | all recomputed and corrected: 5.0, 5.1, 5.7 (and gold-as-decoration is 3.2, kept on rules only) |
+| Editorial body face | the browser's own **Times New Roman**: the family list was routed through a custom property, the browser dropped the declaration as invalid at computed-value time, and the pinned Source Serif 4 files were registered and never fetched — 12 screenshots of this task shipped a body the page never asked for | the stack written out in the rule; 2 font files fetched; `rendered.mjs` now records the loaded families and the fetched font files for every page |
 
 **The audit was the thing that was weak, and it is worth stating plainly.**
 The harness measured contrast per *element* and skipped any element that had
@@ -122,6 +123,17 @@ check; the check was blind. Contrast numbers for tasks 01–10 were produced by
 the element rule and are looser than the ones here; 11-styles is measured under
 the text rule.
 
+The audit had a second blind spot of the same shape, and it was found after the
+pages had been shot: it never asked **which type the browser drew**. The
+everything-passed editorial page was rendering its body in the browser's serif
+while its pinned faces sat registered and unloaded — a screenshot shows a
+serif, and only the page's own `<link>` tags say which serif was promised. A
+console audit, a contrast audit and a screenshot all agree with a page that is
+using the wrong font. `tools/rendered.mjs` now reports, per page, the families
+the browser loaded and the font files it fetched; the study page prints the
+count (28 files across the nine pages) and every body and headline names a
+pinned family.
+
 ## Weights
 
 43 shots: 27 style (hero 1 440 × 900, whole page, phone 390 × 844), 14 study
@@ -134,7 +146,11 @@ Measured across the nine pages:
 
 - content 41 strings / 207 words; rendered 382–493 words; added 12–42
 - CSS 8.7–13.0 KB, 74–102 rules; markup+sheet 13.6–19.0 KB per page
-- 9 display faces, 8 text faces, no face used twice
+- 9 display faces, 9 text faces, no face shared between two styles (within a
+  style the display face is often the text face too: Swiss, glass, neumorphism,
+  cyber each run one family for both)
+- 28 font files fetched across the nine pages; every page loads its pinned
+  families, and the first family named by every `h1` and `body` is one of them
 - h1 30–78 px, weight 300–800, tracking −2.42 px to +12.88 px
 - body 16–22 px, leading 20.73 px to 31.24 px; smallest text 10.5–14.5 px
 - rendered inks 5–9; max radius 0 px (×4), 4, 50, 999 (×2); shadows 0–20
@@ -169,8 +185,15 @@ Measured across the nine pages:
   brutalist, pixel and cyber micro-labels are 11 px. WCAG sets no minimum size
   and the audit clears them; a reader with a phone in sunlight is the test that
   was not run.
-- The `full` and `phone` shots of the study page are 19 695 px and 40 347 px
-  tall: honest, and useless to read. The 13 section shots are the ones to look at.
+- **Font loading is now measured, one level deep.** The harness records the
+  families the browser loaded and the font files it fetched, which is enough to
+  catch the editorial page's fallback and enough to catch a dead CDN (a failed
+  request is already an audit problem). It is not per-code-point coverage: the
+  Japanese page registers 608 subset faces and loads 8, and nothing here proves
+  that every glyph on that page came from Zen Old Mincho rather than the
+  system's CJK fallback.
+- The `full` and `phone` shots of the study page are 19 620 px and 40 259 px
+  tall: honest, and useless to read. The 14 section shots are the ones to look at.
 
 ## Ratings
 

@@ -16,7 +16,14 @@
   --text: "Source Serif 4 Variable", Source Serif 4, Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17.5px/1.62 var(--text) }
+/* The family list is written out, not routed through var(). Routed through var(), the
+   body's font-family came out of the browser as a bare "Times New Roman" — the default,
+   i.e. the declaration was dropped as invalid at computed-value time — so the page
+   rendered in the browser's serif and the pinned Source Serif 4 faces sat registered
+   and never fetched. Written out, the woff2 arrives and the body is the style's own. */
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font-family: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: 17.5px; line-height: 1.62 }
 h1, h2, h3, h4, h5, p, ol, ul, blockquote { margin: 0 }
 ol, ul { list-style: none; padding: 0 }
 a { color: var(--ink) }

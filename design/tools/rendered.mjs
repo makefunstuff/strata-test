@@ -55,6 +55,9 @@ try {
     p.on("console", (m) => m.type() === "error" && errs.push(m.text()));
     p.on("pageerror", (e) => errs.push("pageerror: " + e.message));
     p.on("requestfailed", (r) => errs.push("requestfailed: " + r.url().replace(origin + "/", "")));
+    /* the font question the contrast audit never asked: did the pinned face arrive? */
+    const fontFiles = new Set();
+    p.on("response", (r) => { if (/\.woff2?(\?|$)/.test(r.url()) && r.status() < 400) fontFiles.add(r.url().split("/npm/")[1] || r.url()) });
     await p.goto(`${origin}/${task}/${page}`, { waitUntil: "load", timeout: 30000 });
     await p.waitForTimeout(1800);
     out[page] = await p.evaluate(() => {
@@ -91,11 +94,15 @@ try {
         inks: [...new Set(textEls.map((el) => getComputedStyle(el).color))].length,
         smallestText: Math.min(...textEls.map((el) => parseFloat(getComputedStyle(el).fontSize))),
         docWidth: document.documentElement.scrollWidth,
+        fontsTotal: document.fonts.size,
+        fontsLoaded: [...document.fonts].filter((f) => f.status === "loaded").length,
+        fontFamilies: [...new Set([...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family))].sort(),
       };
     });
+    out[page].fontFiles = [...fontFiles];
     if (errs.length) out[page].consoleErrors = errs;
     await p.close();
-    console.log(`  ${page.padEnd(22)} words ${String(out[page].words).padStart(5)}  inks ${out[page].inks}  anim ${out[page].animations}  errs ${errs.length}`);
+    console.log(`  ${page.padEnd(22)} words ${String(out[page].words).padStart(5)}  inks ${out[page].inks}  anim ${out[page].animations}  faces ${String(out[page].fontsLoaded).padStart(2)}/${String(out[page].fontsTotal).padStart(3)}  woff ${String(out[page].fontFiles.length).padStart(2)}  errs ${errs.length}`);
   }
 } finally {
   await ctx.close();

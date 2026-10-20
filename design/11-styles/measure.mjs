@@ -120,6 +120,17 @@ for (let i = 0; i < STYLES.length; i += 1) {
     bodysize: r.bodysize,
     bodyleading: r.bodyleading,
     smallestText: r.smallestText,
+    /* did the pinned type arrive? the browser's own FontFace set and the woff files it
+       actually fetched — the contrast audit never looked at fonts, and in the first pass
+       of this task the editorial body rendered in the browser's serif with the pinned
+       Source Serif 4 faces registered and never fetched. */
+    render: {
+      woff: (r.fontFiles || []).length,
+      fontFiles: r.fontFiles || [],
+      families: r.fontFamilies || [],
+      bodyStack: r.bodyfont,
+      h1Stack: r.h1font,
+    },
     wordsRendered: r.words,
     parity: { total: strings.length, found: strings.length - missing.length, missing: missing.map((m) => m.label) },
     sentences: { total: strings.length, found: strings.length - missing.length },

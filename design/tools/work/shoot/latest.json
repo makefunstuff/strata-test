@@ -83,7 +83,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-hero.jpg",
-  "bytes": 255006,
+  "bytes": 254837,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -149,7 +149,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-hero.jpg",
-  "bytes": 282213,
+  "bytes": 238702,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -171,8 +171,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-full.jpg",
-  "bytes": 312411,
-  "px": "1440x2997",
+  "bytes": 348678,
+  "px": "1440x3348",
   "actions_failed": []
  },
  {
@@ -193,8 +193,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-phone.jpg",
-  "bytes": 215101,
-  "px": "390x4459",
+  "bytes": 251696,
+  "px": "390x5281",
   "actions_failed": []
  },
  {
@@ -215,7 +215,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-hero.jpg",
-  "bytes": 289411,
+  "bytes": 289445,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -237,7 +237,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286557,
+  "bytes": 286556,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -259,7 +259,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-phone.jpg",
-  "bytes": 210948,
+  "bytes": 210950,
   "px": "390x4592",
   "actions_failed": []
  },
@@ -501,7 +501,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303516,
+  "bytes": 303647,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -611,7 +611,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/masthead.jpg",
-  "bytes": 266331,
+  "bytes": 266386,
   "px": "2880x1520",
   "actions_failed": []
  },
@@ -659,7 +659,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425105,
+  "bytes": 425026,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -683,7 +683,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 296176,
+  "bytes": 299993,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -707,7 +707,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-swiss.jpg",
-  "bytes": 536907,
+  "bytes": 497513,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -731,7 +731,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-neumorph.jpg",
-  "bytes": 471076,
+  "bytes": 443380,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -755,7 +755,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 517831,
+  "bytes": 493744,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -779,7 +779,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 458323,
+  "bytes": 503044,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -803,7 +803,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/parity.jpg",
-  "bytes": 325330,
+  "bytes": 321536,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -827,7 +827,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/measures.jpg",
-  "bytes": 300902,
+  "bytes": 342318,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -851,7 +851,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/ratings.jpg",
-  "bytes": 373695,
+  "bytes": 369844,
   "px": "2880x1600",
   "actions_failed": []
  },
@@ -875,7 +875,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/verdict.jpg",
-  "bytes": 528298,
+  "bytes": 529611,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -897,8 +897,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2637647,
-  "px": "1440x19695",
+  "bytes": 2752850,
+  "px": "1440x20883",
   "actions_failed": []
  },
  {
@@ -919,8 +919,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 1956954,
-  "px": "390x40347",
+  "bytes": 2037203,
+  "px": "390x41911",
   "actions_failed": []
  },
  {

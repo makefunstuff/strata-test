@@ -109,6 +109,17 @@ window.TERNMARK_STATS = {
    "bodysize": "16px",
    "bodyleading": "24px",
    "smallestText": 11,
+   "render": {
+    "woff": 1,
+    "fontFiles": [
+     "@fontsource-variable/archivo@5.3.0/files/archivo-latin-wght-normal.woff2"
+    ],
+    "families": [
+     "Archivo Variable"
+    ],
+    "bodyStack": "\"Archivo Variable\", Archivo, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "h1Stack": "\"Archivo Variable\", Archivo, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+   },
    "wordsRendered": 382,
    "parity": {
     "total": 41,
@@ -205,6 +216,18 @@ window.TERNMARK_STATS = {
    "bodysize": "16.5px",
    "bodyleading": "24.75px",
    "smallestText": 11,
+   "render": {
+    "woff": 2,
+    "fontFiles": [
+     "@fontsource/space-mono@5.3.0/files/space-mono-latin-700-normal.woff2",
+     "@fontsource/space-mono@5.3.0/files/space-mono-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Space Mono"
+    ],
+    "bodyStack": "\"Times New Roman\", Times, serif",
+    "h1Stack": "\"Times New Roman\", Times, serif"
+   },
    "wordsRendered": 480,
    "parity": {
     "total": 41,
@@ -289,7 +312,7 @@ window.TERNMARK_STATS = {
    "title": "Ternmark — The Field Quarterly (Editorial)",
    "rules": "11 · s03 — Editorial / magazine. The rules: a masthead with folios and a strapline; a single subject in a big display serif, then a measure the eye can run down; two columns with a hairline rule between them; a drop cap; small capitals for every label; dot leaders in the index; and one red, used only where a newspaper would use red.",
    "bytesHtml": 5473,
-   "bytesCss": 10435,
+   "bytesCss": 10974,
    "fonts": [
     "instrument-serif@5.3.0",
     "source-serif-4@5.3.0 variable"
@@ -298,10 +321,23 @@ window.TERNMARK_STATS = {
    "h1weight": "400",
    "h1size": "74px",
    "h1tracking": "0.37px",
-   "bodyfont": "Times New Roman",
-   "bodysize": "16px",
-   "bodyleading": "normal",
+   "bodyfont": "Source Serif 4 Variable",
+   "bodysize": "17.5px",
+   "bodyleading": "28.35px",
    "smallestText": 14.5,
+   "render": {
+    "woff": 2,
+    "fontFiles": [
+     "@fontsource-variable/source-serif-4@5.3.0/files/source-serif-4-latin-wght-normal.woff2",
+     "@fontsource/instrument-serif@5.3.0/files/instrument-serif-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Instrument Serif",
+     "Source Serif 4 Variable"
+    ],
+    "bodyStack": "\"Source Serif 4 Variable\", \"Source Serif 4\", Georgia, \"Times New Roman\", serif",
+    "h1Stack": "\"Instrument Serif\", \"Iowan Old Style\", Georgia, serif"
+   },
    "wordsRendered": 493,
    "parity": {
     "total": 41,
@@ -369,8 +405,8 @@ window.TERNMARK_STATS = {
     }
    },
    "heights": {
-    "full": 2997,
-    "phone": 4459,
+    "full": 3348,
+    "phone": 5281,
     "hero": 900
    },
    "audit": {
@@ -401,6 +437,17 @@ window.TERNMARK_STATS = {
    "bodysize": "16.5px",
    "bodyleading": "26.4px",
    "smallestText": 12,
+   "render": {
+    "woff": 1,
+    "fontFiles": [
+     "@fontsource-variable/manrope@5.3.0/files/manrope-latin-wght-normal.woff2"
+    ],
+    "families": [
+     "Manrope Variable"
+    ],
+    "bodyStack": "\"Manrope Variable\", Manrope, system-ui, sans-serif",
+    "h1Stack": "\"Manrope Variable\", Manrope, system-ui, sans-serif"
+   },
    "wordsRendered": 414,
    "parity": {
     "total": 41,
@@ -498,6 +545,20 @@ window.TERNMARK_STATS = {
    "bodysize": "16.5px",
    "bodyleading": "26.73px",
    "smallestText": 12,
+   "render": {
+    "woff": 4,
+    "fontFiles": [
+     "@fontsource/nunito-sans@5.3.0/files/nunito-sans-latin-700-normal.woff2",
+     "@fontsource/nunito-sans@5.3.0/files/nunito-sans-latin-600-normal.woff2",
+     "@fontsource/nunito-sans@5.3.0/files/nunito-sans-latin-800-normal.woff2",
+     "@fontsource/nunito-sans@5.3.0/files/nunito-sans-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Nunito Sans"
+    ],
+    "bodyStack": "\"Nunito Sans\", \"Nunito Sans\", system-ui, sans-serif",
+    "h1Stack": "\"Nunito Sans\", \"Nunito Sans\", system-ui, sans-serif"
+   },
    "wordsRendered": 400,
    "parity": {
     "total": 41,
@@ -595,6 +656,19 @@ window.TERNMARK_STATS = {
    "bodysize": "22px",
    "bodyleading": "31.24px",
    "smallestText": 11,
+   "render": {
+    "woff": 2,
+    "fontFiles": [
+     "@fontsource/press-start-2p@5.3.0/files/press-start-2p-latin-400-normal.woff2",
+     "@fontsource/vt323@5.3.0/files/vt323-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Press Start 2P",
+     "VT323"
+    ],
+    "bodyStack": "VT323, \"Courier New\", monospace",
+    "h1Stack": "\"Press Start 2P\", \"Courier New\", monospace"
+   },
    "wordsRendered": 477,
    "parity": {
     "total": 41,
@@ -694,6 +768,25 @@ window.TERNMARK_STATS = {
    "bodysize": "16.5px",
    "bodyleading": "32.175px",
    "smallestText": 12.5,
+   "render": {
+    "woff": 8,
+    "fontFiles": [
+     "@fontsource/zen-kaku-gothic-new@5.3.0/files/zen-kaku-gothic-new-latin-400-normal.woff2",
+     "@fontsource/zen-kaku-gothic-new@5.3.0/files/zen-kaku-gothic-new-latin-500-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-latin-500-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-111-400-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-117-400-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-113-400-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-107-400-normal.woff2",
+     "@fontsource/zen-old-mincho@5.3.0/files/zen-old-mincho-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Zen Kaku Gothic New",
+     "Zen Old Mincho"
+    ],
+    "bodyStack": "\"Zen Kaku Gothic New\", \"Hiragino Sans\", \"Yu Gothic\", system-ui, sans-serif",
+    "h1Stack": "\"Zen Old Mincho\", \"Hiragino Mincho ProN\", \"Yu Mincho\", Georgia, serif"
+   },
    "wordsRendered": 393,
    "parity": {
     "total": 41,
@@ -789,6 +882,21 @@ window.TERNMARK_STATS = {
    "bodysize": "16.5px",
    "bodyleading": "28.05px",
    "smallestText": 11,
+   "render": {
+    "woff": 4,
+    "fontFiles": [
+     "@fontsource/ibm-plex-mono@5.3.0/files/ibm-plex-mono-latin-500-normal.woff2",
+     "@fontsource/chakra-petch@5.3.0/files/chakra-petch-latin-600-normal.woff2",
+     "@fontsource/chakra-petch@5.3.0/files/chakra-petch-latin-400-normal.woff2",
+     "@fontsource/ibm-plex-mono@5.3.0/files/ibm-plex-mono-latin-400-normal.woff2"
+    ],
+    "families": [
+     "Chakra Petch",
+     "IBM Plex Mono"
+    ],
+    "bodyStack": "\"Chakra Petch\", system-ui, sans-serif",
+    "h1Stack": "\"Chakra Petch\", system-ui, sans-serif"
+   },
    "wordsRendered": 484,
    "parity": {
     "total": 41,
@@ -888,6 +996,21 @@ window.TERNMARK_STATS = {
    "bodysize": "17px",
    "bodyleading": "31.45px",
    "smallestText": 10.5,
+   "render": {
+    "woff": 4,
+    "fontFiles": [
+     "@fontsource/jost@5.3.0/files/jost-latin-400-normal.woff2",
+     "@fontsource/cormorant-garamond@5.3.0/files/cormorant-garamond-latin-300-normal.woff2",
+     "@fontsource/cormorant-garamond@5.3.0/files/cormorant-garamond-latin-300-italic.woff2",
+     "@fontsource/jost@5.3.0/files/jost-latin-300-normal.woff2"
+    ],
+    "families": [
+     "Cormorant Garamond",
+     "Jost"
+    ],
+    "bodyStack": "Jost, Futura, \"Century Gothic\", system-ui, sans-serif",
+    "h1Stack": "\"Cormorant Garamond\", \"Iowan Old Style\", Georgia, serif"
+   },
    "wordsRendered": 392,
    "parity": {
     "total": 41,

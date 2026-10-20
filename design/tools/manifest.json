@@ -1,5 +1,92 @@
 [
   {
+    "task": ".",
+    "title": "Design gallery — the frame page",
+    "shots": [
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "range",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#range"
+        ]
+      },
+      {
+        "name": "table",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1050,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#table"
+        ]
+      },
+      {
+        "name": "cards",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1400,
+        "dpr": 2,
+        "settle": 1400,
+        "actions": [
+          "reveal:#cards"
+        ]
+      },
+      {
+        "name": "verdict",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1400,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#verdict"
+        ]
+      },
+      {
+        "name": "limits",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1050,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#limits"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "settle": 1600,
+        "full": true
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 3,
+        "settle": 1600,
+        "full": true
+      }
+    ]
+  },
+  {
     "task": "01-landing",
     "title": "Foldline — landing page",
     "shots": [

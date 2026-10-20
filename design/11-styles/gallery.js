@@ -88,6 +88,7 @@ el("cards").innerHTML = R.map((r, i) => {
     </div>
     <dl class="numbers">
       <div><dt>Type in use</dt><dd>${esc(r.h1font)} ${r.h1size.replace("px", "")} / ${r.h1weight}, ${esc(r.bodyfont)} ${r.bodysize.replace("px", "")}</dd></div>
+      <div><dt>Type arrived</dt><dd>${(r.render && r.render.woff) || 0} font files fetched · ${esc(((r.render && r.render.families) || []).join(", ") || "none")}</dd></div>
       <div><dt>Smallest text</dt><dd>${r.smallestText ? r.smallestText.toFixed(1) : "?"} px · body leading ${esc(r.bodyleading)}</dd></div>
       <div><dt>Colour</dt><dd>${r.dom.inks} rendered inks · ${r.css.coloursDeclared} declared${r.dom.bg ? " · base " + esc(r.dom.bg) : ""}</dd></div>
       <div><dt>Geometry</dt><dd>max radius ${r.dom.maxRadius} px · ${r.css.borders} borders · ${r.css.shadows} shadows</dd></div>
@@ -160,7 +161,12 @@ el("measure-note").innerHTML = `Nine pages, ${new Set(R.map((r) => r.h1font)).si
   ${Math.min(...R.map((r) => r.heights.full))} px to ${Math.max(...R.map((r) => r.heights.full))} px,
   and every one of the nine carries a <code>prefers-reduced-motion</code> block.
   ${R.filter((r) => r.css.threeCol).length} of the nine use a three-column grid for the features — the one
-  piece of armature that survives every costume, and the reason this study is about skins.`;
+  piece of armature that survives every costume, and the reason this study is about skins.
+  Type is measured too: ${R.reduce((a, r) => a + ((r.render && r.render.woff) || 0), 0)} font files were
+  fetched across the nine pages, and the first family the browser reports for every body and headline is
+  a pinned one. In the first pass of this task that was not true — the editorial body reported
+  <em>Times New Roman</em>, the browser's own serif, with its pinned faces registered and never fetched —
+  and the screenshots of that pass are in the git history.`;
 
 /* ---------- the ratings ---------- */
 el("rating-table").innerHTML = `

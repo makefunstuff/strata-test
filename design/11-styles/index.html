@@ -77,6 +77,15 @@
       The harness now walks text nodes and reports a near-transparent foreground as
       <em>no colour to measure</em> — which is why the "before" shot reports exactly one finding.
       The fix was never to satisfy the check; the check was blind.</p>
+    <p class="note"><b>The audit had a second blind spot of the same shape</b>, found after the pages
+      were shot: it never asked which type the browser drew. The editorial body asked for Source Serif 4
+      through a CSS custom property, the browser dropped that declaration as invalid at computed-value
+      time and used its installed serif, and the task shipped screenshots with a Times New Roman body
+      while the pinned faces sat registered and were never fetched. <code>tools/rendered.mjs</code> now
+      records per page the families the browser loaded and the font files it fetched, and the measurement
+      table prints the count. Every one of the nine fetches its pinned faces; every body and headline
+      names one. A screenshot cannot show a missing font to anyone who has not read the page's own
+      <code>&lt;link&gt;</code> tags.</p>
     <div class="pairs">
       <figure><img src="shots/before-neumorph.jpg" alt="The neumorphism page before the contrast fixes" loading="lazy"><figcaption><b>Before</b> — 12 contrast findings: body text 3.4:1, secondary 3.0:1, accent 3.1:1.</figcaption></figure>
       <figure><img src="shots/neumorph-hero.jpg" alt="The neumorphism page after the contrast fixes" loading="lazy"><figcaption><b>After</b> — 0 findings: lightest text 5.0:1, accent 5.1:1, the surface unchanged.</figcaption></figure>
