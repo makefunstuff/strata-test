@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>logtrail — a terminal log explorer, frame by frame</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/outfit@5.3.0/index.css">
+<style>
+  :root {
+    --wall: #0b1014; --panel: #10161c; --ink: #e3eaf0; --dim: #a2b1bc; --faint: #7d8e9a;
+    --line: #22303a; --accent: #6fd4b8; --gold: #e3b05c; --red: #ef7d6b;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--wall); color: var(--ink); font-family: "Outfit Variable", system-ui, sans-serif; font-size: 15px; line-height: 1.55 }
+  .mono { font-family: "JetBrains Mono Variable", ui-monospace, monospace }
+  header { padding: 40px 34px 26px; border-bottom: 1px solid var(--line); display: grid; gap: 18px;
+    background: radial-gradient(70% 140% at 12% 0%, #14212a, transparent 70%) }
+  .kicker { font-family: "JetBrains Mono Variable", monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent) }
+  h1 { margin: 0; font-size: clamp(30px, 5vw, 54px); font-weight: 650; letter-spacing: -.02em; line-height: 1.02 }
+  h1 span { color: var(--faint) }
+  .lede { max-width: 76ch; color: var(--dim); font-size: 17px }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px }
+  .facts span { font-family: "JetBrains Mono Variable", monospace; font-size: 11.5px; border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--dim) }
+  .facts b { color: var(--accent); font-weight: 500 }
+  main { padding: 0 34px 60px; display: grid; gap: 34px }
+  section { display: grid; gap: 14px }
+  h2 { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); font-family: "JetBrains Mono Variable", monospace }
+  .why { color: var(--dim); max-width: 78ch; font-size: 14.5px }
+  .frames { display: grid; grid-template-columns: repeat(auto-fit, minmax(560px, 1fr)); gap: 18px }
+  .frame { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--panel) }
+  .frame .head { display: flex; align-items: baseline; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--dim); font-family: "JetBrains Mono Variable", monospace }
+  .frame .head b { color: var(--ink); font-weight: 600 }
+  .frame .head .grow { flex: 1 }
+  .frame .head .sz { color: var(--faint) }
+  .frame .shot { position: relative; width: 100%; overflow: hidden; background: #0d1217 }
+  .frame iframe { border: 0; display: block; transform-origin: top left }
+  .frame .cap { padding: 9px 14px; border-top: 1px solid var(--line); color: var(--dim); font-size: 13px }
+  .two { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px }
+  @media (max-width: 1040px) { .two { grid-template-columns: 1fr } }
+  .panel { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 18px 20px }
+  .panel h3 { margin: 0 0 10px; font-size: 16px; font-weight: 600 }
+  .keys { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-family: "JetBrains Mono Variable", monospace; font-size: 12.5px }
+  .keys b { color: var(--accent); font-weight: 500 }
+  .keys span { color: var(--dim) }
+  pre.code { margin: 0; background: #0c1216; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow: auto;
+    font-family: "JetBrains Mono Variable", monospace; font-size: 12px; line-height: 1.5; color: #b9c7d2 }
+  pre.code .k { color: var(--accent) } pre.code .c { color: #8698a5 } pre.code .s { color: var(--gold) }
+  ul.real { margin: 0; padding-left: 20px; color: var(--dim); font-size: 14px; display: grid; gap: 7px }
+  ul.real b { color: var(--ink); font-weight: 600 }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px }
+  footer { padding: 26px 34px; border-top: 1px solid var(--line); color: var(--faint); font-size: 12.5px; font-family: "JetBrains Mono Variable", monospace }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Task 04 · terminal user interface · 148 × 40 and 80 × 24</div>
+  <h1>logtrail <span>— a log tail that fits a terminal</span></h1>
+  <p class="lede">Four hundred and twenty lines from a fictional API gateway fleet, drawn in a box-padded grid
+  with 24-bit colour: the tail on the left, the selected line decomposed on the right, a 60-bucket volume
+  histogram along the bottom. One TypeScript file, no dependencies, no curses, no React. Every frame below is
+  the <b class="mono" style="color:var(--accent)">bytes the program prints</b>, rendered by a small ANSI reader —
+  not a redraw of the design.</p>
+  <div class="facts">
+    <span><b>9</b> keys</span><span><b>3</b> views</span><span><b>420</b> lines, 6 services</span>
+    <span><b>2</b> palettes</span><span><b>2</b> widths</span><span>filter, freeze, sort, empty</span>
+    <span>node src/logtrail.ts</span>
+  </div>
+</header>
+<main>
+  <section>
+    <h2>The three views</h2>
+    <div class="frames" id="frames-main"></div>
+  </section>
+
+  <section>
+    <h2>What the app knows about its own window</h2>
+    <div class="frames" id="frames-states"></div>
+  </section>
+
+  <section class="two">
+    <div class="panel">
+      <h3>How a frame is made</h3>
+      <p class="why">Every widget writes a line of <em>exactly</em> the pane's visible width, then the panes are
+      concatenated and clipped to the terminal width. Colour codes do not count towards width, so
+      <span class="mono" style="color:var(--accent)">vis()</span> strips them before measuring — that is the whole
+      trick that keeps the right-hand pane's border in the same column on every row.</p>
+      <pre class="code"><span class="c">// the row body, then the exact clip that keeps the grid true</span>
+<span class="k">const</span> row =
+  fg(pal.line) + <span class="s">"│"</span> + (on ? bg(pal.sel) : <span class="s">""</span>) + <span class="s">" "</span> +
+  (on ? fg(pal.selInk) + BOLD : fg(pal.faint)) + r.t.slice(0, 8) + <span class="s">" "</span> +
+  s(on ? pal.selInk : pal.dim, pad(r.svc, w.svc)) + <span class="s">" "</span> +
+  (compact
+    ? s(on ? pal.selInk : pal.ink, clip(r.msg, listW - 39))
+    : s(on ? pal.selInk : pal.ink, pad(r.ep, w.ep)) + <span class="s">" "</span> +
+      (r.lat &gt; 900 ? fg(pal.red) : r.lat &gt; 300 ? fg(pal.gold) : fg(pal.dim)) +
+      pad(String(r.lat), w.ms, <span class="k">true</span>) + <span class="s">"  "</span> +
+      s(on ? pal.selInk : pal.dim, clip(r.msg, listW - 74)));
+P.push(clip(row, listW - 1) + fg(pal.line) + <span class="s">"│"</span>);   <span class="c">// the shared rule</span></pre>
+      <p class="why">At 80 columns the app drops the endpoint and latency columns, shortens the tab labels and
+      removes the per-level counts. The detail pane only appears at 128 columns and above. Nothing scrolls
+      sideways.</p>
+    </div>
+    <div style="display:grid;gap:18px">
+      <div class="panel">
+        <h3>Keys</h3>
+        <div class="keys">
+          <b>j k ↑ ↓</b><span>move the selection</span>
+          <b>g G</b><span>oldest / newest line</span>
+          <b>/ … Esc</b><span>filter by <span class="mono">lvl=warn svc=gateway</span>, substring, or clear</span>
+          <b>f</b><span>freeze the tail (the buffer keeps filling)</span>
+          <b>t</b><span>light / dark palette</span>
+          <b>s S</b><span>cycle the sort column in endpoints, reverse it</span>
+          <b>1 2 3 · ?</b><span>stream · endpoints · help, <span class="mono">?</span> toggles help</span>
+          <b>enter · o</b><span>copy the line, open the trace id</span>
+          <b>q</b><span>quit</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>What is real</h3>
+        <ul class="real">
+          <li><b>The captures are the program's output.</b> <span class="mono">tools/capture.sh</span> runs the app at a fixed size, writes the ANSI bytes to <span class="mono">capture/*.ansi</span>, and <span class="mono">capture.html</span> renders them.</li>
+          <li><b>The filter is a query language, not a placeholder</b> — <span class="mono">lvl=</span>, <span class="mono">svc=</span>, <span class="mono">ep=</span>, <span class="mono">code=</span> and free text, applied to the tail and the endpoint table together.</li>
+          <li><b>Colour is the threshold, not a legend.</b> p95 over 900 ms is red, over 300 ms amber; the same thresholds colour the latency column and the histogram buckets.</li>
+          <li><b>The data is invented and says so</b> — a fictional gateway fleet, seeded so every capture is reproducible.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>States, themes, widths</h2>
+    <div class="frames" id="frames-more"></div>
+  </section>
+</main>
+<footer>
+  logtrail · 420 lines of a fictional gateway fleet · src/logtrail.ts (TypeScript, no dependencies) ·
+  frames: tools/capture.sh · rendered by capture.html, an ANSI reader
+</footer>
+<script>
+/* [board, key, label, size, sceneW, cols, rows, caption] */
+const FRAMES = [
+  ["frames-main", "stream", "stream", "148 × 40", 1500, 148, 40, "the tail, the volume histogram, and the selected line as key/value pairs, a latency strip of the last 26 requests on the same route, and its JSON"],
+  ["frames-main", "endpoints", "endpoints", "148 × 22", 1500, 148, 22, "the same buffer by route: volume, p50/p95, warnings, errors and a share bar in the cell; s cycles the sort, S reverses"],
+  ["frames-main", "help", "help", "148 × 34", 1500, 148, 34, "the help overlay: a modal box that blanks the screen behind it, listing all nine keys"],
+  ["frames-states", "filtered", "filtered", "148 × 30", 1500, 148, 30, "lvl=warn svc=ledger — the filter narrows both views and the counters on the filter line"],
+  ["frames-states", "empty", "no match", "148 × 26", 1500, 148, 26, "the empty state names the filter that matched nothing and shows the levels that exist in the window"],
+  ["frames-states", "frozen", "frozen", "148 × 34", 1500, 148, 34, "f freezes the tail so you can read a burst; the buffer keeps filling and the status line says so"],
+  ["frames-more", "light", "light palette", "148 × 34", 1500, 148, 34, "the t key switches to a light palette for a terminal on a bright desk — the same thresholds, recoloured"],
+  ["frames-more", "narrow", "80 × 24", "80 × 24", 860, 80, 24, "at 80 columns the endpoint and latency columns drop out, the tab labels shorten, and the detail pane disappears"],
+];
+const LINE = 18.6, CHROME = 34, PAD = 32, CAPTION = 44, BODY = 56;
+for (const [host, key, label, size, sceneW, cols, rows, cap] of FRAMES) {
+  const el = document.createElement("div");
+  el.className = "frame";
+  el.innerHTML = `<div class="head"><b>${label}</b><span class="grow"></span><span class="sz">${size}</span></div>
+    <div class="shot"></div><div class="cap">${cap}</div>`;
+  const shot = el.querySelector(".shot");
+  const f = document.createElement("iframe");
+  f.title = `logtrail ${label} — ${size}`;
+  f.loading = "lazy";
+  f.src = `capture.html?frame=${key}`;
+  f.style.width = sceneW + "px";
+  f.style.height = (CHROME + PAD + rows * LINE + CAPTION + BODY) + "px";
+  shot.appendChild(f);
+  document.getElementById(host).appendChild(el);
+  el.dataset.scene = sceneW;
+}
+const fit = () => document.querySelectorAll(".frame").forEach((el) => {
+  const shot = el.querySelector(".shot"), f = el.querySelector("iframe");
+  const sceneW = +el.dataset.scene;
+  if (!shot.clientWidth || !f) return;
+  const s = shot.clientWidth / sceneW;
+  f.style.transform = "scale(" + s + ")";
+  f.style.transformOrigin = "top left";
+  shot.style.height = parseFloat(f.style.height) * s + "px";
+});
+addEventListener("resize", fit);
+addEventListener("load", fit);
+requestAnimationFrame(fit);
+</script>
+</body>
+</html>

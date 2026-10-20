@@ -383,5 +383,83 @@
         "height": 900
       }
     ]
+  },
+  {
+    "task": "04-tui",
+    "shots": [
+      {
+        "name": "board",
+        "page": "index.html",
+        "width": 1500,
+        "height": 1100,
+        "full": true,
+        "dpr": 2,
+        "settle": 2.6
+      },
+      {
+        "name": "stream",
+        "page": "capture.html?frame=stream",
+        "width": 1660,
+        "height": 940,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "endpoints",
+        "page": "capture.html?frame=endpoints",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "help",
+        "page": "capture.html?frame=help",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "filtered",
+        "page": "capture.html?frame=filtered",
+        "width": 1660,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "empty",
+        "page": "capture.html?frame=empty",
+        "width": 1660,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "frozen",
+        "page": "capture.html?frame=frozen",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "light",
+        "page": "capture.html?frame=light",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4
+      },
+      {
+        "name": "narrow",
+        "page": "capture.html?frame=narrow",
+        "width": 980,
+        "height": 660,
+        "dpr": 2,
+        "settle": 1.4
+      }
+    ]
   }
 ]
