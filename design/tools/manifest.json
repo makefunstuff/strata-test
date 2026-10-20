@@ -1,0 +1,6 @@
+[
+  { "task": "00-probe", "shots": [
+    { "name": "desktop", "page": "index.html", "width": 1440, "height": 900 },
+    { "name": "phone", "page": "index.html", "width": 390, "height": 844, "phone": true }
+  ]}
+]

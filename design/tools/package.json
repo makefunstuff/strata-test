@@ -1,0 +1,9 @@
+{
+  "name": "design-tools",
+  "private": true,
+  "type": "module",
+  "description": "Headless Chromium screenshot + console-error harness for the design gallery.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}
