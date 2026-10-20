@@ -24,6 +24,7 @@ export function createLab({
   fog = null,
   controls = true,
   pixelRatio = Math.min(window.devicePixelRatio || 1, 2),
+  preset = "high",
   shadow = false,
   hints = [],
   guiTitle = null,
@@ -109,13 +110,21 @@ export function createLab({
   // ---- control panel ------------------------------------------------------------
   const gui = new GUI({ title: guiTitle ?? title, width: 250 });
   gui.domElement.classList.add("lab-gui");
-  const q = { quality: "high", pixelRatio: renderer.getPixelRatio() };
-  const qualityFolder = gui.addFolder("quality");
-  qualityFolder.add(q, "quality", ["low", "medium", "high"]).name("preset");
+  const q = { quality: preset, pixelRatio: renderer.getPixelRatio() };
   let onQuality = () => {};
+  let lastQuality = preset;
+  const qualityFolder = gui.addFolder("quality");
+  const presetCtrl = qualityFolder.add(q, "quality", ["low", "medium", "high"]).name("preset");
   qualityFolder.add(q, "pixelRatio", 0.5, 2, 0.05).name("pixel ratio").onChange(setPixelRatio);
   qualityFolder.open();
-  qualityFolder.domElement.addEventListener("change", () => onQuality(q.quality));
+  // the listener belongs to the preset select, not to the folder: on the folder it fires for the
+  // pixel-ratio number box too (a number box emits change when it commits), so typing a ratio
+  // re-applied the whole preset — which on the cloth means sewing a new sheet and wiping every tear
+  presetCtrl.domElement.addEventListener("change", () => {
+    if (q.quality === lastQuality) return;
+    lastQuality = q.quality;
+    onQuality(q.quality);
+  });
 
   // ---- pointer ------------------------------------------------------------------
   const pointer = {
@@ -155,6 +164,8 @@ export function createLab({
     step() { return Math.min(clock.getDelta(), 1 / 20); },
     render: () => composer.render(),
     onQuality(fn) { onQuality = fn; },
+    /** jump to a preset and run the page handler; the dropdown follows */
+    setQuality(name) { q.quality = name; lastQuality = name; presetCtrl.updateDisplay(); onQuality(name); },
     /** window.experiment: what the headless checks read and drive. */
     expose(api) { window.experiment = { THREE, renderer, scene, camera, lab, fps, ...api }; },
   };

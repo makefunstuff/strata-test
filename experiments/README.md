@@ -20,6 +20,11 @@ the page's own `window.experiment` hook — not what it should do. One command p
 ```
 node experiments/tools/check.mjs 1-water --label water --wait 8 \
   --drag 0.5,0.6:0.62,0.5 --click 0.4,0.55 --eval "…"
+
+# the cloth: a real mouse drag on the sheet, a shift-drag slice, a scripted sustained pull
+node experiments/tools/check.mjs 3-cloth-tearing --label cloth --wait 8 \
+  --drag 0.47,0.53:0.36,-0.06:900 --drag 0.4,0.42:0.16,0.22:600:shift \
+  --eval "…api.pullScreen(mid, …)…"
 ```
 
 `bash experiments/tools/sweep.sh` runs all five and prints one line each
@@ -29,14 +34,27 @@ kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones th
 
 | # | experiment | works? (headless, software renderer) | fps (sw) idle / after input | one line | controls |
 |---|---|---|---|---|---|
-| 1 | [Water](1-water/index.html) | 0 errors; splats 0→54 from drag + click, 7 floating bodies bobbing, sim 256², reflection RT 384² | 14.0 / 14.8 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
-| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 121 shattered, 700 displaced, 706 awake, 689 chips, 695 dust, max impact 50 m/s | 18.8 / 18.0 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
-| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, 286 snapped, quads 1882 of 2052 after cuts and a pull | 30.4 / 29.6 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so a sustained yank rags the sheet, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
-| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.0, trails on; 16 384 boids measured at 8.8 fps | 17.6 / 18.0 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
-| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; intensity 1→2.13 from the click-stoke, light 214, gust 0.74, 60 march steps at 42% resolution | 4.8 / 4.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
+| 1 | [Water](1-water/index.html) | 0 errors; splats 0→70 from drag + click, 7 floating bodies bobbing, sim 256², reflection RT 384² | 14.0 / 14.4 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
+| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 121 shattered, 701 displaced, 706 awake, 695 chips, 700 dust, last impact 31 m/s | 19.2 / 18.4 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
+| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, **927 snapped** — real mouse drags on the sheet, a shift-drag slice and a scripted sustained pull — quads 1840 of 2052 | 30.0 / 30.4 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so **grabbing a patch and pulling rags the sheet**, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
+| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.05, trails on; 16 384 boids measured at 8.8 fps | 18.4 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
+| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.96, light 148, gust 0.66, 60 march steps at 42% resolution | 6.0 / 6.0 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
+
+## How they look and how they move (1–5)
+
+Self-assessed, from the kept shots (`hero.jpg`, `alt1.jpg`, `alt2.jpg` in each folder) at the
+medium preset. 3 = does the job, 4 = would show someone, 5 = the reason to open the page.
+
+| # | experiment | visuals | motion | why that number |
+|---|---|---|---|---|
+| 1 | water | **4** | **4** | the planar reflection, caustics and foam carry it; the sky band is a gradient, not a sky. wave fronts spread, reflect off the basin walls and the crates ride them and kick ripples back |
+| 2 | voxel demolition | **4** | **5** | masonry in flat colours under a hard key light, saved by dust, chips and flash. 842 real rigid bodies topple, tumble and pile, and a hard hit collapses the wall where it is hit |
+| 3 | cloth & tearing | **4** | **4** | a woven sheet that catches a low sun, flutters, rags and frays. the verlet flutter and a tear that runs along the weave read as cloth; at high stiffness it behaves as a board |
+| 4 | GPU flocking | **4** | **4** | 4096 darts with heading colour, fog and an afterimage trail. the flock turns as a body, splits around the spheres and reforms behind the hawk — but the neighbourhood is sampled, so the flocking is approximate |
+| 5 | volumetric fire | **5** | **3** | the flame lights itself, the plume takes the glow, bloom at dusk carries it — the best-looking page here. it flickers, rises, shears and curls in the wind, yet the flame body is a shaped teardrop: it looks alive rather than being alive |
 
 ## The shared kit — `shared/`
 
@@ -50,6 +68,30 @@ Every page exposes `window.experiment.state()` (the numbers on screen) and an `a
 drives: `dropStone`, `fireAt`, `shatterAt`, `grabScreen`/`cutScreen`/`dragTo`, `setHawkMode`/
 `scatter`/`setCount`, `stoke`/`gust`/`douse`. That hook is what turns "the page loaded" into
 "the mechanic moved".
+
+### Testing the mechanic, not the page load
+
+Two checks exist because a review found a mechanic that only *looked* implemented. Both drive
+**real mouse events**, the way a person does, and both exit non-zero.
+
+```
+node experiments/tools/clothtest.mjs      # 6 real-mouse yanks on the flag and on a curtain
+node experiments/tools/qualitytest.mjs    # typing in the shared pixel-ratio box, on the cloth
+```
+
+`clothtest.mjs` grabs the middle of the sheet with `mouse.down`, moves in steps, **holds the
+pull**, releases, and requires `torn` to rise — and runs a control: the same sheet, untouched, in
+the same wind, must not tear. Last run, from a clean sheet each time:
+
+```
+flag    right 309 torn · down-left 122 · up 48        curtain  right 296 · down-left 344 · up 48
+control (no interaction): torn 0 → 0
+```
+
+`qualitytest.mjs` tears the sheet, types a new pixel ratio into the shared panel and presses
+Enter, and requires the tears to survive: typing a render-size number must change the render
+size and nothing else. It then picks a preset from the dropdown and requires the page handler to
+run (that part is the point of the preset).
 
 ## What got hard as the complexity rose
 
@@ -80,7 +122,25 @@ drives: `dropStone`, `fireAt`, `shatterAt`, `grabScreen`/`cutScreen`/`dragTo`, `
 8. **Headless software rendering is the only renderer available here** (the model server holds
    both GPUs), so every heavy page needed a quality preset from the start, and the check reports
    a floor: 6 fps for a full-screen raymarch on SwiftShader is a *good* result.
-9. **The harness is a tool, not a script.** `check.mjs` serves the folder over http (module
+9. **Tearing is measured at the end of the step, not inside the solver** (exp 3, found in review).
+   The strain pass ran on the last solver iteration, and the grab spring is applied *after* the
+   loop — so the stretch a pull creates was never seen, and a yank on the default settings never
+   tore anything. The pass now runs once, after the hem is re-pinned and the grab has pulled. The
+   grab also pinches a **patch** of cloth (`grip`, a disc of particles, each dragged at its own
+   offset from the picked point) rather than one mathematical point: a point makes a needle, a
+   patch loads a disc of the weave and rags it. Adjacent threads take the load a broken one was
+   carrying — a small capped kick, because an uncapped one unzips the whole sheet in a single step.
+10. **Per-particle arrays indexed by position offset** (exp 3, same review): `pinned[a]` and
+    `dead[a]` with `a = particle * 3` read the pin flag of a *different* particle, so an arbitrary
+    third of the sheet was treated as pinned. The fix is to keep the particle index next to the
+    offset. It only shows up as a sheet that pulls oddly — which is exactly how it hid.
+11. **A folder-level `change` listener catches every control in the folder** (`shared/lab.js`,
+    same review): the quality folder listened for `change` to detect a preset pick, so committing
+    the pixel-ratio number box re-ran the whole preset — and on the cloth the preset sews a new
+    sheet, wiping every tear. The listener belongs on the preset `select` (`preset.domElement`),
+    and the panel opens on the preset a page really starts on (`createLab({ preset: "medium" })`,
+    `lab.setQuality(...)`).
+12. **The harness is a tool, not a script.** `check.mjs` serves the folder over http (module
    imports and WASM need a real origin), samples fps before and after the interaction, takes
    before/after screenshots, fails on console, page and **network** errors, and reads
    `window.experiment.state()` so the evidence is numeric, not a screenshot to squint at.
@@ -97,7 +157,9 @@ experiments/
   3-cloth-tearing/    index.html main.js cloth.js shots/
   4-gpu-flocking/     index.html main.js flock.js boids.js shots/
   5-volumetric-fire/  index.html main.js volume.js shots/
-  tools/              check.mjs (per page), sweep.sh (all five), summarize.mjs, syntax.mjs
+  tools/              check.mjs (one page), sweep.sh (all five), summarize.mjs, syntax.mjs,
+                      links.mjs (every local href/src resolves), clothtest.mjs (grab-and-tear),
+                      qualitytest.mjs (the shared panel)
 ```
 
 `tools/` is not published (the Pages workflow ships `experiments/` minus `tools/`).

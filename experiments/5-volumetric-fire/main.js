@@ -6,6 +6,7 @@ import { createLab, rand, skyDome } from "../shared/lab.js";
 import { FireVolume, VolumetricPass, createEmbers } from "./volume.js";
 
 const lab = createLab({
+  preset: "medium",   // the heaviest page in the lab: the raymarch starts on medium
   title: "5 · Volumetric fire — raymarched flame and smoke",
   camera: { position: [7.5, 4.2, 11.5], target: [0, 3.4, 0], fov: 50, near: 0.3, far: 300, minDistance: 3.5, maxDistance: 60 },
   bloom: { strength: 0.42, radius: 0.55, threshold: 0.95, scale: 0.45 },
@@ -162,8 +163,7 @@ function applyQuality(q) {
 lab.onQuality(applyQuality);
 lab.setSize();
 // a raymarch is the heaviest thing on this page, so it starts on medium, not on the kit's high
-lab.q.quality = "medium";
-applyQuality("medium");
+lab.setQuality("medium");
 const size = lab.renderer.getSize(new THREE.Vector3());
 volPass.setSize(size.x, size.y);
 window.addEventListener("resize", () => { const s = renderer.getSize(new THREE.Vector3()); volPass.setSize(s.x, s.y); });

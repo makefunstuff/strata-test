@@ -6,6 +6,7 @@ import { createLab, rand, skyDome } from "../shared/lab.js";
 import { Cloth } from "./cloth.js";
 
 const lab = createLab({
+  preset: "medium",   // the default weave density is the medium preset; the panel must say what is running
   title: "3 · Cloth — verlet weave, gusts, tearing",
   camera: { position: [7.2, 5.6, 13.5], target: [0.4, 4.2, 0], fov: 46, near: 0.2, far: 400, minDistance: 3, maxDistance: 46 },
   bloom: { strength: 0.26, radius: 0.5, threshold: 0.95, scale: 0.4 },
@@ -13,7 +14,7 @@ const lab = createLab({
   background: null,
   fog: { color: 0xc0b49c, near: 40, far: 190 },
   shadow: true,
-  hints: ["drag the cloth to grab and pull", "Shift-drag (or C) slices it", "Space gust", "R re-weave", "right-drag / wheel for the camera"],
+  hints: ["drag to grab a patch of cloth and pull — a hard pull rags it", "Shift-drag (or C) slices it", "Space gust", "R re-weave", "right-drag / wheel for the camera"],
   guiTitle: "cloth",
 });
 const { renderer, scene, camera, gui, pointer } = lab;
@@ -189,7 +190,7 @@ function fabricTexture(kind = "flag") {
 
 const P = {
   fabric: "flag", mode: "flag", gravity: -3, wind: 7.5, windAz: 74, windEl: 3, gust: 0,
-  iterations: 5, tearMul: 3.4, tearEnergy: 0.9, damping: 0.99, flutter: 1.1, cutMode: false, cutSize: 0.3,
+  iterations: 5, tearMul: 2.2, tearEnergy: 0.6, grip: 2, damping: 0.99, flutter: 1.1, cutMode: false, cutSize: 0.3,
   resolution: "medium", slowmo: 1,
 };
 const RES = { low: [30, 22], medium: [54, 38], high: [76, 54] };
@@ -201,6 +202,7 @@ function sew() {
   const [sx, sy] = RES[P.resolution] ?? RES.medium;
   const w = P.mode === "banner" ? 5.2 : 7, h = P.mode === "banner" ? 6.2 : 4.4;
   cloth = new Cloth({ w, h, segX: sx, segY: sy, origin: [0, 2.2, 0], mode: P.mode });
+  cloth.grip = P.grip;
   const old = clothMat.map;
   clothMat.map = fabricTexture(P.fabric);
   clothMat.shadowSide = THREE.DoubleSide;
@@ -283,6 +285,7 @@ fC.add(P, "tearMul", 1.1, 8, 0.05).name("tear stretch limit");
 fC.add(P, "tearEnergy", 0.05, 4, 0.05).name("tear persistence");
 fC.add(P, "damping", 0.9, 1.0, 0.001).name("damping");
 fC.add(P, "resolution", ["low", "medium", "high"]).name("weave density").onChange(sew);
+fC.add(P, "grip", 1, 4, 1).name("grip size (particles)").onChange((v) => { cloth.grip = v; });
 fC.add(P, "cutMode").name("cut tool (C)");
 fC.add(P, "cutSize", 0.08, 1.2, 0.02).name("cut size");
 fC.add(P, "slowmo", 0.15, 1, 0.05).name("time scale");
@@ -365,7 +368,7 @@ lab.renderer.setAnimationLoop(frame);
 lab.expose({
   state: () => ({
     fps: lab.fps.value, particles: cloth.particles, constraints: cloth.constraints, torn: cloth.torn,
-    quads: cloth.quadsAlive, totalQuads: cloth.segX * cloth.segY, mode: P.mode, fabric: P.fabric,
+    quads: cloth.quadsAlive, totalQuads: cloth.segX * cloth.segY, mode: P.mode, fabric: P.fabric, grip: P.grip,
     resolution: P.resolution, wind: P.wind, gust: Math.round(gustLevel * 100) / 100, iterations: P.iterations,
     tearMul: P.tearMul, tearEnergy: P.tearEnergy, gravity: P.gravity, grabbed: cloth.grabbed, cutMode: P.cutMode,
   }),
@@ -382,6 +385,17 @@ lab.expose({
     grabPoint: (v) => cloth.grabAt(new THREE.Vector3(v[0], v[1], v[2]), 5),
     pullTo: (v) => cloth.moveGrabTo(new THREE.Vector3(v[0], v[1], v[2])),
     release: () => cloth.release(),
+    setGrip: (g) => { P.grip = g; cloth.grip = g; },
+    grabPatch: () => cloth.grabCount(),
+    // a pull spread over frames, so a scripted pull is a real sustained pull
+    pullScreen: async (u, v, du, dv, steps = 16, hold = 14) => {
+      const s = startGrab(u, v, false);
+      for (let i = 1; i <= steps; i++) { moveDrag(u + du * (i / steps), v + dv * (i / steps)); await new Promise((r) => requestAnimationFrame(r)); }
+      for (let i = 0; i < hold; i++) await new Promise((r) => requestAnimationFrame(r));
+      const out = { ok: s.ok, index: s.index, held: cloth.grabCount(), torn: cloth.torn, quads: cloth.quadsAlive };
+      endDrag();
+      return out;
+    },
     project: (i) => {
       const v = new THREE.Vector3(cloth.pos[i * 3], cloth.pos[i * 3 + 1], cloth.pos[i * 3 + 2]).project(camera);
       return [v.x * 0.5 + 0.5, 0.5 - v.y * 0.5, Math.round(v.z * 1000) / 1000];

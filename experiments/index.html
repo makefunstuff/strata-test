@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><path d=%27M1 11q2.5-3 4.5 0t4.5 0 5-1%27 fill=%27none%27 stroke=%27%238ee8ff%27 stroke-width=%271.6%27/><circle cx=%2711.5%27 cy=%274.5%27 r=%272.2%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.4%27/></svg>">
 <title>strata-test — five graphics experiments</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
 <style>
@@ -95,8 +96,9 @@ code{color:var(--amber)}
       <h2>3 · Cloth &amp; tearing</h2>
       <p class="why">A Verlet mass–spring weave (structural, shear and bend constraints, Gauss–Seidel)
       with gusting wind and aerodynamic normal pressure, so the sheet snaps and flutters. Constraints snap
-      when overload persists, so a yank rips the body and the cut tool severs the weave — quads with a
-      broken edge stop being drawn, which is the ragged tear.</p>
+      when overload persists, so grabbing a patch of the sheet and pulling rags a hole in the body — six
+      real-mouse yanks tore 48 to 344 constraints each on the default settings — and the shift-drag
+      cut tool severs the weave. Quads with a broken edge stop being drawn: that is the ragged tear.</p>
       <div class="row"><span class="tag">Verlet</span><span class="tag">tearing</span>
       <kbd>Drag</kbd> grab &amp; pull <kbd>Shift-drag</kbd> cut <kbd>Space</kbd> gust <kbd>R</kbd> re-weave</div>
     </a>
@@ -141,7 +143,8 @@ code{color:var(--amber)}
     interaction verified by scripted drags, clicks and calls into each page's
     <code>window.experiment</code> hook; FPS sampled idle and after the interaction. One command per
     experiment: <code>node experiments/tools/check.mjs 1-water</code>. The table with the measured numbers
-    is in <a href="README.md">README.md</a>; the harness is <code>experiments/tools/</code>.
+    is in <a href="https://github.com/makefunstuff/strata-test/blob/main/experiments/README.md">the README</a>
+    (it renders on GitHub; on the Pages site a <code>.md</code> is served as raw text); the harness is <code>experiments/tools/</code>.
     <br><br>Shared kit in <code>experiments/shared/</code>: renderer, bloom composer, orbit camera, fps
     readout, hint card, lil-gui panel, quality presets and GLSL noise chunks.
     <br><br>Built by Strata, running pi headless, on task TST-6.

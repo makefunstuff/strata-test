@@ -26,6 +26,8 @@ export class Cloth {
     this.grab = -1;
     this.grabTo = new THREE.Vector3();
     this.grabOffset = new THREE.Vector3();
+    this.grabPatch = [];
+    this.grip = 2;
     this.grabK = 0.6;
     this.torn = 0; this.quadsAlive = this.segX * this.segY;
 
@@ -74,6 +76,14 @@ export class Cloth {
       const x = a % cols, y = (a - x) / cols;
       if (b === a + 1) this.hEdge[y * this.segX + x] = c / 4;
       else if (b === a + cols) this.vEdge[y * cols + x] = c / 4;
+    }
+
+    // which constraints touch each particle: when one breaks, its load goes to its neighbours,
+    // which is what makes a tear run instead of stopping at the first snapped thread
+    this.at = Array.from({ length: this.n }, () => []);
+    for (let c = 0; c < this.cons.length; c += 4) {
+      this.at[this.cons[c]].push(c >> 2);
+      this.at[this.cons[c + 1]].push(c >> 2);
     }
 
     this.pin(mode);
@@ -185,27 +195,19 @@ export class Cloth {
       }
     }
 
-    const C = this.cons, alive = this.consAlive;
-    const lim = tearMul, energy = tearEnergy;
-    let tore = 0;
+    const C = this.cons;
     for (let it = 0; it < iterations; it++) {
-      const check = it === iterations - 1;   // after the solve: the stretch the weave really carries
       for (let c = 0; c < C.length; c += 4) {
         const ci = c >> 2;
-        if (!alive[ci]) continue;
-        const a = C[c] * 3, b = C[c + 1] * 3, rest = C[c + 2], kind = C[c + 3];
+        if (!this.consAlive[ci]) continue;
+        const pa = C[c], pb = C[c + 1], a = pa * 3, b = pb * 3, rest = C[c + 2], kind = C[c + 3];
         const dx = pos[b] - pos[a], dy = pos[b + 1] - pos[a + 1], dz = pos[b + 2] - pos[a + 2];
         const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
         if (d < 1e-7) continue;
-        if (check && kind !== 2 && !(pinned[a] || pinned[b])) {
-          const excess = d / rest - lim;
-          this.strain[ci] = excess > 0 ? this.strain[ci] * 0.86 + excess : this.strain[ci] * 0.8;
-          if (this.strain[ci] > energy) { alive[ci] = 0; tore++; continue; }
-        } else if (check) this.strain[ci] *= 0.8;
         const stiff = kind === 2 ? 0.55 : 1;
         const diff = ((d - rest) / d) * 0.5 * stiff;
         const ox = dx * diff, oy = dy * diff, oz = dz * diff;
-        const wa = pinned[a] || dead[a] ? 0 : 1, wb = pinned[b] || dead[b] ? 0 : 1;
+        const wa = pinned[pa] || dead[pa] ? 0 : 1, wb = pinned[pb] || dead[pb] ? 0 : 1;
         if (wa && wb) {
           pos[a] += ox; pos[a + 1] += oy; pos[a + 2] += oz;
           pos[b] -= ox; pos[b + 1] -= oy; pos[b + 2] -= oz;
@@ -218,13 +220,61 @@ export class Cloth {
       const k = i * 3;
       pos[k] = this.pinPos[k]; pos[k + 1] = this.pinPos[k + 1]; pos[k + 2] = this.pinPos[k + 2];
     }
-    if (this.grab >= 0 && !dead[this.grab]) {
-      const k = this.grab * 3;
-      pos[k] += (this.grabTo.x - pos[k]) * this.grabK;
-      pos[k + 1] += (this.grabTo.y - pos[k + 1]) * this.grabK;
-      pos[k + 2] += (this.grabTo.z - pos[k + 2]) * this.grabK;
+    if (this.grab >= 0) {
+      const g = this.grabPatch, to = this.grabTo;
+      for (let m = 0; m < g.length; m += 4) {
+        const i = g[m];
+        if (dead[i] || pinned[i] || !this.hasThread(i)) continue;   // cut, hemmed, or torn free
+        const k = i * 3;
+        pos[k] += (to.x + g[m + 1] - pos[k]) * this.grabK;
+        pos[k + 1] += (to.y + g[m + 2] - pos[k + 1]) * this.grabK;
+        pos[k + 2] += (to.z + g[m + 3] - pos[k + 2]) * this.grabK;
+      }
     }
+    // the strain the weave carries is measured HERE, at the end of the step: after the hem has been
+    // re-pinned and the grab spring has pulled. Measuring it inside the solver misses the pull, and
+    // then a yank never tears anything — which is exactly the bug this pass fixes.
+    const tore = this.tearPass(tearMul, tearEnergy);
     if (tore) this.rebuild();
+    return tore;
+  }
+
+  /**
+   * One strain pass over the live constraints. A constraint remembers how long it has been
+   * stretched past its limit: a transient buckle decays, a sustained load — wind, a gust, a pull on
+   * a grabbed point — adds to it, and when the memory crosses `energy` the constraint goes. The
+   * hem attached to the pins is reinforced, so a pull tears the body of the sheet, not the seam.
+   */
+  tearPass(lim, energy) {
+    const { cons: C, consAlive: alive, pinned, pos, strain, at } = this;
+    let tore = 0;
+    const broken = [];
+    for (let c = 0; c < C.length; c += 4) {
+      const ci = c >> 2;
+      if (!alive[ci]) continue;
+      const kind = C[c + 3];
+      if (kind === 2) { strain[ci] *= 0.9; continue; }   // bend constraints fold; they carry no tear
+      const pa = C[c], pb = C[c + 1], a = pa * 3, b = pb * 3, rest = C[c + 2];
+      const dx = pos[b] - pos[a], dy = pos[b + 1] - pos[a + 1], dz = pos[b + 2] - pos[a + 2];
+      const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      const anchored = pinned[pa] || pinned[pb];
+      const limit = anchored ? lim * 2.4 : lim;
+      const excess = d / rest - limit;
+      // a sustained overload integrates: 0.93 decay means ~14 frames of load to cross the energy,
+      // so a snap that relaxes in two frames does nothing and a pull you hold does
+      strain[ci] = excess > 0 ? strain[ci] * 0.93 + excess : strain[ci] * 0.9;
+      if (strain[ci] > energy) { alive[ci] = 0; tore++; broken.push(ci); }
+    }
+    // load sharing: what a broken thread was carrying lands on its neighbours, so a crack runs —
+    // a small, capped kick, because an uncapped one unzips the whole sheet in a single step
+    for (const ci of broken) {
+      const kick = Math.min(0.05, strain[ci] * 0.04);
+      const a = C[ci * 4], b = C[ci * 4 + 1];
+      for (const p of [a, b]) for (const nj of at[p]) {
+        if (nj !== ci && alive[nj]) strain[nj] = Math.min(strain[nj] + kick, energy * 1.8);
+      }
+      strain[ci] = 0;
+    }
     return tore;
   }
 
@@ -262,6 +312,13 @@ export class Cloth {
     this.geometry.computeBoundingSphere();
   }
 
+  /**
+   * Grab: the pointer pinches a patch of cloth (`grip` particles in radius), the way fingers do.
+   * The patch is stored with each member's offset from the picked particle, so the grab drags a
+   * piece of the sheet and loads a disc of the weave — which is what makes a yank tear a ragged
+   * hole instead of a single thread. Members that are cut, pinned to the hem, or torn free stop
+   * being dragged.
+   */
   grabAt(point, radius = 0.7) {
     let best = -1, bd = radius * radius;
     for (let i = 0; i < this.n; i++) {
@@ -273,7 +330,29 @@ export class Cloth {
     this.grab = best;
     this.grabTo.copy(point);
     this.grabOffset = best >= 0 ? new THREE.Vector3(this.pos[best * 3], this.pos[best * 3 + 1], this.pos[best * 3 + 2]).sub(point) : new THREE.Vector3();
+    this.grabPatch.length = 0;
+    if (best >= 0) {
+      const cols = this.cols, bx = best % cols, by = (best - bx) / cols, g = Math.max(1, this.grip | 0);
+      for (let dy = -g; dy <= g; dy++) for (let dx = -g; dx <= g; dx++) {
+        const x = bx + dx, y = by + dy;
+        if (x < 0 || y < 0 || x >= cols || y >= this.rows) continue;
+        if (dx * dx + dy * dy > g * g + 1) continue;
+        const i = idx(x, y, cols);
+        if (this.dead[i] || this.pinned[i]) continue;
+        this.grabPatch.push(i, this.pos[i * 3] - this.pos[best * 3], this.pos[i * 3 + 1] - this.pos[best * 3 + 1], this.pos[i * 3 + 2] - this.pos[best * 3 + 2]);
+      }
+    }
     return best;
+  }
+  /** does this particle still have a live thread to the sheet? (a torn-free flapping piece) */
+  hasThread(i) {
+    for (const ci of this.at[i]) if (this.consAlive[ci]) return true;
+    return false;
+  }
+  grabCount() {
+    let n = 0;
+    for (let m = 0; m < this.grabPatch.length; m += 4) if (!this.dead[this.grabPatch[m]] && this.hasThread(this.grabPatch[m])) n++;
+    return n;
   }
   moveGrabTo(point) { if (this.grab >= 0) this.grabTo.copy(point).add(this.grabOffset); }
   release() { this.grab = -1; }

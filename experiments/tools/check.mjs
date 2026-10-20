@@ -2,7 +2,7 @@
 // one page, hard deadline, browser always closed).
 //
 //   node experiments/tools/check.mjs 1-water [--wait 5] [--shot-dir experiments/1-water/shots]
-//        [--drag fx,fy:dx,dy:ms]... [--click fx,fy]... [--eval "js"]... [--label tag]
+//        [--drag fx,fy:dx,dy:ms[:shift]]... [--click fx,fy]... [--eval "js"]... [--label tag]
 //
 // Coordinates are canvas fractions. --eval runs in the page (window.experiment is the hook each
 // experiment exposes) and its return value is recorded. Prints JSON, exit 1 on any console error,
@@ -111,7 +111,9 @@ for (const spec of all("click")) {
   log.push(`click ${spec}`);
 }
 for (const spec of all("drag")) {
-  const [a, b, ms] = spec.split(":");
+  const [a, b, ms, mod] = spec.split(":");
+  const shift = /shift/i.test(mod ?? "");
+  if (shift) await page.keyboard.down("Shift");
   const [fx, fy] = a.split(",").map(Number);
   const [dx, dy] = b.split(",").map(Number);
   const from = pt(fx, fy), to = pt(fx + dx, fy + dy);
@@ -122,6 +124,7 @@ for (const spec of all("drag")) {
     await page.waitForTimeout((+ms || 600) / 8);
   }
   await page.mouse.up();
+  if (shift) await page.keyboard.up("Shift");
   await page.waitForTimeout(500);
   log.push(`drag ${spec}`);
 }

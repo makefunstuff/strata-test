@@ -17,6 +17,7 @@ const PRESET = {
 };
 
 const lab = createLab({
+  preset: "medium",   // the pool really runs the medium preset (256 sim), so the panel says so
   title: "1 · Water — GPU waves, reflection, caustics",
   camera: { position: [9.5, 7.4, 13.5], target: [0, -0.3, 0], fov: 48, near: 0.4, far: 900, minDistance: 3, maxDistance: 70 },
   bloom: { strength: 0.42, radius: 0.6, threshold: 0.9, scale: 0.4 },

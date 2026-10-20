@@ -9,6 +9,7 @@ import { Flock } from "./flock.js";
 import { createBoids } from "./boids.js";
 
 const lab = createLab({
+  preset: "medium",   // 4096 boids is the medium preset; high is 9216
   title: "4 · GPU flock — 16k boids, hawk, obstacles, trails",
   camera: { position: [0, 5, 44], target: [0, 0, 0], fov: 50, near: 0.5, far: 400, minDistance: 8, maxDistance: 140 },
   bloom: { strength: 0.42, radius: 0.6, threshold: 0.95, scale: 0.4 },
@@ -143,7 +144,7 @@ gui.add({ reshuffle: () => build(P.count) }, "reshuffle").name("re-seed flock");
 
 lab.onQuality((q) => {
   lab.setPixelRatio(q === "low" ? 0.7 : q === "high" ? 1 : 0.85);
-  build(q === "low" ? 2304 : q === "high" ? 16384 : 9216);
+  build(q === "low" ? 2304 : q === "high" ? 9216 : 4096);
   P.trails = q !== "low";
   trails.enabled = P.trails;
 });
