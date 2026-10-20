@@ -7,14 +7,16 @@
         "name": "hero",
         "page": "index.html",
         "width": 1440,
-        "height": 900
+        "height": 900,
+        "actions": []
       },
       {
         "name": "full",
         "page": "index.html",
         "width": 1440,
         "height": 900,
-        "full": true
+        "full": true,
+        "actions": []
       },
       {
         "name": "features",
@@ -70,7 +72,8 @@
         "page": "index.html",
         "width": 390,
         "height": 844,
-        "phone": true
+        "phone": true,
+        "actions": []
       },
       {
         "name": "phone-full",
@@ -78,7 +81,8 @@
         "width": 390,
         "height": 844,
         "phone": true,
-        "full": true
+        "full": true,
+        "actions": []
       },
       {
         "name": "phone-menu",
@@ -100,7 +104,8 @@
         "name": "light",
         "page": "index.html",
         "width": 1440,
-        "height": 900
+        "height": 900,
+        "actions": []
       },
       {
         "name": "dark",
@@ -116,7 +121,8 @@
         "page": "index.html",
         "width": 1440,
         "height": 900,
-        "full": true
+        "full": true,
+        "actions": []
       },
       {
         "name": "dark-full",
@@ -244,14 +250,16 @@
         "name": "board",
         "page": "index.html",
         "width": 1440,
-        "height": 900
+        "height": 900,
+        "actions": []
       },
       {
         "name": "board-full",
         "page": "index.html",
         "width": 1440,
         "height": 900,
-        "full": true
+        "full": true,
+        "actions": []
       },
       {
         "name": "board-phone",
@@ -259,77 +267,88 @@
         "width": 390,
         "height": 844,
         "phone": true,
-        "full": true
+        "full": true,
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "today",
-        "page": "app.html?screen=today&nobar=1"
+        "page": "app.html?screen=today&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "log-1",
-        "page": "app.html?screen=log&step=1&nobar=1"
+        "page": "app.html?screen=log&step=1&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "log-2",
-        "page": "app.html?screen=log&step=2&nobar=1"
+        "page": "app.html?screen=log&step=2&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "log-3",
-        "page": "app.html?screen=log&step=3&nobar=1"
+        "page": "app.html?screen=log&step=3&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "detail",
-        "page": "app.html?screen=detail&nobar=1"
+        "page": "app.html?screen=detail&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "list",
-        "page": "app.html?screen=list&nobar=1"
+        "page": "app.html?screen=list&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "trip",
-        "page": "app.html?screen=trip&nobar=1"
+        "page": "app.html?screen=trip&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "onboard",
-        "page": "app.html?screen=onboard&nobar=1"
+        "page": "app.html?screen=onboard&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "offline",
-        "page": "app.html?screen=today&state=offline&nobar=1"
+        "page": "app.html?screen=today&state=offline&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "empty",
-        "page": "app.html?screen=today&state=empty&nobar=1"
+        "page": "app.html?screen=today&state=empty&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
@@ -337,14 +356,16 @@
         "phone": true,
         "name": "loading",
         "page": "app.html?screen=today&state=loading&nobar=1",
-        "motion": "reduce"
+        "motion": "reduce",
+        "actions": []
       },
       {
         "width": 390,
         "height": 844,
         "phone": true,
         "name": "no-location",
-        "page": "app.html?screen=today&state=denied&nobar=1"
+        "page": "app.html?screen=today&state=denied&nobar=1",
+        "actions": []
       },
       {
         "width": 390,
@@ -380,7 +401,8 @@
         "name": "app-standalone",
         "page": "app.html",
         "width": 1440,
-        "height": 900
+        "height": 900,
+        "actions": []
       }
     ]
   },
@@ -394,7 +416,8 @@
         "height": 1100,
         "full": true,
         "dpr": 2,
-        "settle": 2.6
+        "settle": 2.6,
+        "actions": []
       },
       {
         "name": "stream",
@@ -402,7 +425,8 @@
         "width": 1660,
         "height": 940,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "endpoints",
@@ -410,7 +434,8 @@
         "width": 1660,
         "height": 830,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "help",
@@ -418,7 +443,8 @@
         "width": 1660,
         "height": 830,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "filtered",
@@ -426,7 +452,8 @@
         "width": 1660,
         "height": 760,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "empty",
@@ -434,7 +461,8 @@
         "width": 1660,
         "height": 700,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "frozen",
@@ -442,7 +470,8 @@
         "width": 1660,
         "height": 830,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "light",
@@ -450,7 +479,8 @@
         "width": 1660,
         "height": 830,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       },
       {
         "name": "narrow",
@@ -458,7 +488,8 @@
         "width": 980,
         "height": 660,
         "dpr": 2,
-        "settle": 1.4
+        "settle": 1.4,
+        "actions": []
       }
     ]
   },
@@ -472,7 +503,8 @@
         "height": 950,
         "full": true,
         "dpr": 2,
-        "settle": 2.2
+        "settle": 2.2,
+        "actions": []
       },
       {
         "name": "overview",
@@ -480,7 +512,8 @@
         "width": 1440,
         "height": 900,
         "dpr": 2,
-        "settle": 1.6
+        "settle": 1.6,
+        "actions": []
       },
       {
         "name": "colour",
@@ -684,7 +717,8 @@
         "width": 1440,
         "height": 1000,
         "full": true,
-        "dpr": 1
+        "dpr": 1,
+        "actions": []
       },
       {
         "name": "masthead",
@@ -814,7 +848,8 @@
         "height": 844,
         "phone": true,
         "dpr": 2,
-        "full": true
+        "full": true,
+        "actions": []
       }
     ]
   },
@@ -827,7 +862,8 @@
         "width": 1440,
         "height": 1000,
         "full": true,
-        "settle": 700
+        "settle": 700,
+        "actions": []
       },
       {
         "name": "claim",
@@ -998,7 +1034,146 @@
         "height": 900,
         "print": true,
         "full": true,
-        "settle": 500
+        "settle": 500,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "08-form",
+    "shots": [
+      {
+        "name": "step1",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1040,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "revealed",
+        "page": "index.html",
+        "width": 1180,
+        "height": 920,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:.opt:has(input[name=zone][value=yes])"
+        ]
+      },
+      {
+        "name": "blocked",
+        "page": "index.html",
+        "width": 1180,
+        "height": 920,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:.opt:has(input[name=owns][value=no])",
+          "click:#step-eligibility .actions .btn"
+        ]
+      },
+      {
+        "name": "works",
+        "page": "index.html?demo=file&go=works",
+        "width": 1180,
+        "height": 1200,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "errors",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1040,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-eligibility .actions .btn"
+        ]
+      },
+      {
+        "name": "lookup",
+        "page": "index.html?go=property",
+        "width": 1180,
+        "height": 1000,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "eval:window.dispatchEvent(new Event('noop'))",
+          "type:#lookup:2 Quay",
+          "click:#lookupBtn",
+          "wait:800",
+          "click:#results button"
+        ]
+      },
+      {
+        "name": "review",
+        "page": "index.html?demo=fill&go=review",
+        "width": 1180,
+        "height": 1200,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "submitted",
+        "page": "index.html?demo=fill&go=review",
+        "width": 1180,
+        "height": 1140,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-review .btn.big",
+          "wait:1200"
+        ]
+      },
+      {
+        "name": "draft",
+        "page": "index.html",
+        "width": 1180,
+        "height": 720,
+        "actions": [
+          "eval:localStorage.clear()",
+          "eval:localStorage.setItem('hea-frg-draft-v1', JSON.stringify({at:new Date().toISOString(),step:'works',answers:{owns:'yes',flooded:'yes',zone:'no'},done:{eligibility:true,property:true}}))",
+          "reload:"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "phone": true,
+        "full": true,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ],
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "phone-errors",
+        "page": "index.html",
+        "phone": true,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-eligibility .actions .btn"
+        ],
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "property",
+        "page": "index.html?go=property",
+        "width": 1180,
+        "height": 1000,
+        "actions": []
       }
     ]
   }

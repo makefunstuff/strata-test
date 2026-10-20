@@ -1,53 +1,314 @@
 [
  {
-  "label": "07-dataviz/feet",
+  "label": "08-form/step1",
   "ok": true,
   "errs": [],
   "actions": [
-   "click:#units button[data-unit=\"ft\"]",
-   "click:#nums button[data-set=\"numbers\"]",
-   "reveal:#fig-claim"
+   "eval:localStorage.clear()",
+   "reload:"
   ],
   "audit": {
-   "h1": 1,
+   "h1": 6,
    "lang": "en",
-   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
    "stylesheetsMissing": [],
-   "landmarks": "header+main+footer",
+   "landmarks": "header+main+footer+nav",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
-   "focusRing": "none"
+   "focusRing": "outline"
   },
-  "jpg": "07-dataviz/shots/feet.jpg",
-  "bytes": 214771,
-  "px": "2800x1640",
+  "jpg": "08-form/shots/step1.jpg",
+  "bytes": 289648,
+  "px": "2360x2080",
   "actions_failed": []
  },
  {
-  "label": "07-dataviz/feet-slope",
+  "label": "08-form/revealed",
   "ok": true,
   "errs": [],
   "actions": [
-   "click:#units button[data-unit=\"ft\"]",
-   "reveal:#fig-slope"
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:.opt:has(input[name=zone][value=yes])"
   ],
   "audit": {
-   "h1": 1,
+   "h1": 6,
    "lang": "en",
-   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
    "stylesheetsMissing": [],
-   "landmarks": "header+main+footer",
+   "landmarks": "header+main+footer+nav",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
    "focusRing": "none"
   },
-  "jpg": "07-dataviz/shots/feet-slope.jpg",
-  "bytes": 197235,
-  "px": "2800x1520",
+  "jpg": "08-form/shots/revealed.jpg",
+  "bytes": 166041,
+  "px": "2360x1840",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/blocked",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:.opt:has(input[name=owns][value=no])",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/blocked.jpg",
+  "bytes": 304056,
+  "px": "2360x1840",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/works",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "eval: \"{\\\"reveals\\\":[\\\"owns:no=true\\\",\\\"flooded:no=true\\\",\\\"zone:yes=true\\\",\\\"quotes:one quotes:none=false\\\",\\\"contact:post=true\\\"],\\\"quotes\\\":[false,true,false],\\\"files\\\":2,\\\"step\\\":\\\"works\\\"}\"",
+   "eval:return JSON.stringify({reveals:[...document.querySelectorAll(\".reveal\")].map(r=>r.dataset.show+\"=\"+r.hidden), quotes:[...document.querySelectorAll('[name=quotes]')].map(i=>i.checked), files:document.querySelectorAll(\"#fileList li\").length, step:document.body.dataset.step})"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/works.jpg",
+  "bytes": 314273,
+  "px": "2360x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/errors",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/errors.jpg",
+  "bytes": 319412,
+  "px": "2360x2080",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/lookup",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "eval:window.dispatchEvent(new Event('noop'))",
+   "type:#lookup:2 Quay",
+   "click:#lookupBtn",
+   "wait:800",
+   "click:#results button"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/lookup.jpg",
+  "bytes": 257008,
+  "px": "2360x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/review",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/review.jpg",
+  "bytes": 277028,
+  "px": "2360x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/submitted",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-review .btn.big",
+   "wait:1200"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/submitted.jpg",
+  "bytes": 322495,
+  "px": "2360x2280",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/draft",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "eval:localStorage.setItem('hea-frg-draft-v1', JSON.stringify({at:new Date().toISOString(),step:'works',answers:{owns:'yes',flooded:'yes',zone:'no'},done:{eligibility:true,property:true}}))",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/draft.jpg",
+  "bytes": 237187,
+  "px": "2360x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/phone.jpg",
+  "bytes": 117115,
+  "px": "390x1974",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/phone-errors",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/phone-errors.jpg",
+  "bytes": 149932,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/property",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/property.jpg",
+  "bytes": 228626,
+  "px": "2360x2000",
   "actions_failed": []
  }
 ]

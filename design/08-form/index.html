@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apply for a Property Flood Resilience grant — Harrow Estuary Authority</title>
+<meta name="description" content="A six-step grant application: eligibility, property, works, your details, review, submitted. Inline validation, an error summary, autosave, conditional questions and a review step. Fictional service, fictional data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2307604d'/%3E%3Cpath d='M3,11 Q6,6 8,9 T13,6' stroke='white' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body data-step="eligibility">
+<a class="skip" href="#form">Skip to the form</a>
+
+<div class="phase">
+  <div class="phase-in">
+    <span class="tag">Beta</span>
+    <p>This is a new service. <a href="#help">Tell us what is hard about it</a> (opens in a new window).</p>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="crest" aria-hidden="true">
+      <svg viewBox="0 0 28 28"><path d="M2 19q5-7 8-2t8-4 8 3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M2 24q5-7 8-2t8-4 8 3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".55"/></svg>
+    </div>
+    <div class="mast-txt">
+      <p class="org">Harrow Estuary Authority</p>
+      <p class="svc">Property Flood Resilience grant</p>
+    </div>
+    <div class="mast-save" id="saveState" role="status" aria-live="polite">Not saved yet</div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="rail" aria-label="Application steps">
+    <p class="rail-h">Application</p>
+    <ol class="rail-list" id="rail">
+      <li data-go="eligibility"><a href="#eligibility"><span class="ix">1</span><span class="nm">Eligibility</span><span class="st" data-st></span></a></li>
+      <li data-go="property"><a href="#property"><span class="ix">2</span><span class="nm">The property</span><span class="st" data-st></span></a></li>
+      <li data-go="works"><a href="#works"><span class="ix">3</span><span class="nm">The works</span><span class="st" data-st></span></a></li>
+      <li data-go="applicant"><a href="#applicant"><span class="ix">4</span><span class="nm">Your details</span><span class="st" data-st></span></a></li>
+      <li data-go="review"><a href="#review"><span class="ix">5</span><span class="nm">Check your answers</span><span class="st" data-st></span></a></li>
+      <li data-go="submitted"><a href="#submitted"><span class="ix">6</span><span class="nm">Submit</span><span class="st" data-st></span></a></li>
+    </ol>
+    <div class="rail-note">
+      <p class="rn-h">Time on this form</p>
+      <p class="rn-v" id="elapsed">0:00</p>
+      <p class="rn-b">We save your answers as you go. Nothing is sent until you submit on the last step.</p>
+    </div>
+    <form id="saveForm" class="rail-save">
+      <button class="btn ghost" type="submit">Save and come back later</button>
+      <p class="rn-code" id="saveCode" hidden></p>
+    </form>
+  </nav>
+
+  <main class="form-wrap" id="form">
+    <p class="progress" id="progress"><span>Step 1 of 6</span><span class="bar" aria-hidden="true"><span class="fill" style="width:16%"></span></span></p>
+
+    <div class="draft" id="draft" hidden>
+      <p class="draft-h">We found answers saved on this device.</p>
+      <p class="draft-b" id="draftMeta">Saved at 14:02 on 3 December 2024, at step “The works”.</p>
+      <div class="draft-act">
+        <button class="btn" type="button" id="draftGo">Continue where you left off</button>
+        <button class="btn ghost" type="button" id="draftNew">Start again</button>
+      </div>
+    </div>
+
+    <div class="summary" id="summary" role="alert" tabindex="-1" hidden>
+      <h2 class="sum-h">There is a problem</h2>
+      <p class="sum-b">Fix the boxes below to carry on.</p>
+      <ul class="sum-list" id="sumList"></ul>
+    </div>
+
+    <form id="appForm" novalidate>
+
+      <!-- ── 1 eligibility ─────────────────────────────────────────── -->
+      <section class="step" id="step-eligibility" data-title="Eligibility" aria-labelledby="h-elig">
+        <span class="eyebrow">Step 1 · Eligibility</span>
+        <h1 class="h" id="h-elig">Apply for a Property Flood Resilience grant</h1>
+        <p class="lede">We pay up to <b>£5,000</b> towards fittings that keep water out of a home that has
+          flooded, or that let it dry out fast. We will ask four short questions, then the property, then the works.</p>
+        <div class="panel facts">
+          <h2 class="p-h">Before you start</h2>
+          <ul class="bullets">
+            <li>You must own the home, or have the owner's written permission.</li>
+            <li>You need a <b>grid reference</b> or a postcode — the address lookup takes the grid reference.</li>
+            <li>Two quotes are needed for works over <b>£1,500</b>.</li>
+            <li>This form takes about <b>8 minutes</b> and saves as you go.</li>
+          </ul>
+        </div>
+
+        <fieldset class="fs" data-field="owns">
+          <legend>Do you own this property?</legend>
+          <p class="hint" id="owns-hint">If you rent, you can still apply with the owner's written permission.</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="owns" value="yes" data-required="Choose whether you own the property" data-aria="owns-hint"><span>Yes, I own it</span></label>
+            <label class="opt"><input type="radio" name="owns" value="owner-permission" data-aria="owns-hint"><span>No, I rent it and the owner agrees</span></label>
+            <label class="opt"><input type="radio" name="owns" value="no" data-aria="owns-hint"><span>No, I rent it and I have no permission</span></label>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <div class="reveal" data-show="owns:no" data-show-kind="stop">
+          <p class="reveal-b"><b>You cannot apply for this grant as a tenant without permission.</b>
+            The owner must consent in writing. <a href="#help">Ask us for the permission letter</a> and come back
+            to this form.</p>
+        </div>
+
+        <fieldset class="fs" data-field="flooded">
+          <legend>Has this property flooded in the last 5 years?</legend>
+          <p class="hint" id="flooded-hint">From any source: river, tide, surface water or groundwater.</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="flooded" value="yes" data-required="Choose if the property has flooded in the last 5 years" data-aria="flooded-hint"><span>Yes</span></label>
+            <label class="opt"><input type="radio" name="flooded" value="no" data-aria="flooded-hint"><span>No</span></label>
+            <label class="opt"><input type="radio" name="flooded" value="unknown" data-aria="flooded-hint"><span>I do not know</span></label>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <div class="reveal" data-show="flooded:no">
+          <div class="panel">
+            <h2 class="p-h">If it has not flooded</h2>
+            <p class="panel-b">This grant pays for <b>resilience after a flood</b>. For prevention only, the
+              Estuary Risk fund pays up to £1,200 and has a shorter form. You can carry on here if you expect
+              flooding this winter.</p>
+          </div>
+        </div>
+
+        <fieldset class="fs" data-field="zone">
+          <legend>Is the property inside a mapped flood zone?</legend>
+          <p class="hint" id="zone-hint">Check the public map. The reference looks like <span class="mono">HZ-4128</span>.</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="zone" value="yes" data-required="Choose if the property is in a mapped flood zone" data-aria="zone-hint"><span>Yes, and I have the reference</span></label>
+            <label class="opt"><input type="radio" name="zone" value="no" data-aria="zone-hint"><span>No, it is outside the zones</span></label>
+            <label class="opt"><input type="radio" name="zone" value="unsure" data-aria="zone-hint"><span>I am not sure</span></label>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <div class="reveal" data-show="zone:yes">
+          <div class="fld" data-field="zoneRef">
+            <label class="lab" for="zoneRef">Flood zone reference</label>
+            <p class="hint" id="zoneRef-hint">From the map: two letters, a dash, four digits.</p>
+            <input class="inp mono" id="zoneRef" name="zoneRef" type="text" inputmode="text" autocomplete="off"
+              spellcheck="false" aria-describedby="zoneRef-hint" data-pattern="^[A-Z]{2}-[0-9]{4}$" data-msg="Enter a reference like HZ-4128">
+            <p class="err" data-err></p>
+          </div>
+        </div>
+
+        <nav class="actions" aria-label="Continue">
+          <button class="btn" type="submit" data-next="property">Save and continue</button>
+          <button class="btn ghost" type="button" data-save>Save and come back later</button>
+        </nav>
+      </section>
+
+      <!-- ── 2 property ────────────────────────────────────────────── -->
+      <section class="step" id="step-property" data-title="The property" aria-labelledby="h-prop" hidden>
+        <span class="eyebrow">Step 2 · The property</span>
+        <h1 class="h" id="h-prop">Which property is flooded?</h1>
+        <p class="lede">Use the address lookup if you can: it fills in the postcode, the local service area and
+          the flood zone for you.</p>
+
+        <div class="fld" data-field="lookup">
+          <label class="lab" for="lookup">Find the address</label>
+          <p class="hint" id="lookup-hint">A street and a house number, for example <span class="mono">2 Quay Wall</span>.</p>
+          <div class="lookup">
+            <input class="inp" id="lookup" name="lookup" type="text" autocomplete="off" aria-describedby="lookup-hint lookup-msg" placeholder="2 Quay Wall">
+            <button class="btn sec" type="button" id="lookupBtn">Search</button>
+          </div>
+          <p class="msg" id="lookup-msg" role="status" aria-live="polite"></p>
+          <ul class="results" id="results" role="listbox" aria-label="Address results" hidden></ul>
+          <p class="or">or</p>
+          <button class="linkbtn" type="button" id="manualBtn">Enter the address manually</button>
+        </div>
+
+        <div class="panel manual" id="manual" hidden>
+          <div class="fld" data-field="line1">
+            <label class="lab" for="line1">Address line 1</label>
+            <input class="inp" id="line1" name="line1" type="text" autocomplete="address-line1" aria-describedby="line1-hint" data-required="Enter the street and number">
+            <p class="hint" id="line1-hint">Building name is fine if there is no street.</p>
+            <p class="err" data-err></p>
+          </div>
+          <div class="row2">
+            <div class="fld" data-field="town">
+              <label class="lab" for="town">Town</label>
+              <input class="inp" id="town" name="town" type="text" autocomplete="address-level2" data-required="Enter the town">
+              <p class="err" data-err></p>
+            </div>
+            <div class="fld" data-field="postcode">
+              <label class="lab" for="postcode">Postcode</label>
+              <p class="hint" id="postcode-hint">Like <span class="mono">HA1 4QT</span>.</p>
+              <input class="inp mono" id="postcode" name="postcode" type="text" autocomplete="postal-code"
+                spellcheck="false" aria-describedby="postcode-hint" data-pattern="^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$" data-required="Enter the postcode" data-msg="Enter a full UK postcode, like HA1 4QT">
+              <p class="err" data-err></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fld" data-field="grid">
+          <label class="lab" for="grid">Grid reference <span class="opt-lab">(optional)</span></label>
+          <p class="hint" id="grid-hint">Six pairs of digits, like <span class="mono">592104 131820</span>. It makes the assessment faster.</p>
+          <input class="inp mono" id="grid" name="grid" type="text" spellcheck="false" autocomplete="off"
+            aria-describedby="grid-hint" data-pattern="^[0-9]{6} ?[0-9]{6}$" data-msg="Enter six pairs of digits, like 592104 131820">
+          <p class="err" data-err></p>
+        </div>
+
+        <nav class="actions" aria-label="Continue">
+          <button class="btn" type="submit" data-next="works">Save and continue</button>
+          <button class="linkbtn" type="button" data-back="eligibility">Back</button>
+        </nav>
+      </section>
+
+      <!-- ── 3 works ───────────────────────────────────────────────── -->
+      <section class="step" id="step-works" data-title="The works" aria-labelledby="h-works" hidden>
+        <span class="eyebrow">Step 3 · The works</span>
+        <h1 class="h" id="h-works">What do you want to pay for?</h1>
+        <p class="lede">Pick every item you plan to install. Costs are what the authority pays per unit; you can
+          see the total as you go.</p>
+
+        <fieldset class="fs checks" data-field="items">
+          <legend>Works you want</legend>
+          <p class="hint" id="items-hint">Flood-resistant doors and air-brick covers are paid in full; the rest up to £5,000.</p>
+          <div class="opts grid">
+            <label class="opt"><input type="checkbox" name="items" value="Air-brick covers" data-cost="180" data-aria="items-hint"><span>Air-brick covers<small>£180</small></span></label>
+            <label class="opt"><input type="checkbox" name="items" value="Flood door" data-cost="1450" data-aria="items-hint"><span>Flood-resistant door<small>£1,450</small></span></label>
+            <label class="opt"><input type="checkbox" name="items" value="Non-return valve" data-cost="760" data-aria="items-hint"><span>Sewer non-return valve<small>£760</small></span></label>
+            <label class="opt"><input type="checkbox" name="items" value="Solid floor" data-cost="2300" data-aria="items-hint"><span>Solid floor, insulated<small>£2,300</small></span></label>
+            <label class="opt"><input type="checkbox" name="items" value="Removable panels" data-cost="420" data-aria="items-hint"><span>Removable door panels<small>£420</small></span></label>
+            <label class="opt"><input type="checkbox" name="items" value="Painted walls" data-cost="260" data-aria="items-hint"><span>Water-resistant wall finish<small>£260</small></span></label>
+          </div>
+          <p class="err" data-err></p>
+          <p class="total" id="total" role="status" aria-live="polite">Nothing chosen yet.</p>
+        </fieldset>
+
+        <fieldset class="fs" data-field="quotes">
+          <legend>Do you have two quotes?</legend>
+          <p class="hint" id="quotes-hint">Needed when the works cost more than £1,500.</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="quotes" value="yes" data-required="Choose if you have two quotes" data-aria="quotes-hint"><span>Yes, I have two quotes</span></label>
+            <label class="opt"><input type="radio" name="quotes" value="one" data-aria="quotes-hint"><span>I have one quote</span></label>
+            <label class="opt"><input type="radio" name="quotes" value="none" data-aria="quotes-hint"><span>I have no quotes yet</span></label>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <div class="reveal" data-show="quotes:one quotes:none">
+          <div class="fld" data-field="file">
+            <label class="lab" for="file">Upload the quote</label>
+            <p class="hint" id="file-hint">A photo or a PDF, up to 10 MB. If you have no quote, upload a written estimate.</p>
+            <div class="file" id="fileDrop">
+              <input class="file-inp" id="file" name="file" type="file" aria-describedby="file-hint file-msg" data-max="10485760">
+              <span class="file-btn" aria-hidden="true">Choose file</span>
+              <span class="file-name" id="fileName">No file chosen</span>
+            </div>
+            <p class="msg" id="file-msg" role="status" aria-live="polite"></p>
+            <ul class="file-list" id="fileList"></ul>
+            <p class="err" data-err></p>
+          </div>
+        </div>
+
+        <fieldset class="fs date3" data-field="when" data-date data-min="2024-12-04" data-msg="Choose a date in the future, after 3 December 2024">
+          <legend>Earliest the work can start</legend>
+          <p class="hint" id="when-hint">Day, month and year, like <span class="mono">15 1 2025</span>. Today is 3 December 2024 in this demonstration.</p>
+          <div class="dym">
+            <div class="dpart"><label for="when-day">Day</label><input class="inp mono" id="when-day" name="when-day" inputmode="numeric" autocomplete="off" aria-describedby="when-hint"></div>
+            <div class="dpart"><label for="when-month">Month</label><input class="inp mono" id="when-month" name="when-month" inputmode="numeric" autocomplete="off" aria-describedby="when-hint"></div>
+            <div class="dpart wide"><label for="when-year">Year</label><input class="inp mono" id="when-year" name="when-year" inputmode="numeric" autocomplete="off" aria-describedby="when-hint"></div>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <nav class="actions" aria-label="Continue">
+          <button class="btn" type="submit" data-next="applicant">Save and continue</button>
+          <button class="linkbtn" type="button" data-back="property">Back</button>
+        </nav>
+      </section>
+
+      <!-- ── 4 applicant ───────────────────────────────────────────── -->
+      <section class="step" id="step-applicant" data-title="Your details" aria-labelledby="h-me" hidden>
+        <span class="eyebrow">Step 4 · Your details</span>
+        <h1 class="h" id="h-me">How we reach you</h1>
+        <p class="lede">An assessor calls within 10 working days. We only use these details for this application.</p>
+
+        <div class="fld" data-field="name">
+          <label class="lab" for="name">Full name</label>
+          <input class="inp" id="name" name="name" type="text" autocomplete="name" aria-describedby="name-hint" data-required="Enter your full name">
+          <p class="hint" id="name-hint">As on the council tax bill.</p>
+          <p class="err" data-err></p>
+        </div>
+
+        <div class="fld" data-field="email">
+          <label class="lab" for="email">Email</label>
+          <p class="hint" id="email-hint">We send the reference and the decision to this address.</p>
+          <input class="inp" id="email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false"
+            aria-describedby="email-hint" data-required="Enter an email address" data-type="email">
+          <p class="err" data-err></p>
+        </div>
+
+        <div class="fld" data-field="phone">
+          <label class="lab" for="phone">Phone</label>
+          <p class="hint" id="phone-hint">The assessor calls between 9 and 5.</p>
+          <input class="inp mono" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+            aria-describedby="phone-hint" data-pattern="^[0-9 +()-]{9,20}$" data-required="Enter a phone number" data-msg="Enter a phone number with at least 9 digits">
+          <p class="err" data-err></p>
+        </div>
+
+        <fieldset class="fs" data-field="contact">
+          <legend>Best way to reach you</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="contact" value="phone" data-required="Choose the best way to reach you" data-aria="contact-hint"><span>Phone call</span></label>
+            <label class="opt"><input type="radio" name="contact" value="email" data-aria="contact-hint"><span>Email</span></label>
+            <label class="opt"><input type="radio" name="contact" value="post" data-aria="contact-hint"><span>Post</span></label>
+          </div>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <div class="reveal" data-show="contact:post">
+          <div class="panel">
+            <h2 class="p-h">Post only</h2>
+            <p class="panel-b">The decision arrives by post in 15 to 20 working days. Give a postal address if it
+              is not the property address.</p>
+            <div class="fld" data-field="postal">
+              <label class="lab" for="postal">Postal address</label>
+              <textarea class="inp" id="postal" name="postal" rows="3" data-required="Enter the postal address" data-msg="Enter the postal address"></textarea>
+              <p class="err" data-err></p>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="fs" data-field="consent">
+          <legend>Declaration</legend>
+          <label class="opt box" data-field="consentBox">
+            <input type="checkbox" name="consent" value="yes">
+            <span>I believe the answers on this form are correct, and I agree to show the assessor the works when they are done.</span>
+          </label>
+          <p class="err" data-err></p>
+        </fieldset>
+
+        <nav class="actions" aria-label="Continue">
+          <button class="btn" type="submit" data-next="review">Save and continue</button>
+          <button class="linkbtn" type="button" data-back="works">Back</button>
+        </nav>
+      </section>
+
+      <!-- ── 5 review ──────────────────────────────────────────────── -->
+      <section class="step" id="step-review" data-title="Check your answers" aria-labelledby="h-rev" hidden>
+        <span class="eyebrow">Step 5 · Check your answers</span>
+        <h1 class="h" id="h-rev">Check your answers</h1>
+        <p class="lede">Nothing is sent yet. Change any answer, then submit.</p>
+        <div id="review"></div>
+        <fieldset class="fs">
+          <legend class="sr">What happens next</legend>
+          <div class="panel">
+            <h2 class="p-h">What happens next</h2>
+            <ol class="steps-num">
+              <li>We check the answers against the flood map (2 working days).</li>
+              <li>An assessor visits and lists the items that fit the property.</li>
+              <li>The decision and the payment schedule arrive by your chosen contact method.</li>
+            </ol>
+          </div>
+        </fieldset>
+        <nav class="actions" aria-label="Submit">
+          <button class="btn big" type="submit" data-next="submitted">Submit application</button>
+          <button class="linkbtn" type="button" data-back="applicant">Back</button>
+        </nav>
+      </section>
+
+      <!-- ── 6 submitted ───────────────────────────────────────────── -->
+      <section class="step" id="step-submitted" data-title="Submitted" aria-labelledby="h-done" hidden>
+        <div class="banner">
+          <h1 class="h" id="h-done">Application submitted</h1>
+          <p class="ref">Your reference <b id="refNo">HEA-7741-2024</b></p>
+        </div>
+        <p class="lede">Keep the reference. We have emailed a copy of your answers to
+          <b id="doneEmail">you</b>.</p>
+        <div class="panel" id="doneSummary"></div>
+        <h2 class="p-h">What happens next</h2>
+        <ol class="steps-num">
+          <li><b>By 9 December</b> — we check the answers against the flood map.</li>
+          <li><b>By 20 December</b> — the assessor calls to book a visit.</li>
+          <li><b>After the visit</b> — the decision and the payment schedule, by post in 15 to 20 working days.</li>
+        </ol>
+        <div class="panel help" id="help">
+          <h2 class="p-h">Get help with this form</h2>
+          <p class="panel-b">Phone <span class="mono">01654 902 118</span>, Monday to Friday 9 to 5.
+            Minicom <span class="mono">01654 902 119</span>. We can take the form over the phone, in Welsh,
+            and in large print.</p>
+        </div>
+        <nav class="actions">
+          <button class="btn sec" type="button" id="printBtn">Print this page</button>
+          <button class="linkbtn" type="button" id="againBtn">Start a new application</button>
+        </nav>
+      </section>
+    </form>
+
+    <div class="savebar" id="savebar" role="status" aria-live="polite">
+      <span class="ic" aria-hidden="true"></span><span id="savebarTxt">Answers saved</span>
+    </div>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot-in">
+    <p><b>Fictional service.</b> The Harrow Estuary Authority, this grant, the postcodes, the references and the
+      phone numbers are invented for a design exercise. Nothing is sent anywhere; the draft lives in this browser only.</p>
+    <p class="fine">Built as a static page: no framework, no build step, no tracking.</p>
+  </div>
+</footer>
+</body>
+</html>

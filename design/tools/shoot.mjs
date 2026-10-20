@@ -123,6 +123,7 @@ async function runActions(page, actions = []) {
           if (gap > 0) window.scrollBy(0, gap);
         });
       }
+      else if (kind === "reload") { await page.reload({ waitUntil: "domcontentloaded" }); await page.waitForTimeout(500); }
       else { await page.waitForTimeout(Math.min(+arg || 300, 4000)); }
       log.push(a);
     } catch (e) { log.push(`${a} -> FAILED ${String(e).split("\n")[0]}`); }
@@ -235,12 +236,19 @@ for (const job of jobs) {
     const ctx = await ctxFor(shot);
     const p = await ctx.newPage();
     await p.emulateMedia({ reducedMotion: shot.motion === "reduce" ? "reduce" : "no-preference", media: shot.print ? "print" : "screen" });
-    if (shot.width && shot.height) await p.setViewportSize({ width: shot.width, height: shot.height });
+    /* phone: true means a real phone viewport, 390x844 at dpr 2, unless the shot says
+       otherwise — a phone shot taken at a desktop viewport is not evidence of anything */
+    const vw = shot.width || (shot.phone ? 390 : 0);
+    const vh = shot.height || (shot.phone ? 844 : 0);
+    if (vw && vh) await p.setViewportSize({ width: vw, height: vh, deviceScaleFactor: shot.dpr || (shot.phone ? 2 : 1) });
+    let rec;
+    for (let attempt = 1; attempt <= 2; attempt++) {
     const errs = [];
+    p.removeAllListeners("console"); p.removeAllListeners("pageerror"); p.removeAllListeners("requestfailed");
     p.on("console", (m) => { if (m.type() === "error") errs.push("console: " + m.text().slice(0, 200)); });
     p.on("pageerror", (e) => errs.push("pageerror: " + String(e).slice(0, 200)));
     p.on("requestfailed", (r) => errs.push("requestfailed: " + r.url().replace(origin + "/", "") + " " + (r.failure()?.errorText || "")));
-    let rec = { label, ok: true, errs };
+    rec = { label, ok: true, errs };
     try {
       await p.goto(`${origin}/${job.task}/${shot.page}`, { waitUntil: "load", timeout: 30000 });
       await p.evaluate("document.fonts.ready.then(() => 1)").catch(() => 1);
@@ -259,6 +267,15 @@ for (const job of jobs) {
         }
         await p.evaluate("window.scrollTo(0, 0)").catch(() => {});
         await p.waitForTimeout(260);
+      }
+      /* a position:fixed toast that lives off-screen (a slide-in that has not slid in)
+         is painted mid-document by a full-page capture: hide fixed boxes that are
+         outside the viewport, keep the ones a person would see */
+      if (shot.full) {
+        await p.evaluate(`[...document.querySelectorAll('*')].forEach((n) => {
+          const cs = getComputedStyle(n); const r = n.getBoundingClientRect();
+          if (cs.position === 'fixed' && (r.bottom < 0 || r.top > innerHeight || r.right < 0 || r.left > innerWidth)) n.style.setProperty('display', 'none', 'important');
+        })`).catch(() => {});
       }
       const png = join(outDir, `${job.task}__${shot.name}.png`);
       // full-page shots render at CSS scale: a 1440x4000 page at dpr 2 is a 2880x8000 canvas,
@@ -288,6 +305,11 @@ for (const job of jobs) {
       if (rec.hOverflow <= 1) delete rec.hOverflow;
     } catch (e) {
       rec.ok = false; rec.why = String(e).split("\n")[0].slice(0, 200);
+    }
+    /* a CDN certificate flake is not a design defect: retry the shot once */
+    const flake = rec.errs.filter((e) => e.startsWith("requestfailed"));
+    if (rec.ok && flake.length && attempt === 1) { console.log("       retry " + label + " (" + flake.length + " failed request)"); continue }
+    break;
     }
     await p.close().catch(() => {});
     results.push(rec);
