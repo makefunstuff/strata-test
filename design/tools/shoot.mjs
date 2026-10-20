@@ -102,8 +102,12 @@ async function runActions(page, actions = []) {
       else if (kind === "type") { const [sel, ...rest] = arg.split(":"); await page.locator(sel).first().fill(rest.join(":")); }
       else if (kind === "key") { await page.keyboard.press(arg); }
       else if (kind === "hover") { await page.locator(arg).first().hover(); }
-      else if (kind === "eval") { await page.evaluate(`(() => { ${arg} })()`); }
+      else if (kind === "eval") {
+        const v = await page.evaluate(`(() => { ${arg} })()`);
+        if (v !== undefined) log.push("eval: " + String(JSON.stringify(v)).slice(0, 400));
+      }
       else if (kind === "scroll") { await page.evaluate(`window.scrollTo(0, ${arg})`); }
+      else if (kind === "reveal") { const el = await page.$(arg); if (el) await el.evaluate((n) => window.scrollTo(0, Math.max(0, n.getBoundingClientRect().top + window.scrollY - 64))); }
       else { await page.waitForTimeout(Math.min(+arg || 300, 4000)); }
       log.push(a);
     } catch (e) { log.push(`${a} -> FAILED ${String(e).split("\n")[0]}`); }
@@ -174,7 +178,7 @@ const audit = async () => {
     const key = txt.slice(0, 24) + cs.color + Math.round(size);
     if (seen.has(key)) continue;
     seen.add(key);
-    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need });
+    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need, fg: cs.color, bg: "rgb(" + bgOf(el).map(Math.round).join(", ") + ")", sel: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(/\s+/).slice(0, 2).join(".") : "") });
   }
   let focusRing = "none";
   try {

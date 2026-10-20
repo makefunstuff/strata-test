@@ -461,5 +461,218 @@
         "settle": 1.4
       }
     ]
+  },
+  {
+    "task": "05-system",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 950,
+        "full": true,
+        "dpr": 2,
+        "settle": 2.2
+      },
+      {
+        "name": "overview",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1.6
+      },
+      {
+        "name": "colour",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('colour').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "type",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('type').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "space",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('space').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-paper",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-deck",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"deck\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-field",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"field\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-terminal",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"terminal\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "patterns",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "table-empty",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1500,
+        "dpr": 2,
+        "actions": [
+          "reveal:#pat-table",
+          "click:#themes button[data-set='deck']",
+          "type:#pat-search:harbourlight"
+        ]
+      },
+      {
+        "name": "form-invalid",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+          "type:#f-email:not-an-email",
+          "key:Tab",
+          "click:#f-submit"
+        ],
+        "settle": 1.6
+      },
+      {
+        "name": "modal",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+          "click:#open-modal"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "rules",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('rules').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "tokens-deck",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"deck\"]",
+          "eval:document.getElementById('tokens').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "settle": 2,
+        "full": false,
+        "actions": [
+          "reveal:#mobile"
+        ]
+      },
+      {
+        "name": "phone-kit",
+        "page": "index.html",
+        "width": 2050,
+        "height": 1060,
+        "phone": false,
+        "dpr": 1.5,
+        "actions": [
+          "reveal:#mobile"
+        ],
+        "settle": 2,
+        "full": false
+      },
+      {
+        "name": "phone-tokens",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "actions": [
+          "reveal:#tokens"
+        ],
+        "settle": 2,
+        "full": false
+      }
+    ]
   }
 ]
