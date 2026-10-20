@@ -26,10 +26,10 @@ await mkdir(reportDir, { recursive: true });
 
 const argv = process.argv.slice(2);
 const oi = argv.indexOf("--only");
-const only = oi < 0 ? null : argv[oi + 1];
-const want = argv.filter((a) => !a.startsWith("-") && a !== only);
+const onlyList = oi < 0 ? null : String(argv[oi + 1]).split(",").map((x) => x.trim()).filter(Boolean);
+const want = argv.filter((a, i) => !a.startsWith("-") && !(oi >= 0 && i === oi + 1));
 const manifest = JSON.parse(await readFile(join(toolsDir, "manifest.json"), "utf8"));
-const jobs = manifest.filter((t) => !want.length || want.includes(t.task)).map((t) => ({ ...t, shots: t.shots.filter((s) => !only || s.name === only) }));
+const jobs = manifest.filter((t) => !want.length || want.includes(t.task)).map((t) => ({ ...t, shots: t.shots.filter((s) => !onlyList || onlyList.includes(s.name) || onlyList.includes(t.task) || onlyList.includes(t.task + "--" + s.name)) }));
 if (!jobs.length) { console.error(`no such task in manifest: ${want.join(",")}`); process.exit(1); }
 
 // A local static server, so pages load the same way they will on GitHub Pages:
@@ -223,6 +223,19 @@ for (const job of jobs) {
       await p.waitForTimeout(350);
       rec.actions = await runActions(p, shot.actions || []);
       await p.waitForTimeout(shot.settle ?? 250);
+      // scroll-driven reveals must have fired before a full-page shot, and the shot must
+      // start at the top: instant jumps, no smooth animation, no mid-page capture
+      await p.addStyleTag({ content: "html,body{scroll-behavior:auto!important}" }).catch(() => {});
+      // (phone shots rely on the white composite in the encoder for overscroll areas)
+      if (shot.full) {
+        const h = await p.evaluate("document.documentElement.scrollHeight").catch(() => 0);
+        for (const y of [h / 3, (2 * h) / 3, h]) {
+          await p.evaluate(`window.scrollTo(0, ${Math.round(y)})`).catch(() => {});
+          await p.waitForTimeout(220);
+        }
+        await p.evaluate("window.scrollTo(0, 0)").catch(() => {});
+        await p.waitForTimeout(260);
+      }
       const png = join(outDir, `${job.task}__${shot.name}.png`);
       // full-page shots render at CSS scale: a 1440x4000 page at dpr 2 is a 2880x8000 canvas,
       // which is a lot of memory next to Strata

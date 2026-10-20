@@ -91,5 +91,149 @@
         ]
       }
     ]
+  },
+  {
+    "task": "02-dashboard",
+    "title": "Gridwatch — depot control tower",
+    "shots": [
+      {
+        "name": "light",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "dark",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true
+      },
+      {
+        "name": "dark-full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "chart-hover",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "hover:#area"
+        ]
+      },
+      {
+        "name": "filtered",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#depotChecks input[value=awl]",
+          "click:#depotChecks input[value=stk]",
+          "type:#q:hall"
+        ]
+      },
+      {
+        "name": "sorted-buses",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:th button.sort[data-key=buses]",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+        ]
+      },
+      {
+        "name": "compact",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#density",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+        ]
+      },
+      {
+        "name": "empty",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "eval:document.querySelectorAll('#depotChecks input').forEach(i=>{i.checked=false;i.dispatchEvent(new Event('change',{bubbles:true}))})",
+          "eval:document.getElementById('table').scrollIntoView({block:'center'})"
+        ]
+      },
+      {
+        "name": "toast",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:#export"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "phone-drawer",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#drawer"
+        ]
+      },
+      {
+        "name": "phone-top",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()"
+        ]
+      },
+      {
+        "name": "phone-table",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-60)"
+        ]
+      }
+    ]
   }
 ]

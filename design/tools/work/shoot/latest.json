@@ -1,227 +1,46 @@
 [
  {
-  "label": "01-landing/hero",
+  "label": "02-dashboard/full",
   "ok": true,
   "errs": [],
   "actions": [],
   "audit": {
    "h1": 1,
    "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "landmarks": "header+main+footer+nav+aside",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
    "focusRing": "outline"
   },
-  "jpg": "01-landing/shots/hero.jpg",
-  "bytes": 407905,
-  "px": "2880x1800",
+  "jpg": "02-dashboard/shots/full.jpg",
+  "bytes": 238099,
+  "px": "1440x1771",
   "actions_failed": []
  },
  {
-  "label": "01-landing/full",
+  "label": "02-dashboard/phone-table",
   "ok": true,
   "errs": [],
-  "actions": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-60)"
+  ],
   "audit": {
    "h1": 1,
    "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "landmarks": "header+main+footer+nav+aside",
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
    "lowContrast": [],
    "focusRing": "outline"
   },
-  "jpg": "01-landing/shots/full.jpg",
-  "bytes": 620894,
-  "px": "1440x5452",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/features",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "eval:document.getElementById('features').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "outline"
-  },
-  "jpg": "01-landing/shots/features.jpg",
-  "bytes": 309719,
-  "px": "2880x1800",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/fold",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "eval:document.getElementById('how').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "outline"
-  },
-  "jpg": "01-landing/shots/fold.jpg",
-  "bytes": 275884,
-  "px": "2880x1800",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/pricing-annual",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "click:.billing .seg[data-cycle=annual]",
-   "eval:document.getElementById('pricing').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "none"
-  },
-  "jpg": "01-landing/shots/pricing-annual.jpg",
-  "bytes": 274692,
-  "px": "2880x1800",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/faq-open",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "click:.faq li:nth-child(2) summary",
-   "eval:document.getElementById('faq').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "none"
-  },
-  "jpg": "01-landing/shots/faq-open.jpg",
-  "bytes": 212619,
-  "px": "2880x1800",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/form-error",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "eval:document.getElementById('get').scrollIntoView({block:'center'})",
-   "type:#email:mairi at kestrel",
-   "click:#signup button[type=submit]"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "none"
-  },
-  "jpg": "01-landing/shots/form-error.jpg",
-  "bytes": 194743,
-  "px": "2880x1800",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/phone",
-  "ok": true,
-  "errs": [],
-  "actions": [],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "outline"
-  },
-  "jpg": "01-landing/shots/phone.jpg",
-  "bytes": 139746,
-  "px": "780x1688",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/phone-full",
-  "ok": true,
-  "errs": [],
-  "actions": [],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "outline"
-  },
-  "jpg": "01-landing/shots/phone-full.jpg",
-  "bytes": 463616,
-  "px": "390x9065",
-  "actions_failed": []
- },
- {
-  "label": "01-landing/phone-menu",
-  "ok": true,
-  "errs": [],
-  "actions": [
-   "click:.navtoggle"
-  ],
-  "audit": {
-   "h1": 1,
-   "lang": "en",
-   "title": "Foldline — offline topographic maps that print like paper",
-   "landmarks": "header+main+footer+nav",
-   "labelledControlsMissing": [],
-   "unnamedButtons": [],
-   "imgMissingAlt": [],
-   "lowContrast": [],
-   "focusRing": "none"
-  },
-  "jpg": "01-landing/shots/phone-menu.jpg",
-  "bytes": 92949,
+  "jpg": "02-dashboard/shots/phone-table.jpg",
+  "bytes": 90649,
   "px": "780x1688",
   "actions_failed": []
  }
