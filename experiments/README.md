@@ -28,17 +28,18 @@ node experiments/tools/check.mjs 3-cloth-tearing --label cloth --wait 8 \
 ```
 
 `bash experiments/tools/sweep.sh` runs all five and prints one line each
-(`experiments/tools/summarize.mjs` reads the JSON the checker emits). The table is the last full sweep, run on the branch after merging `origin/main`. The checker writes
+(`experiments/tools/summarize.mjs` reads the JSON the checker emits). The table is the last full sweep, run on the branch after merging `origin/main` and after the
+review fixes (it is the run the two tests below are quoted from). The checker writes
 `<experiment>/shots/<label>-start.jpg` and `<label>-after.jpg`; the after-shot is the evidence and is
 kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones the gallery shows.
 
 | # | experiment | works? (headless, software renderer) | fps (sw) idle / after input | one line | controls |
 |---|---|---|---|---|---|
-| 1 | [Water](1-water/index.html) | 0 errors; splats 0→70 from drag + click, 7 floating bodies bobbing, sim 256², reflection RT 384² | 14.0 / 14.4 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
-| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 121 shattered, 701 displaced, 706 awake, 695 chips, 700 dust, last impact 31 m/s | 19.2 / 18.4 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
-| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, **927 snapped** — real mouse drags on the sheet, a shift-drag slice and a scripted sustained pull — quads 1840 of 2052 | 30.0 / 30.4 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so **grabbing a patch and pulling rags the sheet**, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
-| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.05, trails on; 16 384 boids measured at 8.8 fps | 18.4 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
-| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.96, light 148, gust 0.66, 60 march steps at 42% resolution | 6.0 / 6.0 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
+| 1 | [Water](1-water/index.html) | 0 errors; splats 0→54 from drag + click, 7 floating bodies bobbing, sim 256², reflection RT 384² | 13.6 / 13.6 | GPU height-field waves with planar mirror reflection, screen-space refraction, Fresnel, depth tint, foam, caustics and floaters that kick the water back | click / drag = ripples · `Space` stone · `R` rain · `Q` preset |
+| 2 | [Voxel demolition](2-voxel-demolition/index.html) | 0 errors; 842 blocks, 2 shells fired, 120 shattered, 700 displaced, 707 awake, 598 chips, 644 dust, last impact 31 m/s | 19.6 / 19.2 | 842 Rapier rigid-body voxels in one instanced mesh; shells shatter blocks into chips, dust, flash and camera shake | click = charge & fire · `1-4` structure · `R` rebuild |
+| 3 | [Cloth & tearing](3-cloth-tearing/index.html) | 0 errors; 2145 particles, 12402 constraints, **974 snapped** — real mouse drags on the sheet, a shift-drag slice and a scripted sustained pull — quads 1831 of 2052 | 30.4 / 30.4 | Verlet mass–spring weave with gusting wind aerodynamics; constraints keep a strain memory, so **grabbing a patch and pulling rags the sheet**, and cut edges stop being drawn | drag = grab & pull · shift-drag/`C` cut · `Space` gust · `R` re-weave |
+| 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.25, trails on; 16 384 boids measured at 8.8 fps | 18.0 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
+| 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.93, light 250, gust 0.64, 60 march steps at 42% resolution | 6.4 / 6.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
@@ -84,7 +85,7 @@ pull**, releases, and requires `torn` to rise — and runs a control: the same s
 the same wind, must not tear. Last run, from a clean sheet each time:
 
 ```
-flag    right 309 torn · down-left 122 · up 48        curtain  right 296 · down-left 344 · up 48
+flag     right 276 torn · down-left 134 · up 48         curtain  right 272 · down-left 352 · up 48
 control (no interaction): torn 0 → 0
 ```
 
