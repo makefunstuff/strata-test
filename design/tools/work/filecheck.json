@@ -1,0 +1,740 @@
+{
+ "generatedFrom": "manifest pages opened over file:// and http:// by tools/filecheck.mjs",
+ "pages": 27,
+ "blockedOverFile": 23,
+ "okOverFile": 4,
+ "tasksOkOverFile": [
+  "05-system",
+  "10-redesign"
+ ],
+ "tasksBlockedOverFile": [
+  ".",
+  "01-landing",
+  "02-dashboard",
+  "03-mobile",
+  "04-tui",
+  "06-identity",
+  "07-dataviz",
+  "08-form",
+  "09-motion",
+  "11-styles"
+ ],
+ "errorsOverHttp": 1,
+ "rows": [
+  {
+   "task": ".",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/gallery.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrom",
+     "requestfailed: design/gallery.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 9187,
+     "interactive": 7,
+     "bodyChildren": 5
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 38442,
+     "interactive": 52,
+     "bodyChildren": 5
+    }
+   }
+  },
+  {
+   "task": "01-landing",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/01-landing/terrain-boot.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protoco",
+     "requestfailed: design/01-landing/terrain-boot.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 25041,
+     "interactive": 34,
+     "bodyChildren": 6
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 199077,
+     "interactive": 34,
+     "bodyChildren": 6
+    }
+   }
+  },
+  {
+   "task": "02-dashboard",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/02-dashboard/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/02-dashboard/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 14097,
+     "interactive": 33,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 33968,
+     "interactive": 45,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "03-mobile",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 15242,
+     "interactive": 13,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 15242,
+     "interactive": 13,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "03-mobile",
+   "page": "app.html",
+   "url": "app.html?screen=today&nobar=1",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/03-mobile/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes:",
+     "requestfailed: design/03-mobile/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 23755,
+     "interactive": 48,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 32789,
+     "interactive": 48,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "04-tui",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1792546580092' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/stream.ansi?v=1792546580092 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/endpoints.ansi?v=1792546580112' from origin 'null' has been blocked by CORS policy: Cross origin requests are only sup",
+     "requestfailed: design/04-tui/capture/endpoints.ansi?v=1792546580112 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/help.ansi?v=1792546580118' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supporte",
+     "requestfailed: design/04-tui/capture/help.ansi?v=1792546580118 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/filtered.ansi?v=1792546580120' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supp",
+     "requestfailed: design/04-tui/capture/filtered.ansi?v=1792546580120 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/empty.ansi?v=1792546580122' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
+     "requestfailed: design/04-tui/capture/empty.ansi?v=1792546580122 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/frozen.ansi?v=1792546580123' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/frozen.ansi?v=1792546580123 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/light.ansi?v=1792546580125' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
+     "requestfailed: design/04-tui/capture/light.ansi?v=1792546580125 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/narrow.ansi?v=1792546580126' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/narrow.ansi?v=1792546580126 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 17340,
+     "interactive": 0,
+     "bodyChildren": 4
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 17340,
+     "interactive": 0,
+     "bodyChildren": 4
+    }
+   }
+  },
+  {
+   "task": "04-tui",
+   "page": "capture.html",
+   "url": "capture.html?frame=stream",
+   "file": {
+    "errs": [
+     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1792546582294' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/stream.ansi?v=1792546582294 net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 8101,
+     "interactive": 0,
+     "bodyChildren": 2
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 35350,
+     "interactive": 0,
+     "bodyChildren": 2
+    }
+   }
+  },
+  {
+   "task": "05-system",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [],
+    "built": {
+     "html": 73758,
+     "interactive": 103,
+     "bodyChildren": 5
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 73758,
+     "interactive": 103,
+     "bodyChildren": 5
+    }
+   }
+  },
+  {
+   "task": "06-identity",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/06-identity/identity.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol s",
+     "requestfailed: design/06-identity/identity.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 23652,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 63369,
+     "interactive": 24,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "07-dataviz",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/07-dataviz/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes",
+     "requestfailed: design/07-dataviz/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 12715,
+     "interactive": 8,
+     "bodyChildren": 5
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 153053,
+     "interactive": 8,
+     "bodyChildren": 7
+    }
+   }
+  },
+  {
+   "task": "08-form",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/08-form/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: c",
+     "requestfailed: design/08-form/app.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 25583,
+     "interactive": 61,
+     "bodyChildren": 5
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 26013,
+     "interactive": 61,
+     "bodyChildren": 5
+    }
+   }
+  },
+  {
+   "task": "09-motion",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/09-motion/motion.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/09-motion/motion.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 7256,
+     "interactive": 0,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 81399,
+     "interactive": 75,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "10-redesign",
+   "page": "before.html",
+   "url": "before.html",
+   "file": {
+    "errs": [],
+    "built": {
+     "html": 17096,
+     "interactive": 92,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [
+     "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "built": {
+     "html": 17096,
+     "interactive": 92,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "10-redesign",
+   "page": "after.html",
+   "url": "after.html",
+   "file": {
+    "errs": [],
+    "built": {
+     "html": 20756,
+     "interactive": 67,
+     "bodyChildren": 6
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 20756,
+     "interactive": 67,
+     "bodyChildren": 6
+    }
+   }
+  },
+  {
+   "task": "10-redesign",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [],
+    "built": {
+     "html": 43109,
+     "interactive": 0,
+     "bodyChildren": 8
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 47730,
+     "interactive": 0,
+     "bodyChildren": 8
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s01-swiss.html",
+   "url": "s01-swiss.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5459,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 11541,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s02-brutalism.html",
+   "url": "s02-brutalism.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 4967,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 10717,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s03-editorial.html",
+   "url": "s03-editorial.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5418,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 12110,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s04-glass.html",
+   "url": "s04-glass.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5582,
+     "interactive": 1,
+     "bodyChildren": 4
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 11876,
+     "interactive": 15,
+     "bodyChildren": 4
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s05-neumorph.html",
+   "url": "s05-neumorph.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5838,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 12295,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s06-pixel.html",
+   "url": "s06-pixel.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 6133,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 17491,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s07-japanese.html",
+   "url": "s07-japanese.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 6103,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 12611,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s08-cyber.html",
+   "url": "s08-cyber.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 7161,
+     "interactive": 1,
+     "bodyChildren": 4
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 14945,
+     "interactive": 15,
+     "bodyChildren": 4
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "s09-luxury.html",
+   "url": "s09-luxury.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5976,
+     "interactive": 1,
+     "bodyChildren": 4
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 12213,
+     "interactive": 15,
+     "bodyChildren": 4
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "index.html",
+   "url": "index.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/gallery.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol sche",
+     "requestfailed: design/11-styles/gallery.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 10606,
+     "interactive": 8,
+     "bodyChildren": 6
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 60613,
+     "interactive": 72,
+     "bodyChildren": 6
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "before-glass.html",
+   "url": "before-glass.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5728,
+     "interactive": 1,
+     "bodyChildren": 4
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 11950,
+     "interactive": 15,
+     "bodyChildren": 4
+    }
+   }
+  },
+  {
+   "task": "11-styles",
+   "page": "before-neumorph.html",
+   "url": "before-neumorph.html",
+   "file": {
+    "errs": [
+     "console: Access to script at 'design/11-styles/render.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schem",
+     "requestfailed: design/11-styles/render.js net::ERR_FAILED",
+     "console: Failed to load resource: net::ERR_FAILED"
+    ],
+    "built": {
+     "html": 5963,
+     "interactive": 1,
+     "bodyChildren": 3
+    }
+   },
+   "http": {
+    "errs": [],
+    "built": {
+     "html": 12372,
+     "interactive": 15,
+     "bodyChildren": 3
+    }
+   }
+  }
+ ]
+}

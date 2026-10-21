@@ -22,7 +22,11 @@ headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mj
 last reported are in the shelf READMEs. [`design/README.md`](design/README.md) is the
 design gallery's own summary: the eleven scores, the verdict on range and taste, and the
 two things the audit was blind to. The gallery and the study pages use ES modules, so they
-need http:// (or GitHub Pages), not `file://`.
+need http:// (or GitHub Pages), not `file://` — measured, not assumed:
+`design/tools/filecheck.mjs` opens every page twice and finds 4 of 27 clean over `file://`
+(`05-system` and the three pages of `10-redesign`) and 23 blocked by CORS, nine of the
+eleven task index pages among them. Serve it and read it the way Pages will:
+`node design/tools/serve.mjs`.
 
 Benchmarks of Strata itself, one folder each with its README (what, how to run, results, verdict):
 

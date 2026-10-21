@@ -34,7 +34,7 @@ task scores under 4 on it.
 | 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4 | 4 | 5 | 4 | 4 | 14 | A construction-built mark, 32 icons on one grid, files generated from one source — and the mark is the weakest part of the strongest-looking page. |
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
-| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4 | 4 | 5 | 4 | 5 | 21 | The film strip *is* the animation (frames rendered from a live page, scrubbed); reduced motion is a redesign with a named replacement per study. |
+| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4 | 4 | 5 | 4 | 5 | 23 | The film strip *is* the animation (frames rendered from a live page, scrubbed); reduced motion is a redesign with a named replacement per study. |
 | 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4 | 5 | 4 | 5 | 5 | 32 | One measure function over the bad page and the good one: 137 → 0 contrast findings, 1 324 → 429 px to the answer, 572 → 0 px overflow, 61 tide values 0 changed. |
 | 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 3.5 | 5 | 4 | 4 | 43 | Parity measured on rendered text (41 strings × 9 pages) and the added words counted; the layout axis is 3.5 because the nine costumes share one skeleton. |
 
@@ -179,7 +179,7 @@ complete run of that task — all eleven tasks have one, and `tools/shotsindex.m
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
 serve. The last full sweep: **211 shots across the eleven tasks plus 8 in the gallery
-frame — 219 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+frame — 221 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
@@ -214,5 +214,6 @@ node design/tools/rendered.mjs 11-styles       # rendered text, computed styles,
 cd design/11-styles && node measure.mjs        # -> stats.js, the page's own numbers
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
+node design/tools/filecheck.mjs               # which pages load over file:// and which do not
 node design/tools/probe.mjs 11-styles s03-editorial.html   # font diagnostic
 ```
