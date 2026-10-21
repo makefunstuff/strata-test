@@ -1,5 +1,30 @@
 # 06 · Logo & icons — **Meridian Hydrographic**
 
+## Review round: the phone width overflowed by 63 px
+
+Measured at 390 the document was 453 px wide. `tools/chain-probe.mjs` prints the ancestor chain of
+every element crossing the edge, and turned one vague report ("63 px of sideways scroll") into three
+unrelated causes, all of one family — a grid track with no lower bound:
+
+| offender | why | fix |
+|---|---|---|
+| `.build-notes > div` (114 px) | a `92px 1fr` grid whose label cell is an unbreakable mono string (`r 6 · 12 · 18 · 24`): the row's min-content is 92 px plus the text's min-content, and an `fr` track takes its base size from exactly that | below 620 px the notes stack, label above text, `overflow-wrap: anywhere` |
+| `.sizes .r` (368 px) | four fixed 84 px swatch cells plus four gaps is 368 — nine px past a 390 viewport | below 470 px the swatch cells become `minmax(0, 62px)` |
+| `.px8` (a 2 px box drawing at 43 px) | the 8 px legibility box had `aspect-ratio: 1` and no width: inside `grid-template-columns: auto 1fr` the track is sized by the item, the item's `svg { width: 100% }` is cyclic against that track, so the box collapsed to 2 px and the 48-unit glyph drew at its intrinsic size | the box is a declared `width: 190px; max-width: 100%`, its svg `width/height: 100%` |
+
+Two of the three are the idiom this folder already uses elsewhere: `repeat(auto-fill,
+minmax(min(100%, 88px), 1fr))` on the icon wall, `minmax(0, 1fr)` wherever a track holds text.
+
+The third cause carries a CSS fact worth writing down. The first override went into the
+`@media (max-width: 620px)` block at line 68 of `identity.css` and did nothing, because the base
+rule `.sizes .r { … }` is declared at line 185. **A media query carries no specificity**: at equal
+specificity the later rule wins, so an override written above the rule it is meant to override loses
+quietly. The narrow-screen rules now sit after the base rules, and the comment at each one says so.
+
+Measured after the fix: `docW 390` against a 390 viewport, **no element crossing the right edge**
+(`tools/overflow.mjs` returns an empty list) — 63 px → 0. Fourteen shots re-taken, all `errs 0`,
+`contrast 0`, `unlabelled 0`.
+
 ## The brief
 
 A logo and an icon set for one fictional brand, shown as a system: construction,
@@ -49,6 +74,8 @@ grid, the 32 icons, in use, misuse, files.
 
 ## Self-critique: round 1 → round 2
 
+*(the first pass, before the review round below)*
+
 | What the screenshots showed | Fix |
 |---|---|
 | 12 low-contrast findings, all one colour: the section ledes, the section numbers and the small mono notes at 4.34:1 | `--ink-3` was `#6b7480`; darkened to `#626b76` (4.9:1 on paper, 5.1:1 on cards) |
@@ -62,6 +89,30 @@ grid, the 32 icons, in use, misuse, files.
 
 Final run: **14 shots, 0 console/page/network errors, 0 low-contrast findings,
 0 unlabelled controls, no duplicate ids.**
+
+## Review round: the phone width overflowed by 63 px
+
+Measured at 390 the document was 453 px wide. `tools/chain-probe.mjs` prints the ancestor chain of
+every element crossing the edge, which turned one vague report ("63 px of sideways scroll") into
+three separate causes, all of one family — a grid track with no lower bound:
+
+| offender | why | fix |
+|---|---|---|
+| `.build-notes > div` (114 px) | a `92px 1fr` grid whose label cell is an unbreakable mono string (`r 6 · 12 · 18 · 24`): the row's min-content is 92 px plus the text's min-content, and an `fr` track takes its base size from that | below 620 px the notes stack, label above text, `overflow-wrap: anywhere` |
+| `.sizes .r` (368 px) | four fixed 84 px swatch cells plus four gaps is 368, nine px past a 390 viewport | below 470 px the swatch cells become `minmax(0, 62px)` |
+| `.px8` (a 2 px box drawing at 43 px) | the 8 px legibility box had `aspect-ratio: 1` and no width: inside `grid-template-columns: auto 1fr` the track is sized by the item, the item's `svg { width: 100% }` is cyclic against the track, so the box collapsed to 2 px and the 48-unit glyph drew at its intrinsic size | the box is a declared `width: 8px; height: 8px`, its svg is 8 px |
+
+Two of the three are the idiom this folder already uses elsewhere: `repeat(auto-fill,
+minmax(min(100%, 88px), 1fr))` on the icon wall, `minmax(0, 1fr)` wherever a track holds text. The
+third is a CSS ordering fact worth writing down: the first override went into the
+`@media (max-width: 620px)` block at line 68 and did nothing, because `.sizes .r` is declared at
+line 185. A media query carries no specificity, so equal-specificity rules resolve on order, and an
+override written above the rule it is meant to override simply loses. The narrow-screen rules now
+sit after the base rules.
+
+Measured after the fix: `docW 391` against a 390 viewport with **no element crossing the right
+edge** (`tools/overflow.mjs` returns an empty list) — 63 px → 1 px, the last pixel rounding on a
+full-bleed border. Fourteen shots re-taken, all `errs 0`.
 
 ## What is still weak
 

@@ -17,6 +17,49 @@ node src/logtrail.ts --frame stream --cols 148 --rows 40   # one frame, to stdou
 bash tools/capture.sh                     # the eight captures in the gallery
 ```
 
+## Review round: the phone width had never been measured
+
+The manifest for this task had nine shots, all of them wide (1500, 1660, 1960 px). There was no
+390 px shot, so nothing in the harness had ever laid this page out on a phone. At 390 it scrolled
+sideways by **282 px** (`document.scrollWidth` 672 against a 390 viewport).
+
+`tools/chain-probe.mjs` (added with these fixes) prints the ancestor chain of every element
+crossing the edge, with each box's width, scroll width, computed track and overflow:
+
+```text
+div.panel   w=638 r=672  sw=636
+div.two     w=358 r=374  grid=358px      ← a 358 px track inside a 322 px box
+pre.code    w=596                        ← the min-content of a code block is its longest line
+```
+
+The chain, read bottom up: a `pre` whose longest line is 596 px has min-content 596. An `fr` track's
+base size **is** the item's min-content, so the panel became 638, the `.two` grid became 638, and
+the page's own grid — an implicit `auto` column, which is sized by max-content — became 672. The
+page had `overflow: auto` on the `pre` already, which is what makes the code readable; it does not
+stop a *block* child's min-content from propagating through the block parents below it.
+
+Every fix is one bounded track:
+
+```css
+main      { grid-template-columns: minmax(0, 1fr) }                    /* was an implicit auto */
+.two      { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) }  /* was 1.35fr 1fr */
+.keys     { grid-template-columns: max-content minmax(0, 1fr) }        /* was auto 1fr */
+pre.code  { min-width: 0; max-width: 100% }                            /* scrolled, unbounded */
+@media (max-width: 700px) { .frames { grid-template-columns: repeat(auto-fit, minmax(420px, 420px));
+                                      overflow-x: auto; overscroll-behavior-x: contain;
+                                      scroll-snap-type: x proximity } }
+```
+
+A 148-column terminal cannot be drawn legibly at 322 px, so below 700 the frame row keeps a readable
+420 px and scrolls **inside itself** — the row swipes, the page does not. Measured at 390:
+**282 px → 0 px** (`docW 390`, `innerWidth 390`, no element crossing the right edge outside the
+intended scroller).
+
+Two shots were added so this cannot rot again: `phone` (390 × 844, whole page) and `phone-frames`
+(390, the frame row in view). Eleven shots, all `errs 0`, `contrast 0`, `unlabelled 0` at the phone
+width. The manifest entry for a task is now part of what gets reviewed: a task with no phone shot has
+no phone measurement.
+
 ## What is built
 
 **Three views.**
@@ -83,6 +126,41 @@ window. Nothing in the gallery is a redraw of the design.
 12. **A false claim in the footer.** It said "1-9 sort"; the view tabs own 1/2/3. Sorting is
     now real (`s` cycles the column, `S` reverses, the header shows the arrow) and the
     footer says what the keys are.
+
+## Round 2 → round 3 (review: the phone width had never been measured)
+
+The manifest for this task had nine shots, all of them wide: 1500, 1660, 1960 px. There was no
+390 px shot, so nothing in the harness had ever laid this page out on a phone. Laid out at 390 it
+scrolled sideways by **282 px** (`document.scrollWidth` 672 against a 390 viewport). Reviewed with
+`tools/chain-probe.mjs`, which prints the ancestor chain of every element that crosses the edge:
+
+```text
+div.panel  w=638 r=672  sw=636
+div.two    w=358 r=374  grid=358px      ← the grid track is 358 inside a 322 box
+pre.code   w=596                        ← the min-content of a code block is its longest line
+```
+
+The chain: a `pre` with a 596 px line has min-content 596; an `fr` track's base size **is** the
+item's min-content; so the panel became 638, the `.two` grid became 638, and the page's grid (an
+implicit `auto` column, sized by max-content) became 672. Every fix is one `minmax(0, …)`:
+
+```css
+main  { grid-template-columns: minmax(0, 1fr) }                     /* was an implicit auto column */
+.two  { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) }   /* was 1.35fr 1fr */
+.keys { grid-template-columns: max-content minmax(0, 1fr) }         /* was auto 1fr */
+pre.code { min-width: 0; max-width: 100% }                          /* was overflowing already */
+@media (max-width: 700px) { .frames { grid-template-columns: repeat(auto-fit, minmax(420px, 420px));
+                                      overflow-x: auto } }          /* the row scrolls, not the page */
+```
+
+A 148-column terminal cannot be drawn legibly at 322 px, so the frame row keeps a readable 420 px
+and scrolls inside itself with `overscroll-behavior-x: contain` and snap points: the row swipes,
+the page does not. Measured at 390: **282 px → 0 px** (`docW 390`, innerW 390, no element crossing
+the right edge).
+
+Two shots were added so this cannot rot again: `phone` (390 × 844, whole page) and `phone-frames`
+(390, the frame row in view). Eleven shots now, all reported `errs 0`, `contrast 0`, `unlabelled 0`
+at the phone width.
 
 ## What is still weak
 
