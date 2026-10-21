@@ -24,20 +24,24 @@ const origin = `http://127.0.0.1:${server.address().port}`;
 
 const argv = process.argv.slice(2);
 const page = argv[0];
-const sels = argv.slice(1).filter((s) => s !== "--phone");
+const want = argv.slice(1).filter((s) => s !== "--phone");
 const phone = argv.includes("--phone");
+const reduce = argv.includes("--reduce");
+const sels = want.filter((s) => s !== "--reduce");
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH ?? join(toolsDir, "chromium-capped.sh"),
   headless: true,
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--single-process", "--no-zygote",
          "--disable-dev-shm-usage", "--disable-gpu", "--force-color-profile=srgb", "--hide-scrollbars"],
 });
-const ctx = await browser.newContext({ viewport: phone ? { width: 390, height: 844 } : { width: 1440, height: 900 } });
+const ctx = await browser.newContext({ viewport: phone ? { width: 390, height: 844 } : { width: 1440, height: 900 }, reducedMotion: reduce ? "reduce" : "no-preference" });
 const p = await ctx.newPage();
 p.on("console", (m) => { if (m.type() === "error") console.log("[console error]", m.text()); });
 p.on("pageerror", (e) => console.log("[page error]", e.message));
 await p.goto(`${origin}/${page}`, { waitUntil: "networkidle" });
 await p.waitForTimeout(1200);
+if (argv.includes("--build")) console.log("### window.__build\n" + JSON.stringify(await p.evaluate("window.__build")));
+if (argv.includes("--frames")) console.log("### frame ms labels\n" + await p.evaluate("[...document.querySelectorAll('.frame-h .t')].map(x => x.textContent).join(' ')"));
 for (const s of sels) {
   const t = await p.evaluate((sel) => {
     const els = [...document.querySelectorAll(sel)];

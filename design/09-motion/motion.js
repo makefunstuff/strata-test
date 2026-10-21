@@ -103,7 +103,7 @@ const STUDIES = [
       <div class="toast">Chart 4128 queued for download<span class="undo">Undo</span><span class="life"></span></div></div>`,
     mount(r, D) {
       const t = $(".toast", r), life = $(".life", r);
-      const span = Math.max(D[3] * 9, 1);            /* the toast's whole life, on the same clock */
+      const span = D[3] ? Math.max(D[3] * 9, 1) : 0;   /* the toast's whole life, on the same clock; 0 under reduced motion, so no 1 ms residue survives the media query */
       return [
         anim(t, { transform: "translateY(140%)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }, { d: D[3], ease: EASE.out }),
         anim(life, { transform: "scaleX(1)" }, { transform: "scaleX(0)" }, { d: span, ease: "linear" }),
@@ -125,11 +125,11 @@ const STUDIES = [
       const nw = $(".li.new", r), rows = [".n1", ".n2", ".n3"].map((s) => $(s, r));
       return [
         anim(nw, { opacity: 0, transform: "translateY(-7px) scaleY(.6)" }, { opacity: 1, transform: "translateY(0) scaleY(1)" }, { d: D[3], ease: EASE.out }),
-        ...rows.map((el, i) => anim(el, { transform: `translateY(-${(i + 1) * 39}px)` }, { transform: "translateY(0)" }, { d: D[3], ease: EASE.out, delay: 40 })),
+        ...rows.map((el, i) => anim(el, { transform: `translateY(-${(i + 1) * 39}px)` }, { transform: "translateY(0)" }, { d: D[3], ease: EASE.out, delay: D[1] })),
       ];
     },
     frame(r) { $(".bar-top .val", r).textContent = "143" },
-    spec: { trigger: "save a sighting", timing: "--dur-3, neighbours 40 ms behind", curve: "--ease-out", props: "transform, opacity", why: "The record is written to the data before the animation starts, so saving never waits for the picture. The neighbours move on the same clock, one frame behind, which reads as weight rather than as two events." },
+    spec: { trigger: "save a sighting", timing: "--dur-3, neighbours one --dur-1 behind", curve: "--ease-out", props: "transform, opacity", why: "The record is written to the data before the animation starts, so saving never waits for the picture. The neighbours move on the same clock, one frame behind, which reads as weight rather than as two events. The offset is a token, so under reduced motion it is 0 ms with everything else — a hard-coded beat would survive the media query." },
     rm: "The row is at the top of the list, marked “added”, and <b>the count changes in the header</b>. Nothing slides; the row's label carries the news the movement used to carry.",
   },
   {
@@ -420,7 +420,15 @@ function build(D) {
   for (const [name, sel, fn] of [["reduced motion", "#rmGrid", () => buildReduced(D)], ["the checks", "#audit-list", () => buildAudit(D)]]) {
     try { fn(); ran.push(name) } catch (e) { failSection(name, sel, e) }
   }
-  window.__build = { studies: $("#studies-list").children.length, rm: $("#rmGrid").children.length, audit: $("#audit-list").children.length, ran };
+  window.__build = {
+    studies: $("#studies-list").children.length,
+    rm: $("#rmGrid").children.length,
+    audit: $("#audit-list").children.length,
+    named: [...document.querySelectorAll("#studies-list .spec.rm dd")].filter((d) => d.textContent.trim()).length,
+    reduced: REDUCE.matches,
+    longest: Math.max(0, ...registry.map((r) => r.total)),
+    ran,
+  };
 }
 function failSection(name, sel, e) {
   const el = $(sel);
@@ -472,8 +480,10 @@ function buildTokens(D) {
 }
 /* ── reduced-motion section ─────────────────────────────────────────── */
 function buildReduced(D) {
-  $("#rmState").textContent = REDUCE.matches ? "prefers-reduced-motion: reduce is ON on this view" : "prefers-reduced-motion: reduce is off on this view";
   const picks = ["sheet", "insert", "button"];
+  const named = STUDIES.filter((s) => (s.rm || "").trim().length > 0).length;
+  const cover = `${picks.length} of ${STUDIES.length} studies are rebuilt as a strip below, and all ${named} of ${STUDIES.length} name their replacement in their own card — counted out of this DOM, not typed`;
+  $("#rmState").textContent = `${REDUCE.matches ? "prefers-reduced-motion: reduce is ON on this view" : "prefers-reduced-motion: reduce is off on this view"} · ${cover}`;
   $("#rmGrid").innerHTML = "";
   for (const key of picks) {
     const s = STUDIES.find((x) => x.key === key);
@@ -509,12 +519,42 @@ function buildAudit(D) {
   const layout = (byProp["width"] || []).concat(byProp["grid-template-rows"] || []);
   const longestRow = snapshot.slice().sort((a, b) => b.total - a.total)[0];
   const longest = longestRow.total;
+  /* "long is allowed" is a property of two kinds of animation, not a sentence about one study */
+  const LONG = ["toast", "reveal"];          /* a countdown and a scroll reveal: both have a job in their length */
+  const longestStudy = STUDIES.find((s) => s.key === longestRow.key);
+  const allowed = LONG.includes(longestRow.key);
+  const spanOf = (a) => { const t = a.effect.getTiming(); return (t.delay || 0) + t.duration };
+  const isLoop = (a) => { const it = a.effect.getTiming().iterations; return !Number.isFinite(it) || it > 1 };
+  const perStudy = snapshot.map((r) => { const s = STUDIES.find((x) => x.key === r.key);
+    return { key: r.key, title: r.title, n: s.n, timing: s.spec.timing, total: r.total,
+      once: r.anims.filter((a) => !isLoop(a)), loops: r.anims.filter(isLoop) }; });
+  const maxOf = (list) => Math.max(0, ...list.map(spanOf));
+  const durOf = (list) => Math.max(0, ...list.map((a) => a.effect.getTiming().duration));
+  const strict = perStudy.filter((s) => !LONG.includes(s.key));
+  const ceiling = Math.max(0, ...strict.map((s) => maxOf(s.once)));
+  const ceilingStudy = strict.slice().sort((a, b) => maxOf(b.once) - maxOf(a.once))[0];
+  const singleCeiling = Math.max(0, ...strict.map((s) => durOf(s.once)));
+  const singleStudy = strict.slice().sort((a, b) => durOf(b.once) - durOf(a.once))[0];
+  const loopCount = perStudy.reduce((n, s) => n + s.loops.length, 0);
+  const loopCycle = Math.max(0, ...perStudy.flatMap((s) => s.loops.map((a) => a.effect.getTiming().duration)));
+  const longestText = () => {
+    const at = D[3] === 0 ? " (reduced motion is on: every token is 0 ms, so this is what is left)" : "";
+    const why = allowed
+      ? `Its length is the job — a countdown and a scroll reveal are the two kinds allowed to run long here, and this is ${longestRow.key === "toast" ? "the toast's countdown bar, which has to last as long as the message can be read" : "the reveal, which is bound to the scroll"}.`
+      : `This is not a countdown or a scroll reveal, so it belongs under 360 ms.`;
+    const span = ceilingStudy && ceiling > 360 && D[3] !== 0
+      ? ` The widest span outside those two kinds is <span class="mono">${ceiling} ms</span> in “${ceilingStudy.title}”.`
+      : "";
+    const single = ` The longest <i>single</i> animation outside the countdown and the reveal is <span class="mono">${singleCeiling} ms</span>, in “${singleStudy.title}” (study ${singleStudy.n}, declared timing <span class="mono">${singleStudy.timing}</span>). ${singleCeiling > 360 && D[3] !== 0 ? "The 360 ms line is crossed there, so this row is a warning about it and not a pass." : ""}`;
+    const loops = loopCount ? ` ${loopCount} animations loop, with a cycle of up to <span class="mono">${loopCycle} ms</span>: a cycle is a rhythm, not a wait.` : "";
+    return `<span class="mono">${longest} ms</span> — the span of “${longestRow.title}” (study ${longestStudy.n}, animates <span class="mono">${prop(longestStudy.spec.props)}</span>), measured as the last animation's delay + duration, so it is when the picture settles${at}. ${why}${span}${single}${loops}`;
+  };
   const total = snapshot.reduce((n, r) => n + r.anims.length, 0);
   const paused = snapshot.reduce((n, r) => n + r.anims.filter((a) => a.playState === "paused").length, 0);
   const live = document.querySelectorAll('.stage [role="status"], .stage [role="dialog"], .stage [aria-expanded], .stage [aria-pressed], .stage [aria-selected]').length;
   const rows = [
     ["Durations in force", `<span class="mono">${D[1]} / ${D[2]} / ${D[3]} / ${D[4]} ms</span> read from the stylesheet. With <span class="mono">prefers-reduced-motion</span> every one of them is 0 ms, so a strip's three frames become one frame.`, D[3] === 0 ? "reduce" : "full"],
-    ["Longest animation", `<span class="mono">${longest} ms</span>, in “${longestRow.title}” — and it is the toast's countdown bar, whose job is to last as long as the message can be read. Nothing that is not a countdown or scroll-linked exceeds <span class="mono">360 ms</span>.`, "ok"],
+    ["Longest animation", longestText(), singleCeiling <= 360 || D[3] === 0 ? "ok" : "warn"],
     ["Properties animated", Object.entries(byProp).map(([p, ks]) => `<span class="mono">${p}</span> × ${ks.length}`).join(" · "), "info"],
     ["Layout properties", layout.length ? `deliberate, and named in the spec: <span class="mono">width</span> on the tab rule (study 06) and on one 112 px button (study 09), <span class="mono">grid-template-rows</span> on one disclosure (study 10). Nothing animates <span class="mono">top</span>, <span class="mono">left</span>, <span class="mono">margin</span> or <span class="mono">font-size</span>, and no animation touches a property that reflows the page behind it.` : "none", layout.length ? "warn" : "ok"],
     ["Animations created", `${total} Web Animations, <span class="mono">${paused}</span> of them paused at load: the strips hold them at a millisecond, and Play runs the same objects.`, paused === total ? "ok" : "warn"],
@@ -524,7 +564,7 @@ function buildAudit(D) {
     ["What is not proven", "No frame-rate measurement in this page: the animations are transform and opacity, and the layout cases are argued, not profiled. The demo surfaces are scaled-down components, so their 34 px targets are not the 44 px targets of the real product. No screen-reader walkthrough of a toast, a dialog or a re-sort.", "warn"],
   ];
   /* pushed after the literal, because the row counts the rows of the table it is in */
-  rows.push(["Sections filled", `<span class="mono">${document.querySelectorAll("#studies-list .study").length}</span> study cards, <span class="mono">${document.querySelectorAll("#rmGrid .rm-card").length}</span> reduced-motion strips, <span class="mono">${rows.length + 1}</span> rows in this table — counted out of the live DOM after both builders ran. Both builders run in a guard, so a throw prints its own line inside the section that failed instead of leaving it empty.`, "ok"]);
+  rows.push(["Sections filled", `<span class="mono">${document.querySelectorAll("#studies-list .study").length}</span> study cards, <span class="mono">${document.querySelectorAll("#rmGrid .rm-card").length}</span> of ${STUDIES.length} studies rebuilt as reduced-motion strips below (a picked three, not the whole set), <span class="mono">${[...document.querySelectorAll("#studies-list .spec.rm dd")].filter((d) => d.textContent.trim()).length}</span> of ${STUDIES.length} study cards carrying a named replacement in their own spec, <span class="mono">${rows.length + 1}</span> rows in this table — all counted out of the live DOM after both builders ran. Both builders run in a guard, so a throw prints its own line inside the section that failed instead of leaving it empty.`, "ok"]);
   $("#audit-list").innerHTML = rows.map(([k, v, s]) => `<div class="audit-row"><span class="k">${k}</span><span class="v">${v}</span><span class="s ${s === "info" ? "" : s}">${s === "info" ? "" : s}</span></div>`).join("");
 }
 

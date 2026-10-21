@@ -1479,6 +1479,28 @@
         ]
       },
       {
+        "name": "reduced-insert",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-insert"
+        ]
+      },
+      {
+        "name": "checks-reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#audit"
+        ]
+      },
+      {
         "name": "audit",
         "page": "index.html",
         "width": 1400,

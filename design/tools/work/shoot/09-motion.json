@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/masthead.jpg",
-  "bytes": 258324,
+  "bytes": 252151,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/system.jpg",
-  "bytes": 319579,
+  "bytes": 317801,
   "px": "2800x1800",
   "actions_failed": []
  },
@@ -65,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/rules.jpg",
-  "bytes": 321286,
+  "bytes": 329923,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -89,7 +89,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/sheet.jpg",
-  "bytes": 215389,
+  "bytes": 211558,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -113,7 +113,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/modal.jpg",
-  "bytes": 212788,
+  "bytes": 213963,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -137,7 +137,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/toast.jpg",
-  "bytes": 204331,
+  "bytes": 206872,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -161,7 +161,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/insert.jpg",
-  "bytes": 204923,
+  "bytes": 198822,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -185,7 +185,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/reorder.jpg",
-  "bytes": 192999,
+  "bytes": 192736,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -209,7 +209,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/tabs.jpg",
-  "bytes": 203185,
+  "bytes": 202623,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -233,7 +233,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/skeleton.jpg",
-  "bytes": 184792,
+  "bytes": 184673,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -257,7 +257,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/like.jpg",
-  "bytes": 172379,
+  "bytes": 171682,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -283,7 +283,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/button.jpg",
-  "bytes": 192528,
+  "bytes": 192834,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -307,7 +307,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/accordion.jpg",
-  "bytes": 231116,
+  "bytes": 230610,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -331,7 +331,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/reveal.jpg",
-  "bytes": 165310,
+  "bytes": 164857,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -355,7 +355,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/pointer.jpg",
-  "bytes": 204363,
+  "bytes": 210720,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -379,7 +379,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/reduced.jpg",
-  "bytes": 357399,
+  "bytes": 375500,
   "px": "2800x1640",
   "actions_failed": []
  },
@@ -403,7 +403,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/reduced-sheet.jpg",
-  "bytes": 214196,
+  "bytes": 211443,
   "px": "2800x1400",
   "actions_failed": []
  },
@@ -427,8 +427,56 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/reduced-button.jpg",
-  "bytes": 193102,
+  "bytes": 193366,
   "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-insert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-insert"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-insert.jpg",
+  "bytes": 212579,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/checks-reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#audit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/checks-reduced.jpg",
+  "bytes": 392005,
+  "px": "2800x1800",
   "actions_failed": []
  },
  {
@@ -451,7 +499,7 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/audit.jpg",
-  "bytes": 329588,
+  "bytes": 392678,
   "px": "2800x1640",
   "actions_failed": []
  },
@@ -473,8 +521,8 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/phone.jpg",
-  "bytes": 1291790,
-  "px": "390x25850",
+  "bytes": 1339868,
+  "px": "390x26283",
   "actions_failed": []
  },
  {
@@ -495,8 +543,8 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/full.jpg",
-  "bytes": 1362835,
-  "px": "1400x10778",
+  "bytes": 1403441,
+  "px": "1400x11043",
   "actions_failed": []
  }
 ]

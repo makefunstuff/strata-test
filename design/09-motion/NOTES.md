@@ -130,6 +130,65 @@ underline without it — so none of it is load-bearing.
    21 shots, 0 problems, with a `pageerror` listener live.
 
 
+## Round 3 → round 4: a review read the reduced-motion page and the audit lied twice
+
+A reviewer loaded the page with `prefers-reduced-motion: reduce` and found two
+claims the page cannot support. Both are the same failure: a sentence typed where
+a number should have been measured.
+
+**The 40 ms that survived the media query.** Study 04 ("A row added, and the rows
+that give way") gave the displaced rows `delay: 40` — a literal, not a token — while
+everything else is on `--dur-*`. Under reduce every duration is 0 ms and that delay
+is not, so the reduced strip read `mid 18 ms · end 40 ms` on the one study whose own
+section says every duration on the page is 0 ms. The strip's frames are the proof of
+the reduced path, so the strip was proving the opposite of the sentence above it.
+Fixed: the offset is `D[1]`, and the study's own spec line changed from "neighbours
+40 ms behind" to "neighbours one `--dur-1` behind", with the reason in the spec —
+*a hard-coded beat would survive the media query*. The same class of bug was next
+door in study 03: the toast's life is `Math.max(D[3] * 9, 1)`, whose `1` floor left a
+`1 ms` frame in the reduced grid. It is `D[3] ? … : 0` now. Measured: all 45 frame
+labels across the page read `0 ms` under reduce, where they read 18, 40 and 1.
+
+**The hard-coded sentence about the longest animation.** The Checks row said
+"…and it is the toast's countdown bar…" as prose, next to a measured number. Under
+reduce the number becomes 40 ms (see above) and the study named by the data is study
+01, the sheet — so the row read "40 ms, in 'A row added…' — and it is the toast's
+countdown bar". The row is computed now, end to end: the span, its study, its number,
+the properties it animates, and a ceiling separated into what is allowed to be long
+(a countdown and a scroll reveal) and the longest *single* animation outside them.
+Two facts came out of writing it. The longest single animation outside those two
+kinds is **820 ms, in study 09** (the button that becomes its own progress), which
+crosses the page's own 360 ms line: the row says so and carries a **warn**, where the
+old prose row said "ok" and asserted that nothing exceeded 360 ms. That assertion
+was false in the full-motion page too — 820 ms was always there. The audit is allowed
+to fail the page it is printed on; that is the only way it is worth reading.
+
+**The counters the handoff quoted.** I wrote that the page reports "12 of 12 studies
+listed" and "12 of 12 studies have a named replacement". Neither string exists: the
+page said "12 study cards, 3 reduced-motion strips, 10 rows in this table", and the
+reduced panel holds **three** strips — a picked three, not the twelve. The substance
+was there (every study card carries its own reduced-motion line) and the numbers were
+wrong, in my summary, because I described the intent and not the DOM. So the page now
+says the coverage the summary claimed to have measured, and says it in the same words
+it can prove:
+
+- `#rmState`: *"prefers-reduced-motion: reduce is ON on this view · 3 of 12 studies
+  are rebuilt as a strip below, and all 12 of 12 name their replacement in their own
+  card — counted out of this DOM, not typed"*
+- the Checks table's last row: *"12 study cards, 3 of 12 studies rebuilt as
+  reduced-motion strips below (a picked three, not the whole set), 12 of 12 study
+  cards carrying a named replacement in their own spec, 10 rows in this table"*
+- `window.__build` gained `named`, `reduced` and `longest`, so a harness can read
+  `{studies: 12, rm: 3, audit: 10, named: 12, longest: 3240}` rather than infer.
+
+**The coverage hole that hid it.** `reduced.jpg`, `reduced-sheet.jpg` and
+`reduced-button.jpg` were all taken with `motion: reduce` — so the reduced section
+*was* screenshotted. The Checks table under reduce was not: `audit.jpg` is a
+full-motion shot, and the mismatch lived in the one section the reduce flag never
+reached. Two shots added: `checks-reduced.jpg` (the table with the flag on: 0 ms,
+REDUCE, warn rows) and `reduced-insert.jpg` (study 04 under reduce, where a surviving
+stagger would show as a non-zero frame label). 23 shots, 0 with problems.
+
 ## Weights
 The full desktop page is 10 778 px tall and the phone capture is 25 850 px,
 because twelve studies with three frames each stack into one column on a 390 px
