@@ -11,10 +11,21 @@ at against its own screenshots, fixed, and re-shot. Each folder carries a
 numbers that moved, what is still wrong, and ratings out of five.
 
 Start at [`index.html`](index.html) — the summary page, with thumbnails, the
-measured facts and the verdict. It uses ES modules and reads a generated file, so
-view it over http://: `node design/tools/serve.mjs` then
-<http://127.0.0.1:8080/index.html>. Every individual task page works over
-`file://` on its own.
+measured facts and the verdict.
+
+**Read this folder over http, not `file://`.** Measured, not assumed:
+`node tools/filecheck.mjs` opens every distinct page in the manifest twice in the same
+Chromium the screenshots come from — once over `file://`, once over http — with the same
+console, page and request listeners the screenshot audit uses. Of **27 pages, 4 open
+clean over `file://`**: `05-system/index.html` and the three pages of `10-redesign`. The
+other 23 do not, because ES module scripts and `fetch()` are blocked by CORS on `file://`
+and nine of the eleven task pages load a module — each one logging `blocked by CORS
+policy` / `ERR_FAILED` on its own script. Over http, 26 of 27 load with no errors; the
+27th is `10-redesign/before.html`, the deliberately-bad page whose fictional
+`watermark.png` is not in the repo. So: `node tools/serve.mjs` and open
+<http://127.0.0.1:8080/>. The report, page by page with the first error each logged, is
+[`tools/work/filecheck.md`](tools/work/filecheck.md) — paths in it are cut to `design/…`,
+because a CORS message quotes the absolute URL and this repository is public.
 
 ## The eleven
 
@@ -202,8 +213,16 @@ spread over one point) are the least useful numbers in this folder.
 The gallery links raw `.md` files (a task's `NOTES.md`, a run's report). They are
 served as text by GitHub Pages only because the repository root has a `.nojekyll`,
 which turns Pages' Jekyll step off; without it a linked `.md` is converted to
-`.html` and the link 404s. The gallery and the study page in `11-styles/` use ES
-modules and a generated data file, so they need http (or Pages), not `file://`.
+`.html` and the link 404s.
+
+The same kind of failure as the 09-motion rows lives in the prose of this folder: a
+sentence asserted instead of measured. The sentence about `file://` sat here claiming
+every task page opens on its own, and it was false for nine of eleven — the folder's
+own limits paragraph and `01-landing/NOTES.md` contradicted it. A tool now measures
+it (`tools/filecheck.mjs`) and the numbers above are its output. Two of the three
+findings in the last review round were of this shape, and the check that catches them
+is the one that runs the page: the shots, `dump.mjs --reduce --build --frames`,
+`links.mjs`, `filecheck.mjs`. Prose about a page is not evidence about a page.
 
 ## Commands
 
@@ -215,5 +234,7 @@ cd design/11-styles && node measure.mjs        # -> stats.js, the page's own num
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not
+node design/tools/dump.mjs 09-motion/index.html '#audit-list' --reduce --build --frames
+                                              # the reduced-motion page, as the browser sees it
 node design/tools/probe.mjs 11-styles s03-editorial.html   # font diagnostic
 ```
