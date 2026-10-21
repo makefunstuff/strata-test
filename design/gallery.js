@@ -34,7 +34,7 @@ const TASKS = [
     strong: "No dependencies, TypeScript only, and a capture pipeline that renders the program's own bytes: a browser reads the ANSI stream an ANSI writer produced, so what is shot is what the terminal draws.",
     weak: "Its own accessibility rating: 3. No screen reader, no mouse, no resize, and the colour ramp carries the level in the densest view.",
     scores: { Visual: 4, Layout: 4, Consistency: 5, Accessibility: 3, Originality: 4 },
-    verdict: "Real software, honestly captured, weak on the axes a terminal makes hard.", shots: 9
+    verdict: "Real software, honestly captured, weak on the axes a terminal makes hard.", shots: 11
   },
   {
     n: "05", folder: "05-system", title: "Halyard", kind: "Design system",
@@ -130,8 +130,13 @@ function table() {
   document.getElementById("score-table").innerHTML = head + `<tbody>${rows}</tbody>` + foot;
 
   const best = AXES.filter((k) => per[k].n > 3).sort((a, b) => per[b].avg - per[a].avg);
+  const floor = Math.min(...best.map((k) => per[k].avg));
+  const onFloor = best.filter((k) => per[k].avg === floor);
   document.getElementById("avg-note").innerHTML =
-    `Highest axis: <b>${best[0]}</b> (${fmt(per[best[0]].avg)}), lowest: <b>${best.at(-1)}</b> (${fmt(per[best.at(-1)].avg)}). ` +
+    `Highest axis: <b>${best[0]}</b> (${fmt(per[best[0]].avg)}), lowest: <b>${onFloor.join(" and ")}</b>`
+    + ` (${fmt(floor)}${onFloor.length > 1 ? ", tied" : ""}). `
+    + `Layout sits at ${fmt(per.Layout.avg)}, third of five — the claim in the prose is about the `
+    + `spread, not the mean: Layout is the only axis carrying a 3.5. ` +
     `Spread on ${best[0]}: ${fmt(per[best[0]].min)}–${fmt(per[best[0]].max)}. ` +
     `Lowest single score in the table: <b>3</b> — originality on 02 Gridwatch, and accessibility on 04 logtrail. ` +
     `Fidelity is scored only on 11, the one task that asks for styles by name.`;
@@ -159,7 +164,7 @@ function cards(counts) {
         <p class="links">
           <a href="${t.folder}/index.html">${t.folder}/index.html</a>
           <a href="${t.folder}/NOTES.md">NOTES.md</a>
-          <a href="${t.folder}/shots/">${counts[t.folder] ?? t.shots} shots</a>
+          <a href="${t.folder}/shots/index.html">${counts[t.folder] ?? t.shots} shots</a>
         </p>
       </div>
     </article>`).join("");
@@ -208,8 +213,11 @@ function verdict(per) {
     wrong.</p>
 
   <p><b>Where it is weak, in three named places.</b>
-    First, <b>structure</b>: Layout is the lowest axis (${fmt(per.Layout.avg)}) and the only 3.5 in
-    the folder is task 11's, where the weakness is visible — a 40 px numeral over a caps label, a
+    First, <b>structure</b>. The averages do not say this and the spread does: Layout averages
+    ${fmt(per.Layout.avg)}, third of five behind Consistency and Originality, with Visual and
+    Accessibility tied last at ${fmt(per.Visual.avg)} — accessibility's floor is task 04's 3, in a
+    terminal where colour carries the level. What marks Layout is that it is the only axis carrying
+    a 3.5, task 11's, and there the weakness is visible: a 40 px numeral over a caps label, a
     three-column feature grid, two plan panels and a copy-left hero recur across the nine styles, so
     restyling changed the surfaces and not the argument's shape. The model styles well inside a
     layout it has reached, and reaches for the same three layouts.
@@ -230,6 +238,24 @@ function verdict(per) {
     translucent panel is a contrast the audit measures at 11.34:1 against a solid card and cannot
     measure at all over the middle of a drifting blob. Style fidelity scores 4: the range is real, and
     it is skin-deep in structure.</p>
+
+  <p><b>Against a strong frontier model.</b> No frontier arm was run in this repo, so this is a
+    judgement against expectation and it is labelled as one. What was made is at the level a frontier
+    coding agent (Claude-4/Opus-class, GPT-5-class, Gemini-2.5-Pro-class) reaches on briefs of this
+    size: eleven complete static pages, no build step, ES modules that load, self-critique rounds
+    that move measured numbers, audits that report their own warnings. It is behind on the same three
+    edges the folder already names — drawn marks (06's logo), structural originality (three layouts
+    recur), typographic metrics at the edges (10.5 px tracked capitals; a pixel face's quarter-em
+    x-height at reading size) — and behind on self-verification across long edits: the 09-motion
+    regression survived a code change because the screenshots were not re-taken, and the page's own
+    audit did not count its own rows until the review asked. The one <i>measured</i> neighbour in this
+    repo is <code>whole-repo-qa/README.md</code>: this model against the router's dense 27B on
+    100K-token whole-repo Q&amp;A — 25/25 answers each, line citations 23/25 against 25/25, and about
+    2.9× faster to first token. Same shape as this gallery: the answers are right, and the precision
+    at the edges is where it loses. What is not about quality is cost: these eleven briefs ran on a
+    home GPU box at ~2 400 tok/s prefill with no API meter, in a folder that is set up for the A/B it
+    lacks — the eleven briefs are written, the harness is one command, and a frontier arm would be
+    scored by the same screenshots.</p>
 
   <p><b>Reasoning about trade-offs.</b> Each task's notes carry weights (what was traded for what), a
     round-1 → round-2 of measured fixes, and named compromises: task 09 chose a scrub strip over a

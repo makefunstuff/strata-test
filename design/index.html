@@ -14,7 +14,10 @@
 <header class="mast">
   <p class="crumbs"><a href="../index.html">strata-test</a> · design gallery</p>
   <h1>Eleven design briefs, built and measured</h1>
-  <p class="lede">Every page in this folder was built by the same model, from a written brief, as plain
+  <p class="lede">Every page in this folder was built by the same model — <b>Swift 1.5 Flash-Next</b>
+    (<code>strata/swift-1.5-flash-next-iq3_s</code>, the IQ3_S quant of Qwen3.8-Flash-Next, 131K
+    context, served by Strata on a home GPU box) working as the agent <b>pi</b> — from a written
+    brief, as plain
     static files with no build step, screenshotted in headless Chromium, inspected against its own
     screenshots, then fixed and re-shot. Each folder carries a <code>NOTES.md</code> with a
     self-critique, a list of remaining weak points, and ratings out of five. This page is the summary:
@@ -99,6 +102,19 @@
         measured; being read is not.</li>
       <li><strong>Self-assessment.</strong> The ratings, the "remaining weak points" and the verdict on
         this page are all written by the thing being judged. The scores are the least reliable numbers here.</li>
+      <li><strong>Coverage is the manifest.</strong> The audit only measures the shots the manifest
+        asks for. <code>04-tui</code> had nine shots, every one of them wide, and at 390 px its page
+        scrolled sideways by 282 px — a fact nobody knew because nobody had asked for 390.
+        <code>06-identity</code> had a phone shot and 63 px of overflow that the report printed and
+        nobody read. Both measure 0 px now, <code>04-tui</code> has two 390 px shots, and every task's
+        <code>shots/</code> folder is a page carrying its own audit numbers. A width that is never
+        requested is a width that is never measured.</li>
+      <li><strong>No frontier arm.</strong> The verdict's comparison with a strong frontier model is a
+        judgement against expectation, not a measured A/B: no Claude-4/Opus-, GPT-5- or
+        Gemini-2.5-Pro-class page was built in this repo. The one measured neighbour is
+        <code>whole-repo-qa/README.md</code> — this model against the router's dense 27B on 100K-token
+        whole-repo Q&amp;A. The briefs, the manifest and the harness are the shape of a real A/B; the
+        second arm is not here.</li>
       <li><strong>One drop.</strong> A twelfth brief — four conflicting-constraint problems with written
         decision records (dense data at AA on a 390 px phone; a brand palette that fails contrast; a
         playful brand in a clinical form; one console for beginners and experts) — was dropped by the
@@ -113,7 +129,8 @@
 <footer>
   <p>Eleven design tasks, <span id="foot-shots">—</span> screenshots, one headless harness.
     Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>,
-    branch work/7-strata-design-capability-evalu. Built by Strata, running pi headless.</p>
+    branch work/7-strata-design-capability-evalu. Built by Strata running pi headless, model
+    <code>strata/swift-1.5-flash-next-iq3_s</code>.</p>
 </footer>
 
 <script src="gallery.js" type="module"></script>
