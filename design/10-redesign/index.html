@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 · Redesign: the estuary portal, before and after</title>
+<meta name="description" content="A civic flood-information portal redesigned: twenty changes, each with its reason, and a measurement of both pages from the same script.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20rx='4'%20fill='%2316262b'/%3E%3Cpath%20d='M5%2016l7-7%207%207'%20fill='none'%20stroke='%2357c98d'%20stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<style>
+:root {
+  --ink: #16262b; --ink-2: #3d5259; --ink-3: #5d6f75;
+  --paper: #ffffff; --paper-2: #f4f7f4; --paper-3: #e9efeb;
+  --line: #d5ddd6; --line-2: #9fada4;
+  --accent: #167057; --accent-soft: #e3f0e9;
+  --before: #a13327; --before-soft: #fbe9e5;
+  --after: #167057; --after-soft: #e3f0e9;
+  --flood: #8a5300; --flood-soft: #fbf0dd;
+  --display: "Fraunces Variable", Fraunces, Georgia, serif;
+  --text: Inter, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 4px;
+}
+* { box-sizing: border-box }
+html { background: #fff; scroll-behavior: smooth }
+body { margin: 0; color: var(--ink); font: 400 16px/1.6 var(--text); background: var(--paper) }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; letter-spacing: -0.015em; margin: 0 }
+h1 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.05 }
+h2 { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15 }
+h3 { font-size: 18px }
+p { margin: 0 0 14px }
+a { color: var(--accent) }
+code, .mono { font-family: var(--mono); font-size: 0.9em }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px }
+section.blk { padding: 46px 0; border-bottom: 1px solid var(--line) }
+.eyebrow { font: 600 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px }
+.eyebrow b { color: var(--accent) }
+.lede { font-size: 18px; color: var(--ink-2); max-width: 74ch }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+
+/* masthead */
+.mast { padding: 54px 0 34px; border-bottom: 1px solid var(--line) }
+.mast-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr); gap: 40px; align-items: end }
+.mast .lede { margin-top: 18px }
+.facts { display: grid; gap: 12px; font-size: 13.5px; color: var(--ink-2) }
+.facts div { border-left: 2px solid var(--line-2); padding-left: 12px }
+.facts b { color: var(--ink); display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; font-family: var(--mono); color: var(--ink-3); margin-bottom: 3px }
+.pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px }
+.pill { font: 500 12px var(--mono); padding: 5px 9px; border: 1px solid var(--line-2); border-radius: 99px; color: var(--ink-2) }
+.pill.b { border-color: #e0bdb6; background: var(--before-soft); color: #7b2318 }
+.pill.a { border-color: #bcdbcd; background: var(--after-soft); color: #0f5340 }
+
+/* the measurement */
+table.m { border-collapse: collapse; width: 100%; margin-top: 18px; font-size: 14.5px }
+table.m th, table.m td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top }
+table.m thead th { font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); border-bottom: 2px solid var(--line-2) }
+table.m td.mz { font-weight: 500 }
+table.m td.mz small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12.5px; margin-top: 2px }
+table.m td.v { font-family: var(--mono); white-space: nowrap }
+td.bad { color: var(--before) }
+td.good { color: var(--after) }
+td.mid { color: var(--ink-2) }
+.mnote { font-size: 13.5px; color: var(--ink-3); background: var(--paper-2); border-left: 3px solid var(--line-2); padding: 12px 14px; margin-top: 18px; max-width: 82ch }
+.spin { font: 500 13px var(--mono); color: var(--ink-3) }
+
+/* the two pages */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 20px }
+.pair figure { margin: 0 }
+.pair .lab { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 9px; border-radius: var(--r); display: inline-block; margin-bottom: 8px }
+.lab.b { background: var(--before-soft); color: #7b2318 }
+.lab.a { background: var(--after-soft); color: #0f5340 }
+.pair img, .shots img { width: 100%; display: block; border: 1px solid var(--line); border-radius: var(--r); background: #fff }
+.pair figcaption { font-size: 13px; color: var(--ink-3); margin-top: 7px }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0 0 }
+
+/* the change log */
+.log { list-style: none; margin: 22px 0 0; padding: 0; border-top: 1px solid var(--line) }
+.log > li { padding: 22px 0; border-bottom: 1px solid var(--line) }
+.ch { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 18px }
+.ch > .n { font: 600 13px var(--mono); color: var(--accent); padding-top: 3px }
+.ch h3 { margin-bottom: 12px; font-size: 20px }
+.ch .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; font-size: 14.5px }
+.ch .grid > div { border-left: 2px solid var(--line); padding-left: 12px }
+.ch .grid > div.prob { border-color: #dcb2ab }
+.ch .grid > div.chg { border-color: #bcdbcd }
+.ch .grid > div.prn { border-color: var(--line-2) }
+.ch .grid b.k { display: block; font: 600 10.5px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); margin-bottom: 5px }
+.ch .shots { grid-column: 1 / -1; margin-top: 16px }
+.ch .shots img { border: 1px solid var(--line) }
+.ch .shots figcaption { font-size: 12.5px; color: var(--ink-3); margin-top: 6px }
+.ch .shots .cap { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); margin: 6px 0 0 }
+.kv { font-family: var(--mono); font-size: 0.92em }
+
+/* kept / left */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 18px }
+.two ul { margin: 8px 0 0; padding-left: 20px }
+.two li { margin: 7px 0; font-size: 15px }
+.two h3 { font-size: 17px; margin-bottom: 4px }
+.tag { font: 600 10.5px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 7px; border-radius: 3px }
+.tag.keep { background: var(--after-soft); color: #0f5340 }
+.tag.left { background: var(--flood-soft); color: #5c3700 }
+footer.foot { padding: 30px 0 50px; color: var(--ink-3); font-size: 13.5px }
+iframe.probe { position: fixed; left: -20000px; top: 0; border: 0; width: 1400px; height: 1400px; visibility: hidden }
+@media (max-width: 900px) {
+  .mast-grid, .pair, .two { grid-template-columns: 1fr }
+  .ch .grid { grid-template-columns: 1fr }
+  .shots { grid-template-columns: 1fr }
+}
+@media (max-width: 700px) {
+  body { font-size: 16.5px }
+  .wrap { padding: 0 15px }
+  table.m { font-size: 14px }
+  table.m td.v { white-space: normal }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } }
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap mast-grid">
+    <div>
+      <p class="eyebrow">10 · Redesign · <b>the estuary portal</b> · every change, with its reason</p>
+      <h1>Eleven pixels of grey, and a flood warning.</h1>
+      <p class="lede">The page on the left is a civic flood-information portal as found: eleven
+        columns of tide data in 10 px grey, a carousel that advances every 4.5 seconds, a cookie
+        strip whose only path is “agree”, and an answer to “what do I do now?” that lives in the
+        FAQ, below the fold, in the language of the Order. The page on the right is the same
+        content, re-ordered and rewritten, with the same tide numbers, cell for cell.</p>
+      <div class="pill-row">
+        <span class="pill b">before · 960 px fixed · 11 px · 3 columns</span>
+        <span class="pill a">after · fluid · 16 px · 1 column + a rail</span>
+        <span class="pill">20 changes, each with a reason</span>
+        <span class="pill">the numbers in the tide table did not move</span>
+        <span class="pill">the redesign costs 778 KB, and the table says so</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div><b>Subject</b>A public flood &amp; tide portal for the Harrow Estuary Authority — the same authority as tasks 07 and 08.</div>
+      <div><b>The brief</b>Redesign it, and give the reason for every change.</div>
+      <div><b>Method</b>One script measures both pages in a browser, at 1400 px and at 390 px. The table below is its output, not my notes.</div>
+      <div><b>The honest headline</b><span id="mastDelta">The answer moved up; the page grew.</span></div>
+      <div><b>Honesty</b>The “as found” page is a composite I built for this exercise from patterns in real civic portals. It is not one site's page.</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="blk" id="measures">
+    <div class="wrap">
+      <p class="eyebrow">01 · <b>The measurement</b> — one script, both pages</p>
+      <h2>What the pages do, counted</h2>
+      <p class="lede">Each number below is measured in the browser from the two files in this folder,
+        in an off-screen frame at 1400 px, and at 390 px where the row says phone. The same function
+        runs on both pages, so a row cannot be good on one side and bad on the other by
+        construction. It is re-measured on every load of this page.</p>
+      <div id="mbox"><p class="spin">measuring…</p></div>
+      <p class="mnote"><b>What this cannot measure:</b> whether a frightened resident understands the
+        page, how long it takes them, whether the five nav labels match their words, and whether the
+        plain-language warning is right about the water. Those need residents. What it can measure is
+        the distance between a page and the person reading it in the rain, at arm's length, on a
+        phone: contrast, target size, the length of the scroll to the answer, sideways scroll, the
+        number of things that move on their own.</p>
+    </div>
+  </section>
+
+  <section class="blk" id="pages">
+    <div class="wrap">
+      <p class="eyebrow">02 · <b>The two pages</b>, full length</p>
+      <h2>The same content, at a size a person can read</h2>
+      <p class="lede" id="pagesDelta">The before page is 960 px of three columns; the after page is one column and a rail. Both are measured in the same pass.</p>
+      <div class="pair">
+        <figure>
+          <span class="lab b">Before</span>
+          <img src="shots/before-full.jpg" alt="The full before page: a grey utility bar, a header, a nine-link navy nav, a red jargon banner, a photo carousel, a yellow scrolling ticker, then three columns: news and an eleven-column tide table on the left, a sidebar of six widgets in the middle, a narrow third column of related links on the right, and a newsletter box in the middle column." width="1400" height="2570">
+          <figcaption id="figBefore">960 px fixed, three columns of 545 / 220 / 190 px, HEIGHT1 tall. The newsletter sits between the notices and the FAQ; the only answer to “what do I do” is FAQ item two.</figcaption>
+        </figure>
+        <figure>
+          <span class="lab a">After</span>
+          <img src="shots/after-full.jpg" alt="The full after page: a masthead with the phone number for flooding and a labelled search, five nav links, then a status panel with the flood warning in plain language, four things to do, an address check and the current tide, then one column of tide times, notices and news with a narrow rail of actions on the right." width="1400" height="2340">
+          <figcaption id="figAfter">One reading column at 68 characters, one rail of actions, HEIGHT2 tall. The warning, the times and the four things to do are above the fold.</figcaption>
+        </figure>
+      </div>
+      <div class="pair" style="margin-top:34px">
+        <figure>
+          <span class="lab b">Before · phone</span>
+          <img src="shots/before-phone.jpg" alt="The before page at 390 px: the 960 pixel fixed layout overflows, so the capture is 960 pixels wide showing the page cut off, with a horizontal scrollbar implied.">
+          <figcaption>At 390 px the page is 960 px wide: <span class="kv">scrollWidth 960</span> against a viewport of 390. The reader pans sideways and zooms to read a tide table.</figcaption>
+        </figure>
+        <figure>
+          <span class="lab a">After · phone</span>
+          <img src="shots/after-phone.jpg" alt="The after page at 390 px: a single column with the warning panel, the address check, the tide times as seven cards, notices, news, and the actions rail.">
+          <figcaption>Fluid, one column, the tide table as seven cards with the flood-line days tinted. No sideways scroll.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="log">
+    <div class="wrap">
+      <p class="eyebrow">03 · <b>The change log</b> — twenty changes, three lines each</p>
+      <h2>Every change, and the reason it was made</h2>
+      <p class="lede">For each: what the page did, what it does now, and the rule the change
+        comes from. Where a change can be shown, it is shown as a pair of frames of the two
+        real pages. Where a change can be counted, the count is in the row.</p>
+      <ol class="log" id="log-list"></ol>
+    </div>
+  </section>
+
+  <section class="blk" id="kept">
+    <div class="wrap">
+      <p class="eyebrow">04 · <b>What did not change</b></p>
+      <h2>A redesign is not a rewrite of everything</h2>
+      <div class="two">
+        <div>
+          <span class="tag keep">Untouched</span>
+          <h3>The facts, and the words that carry the law</h3>
+          <ul>
+            <li><b>Every tide number, cell for cell.</b> Seven days, four waters a day, the spring range, the datum. The redesign's own audit compares the two tables cell by cell: <span class="kv" id="tideDiff">—</span>.</li>
+            <li><b>The legal identity.</b> <span class="kv">TID/2024/1187</span>, the designated area's name, the 4.20 m threshold, the issue time, the review time, and the official PDF, which is still the record.</li>
+            <li><b>The register where it is legal.</b> “Flood Warning”, “in force”, “Designated Area” are defined terms. Plain language means sentences a person can act on, not a paraphrase of a statutory instrument.</li>
+            <li><b>The four news items, the seven notices, the three FAQ subjects, the eighteen footer destinations, the opening hours, the address.</b> Nothing was cut because it was boring to lay out.</li>
+            <li><b>The Authority's name and mark</b> — the mark is a new drawing of the same idea (a meridian and a tide line), at 24 px, one colour.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="tag left">Left undone</span>
+          <h3>What this page is not</h3>
+          <ul>
+            <li><b>The address index is three demo rows.</b> The real answer needs the street list in the Designated Areas Order, and a search over it. The lookup shows what the interaction is for; it is not the interaction as shipped.</li>
+            <li><b>One page out of forty.</b> A portal is a system: the news template, the document pages, the search results and the grant form all carry the same sins. Task 05 is the system; this is one page inside it.</li>
+            <li><b>The five nav labels came from the questions on this page</b>, not from residents. A card sort with twenty households would test “Flood status” against “Am I at risk?”.</li>
+            <li><b>No translations.</b> In a designated area where a sixth of households have a first language that is not English, a plain-language English page is step one of a multilingual page, not a substitute for it.</li>
+            <li><b>No screen-reader walkthrough, no forced-colours pass, no field test in rain.</b> The claims about the phone are measured at 390 px in a browser, not in a car.</li>
+            <li><b>The “2 minutes” claim about SMS</b> is a design claim about a service, not a measured one. It is the kind of sentence a designer writes and a service owner must delete or prove.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="method">
+    <div class="wrap">
+      <p class="eyebrow">05 · <b>Method</b>, so the numbers can be checked</p>
+      <h2>How the table is made</h2>
+      <div class="two">
+        <div>
+          <h3>The script</h3>
+          <p class="lede" style="font-size:16px">This page loads <span class="kv">before.html</span> and
+            <span class="kv">after.html</span> into two off-screen frames, one 1400 px wide and one
+            390 px, and runs one function over each document: walk the elements that carry text,
+            resolve the computed foreground and the first non-transparent background behind them,
+            compute the contrast ratio, and count. The same rules for both pages, in the same
+            pass, on every load.</p>
+          <p style="font-size:14.5px;color:var(--ink-2)">The rows are the ones that decide whether a
+            page is usable: contrast, the smallest type, target heights, unlabelled controls,
+            landmarks, headings, the tab order, the number of facts that exist only as PDFs,
+            the scroll distance to the answer, and sideways scroll on a phone. The function is
+            <span class="kv">case.js</span> in this folder, and the two pages are next to it.</p>
+        </div>
+        <div>
+          <h3>What I would add next</h3>
+          <p style="font-size:15px">A keyboard-only pass, recorded. A reader's linearisation of both
+            pages, read aloud. A forced-colours rendering. A render-cost measure of the two pages on
+            a throttled 3G — where the honest finding is that the <em>before</em> page wins, being one
+            inline file with no webfonts, and the redesign has to earn its 778 KB back by subsetting
+            and preloading. And the tide-table diff as a test in CI, because the
+            rule “the numbers must not move” is only real if something checks it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Fictional authority, invented data, one page per file, no build step, no framework. The “as
+      found” page is a composite built for this exercise. Screenshots are headless Chromium, 1400 px
+      and 390 px. The measurement table is computed in the browser from the two files in this
+      folder — see <span class="kv">case.js</span>.</p>
+  </div>
+</footer>
+
+<iframe class="probe" id="probe-d-b" title="measurement frame"></iframe>
+<iframe class="probe" id="probe-d-a" title="measurement frame"></iframe>
+<iframe class="probe" id="probe-p-b" title="measurement frame" style="width:390px;height:844px"></iframe>
+<iframe class="probe" id="probe-p-a" title="measurement frame" style="width:390px;height:844px"></iframe>
+<script src="case.js"></script>
+</body>
+</html>

@@ -1,0 +1,2277 @@
+[
+  {
+    "task": ".",
+    "title": "Design gallery — the frame page",
+    "shots": [
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "range",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#range"
+        ]
+      },
+      {
+        "name": "table",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1050,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#table"
+        ]
+      },
+      {
+        "name": "cards",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1400,
+        "dpr": 2,
+        "settle": 1400,
+        "actions": [
+          "reveal:#cards"
+        ]
+      },
+      {
+        "name": "verdict",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1400,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#verdict"
+        ]
+      },
+      {
+        "name": "limits",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1050,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#limits"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "settle": 1600,
+        "full": true
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 3,
+        "settle": 1600,
+        "full": true
+      }
+    ]
+  },
+  {
+    "task": "01-landing",
+    "title": "Foldline — landing page",
+    "shots": [
+      {
+        "name": "hero",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": []
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true,
+        "actions": []
+      },
+      {
+        "name": "features",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('features').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+        ]
+      },
+      {
+        "name": "fold",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('how').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+        ]
+      },
+      {
+        "name": "pricing-annual",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:.billing .seg[data-cycle=annual]",
+          "eval:document.getElementById('pricing').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+        ]
+      },
+      {
+        "name": "faq-open",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:.faq li:nth-child(2) summary",
+          "eval:document.getElementById('faq').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+        ]
+      },
+      {
+        "name": "form-error",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:document.getElementById('get').scrollIntoView({block:'center'})",
+          "type:#email:mairi at kestrel",
+          "click:#signup button[type=submit]"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": []
+      },
+      {
+        "name": "phone-full",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "actions": []
+      },
+      {
+        "name": "phone-menu",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "click:.navtoggle"
+        ]
+      }
+    ]
+  },
+  {
+    "task": "02-dashboard",
+    "title": "Gridwatch — depot control tower",
+    "shots": [
+      {
+        "name": "light",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": []
+      },
+      {
+        "name": "dark",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true,
+        "actions": []
+      },
+      {
+        "name": "dark-full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "chart-hover",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "hover:#area"
+        ]
+      },
+      {
+        "name": "filtered",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#depotChecks input[value=awl]",
+          "click:#depotChecks input[value=stk]",
+          "type:#q:hall"
+        ]
+      },
+      {
+        "name": "sorted-buses",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:th button.sort[data-key=buses]",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+        ]
+      },
+      {
+        "name": "compact",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#density",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+        ]
+      },
+      {
+        "name": "empty",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "eval:document.querySelectorAll('#depotChecks input').forEach(i=>{i.checked=false;i.dispatchEvent(new Event('change',{bubbles:true}))})",
+          "eval:document.getElementById('table').scrollIntoView({block:'center'})"
+        ]
+      },
+      {
+        "name": "toast",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": [
+          "click:#export"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "actions": [
+          "click:#theme"
+        ]
+      },
+      {
+        "name": "phone-drawer",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "click:#drawer"
+        ]
+      },
+      {
+        "name": "phone-top",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()"
+        ]
+      },
+      {
+        "name": "phone-table",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "actions": [
+          "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+          "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-60)"
+        ]
+      }
+    ]
+  },
+  {
+    "task": "03-mobile",
+    "title": "Ternmark — birding log, nine screens",
+    "shots": [
+      {
+        "name": "board",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "actions": []
+      },
+      {
+        "name": "board-full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "full": true,
+        "actions": []
+      },
+      {
+        "name": "board-phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "today",
+        "page": "app.html?screen=today&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-1",
+        "page": "app.html?screen=log&step=1&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-2",
+        "page": "app.html?screen=log&step=2&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "log-3",
+        "page": "app.html?screen=log&step=3&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "detail",
+        "page": "app.html?screen=detail&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list",
+        "page": "app.html?screen=list&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "trip",
+        "page": "app.html?screen=trip&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "onboard",
+        "page": "app.html?screen=onboard&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "offline",
+        "page": "app.html?screen=today&state=offline&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "empty",
+        "page": "app.html?screen=today&state=empty&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "loading",
+        "page": "app.html?screen=today&state=loading&nobar=1",
+        "motion": "reduce",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "no-location",
+        "page": "app.html?screen=today&state=denied&nobar=1",
+        "actions": []
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list-search",
+        "page": "app.html?screen=list&nobar=1",
+        "actions": [
+          "type:#listSearch:avocet"
+        ]
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "list-empty",
+        "page": "app.html?screen=list&nobar=1",
+        "actions": [
+          "type:#listSearch:goldfinch"
+        ]
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "name": "saved-toast",
+        "page": "app.html?screen=log&step=3&nobar=1",
+        "actions": [
+          "click:#saveSighting"
+        ]
+      },
+      {
+        "name": "app-standalone",
+        "page": "app.html",
+        "width": 1440,
+        "height": 900,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "04-tui",
+    "title": "logtrail — a log tail in the terminal",
+    "shots": [
+      {
+        "name": "board",
+        "page": "index.html",
+        "width": 1500,
+        "height": 1100,
+        "full": true,
+        "dpr": 2,
+        "settle": 2.6,
+        "actions": []
+      },
+      {
+        "name": "stream",
+        "page": "capture.html?frame=stream",
+        "width": 1660,
+        "height": 940,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "endpoints",
+        "page": "capture.html?frame=endpoints",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "help",
+        "page": "capture.html?frame=help",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "filtered",
+        "page": "capture.html?frame=filtered",
+        "width": 1660,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "empty",
+        "page": "capture.html?frame=empty",
+        "width": 1660,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "frozen",
+        "page": "capture.html?frame=frozen",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "light",
+        "page": "capture.html?frame=light",
+        "width": 1660,
+        "height": 830,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "narrow",
+        "page": "capture.html?frame=narrow",
+        "width": 980,
+        "height": 660,
+        "dpr": 2,
+        "settle": 1.4,
+        "actions": []
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "press:Escape"
+        ]
+      },
+      {
+        "name": "phone-frames",
+        "page": "index.html",
+        "width": 390,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "press:Escape",
+          "reveal:.frames"
+        ]
+      }
+    ]
+  },
+  {
+    "task": "05-system",
+    "title": "Halyard — one stylesheet, four themes, 24 components",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 950,
+        "full": true,
+        "dpr": 2,
+        "settle": 2.2,
+        "actions": []
+      },
+      {
+        "name": "overview",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1.6,
+        "actions": []
+      },
+      {
+        "name": "colour",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('colour').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "type",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('type').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "space",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('space').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-paper",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-deck",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"deck\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-field",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"field\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "kit-terminal",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"terminal\"]",
+          "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "patterns",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "table-empty",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1500,
+        "dpr": 2,
+        "actions": [
+          "reveal:#pat-table",
+          "click:#themes button[data-set='deck']",
+          "type:#pat-search:harbourlight"
+        ]
+      },
+      {
+        "name": "form-invalid",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+          "type:#f-email:not-an-email",
+          "key:Tab",
+          "click:#f-submit"
+        ],
+        "settle": 1.6
+      },
+      {
+        "name": "modal",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+          "click:#open-modal"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "rules",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "actions": [
+          "eval:document.getElementById('rules').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "tokens-deck",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "actions": [
+          "click:#themes button[data-set=\"deck\"]",
+          "eval:document.getElementById('tokens').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+        ],
+        "settle": 1.4
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "settle": 2,
+        "full": false,
+        "actions": [
+          "reveal:#mobile"
+        ]
+      },
+      {
+        "name": "phone-kit",
+        "page": "index.html",
+        "width": 2050,
+        "height": 1060,
+        "phone": false,
+        "dpr": 1.5,
+        "actions": [
+          "reveal:#mobile"
+        ],
+        "settle": 2,
+        "full": false
+      },
+      {
+        "name": "phone-tokens",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "actions": [
+          "reveal:#tokens"
+        ],
+        "settle": 2,
+        "full": false
+      }
+    ]
+  },
+  {
+    "task": "06-identity",
+    "title": "Meridian Hydrographic — mark, type, 32 icons",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "full": true,
+        "dpr": 1,
+        "actions": []
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "actions": []
+      },
+      {
+        "name": "construction",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#construction"
+        ]
+      },
+      {
+        "name": "lockups",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#lockups"
+        ]
+      },
+      {
+        "name": "scale",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#scale"
+        ]
+      },
+      {
+        "name": "onebit",
+        "page": "index.html",
+        "width": 1300,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#onebit"
+        ]
+      },
+      {
+        "name": "grid",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#grid"
+        ]
+      },
+      {
+        "name": "wall",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1180,
+        "dpr": 2,
+        "actions": [
+          "reveal:#icons"
+        ]
+      },
+      {
+        "name": "sizes",
+        "page": "index.html",
+        "width": 1200,
+        "height": 620,
+        "dpr": 2,
+        "actions": [
+          "reveal:#icons",
+          "scroll:+1100"
+        ]
+      },
+      {
+        "name": "inuse",
+        "page": "index.html",
+        "width": 1300,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse"
+        ]
+      },
+      {
+        "name": "inuse-tabs",
+        "page": "index.html",
+        "width": 1300,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse",
+          "scroll:+620"
+        ]
+      },
+      {
+        "name": "misuse",
+        "page": "index.html",
+        "width": 1300,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#misuse"
+        ]
+      },
+      {
+        "name": "toolbar-on",
+        "page": "index.html",
+        "width": 1200,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#inuse",
+          "click:#toolbar .tb:nth-child(3)"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "dpr": 2,
+        "full": true,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "07-dataviz",
+    "title": "Harrow Estuary — thirty years of tide data, six figures",
+    "shots": [
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "full": true,
+        "settle": 700,
+        "actions": []
+      },
+      {
+        "name": "claim",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "claim-cursor",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-claim",
+          "eval:document.querySelector(\"#claim svg\").__cursor.set(26)"
+        ]
+      },
+      {
+        "name": "gauges",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-gauges"
+        ]
+      },
+      {
+        "name": "gauges-cross",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-gauges",
+          "eval:document.querySelector(\"#gauges svg\").__hover(34)"
+        ]
+      },
+      {
+        "name": "boxes",
+        "page": "index.html",
+        "width": 1400,
+        "height": 720,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-boxes"
+        ]
+      },
+      {
+        "name": "stack",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-stack",
+          "eval:document.querySelector(\"#stack svg\").__cursor.set(10)"
+        ]
+      },
+      {
+        "name": "slope",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-slope",
+          "eval:const g=[...document.querySelectorAll(\"#slope .slope\")];g[0].dispatchEvent(new PointerEvent(\"pointerenter\",{bubbles:true}));"
+        ]
+      },
+      {
+        "name": "calendar",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-calendar"
+        ]
+      },
+      {
+        "name": "numbers",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "click:#nums button[data-set=\"numbers\"]",
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "feet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "click:#units button[data-unit=\"ft\"]",
+          "click:#nums button[data-set=\"numbers\"]",
+          "reveal:#fig-claim"
+        ]
+      },
+      {
+        "name": "feet-slope",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "click:#units button[data-unit=\"ft\"]",
+          "reveal:#fig-slope"
+        ]
+      },
+      {
+        "name": "reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#fig-claim",
+          "eval:document.querySelector(\"#claim svg\").__cursor.set(4)"
+        ]
+      },
+      {
+        "name": "keyboard",
+        "page": "index.html",
+        "width": 1400,
+        "height": 780,
+        "dpr": 2,
+        "actions": [
+          "reveal:#fig-boxes",
+          "eval:document.querySelector(\"#boxes svg\").focus()",
+          "eval:document.querySelector(\"#boxes svg\").__cursor.set(9)"
+        ]
+      },
+      {
+        "name": "lied",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#lied"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "settle": 700,
+        "actions": []
+      },
+      {
+        "name": "print",
+        "page": "index.html",
+        "width": 1100,
+        "height": 900,
+        "print": true,
+        "full": true,
+        "settle": 500,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "08-form",
+    "title": "Flood Resilience grant — the six-step application",
+    "shots": [
+      {
+        "name": "step1",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1040,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "revealed",
+        "page": "index.html",
+        "width": 1180,
+        "height": 920,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:.opt:has(input[name=zone][value=yes])"
+        ]
+      },
+      {
+        "name": "blocked",
+        "page": "index.html",
+        "width": 1180,
+        "height": 920,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:.opt:has(input[name=owns][value=no])",
+          "click:#step-eligibility .actions .btn"
+        ]
+      },
+      {
+        "name": "works",
+        "page": "index.html?demo=file&go=works",
+        "width": 1180,
+        "height": 1200,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "errors",
+        "page": "index.html",
+        "width": 1180,
+        "height": 1040,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-eligibility .actions .btn"
+        ]
+      },
+      {
+        "name": "lookup",
+        "page": "index.html?go=property",
+        "width": 1180,
+        "height": 1000,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "eval:window.dispatchEvent(new Event('noop'))",
+          "type:#lookup:2 Quay",
+          "click:#lookupBtn",
+          "wait:800",
+          "click:#results button"
+        ]
+      },
+      {
+        "name": "review",
+        "page": "index.html?demo=fill&go=review",
+        "width": 1180,
+        "height": 1200,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ]
+      },
+      {
+        "name": "submitted",
+        "page": "index.html?demo=fill&go=review",
+        "width": 1180,
+        "height": 1140,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-review .btn.big",
+          "wait:1200"
+        ]
+      },
+      {
+        "name": "draft",
+        "page": "index.html",
+        "width": 1180,
+        "height": 720,
+        "actions": [
+          "eval:localStorage.clear()",
+          "eval:localStorage.setItem('hea-frg-draft-v1', JSON.stringify({at:new Date().toISOString(),step:'works',answers:{owns:'yes',flooded:'yes',zone:'no'},done:{eligibility:true,property:true}}))",
+          "reload:"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "phone": true,
+        "full": true,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:"
+        ],
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "phone-errors",
+        "page": "index.html",
+        "phone": true,
+        "actions": [
+          "eval:localStorage.clear()",
+          "reload:",
+          "click:#step-eligibility .actions .btn"
+        ],
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "property",
+        "page": "index.html?go=property",
+        "width": 1180,
+        "height": 1000,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "09-motion",
+    "title": "Halyard in motion — twelve studies, scrubbed",
+    "shots": [
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2
+      },
+      {
+        "name": "system",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "actions": [
+          "reveal:#system"
+        ]
+      },
+      {
+        "name": "rules",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "actions": [
+          "reveal:.rules"
+        ]
+      },
+      {
+        "name": "sheet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-sheet"
+        ]
+      },
+      {
+        "name": "modal",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-modal"
+        ]
+      },
+      {
+        "name": "toast",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-toast"
+        ]
+      },
+      {
+        "name": "insert",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-insert"
+        ]
+      },
+      {
+        "name": "reorder",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-reorder"
+        ]
+      },
+      {
+        "name": "tabs",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-tabs"
+        ]
+      },
+      {
+        "name": "skeleton",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-skeleton"
+        ]
+      },
+      {
+        "name": "like",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-like"
+        ]
+      },
+      {
+        "name": "button",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-button",
+          "eval:return (function(){const el=document.createElement(\"div\");el.style.opacity=\"0.5\";document.body.append(el);const a=el.animate([{opacity:1,offset:0},{opacity:0,offset:0.2},{opacity:0,offset:0.66},{opacity:1,offset:1}],{duration:1000,fill:\"both\",easing:\"cubic-bezier(0.2,0.7,0.3,1)\"});a.pause();const out=[];for(const t of [0,0.2,0.3,0.45,0.66,0.8,1]){a.currentTime=t*1000;out.push(t+\"=\"+getComputedStyle(el).opacity)}a.cancel();el.remove();return out.join(\" \")})()"
+        ]
+      },
+      {
+        "name": "accordion",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-accordion"
+        ]
+      },
+      {
+        "name": "reveal",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-reveal"
+        ]
+      },
+      {
+        "name": "pointer",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "actions": [
+          "reveal:#study-pointer"
+        ]
+      },
+      {
+        "name": "reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#reduced"
+        ]
+      },
+      {
+        "name": "reduced-sheet",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-sheet"
+        ]
+      },
+      {
+        "name": "reduced-button",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-button"
+        ]
+      },
+      {
+        "name": "reduced-insert",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#study-insert"
+        ]
+      },
+      {
+        "name": "checks-reduced",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "motion": "reduce",
+        "actions": [
+          "reveal:#audit"
+        ]
+      },
+      {
+        "name": "audit",
+        "page": "index.html",
+        "width": 1400,
+        "height": 820,
+        "dpr": 2,
+        "actions": [
+          "reveal:#audit"
+        ]
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1400,
+        "full": true,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "task": "10-redesign",
+    "title": "Harrow Estuary flood portal — before and after, measured",
+    "shots": [
+      {
+        "name": "before-full",
+        "page": "before.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 1200
+      },
+      {
+        "name": "after-full",
+        "page": "after.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 1200
+      },
+      {
+        "name": "before-phone",
+        "page": "before.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "after-phone",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200
+      },
+      {
+        "name": "c-01b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-faq"
+        ]
+      },
+      {
+        "name": "c-01a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-02b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:[data-sl]"
+        ]
+      },
+      {
+        "name": "c-02a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-03b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-table"
+        ]
+      },
+      {
+        "name": "c-03a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#tides"
+        ]
+      },
+      {
+        "name": "c-04b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-nav"
+        ]
+      },
+      {
+        "name": "c-04a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:.nav"
+        ]
+      },
+      {
+        "name": "c-05b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-news"
+        ]
+      },
+      {
+        "name": "c-05a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#news"
+        ]
+      },
+      {
+        "name": "c-06b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-side"
+        ]
+      },
+      {
+        "name": "c-06a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:.rail"
+        ]
+      },
+      {
+        "name": "c-07b",
+        "page": "before.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#b-banner"
+        ]
+      },
+      {
+        "name": "c-07a",
+        "page": "after.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#status"
+        ]
+      },
+      {
+        "name": "c-08b",
+        "page": "before.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "c-08a",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000
+      },
+      {
+        "name": "measures",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1300,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#measures"
+        ]
+      },
+      {
+        "name": "pages",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#pages"
+        ]
+      },
+      {
+        "name": "log1",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-1"
+        ]
+      },
+      {
+        "name": "log2",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-10"
+        ]
+      },
+      {
+        "name": "log3",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#ch-16"
+        ]
+      },
+      {
+        "name": "kept",
+        "page": "index.html",
+        "width": 1400,
+        "height": 1000,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#kept"
+        ]
+      },
+      {
+        "name": "method",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 4000,
+        "actions": [
+          "reveal:#method"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 4000
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "phone": true,
+        "settle": 4000
+      },
+      {
+        "name": "phone-tides",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "reveal:#tideTable"
+        ]
+      },
+      {
+        "name": "phone-top",
+        "page": "after.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": []
+      }
+    ]
+  },
+  {
+    "task": "11-styles",
+    "title": "Style range — one page, nine styles",
+    "shots": [
+      {
+        "name": "swiss-hero",
+        "page": "s01-swiss.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "swiss-full",
+        "page": "s01-swiss.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "swiss-phone",
+        "page": "s01-swiss.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "brutalism-hero",
+        "page": "s02-brutalism.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "brutalism-full",
+        "page": "s02-brutalism.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "brutalism-phone",
+        "page": "s02-brutalism.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "editorial-hero",
+        "page": "s03-editorial.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "editorial-full",
+        "page": "s03-editorial.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "editorial-phone",
+        "page": "s03-editorial.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "glass-hero",
+        "page": "s04-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "glass-full",
+        "page": "s04-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "glass-phone",
+        "page": "s04-glass.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "neumorph-hero",
+        "page": "s05-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "neumorph-full",
+        "page": "s05-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "neumorph-phone",
+        "page": "s05-neumorph.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "pixel-hero",
+        "page": "s06-pixel.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "pixel-full",
+        "page": "s06-pixel.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "pixel-phone",
+        "page": "s06-pixel.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "japanese-hero",
+        "page": "s07-japanese.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "japanese-full",
+        "page": "s07-japanese.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "japanese-phone",
+        "page": "s07-japanese.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "cyber-hero",
+        "page": "s08-cyber.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "cyber-full",
+        "page": "s08-cyber.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "cyber-phone",
+        "page": "s08-cyber.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "luxury-hero",
+        "page": "s09-luxury.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400
+      },
+      {
+        "name": "luxury-full",
+        "page": "s09-luxury.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1400,
+        "full": true
+      },
+      {
+        "name": "luxury-phone",
+        "page": "s09-luxury.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "settle": 1400,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "masthead",
+        "page": "index.html",
+        "width": 1440,
+        "height": 760,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "brief",
+        "page": "index.html",
+        "width": 1440,
+        "height": 820,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#brief"
+        ]
+      },
+      {
+        "name": "heroes",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1100,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#strip"
+        ]
+      },
+      {
+        "name": "towers",
+        "page": "index.html",
+        "width": 1440,
+        "height": 820,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#towers"
+        ]
+      },
+      {
+        "name": "card-swiss",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#swiss"
+        ]
+      },
+      {
+        "name": "card-neumorph",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#neumorph"
+        ]
+      },
+      {
+        "name": "card-cyber",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1200,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#cyber"
+        ]
+      },
+      {
+        "name": "audit-pairs",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1250,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#before"
+        ]
+      },
+      {
+        "name": "parity",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#parity"
+        ]
+      },
+      {
+        "name": "measures",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#measure"
+        ]
+      },
+      {
+        "name": "ratings",
+        "page": "index.html",
+        "width": 1440,
+        "height": 800,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#ratings"
+        ]
+      },
+      {
+        "name": "verdict",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#verdict"
+        ]
+      },
+      {
+        "name": "full",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "settle": 1500,
+        "full": true
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "dpr": 1,
+        "settle": 1500,
+        "phone": true,
+        "full": true
+      },
+      {
+        "name": "before-glass",
+        "page": "before-glass.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500
+      },
+      {
+        "name": "before-neumorph",
+        "page": "before-neumorph.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1500
+      }
+    ]
+  }
+]

@@ -7,17 +7,26 @@ Each mini project lives in its own folder with a short README: what it tries, ho
 
 ## What's in here
 
-Two shelves of browser work, both plain static files (no build step, no npm, no server), both published
-to GitHub Pages, the layout on Pages mirroring this repo:
+Three shelves of browser work, all plain static files (no build step, no npm, no server),
+all published to GitHub Pages, the layout on Pages mirroring this repo:
 
 | shelf | what | live |
 |---|---|---|
 | [`games/`](games/) | five three.js arcade games on one shared kit (CRT bezel, particles, bloom, WebAudio) | [/games/](https://makefunstuff.github.io/strata-test/games/) |
 | [`experiments/`](experiments/) | five three.js graphics/motion experiments: GPU water, Rapier voxel demolition, tearing cloth, GPU flocking, volumetric fire | [/experiments/](https://makefunstuff.github.io/strata-test/experiments/) |
+| [`design/`](design/) | eleven design briefs — landing page, dashboard, nine-screen mobile app, TUI, design system, identity, estuary dataviz, grant form, motion system, a flood portal redesign, and one page in nine visual styles — each screenshotted, audited and self-critiqued | [/design/](https://makefunstuff.github.io/strata-test/design/) |
 
-The site root is [`index.html`](index.html), the hub that links both. Each folder carries its own
-headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`); the numbers they
-last reported are in the shelf READMEs.
+The site root is [`index.html`](index.html), the hub that links all three. Each folder carries its own
+headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`,
+`design/tools/shoot.mjs`); the numbers they
+last reported are in the shelf READMEs. [`design/README.md`](design/README.md) is the
+design gallery's own summary: the eleven scores, the verdict on range and taste, and the
+two things the audit was blind to. The gallery and the study pages use ES modules, so they
+need http:// (or GitHub Pages), not `file://` — measured, not assumed:
+`design/tools/filecheck.mjs` opens every page twice and finds 4 of 27 clean over `file://`
+(`05-system` and the three pages of `10-redesign`) and 23 blocked by CORS, nine of the
+eleven task index pages among them. Serve it and read it the way Pages will:
+`node design/tools/serve.mjs`.
 
 Benchmarks of Strata itself, one folder each with its README (what, how to run, results, verdict):
 

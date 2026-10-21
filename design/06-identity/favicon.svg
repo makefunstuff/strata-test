@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Meridian">
+  <title>Meridian</title>
+  <!-- Favicon: the reduced mark on a plate. A line mark on a dark browser tab is
+       invisible, so the plate carries it. No sun: at 16 px the dot is a smudge. -->
+  <rect width="48" height="48" rx="10" fill="#14161a"/>
+  <g fill="none" stroke="#f7f6f3" stroke-width="4" stroke-linecap="round">
+    <path d="M7.7 33.6A18 18 0 1 1 40.3 33.6"/>
+    <path d="M2.4 30h43.2"/>
+    <path d="M24 6v17" transform="rotate(15 24 24)"/>
+  </g>
+</svg>

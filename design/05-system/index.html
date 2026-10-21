@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en" data-theme="paper" data-density="cosy" data-size="md" data-motion="on">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halyard — the design system behind four products</title>
+<meta name="description" content="Tokens, components, patterns and rules for Halyard, the design system shared by Foldline, Gridwatch, Ternmark and logtrail.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/sora@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/dm-sans@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.3.0/index.css">
+<link rel="stylesheet" href="system.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <nav class="nav" aria-label="Sections">
+    <div class="mark"><i aria-hidden="true">H</i> Halyard</div>
+    <div class="ver">v0.9 · 4 themes · 24 components</div>
+    <h4>Foundations</h4>
+    <a href="#overview">Overview</a>
+    <a href="#colour">Colour</a>
+    <a href="#type">Type</a>
+    <a href="#space">Space, shape, motion</a>
+    <h4>Kit</h4>
+    <a href="#components">Components</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#rules">Rules</a>
+    <h4>Contract</h4>
+    <a href="#tokens">Token contract</a>
+    <a href="#mobile">In use</a>
+    <a href="#using">Using a theme</a>
+    <div style="margin-top:22px" class="note">Every colour in this page is a token. Switch the theme in the bar above: the component stylesheet does not change.</div>
+  </nav>
+
+  <main id="main">
+    <div class="bar" role="region" aria-label="System controls">
+      <span class="lbl" id="lbl-theme">Theme</span>
+      <div class="seg" role="group" aria-labelledby="lbl-theme" id="themes">
+        <button type="button" data-set="paper" aria-pressed="true">paper</button>
+        <button type="button" data-set="deck" aria-pressed="false">deck</button>
+        <button type="button" data-set="field" aria-pressed="false">field</button>
+        <button type="button" data-set="terminal" aria-pressed="false">terminal</button>
+      </div>
+      <span class="lbl" id="lbl-density">Density</span>
+      <div class="seg" role="group" aria-labelledby="lbl-density" id="density">
+        <button type="button" data-set="compact" aria-pressed="false">compact</button>
+        <button type="button" data-set="cosy" aria-pressed="true">cosy</button>
+      </div>
+      <span class="grow"></span>
+      <span class="lbl" id="lbl-size">Text</span>
+      <div class="seg" role="group" aria-labelledby="lbl-size" id="sizes">
+        <button type="button" data-set="md" aria-pressed="true">15 px</button>
+        <button type="button" data-set="lg" aria-pressed="false">17 px</button>
+      </div>
+      <span class="lbl" id="lbl-motion">Motion</span>
+      <div class="seg" role="group" aria-labelledby="lbl-motion" id="motions">
+        <button type="button" data-set="on" aria-pressed="true">on</button>
+        <button type="button" data-set="off" aria-pressed="false">reduced</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="kicker">Design system · task 05</div>
+      <h1>Halyard</h1>
+      <p class="lede">One component stylesheet, four themes, four products. Halyard is the system
+        behind a paper map sheet, a dark control tower, a warm phone app and a black terminal —
+        which is the hardest case a system can be put to: the same button has to be right on
+        cream, on near-black, in a 44-pixel row, and in a monospaced grid.</p>
+      <div class="products">
+        <div class="prod"><b>Foldline</b><span>paper · landing · map sheet</span>
+          <div class="sw" aria-hidden="true"><i style="background:#f7f3ea"></i><i style="background:#1f6d55"></i><i style="background:#9a6a12"></i><i style="background:#16211d"></i></div></div>
+        <div class="prod"><b>Gridwatch</b><span>deck · control tower · dark</span>
+          <div class="sw" aria-hidden="true"><i style="background:#10161c"></i><i style="background:#3ad0b8"></i><i style="background:#e8b45c"></i><i style="background:#e7edf2"></i></div></div>
+        <div class="prod"><b>Ternmark</b><span>field · phone app · warm</span>
+          <div class="sw" aria-hidden="true"><i style="background:#f6f2ea"></i><i style="background:#1f6d55"></i><i style="background:#96331f"></i><i style="background:#16232a"></i></div></div>
+        <div class="prod"><b>logtrail</b><span>terminal · TUI · mono</span>
+          <div class="sw" aria-hidden="true"><i style="background:#0f151a"></i><i style="background:#6fd4b8"></i><i style="background:#e3b05c"></i><i style="background:#dfe7ee"></i></div></div>
+      </div>
+    </div>
+
+    <section id="overview">
+      <div class="sec-head"><span class="n">01</span><h2>Overview</h2>
+        <p>Three layers, one direction: primitives → semantic tokens → components. Components never
+        name a colour, a font family or a duration; they read a semantic token. A theme is a block of
+        semantic assignments and nothing else.</p></div>
+      <div class="grid g3">
+        <div class="card"><div class="hd"><b>Layer 1 · primitives</b><span class="grow"></span><span class="tag">--p-*</span></div>
+          <div class="bd"><p>A ramp of ink, paper, moss, ochre, clay, sky. Named for what they are,
+            never used by a component.</p><div class="note">18 primitives</div></div></div>
+        <div class="card"><div class="hd"><b>Layer 2 · semantic</b><span class="grow"></span><span class="tag">--surface, --ink, --accent…</span></div>
+          <div class="bd"><p>Twenty roles that say what a colour is for: surface, ink, ink-2, ink-3, line,
+            accent, ok, warn, danger, info, data-1…4, focus, shadow-1…3, grid-ink.</p><div class="note">20 roles per theme</div></div></div>
+        <div class="card"><div class="hd"><b>Layer 3 · components</b><span class="grow"></span><span class="tag">.btn, .inp, .tbl…</span></div>
+          <div class="bd"><p>Twenty-four components, one stylesheet, no colour literal below the theme
+            blocks. Switching the theme re-skins the whole kit in one attribute.</p><div class="note">grep: 0 hex in the kit</div></div></div>
+      </div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><div class="hd"><b>What the themes are allowed to change</b></div>
+          <div class="bd"><ul style="margin:0;padding-left:20px;color:var(--ink-2);font-size:13.5px;display:grid;gap:6px">
+            <li>every colour role, including the three shadows and the grid ink</li>
+            <li>the three type roles (display, text, mono) and the modular ratio</li>
+            <li>the radius scale — 0 px in a terminal, 26 px in a phone app</li>
+            <li>one density multiplier (<span class="mono">--pad</span>)</li>
+            <li><span class="mono">color-scheme</span>, so form controls and scrollbars agree</li>
+          </ul></div>
+          <div class="ft">A theme may not add a component, a class, or a colour a component has to override.</div></div>
+        <div class="card"><div class="hd"><b>The contract a theme must satisfy</b></div>
+          <div class="bd"><ul style="margin:0;padding-left:20px;color:var(--ink-2);font-size:13.5px;display:grid;gap:6px">
+            <li><b>ink on surface ≥ 7:1</b>, ink-3 on surface ≥ 4.5:1</li>
+            <li><b>accent-ink on accent ≥ 4.5:1</b> (the button's label)</li>
+            <li>every status colour legible on its own soft background</li>
+            <li>data-1…4 separable in a 24 px swatch and by luminance, not only by hue</li>
+            <li>the four status colours must not collapse into each other at 11 px</li>
+          </ul></div>
+          <div class="ft">Checked live in the Colour section; the numbers are measured, not declared.</div></div>
+      </div>
+    </section>
+
+    <section id="colour">
+      <div class="sec-head"><span class="n">02</span><h2>Colour</h2>
+        <p>The swatches print the ratio each token has against the surface it is used on, measured in
+          the browser. Move to <em>deck</em> or <em>terminal</em>: the roles move, the requirements do not.</p></div>
+      <div class="card"><div class="hd"><b>Semantic roles</b><span class="grow"></span><span class="tag" id="sw-theme">paper</span></div>
+        <div class="bd"><div class="swatches" id="swatches" aria-label="Colour tokens and their measured contrast"></div></div>
+        <div class="ft" id="sw-summary">measuring…</div></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><div class="hd"><b>Status, as it is used</b></div>
+          <div class="bd" style="display:grid;gap:9px">
+            <div class="alert"><span class="g" aria-hidden="true">i</span><span><b>Info</b> — the system's default voice for a fact the user did not cause.</span></div>
+            <div class="alert warn"><span class="g" aria-hidden="true">!</span><span><b>Warning</b> — a state the user can act on; never a decoration.</span></div>
+            <div class="alert danger" role="alert"><span class="g" aria-hidden="true">×</span><span><b>Danger</b> — data loss, a failure, or a blocked action. Always paired with words.</span></div>
+            <div class="note">Rule: status colour is never the only signal — every status carries a glyph and a word.</div>
+          </div></div>
+        <div class="card"><div class="hd"><b>Data colours</b><span class="grow"></span><span class="tag">data-1…4</span></div>
+          <div class="bd bar-legend" id="data-legend" aria-label="Data colour sample"></div></div>
+      </div>
+    </section>
+
+    <section id="type">
+      <div class="sec-head"><span class="n">03</span><h2>Type</h2>
+        <p>Three roles, one modular scale, and a rule about numbers: every count, price, timestamp and
+          measurement is set in the mono role with tabular figures, in every theme.</p></div>
+      <div class="grid g2">
+        <div class="card"><div class="hd"><b>Scale</b><span class="grow"></span><span class="tag" id="scale-ratio">ratio 1.16</span></div>
+          <div class="bd typeset" id="typeset"></div></div>
+        <div class="card"><div class="hd"><b>Roles, in use</b></div>
+          <div class="bd" style="display:grid;gap:12px">
+            <div><span class="label">display</span><p style="font-family:var(--font-display);font-size:22px;line-height:1.2;margin:2px 0 0">Depot 3 is 41 kW over its night peak.</p></div>
+            <div><span class="label">text</span><p style="margin:2px 0 0">The body carries two ideas per sentence and never sets a number in the proportional face; a column of numbers that shift on hover is a column nobody can read.</p></div>
+            <div><span class="label">mono · tabular</span><p class="num" style="margin:2px 0 0;font-size:15px">06:12:44 · 1 284 ln/min · 41.2 kW · 91 %</p></div>
+            <div class="grid g2" style="gap:10px">
+              <div class="card" style="box-shadow:none"><div class="bd"><span class="label">proportional figures</span>
+                <div class="lbl">1 l / 11 / 111 / 1 111</div></div></div>
+              <div class="card" style="box-shadow:none"><div class="bd"><span class="label">tabular (mono role)</span>
+                <div class="num">1 l / 11 / 111 / 1 111</div></div></div>
+            </div>
+          </div></div>
+      </div>
+    </section>
+
+    <section id="space">
+      <div class="sec-head"><span class="n">04</span><h2>Space, shape, motion</h2>
+        <p>A four-multiple spacing scale, a radius scale that is a <em>theme</em> property (a terminal has
+          right angles, a phone app has soft ones), and four named motion tokens.</p></div>
+      <div class="grid g2">
+        <div class="card"><div class="hd"><b>Spacing · 4 px base</b><span class="grow"></span><span class="tag">--pad <span id="pad-val">1</span></span></div>
+          <div class="bd ruler" id="ruler"></div></div>
+        <div class="card"><div class="hd"><b>Radius</b><span class="grow"></span><span class="tag">theme property</span></div>
+          <div class="bd"><div class="ruler" id="radii"></div>
+            <div class="note" style="margin-top:9px">The same component class, four radii. Nothing in the kit sets a radius directly.</div></div></div>
+        <div class="card"><div class="hd"><b>Elevation</b><span class="grow"></span><span class="tag">shadow-1…3</span></div>
+          <div class="bd elev"><div class="e" style="box-shadow:var(--shadow-1)">1</div><div class="e" style="box-shadow:var(--shadow-2)">2</div><div class="e" style="box-shadow:var(--shadow-3)">3</div>
+            <div class="note" style="align-self:center;max-width:24ch">In the terminal theme elevation is a 1 px rule, not a blur — shadows are meaningless on a black field.</div></div></div>
+        <div class="card"><div class="hd"><b>Motion tokens</b><span class="grow"></span><span class="tag" id="motion-theme">paper</span></div>
+          <div class="bd motion">
+            <div class="track"><span id="m1">in</span><div class="lane"><i style="animation-duration:var(--dur-2);animation-direction:normal"></i></div></div>
+            <div class="track"><span id="m2">out</span><div class="lane"><i style="animation-duration:var(--dur-1);animation-direction:normal"></i></div></div>
+            <div class="track"><span id="m3">sheet</span><div class="lane"><i style="animation-duration:var(--dur-3);animation-direction:normal"></i></div></div>
+            <div class="track"><span id="m4">page</span><div class="lane"><i style="animation-duration:var(--dur-4);animation-direction:normal"></i></div></div>
+            <div class="note">Every duration in the kit is one of these four. In the terminal theme they are all <span class="mono">0ms</span> — a terminal does not animate. All four collapse to 1 ms under <span class="mono">prefers-reduced-motion</span> and under the Motion switch above.</div>
+          </div></div>
+      </div>
+    </section>
+
+    <section id="components">
+      <div class="sec-head"><span class="n">05</span><h2>Components</h2>
+        <p>Twenty-four components. Each card shows the live component, its states, when to use it and
+          what it owes the keyboard. Every one of them is the same markup in all four themes.</p></div>
+      <div class="demo" id="kit"></div>
+    </section>
+
+    <section id="patterns">
+      <div class="sec-head"><span class="n">06</span><h2>Patterns</h2>
+        <p>Components in the order a person meets them: a filter, a table, a form, a dialog that asks
+          before it destroys.</p></div>
+      <div class="grid g2">
+        <div class="card"><div class="hd"><b>Filter bar</b><span class="grow"></span><span class="tag">search · segments · chips · reset</span></div>
+          <div class="bd" style="display:grid;gap:12px">
+            <div class="field" style="max-width:none"><label class="lb" for="pat-search">Search depots</label>
+              <input class="inp" id="pat-search" type="search" placeholder="name, code or note" autocomplete="off"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <span class="label">Range</span>
+              <div class="seg" role="group" aria-label="Range"><button type="button" aria-pressed="true">24 h</button><button type="button" aria-pressed="false">7 d</button><button type="button" aria-pressed="false">30 d</button></div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center" id="chips">
+              <button class="pill on" type="button" aria-pressed="true">peak sites ×</button>
+              <button class="pill" type="button" aria-pressed="false">over target ×</button>
+              <button class="pill" type="button" aria-pressed="false">solar ×</button>
+              <span class="hint" id="chip-count" role="status">2 filters · 6 of 9 depots</span>
+            </div>
+            <div><button class="btn ghost sm" id="pat-reset" type="button">Reset filters</button></div>
+          </div>
+          <div class="ft">Chips are buttons, not links: they toggle, and they announce the count they produce.</div></div>
+        <div class="card"><div class="hd"><b>Table with a real empty state</b><span class="grow"></span><span class="tag">sortable</span></div>
+          <div class="bd">
+            <table class="tbl" id="pat-table">
+              <caption>Night peak, kWh per km · sorted by <span class="mono" id="pat-sortname">load</span></caption>
+              <thead><tr>
+                <th scope="col" aria-sort="descending"><button type="button" data-key="load">Load</button></th>
+                <th scope="col"><button type="button" data-key="kwh">kWh/km</button></th>
+                <th scope="col"><button type="button" data-key="state">State</button></th>
+                <th scope="col" style="text-align:right"><button type="button" data-key="buses">Buses</button></th>
+              </tr></thead>
+              <tbody id="pat-body"></tbody>
+            </table>
+            <div class="empty" id="pat-empty" hidden><div class="g" aria-hidden="true">∅</div><b>Nothing matches the search</b>
+              <p id="pat-empty-q">No depot name contains that string.</p>
+              <button class="btn sm" type="button" id="pat-clear">Clear search</button></div>
+          </div>
+          <div class="ft">Sort is a button in the header with <span class="mono">aria-sort</span>; the empty state names the cause and offers the way out.</div></div>
+        <div class="card" style="grid-column:1/-1"><div class="hd"><b>A form that validates as you leave a field</b><span class="grow"></span><span class="tag">inline · summary · live region</span></div>
+          <div class="bd" style="display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+            <form id="pat-form" novalidate style="display:grid;gap:12px">
+              <div class="field"><label class="lb" for="f-email">Work email</label>
+                <input class="inp" id="f-email" name="email" type="email" inputmode="email" autocomplete="email" aria-describedby="f-email-help">
+                <span class="help" id="f-email-help">A address at your organisation's domain, not a personal one.</span>
+                <span class="err" id="f-email-err" hidden></span></div>
+              <div class="field"><label class="lb" for="f-site">Depot</label>
+                <select class="inp" id="f-site" name="site" aria-describedby="f-site-err"><option value="">Choose a depot…</option><option>Depot 1 — Harbour</option><option>Depot 3 — Salt Quay</option><option>Depot 5 — North Gate</option></select>
+                <span class="err" id="f-site-err" hidden></span></div>
+              <div class="field"><label class="lb" for="f-note">Note for the recorder</label>
+                <textarea class="inp" id="f-note" name="note" maxlength="180" aria-describedby="f-note-count"></textarea>
+                <span class="count" id="f-note-count" aria-live="polite">0/180</span></div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap">
+                <label class="check"><input type="checkbox" id="f-consent"> Send me the weekly sheet</label>
+                <label class="radio"><input type="radio" name="role" value="ops" checked> Operations</label>
+                <label class="radio"><input type="radio" name="role" value="eng"> Engineering</label>
+              </div>
+              <div class="alert danger" id="f-summary" role="alert" hidden><span class="g" aria-hidden="true">×</span><span id="f-summary-text"></span></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit" id="f-submit">Request access</button>
+                <button class="btn quiet" type="reset">Clear</button></div>
+            </form>
+            <div style="display:grid;gap:10px;align-content:start">
+              <div class="label">Behaviour</div>
+              <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:13.5px;display:grid;gap:6px">
+                <li>Validation runs on <span class="mono">blur</span>, not on every keystroke, and re-runs on submit.</li>
+                <li>The failing field gets <span class="mono">aria-invalid</span> and its message is wired with <span class="mono">aria-describedby</span>.</li>
+                <li>On submit with errors, a summary is posted in a <span class="mono">role="alert"</span> and focus moves to the first field.</li>
+                <li>The counter is a <span class="mono">polite</span> live region; it says 180 characters, not "you may type".</li>
+                <li>The submit button becomes busy while the (faked) request is in flight; the label is preserved for the screen reader.</li>
+              </ul>
+            </div>
+          </div></div>
+        <div class="card"><div class="hd"><b>A dialog that asks before it destroys</b></div>
+          <div class="bd" style="display:grid;gap:10px">
+            <p style="color:var(--ink-2);font-size:13.5px">Destructive actions get a title with the verb, a body naming what is lost, and the destructive button last, tinted, and never the default focus.</p>
+            <div><button class="btn danger sm" id="open-modal" type="button">Delete 412 records</button></div>
+          </div>
+          <div class="ft">Focus moves into the dialog, is trapped while open, returns to the trigger, and Escape closes it.</div></div>
+        <div class="card"><div class="hd"><b>Feedback: toast, live region, progress</b></div>
+          <div class="bd" style="display:grid;gap:10px">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn sm" id="toast-ok" type="button">Save</button>
+              <button class="btn ghost sm" id="toast-warn" type="button">Queue offline</button>
+              <button class="btn ghost sm" id="toast-bad" type="button">Fail</button>
+            </div>
+            <div id="toaster" role="status" aria-live="polite" style="display:grid;gap:8px;min-height:44px"></div>
+            <div class="label">Progress, determinate</div>
+            <div class="progress" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Uploading the depot archive"><i style="width:62%"></i></div>
+            <div class="note">62 % · 1.9 MB of 3.1 MB</div>
+          </div></div>
+      </div>
+    </section>
+
+    <section id="rules">
+      <div class="sec-head"><span class="n">07</span><h2>Rules</h2>
+        <p>The six rules a reviewer can check in five minutes. Each has a right and a wrong, rendered.</p></div>
+      <div class="rules" id="rules-list"></div>
+    </section>
+
+    <section id="tokens">
+      <div class="sec-head"><span class="n">08</span><h2>Token contract</h2>
+        <p>The values resolved <em>right now</em>, read out of the browser, with the measured ratio each
+          role has against its background. This table is the test suite.</p></div>
+      <div class="card"><div class="hd"><b>Current theme: <span id="tok-theme">paper</span></b><span class="grow"></span><span class="tag" id="tok-pass">—</span></div>
+        <div class="bd" style="overflow:auto"><table class="token-table" id="token-table"><thead><tr>
+          <th scope="col">Token</th><th scope="col">Role</th><th scope="col">Resolved</th><th scope="col">Against</th><th scope="col">Ratio</th><th scope="col">Need</th>
+        </tr></thead><tbody></tbody></table></div>
+        <div class="ft">A ratio under its need is red. Switching theme re-measures everything.</div></div>
+    </section>
+
+    <section id="mobile">
+      <div class="sec-head"><span class="n">10</span><h2>In use, at phone size</h2>
+        <p>The four themes are four products. Each panel is the same markup at 390 × 844, scaled to fit:
+          a map sheet, a control tower, a field app, a terminal. Nothing in a panel knows which theme it is in.</p></div>
+      <div class="frames">
+        <div class="frame" data-theme="paper">
+          <div class="bar"><i>Foldline</i><span class="grow"></span><span class="mono">1:25 000</span></div>
+          <div class="ttl">Llyn Aled<span class="mono">grid SH 1184</span></div>
+          <div class="stat"><div><b>412 m</b><span>summit</span></div><div><b>3.4 km</b><span>route</span></div><div><b>96 %</b><span>offline</span></div></div>
+          <div class="rows"><div class="row2"><span>Sheet 4 of 6</span><span class="mono">downloaded</span></div>
+            <div class="row2"><span>Next contour</span><span class="mono">440 m</span></div></div>
+          <div class="chart"><svg viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 22 L14 18 L28 20 L42 12 L56 15 L70 6 L84 10 L100 4 L100 26 L0 26 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width=".8"/></svg></div>
+          <div class="tab"><span>Map</span><span>Sheets</span><span>Log</span><span>You</span></div>
+        </div>
+        <div class="frame" data-theme="deck">
+          <div class="bar"><i>Gridwatch</i><span class="grow"></span><span class="mono">04:12</span></div>
+          <div class="ttl">Depot load<span class="mono">9 sites</span></div>
+          <div class="stat"><div><b>1.84 MW</b><span>now</span></div><div><b>118</b><span>buses</span></div><div><b>64 %</b><span>solar</span></div></div>
+          <div class="rows"><div class="row2"><span>SALT QUARRY</span><span class="mono">1.42 kWh/km</span></div>
+            <div class="row2"><span>HARBOUR</span><span class="mono">0.96 kWh/km</span></div></div>
+          <div class="chart"><svg viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 20 L20 16 L40 18 L60 8 L80 14 L100 10 L100 26 L0 26 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width=".8"/></svg></div>
+          <div class="tab"><span>Load</span><span>Sites</span><span>Alerts</span><span>Log</span></div>
+        </div>
+        <div class="frame" data-theme="field">
+          <div class="bar"><i>Ternmark</i><span class="grow"></span><span class="mono">offline</span></div>
+          <div class="ttl">Today<span class="mono">12 records</span></div>
+          <div class="stat"><div><b>12</b><span>today</span></div><div><b>201</b><span>life</span></div><div><b>3</b><span>queued</span></div></div>
+          <div class="rows"><div class="row2"><span>Common Tern</span><span class="mono">07:41</span></div>
+            <div class="row2"><span>Redshank ×4</span><span class="mono">07:18</span></div></div>
+          <div class="chart"><svg viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 24 L16 20 L30 21 L46 14 L60 17 L74 9 L88 13 L100 7 L100 26 L0 26 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width=".8"/></svg></div>
+          <div class="tab"><span>Today</span><span>Log</span><span>List</span><span>You</span></div>
+        </div>
+        <div class="frame" data-theme="terminal">
+          <div class="bar"><i>logtrail</i><span class="grow"></span><span class="mono">live</span></div>
+          <div class="ttl">harbour-gateway<span class="mono">420 lines</span></div>
+          <div class="stat"><div><b>20 ms</b><span>p50</span></div><div><b>282 ms</b><span>p95</span></div><div><b>2</b><span>errors</span></div></div>
+          <div class="rows"><div class="row2"><span>POST /audit</span><span class="mono">2819 ms</span></div>
+            <div class="row2"><span>GET /schedules</span><span class="mono">11 ms</span></div></div>
+          <div class="chart"><svg viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 18 L18 20 L34 14 L50 17 L66 10 L82 16 L100 12 L100 26 L0 26 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width=".8"/></svg></div>
+          <div class="tab"><span>stream</span><span>endpoints</span><span>help</span></div>
+        </div>
+      </div>
+      <div class="note">Each panel sets one <span class="mono">data-theme</span> on its own root and is built from
+        the same bars, rows, pills and numbers as the rest of the page: four products, one stylesheet.</div>
+    </section>
+
+    <section id="using">
+      <div class="sec-head"><span class="n">09</span><h2>Using a theme</h2>
+        <p>What a product does to adopt Halyard, and what it must not do.</p></div>
+      <div class="grid g2">
+        <div class="card"><div class="hd"><b>Adopt it</b></div>
+          <div class="bd"><pre class="mono" style="margin:0;font-size:12px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap">&lt;html data-theme="deck"&gt;          &lt;!-- one attribute --&gt;
+&lt;link rel="stylesheet" href="system.css"&gt;
+
+&lt;button class="btn"&gt;Export&lt;/button&gt;
+&lt;button class="btn ghost sm"&gt;Cancel&lt;/button&gt;
+&lt;span class="pill warn"&gt;queued&lt;/span&gt;
+&lt;input class="inp" aria-invalid="true"
+       aria-describedby="email-err"&gt;</pre>
+          <div class="note" style="margin-top:10px">A product adds classes only for its own domain (a map sheet, a bird row, a log line), never for colour.</div></div></div>
+        <div class="card"><div class="hd"><b>Do not</b></div>
+          <div class="bd"><ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:13.5px;display:grid;gap:7px">
+            <li>Set a colour in a product stylesheet. If a role is missing, the theme is incomplete — fix the theme.</li>
+            <li>Add a component class that overrides a radius, a shadow or a font family.</li>
+            <li>Use <span class="mono">data-2</span> for "warning" because it looked nice in one chart.</li>
+            <li>Ship a theme that passes contrast on surfaces but not on the soft status backgrounds.</li>
+            <li>Introduce a duration. There are four.</li>
+          </ul></div></div>
+      </div>
+    </section>
+
+    <footer style="padding:22px clamp(18px,3.2vw,44px);color:var(--ink-3);font-size:12.5px" class="mono">
+      Halyard v0.9 · 18 primitives · 20 semantic roles × 4 themes · 24 components · 6 rules ·
+      a component stylesheet with no colour literal below the theme blocks
+    </footer>
+  </main>
+</div>
+<div id="modal-host"></div>
+<script src="system.js" defer></script>
+</body>
+</html>

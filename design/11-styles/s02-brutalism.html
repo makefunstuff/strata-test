@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Brutalism</title>
+<meta name="description" content="The Ternmark home page as a brutalist web page: raw type, 3 px rules, hard shadows, no radius.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20fill='%23ff5e00'/%3E%3Ctext%20x='3'%20y='17'%20font-family='monospace'%20font-size='13'%20fill='%23000'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-mono@5.3.0/700.css">
+<link rel="stylesheet" href="s02-brutalism.css">
+</head>
+<body data-style="s02-brutalism">
+<a class="skip" href="#main">SKIP TO CONTENT</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const tpl = (c) => `
+<div class="ticker" aria-hidden="true"><div class="tape"><span>${esc(c.kicker)} /// OFFLINE FIRST /// NO SIGNAL NEEDED /// ${esc(c.brandNote)} /// ${esc(c.kicker)} /// OFFLINE FIRST /// NO SIGNAL NEEDED /// ${esc(c.brandNote)} ///</span></div></div>
+<header class="bar">
+  <h1 class="wordmark">${esc(c.brand)}<sup>4.2</sup></h1>
+  <p class="bn">${esc(c.brandNote)}</p>
+  <nav class="nav" aria-label="Sections">
+    <a href="#feat">[FEATURES]</a><a href="#stats">[STATS]</a><a href="#plans">[PRICES]</a><a href="#foot">[CONTACT]</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <p class="kick">${esc(c.kicker)}</p>
+    <h2 class="big">${esc(c.h1)}</h2>
+    <div class="hero-cols">
+      <p class="lede">${esc(c.lede)}</p>
+      <div class="ascii" role="img" aria-label="An ASCII diagram: the phone writes a record locally, then syncs when it has signal.">
+<pre>
++----------------+   signal?   +---------+
+|  PHONE  (local)| ---- NO ----+  (  X  ) |
+| 1 record = 1 row|            +---------+
+|  name count    |   signal?   +---------+
+|  note  gridref | ---- YES ---+  SYNC   |
++----------------+            +---------+
+      conflict == a row you read
+</pre>
+      </div>
+    </div>
+    <p class="cta">
+      <a class="btn" href="#plans">&gt;&gt; ${esc(c.ctaPrimary)}</a>
+      <a class="btn inv" href="#stats">${esc(c.ctaSecondary)}</a>
+    </p>
+  </section>
+
+  <section class="sec" id="feat" aria-labelledby="feat-h">
+    <h2 class="sec-h" id="feat-h">[FEATURES]<span class="sec-n">section 1 of 4</span></h2>
+    <div class="feat">
+      ${c.features.map((f) => `<article class="box">
+        <p class="num">${f.n}</p>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+        <p class="tag">[NO NETWORK]</p>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="stats" aria-labelledby="stats-h">
+    <h2 class="sec-h" id="stats-h">[STATS]<span class="sec-n">measured on the handset</span></h2>
+    <div class="stats">
+      ${c.stats.map((s) => `<div class="box stat">
+        <b>${esc(s.v)}</b>
+        <p class="u">${esc(s.u)}</p>
+        <p class="n">${esc(s.n)}</p>
+      </div>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="quote" aria-labelledby="quote-h">
+    <h2 class="sec-h" id="quote-h">[QUOTE]&gt;&gt;&gt;<span class="sec-n">a user</span></h2>
+    <blockquote class="box">
+      <p>${esc(c.quote.q)}</p>
+      <footer>— <b>${esc(c.quote.by)}</b>, ${esc(c.quote.role)}</footer>
+    </blockquote>
+  </section>
+
+  <section class="sec" id="plans" aria-labelledby="plans-h">
+    <h2 class="sec-h" id="plans-h">[PRICES]<span class="sec-n">two plans, no trial</span></h2>
+    <div class="plans">
+      ${c.plans.map((p) => `<article class="box plan ${p.best ? "best" : ""}">
+        ${p.best ? `<p class="bestbar">*** MOST RECORDS ***</p>` : ""}
+        <h3>${esc(p.t)}</h3>
+        <p class="price">${esc(p.p)}<span> / ${esc(p.per)}</span></p>
+        <ul>${p.l.map((l) => `<li>+ ${esc(l)}</li>`).join("")}</ul>
+        <a class="btn sm ${p.best ? "inv" : ""}" href="#foot">&gt;&gt; ${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+<footer id="foot" class="wrap">
+  <div class="foot">
+    <p class="made">${esc(c.foot.made)}</p>
+    <form data-subscribe class="sub">
+      <label for="em">${esc(c.foot.inputLabel)}</label>
+      <p class="hint">${esc(c.foot.inputHint)}</p>
+      <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org"><button type="submit">${esc(c.foot.inputButton)} &gt;&gt;</button></p>
+      <p class="status" role="status" data-status></p>
+    </form>
+    <nav class="flinks" aria-label="Footer">${c.foot.lines.map((l) => `<a href="#main">[${esc(l)}]</a>`).join("")}</nav>
+    <p class="legal">${esc(c.foot.legal)}</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — BRUTALISM` });
+</script>
+</body>
+</html>

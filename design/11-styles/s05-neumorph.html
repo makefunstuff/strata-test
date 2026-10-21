@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Neumorphism</title>
+<meta name="description" content="The Ternmark home page in neumorphism: one surface, one light source, everything raised or pressed with shadow alone.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20rx='7'%20fill='%23e4e9f1'/%3E%3Ccircle%20cx='12'%20cy='12'%20r='5'%20fill='%23fff'/%3E%3Ccircle%20cx='11'%20cy='11'%20r='5'%20fill='%23aab4c4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/nunito-sans@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/nunito-sans@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/nunito-sans@5.3.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/nunito-sans@5.3.0/800.css">
+<link rel="stylesheet" href="s05-neumorph.css">
+</head>
+<body data-style="s05-neumorph">
+<a class="skip" href="#main">Skip to content</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const icon = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const ICONS = [
+  icon('<path d="M5 6h11l3 3v9H5z"/><path d="M16 6v3h3"/><path d="M8 13h7M8 16h4"/>'),
+  icon('<path d="M5 12a7 7 0 0 1 14 0"/><path d="M8 12v2.5a4 4 0 0 0 8 0V12"/><path d="M12 19.5V21"/>'),
+  icon('<rect x="4" y="6" width="16" height="12" rx="1.5"/><path d="M4 10h16"/><path d="M8 14h5"/>'),
+];
+
+const tpl = (c) => `
+<header class="bar">
+  <div class="brand"><span class="raised chip">${esc(c.brand[0])}</span><span class="bt"><b>${esc(c.brand)}</b><i>${esc(c.brandNote)}</i></span></div>
+  <nav class="inset nav" aria-label="Sections">
+    <a href="#feat">Features</a><a href="#stats">Numbers</a><a href="#plans">Plans</a><a href="#foot">Contact</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="badge inset">${esc(c.kicker)}</p>
+      <h1>${esc(c.h1)}</h1>
+      <p class="lede">${esc(c.lede)}</p>
+      <p class="cta">
+        <a class="raised btn" href="#plans">${esc(c.ctaPrimary)}</a>
+        <a class="inset btn" href="#stats">${esc(c.ctaSecondary)}</a>
+      </p>
+    </div>
+    <div class="raised device">
+      <div class="screen inset">
+        <p class="scr-top"><span>tonight · the Sandbar hide</span><span class="led" aria-hidden="true"></span></p>
+        <ul class="log">
+          <li><b>21:04</b><span>Common tern</span><em>×14</em></li>
+          <li><b>21:11</b><span>Sandwich tern</span><em>×3</em></li>
+          <li><b>21:19</b><span>Avocet</span><em>×41</em></li>
+          <li class="pend"><b>21:26</b><span>Little tern — call</span><em>queued</em></li>
+        </ul>
+        <div class="switch-row">
+          <span class="switch" aria-hidden="true"><span class="knob on"></span></span>
+          <span class="sw-t"><b>Store offline</b><i>no network is asked for, ever</i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feats" id="feat" aria-labelledby="feat-h">
+    <h2 class="sec-h" id="feat-h">What it does</h2>
+    <div class="feat-grid">
+      ${c.features.map((f, i) => `<article class="raised card">
+        <span class="inset ic">${ICONS[i]}</span>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="stats inset" id="stats" aria-labelledby="stats-h">
+    <h2 class="sec-h" id="stats-h">Measured on the handset</h2>
+    <div class="stat-grid">
+      ${c.stats.map((s) => `<div class="stat raised"><b>${esc(s.v)}</b><span class="u">${esc(s.u)}</span><em>${esc(s.n)}</em></div>`).join("")}
+    </div>
+  </section>
+
+  <section class="quote" id="quote" aria-labelledby="quote-h">
+    <h2 class="sec-h" id="quote-h">From a user</h2>
+    <blockquote class="raised">
+      <p>${esc(c.quote.q)}</p>
+      <footer><span class="raised av" aria-hidden="true">HR</span><span class="who"><b>${esc(c.quote.by)}</b><i>${esc(c.quote.role)}</i></span></footer>
+    </blockquote>
+  </section>
+
+  <section id="plans" aria-labelledby="plans-h">
+    <h2 class="sec-h" id="plans-h">Two ways in</h2>
+    <div class="plan-grid">
+      ${c.plans.map((p) => `<article class="${p.best ? "inset" : "raised"} plan">
+        ${p.best ? `<p class="flag raised">Most records</p>` : ""}
+        <h3>${esc(p.t)}</h3>
+        <p class="price">${esc(p.p)}<em>${esc(p.per)}</em></p>
+        <ul>${p.l.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+        <a class="${p.best ? "raised btn sm" : "inset btn sm"}" href="#foot">${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+<footer id="foot">
+  <div class="foot raised">
+    <div class="foot-a">
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">${esc(c.foot.inputLabel)}</label>
+        <p class="hint">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input class="inset" id="em" type="email" name="email" placeholder="you@example.org"><button class="raised" type="submit">${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <nav class="foot-b" aria-label="Footer">${c.foot.lines.map((l) => `<a class="inset" href="#main">${esc(l)}</a>`).join("")}</nav>
+    <p class="legal">${esc(c.foot.legal)}<br>${esc(c.brand)} · ${esc(c.kicker)}</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — Neumorphism (soft extrusion)` });
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* 11 · s07 — Japanese minimal.
+   The rules: paper with a warm cast, not white; ink, not black; one vermilion, spent
+   on a seal and on nothing else; hairlines do the dividing; a title that runs
+   vertically; wide measure-to-margin ratios and a long leading (1.95) so the text
+   breathes; headings at weight 500 with letterspacing, never bold-condensed; the
+   numeral as ornament. `font-feature-settings: "jp"` with lang="en" is what keeps the
+   Latin punctuation from being drawn at half width. */
+:root {
+  font-feature-settings: "jp";
+  --paper: #f4f2ed;
+  --paper-2: #eeebe3;
+  --ink: #1b1b1b;
+  --ink-2: #3f3b34;
+  --ink-3: #6b665c;
+  --hair: #d9d4c9;
+  --vermilion: #c8402f;
+  --vermilion-ink: #b8392a; /* 5.1:1: the seal red is 4.4, which is not a reading red */
+  --mincho: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  --gothic: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+* { box-sizing: border-box }
+body {
+  margin: 0; background-color: var(--paper); color: var(--ink);
+  font: 400 16.5px/1.95 var(--gothic); letter-spacing: 0.01em;
+}
+h1, h2, h3, h4, p, ol, ul, blockquote { margin: 0 }
+ol, ul { list-style: none; padding: 0 }
+a { color: inherit }
+.skip { position: absolute; left: 10px; top: -70px; z-index: 9; background: var(--ink); color: var(--paper); padding: 11px 16px; text-decoration: none; font-size: 14px }
+.skip:focus { top: 10px }
+:focus-visible { outline: 2px solid var(--vermilion); outline-offset: 3px }
+main, .bar, footer > .foot { max-width: 1120px; margin: 0 auto; padding-left: 26px; padding-right: 26px }
+.seal {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 4px;
+  background: var(--vermilion); color: #fff; font: 500 19px var(--mincho); letter-spacing: 0;
+}
+
+.bar { display: flex; gap: 20px; align-items: center; justify-content: space-between; padding-top: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--hair); flex-wrap: wrap }
+.brand { display: flex; gap: 14px; align-items: center }
+.bt b { display: block; font: 500 19px/1.3 var(--mincho); letter-spacing: 0.08em }
+.bt i { display: block; font-style: normal; font-size: 12.5px; color: var(--ink-3); letter-spacing: 0.06em }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 26px; font-size: 13.5px; letter-spacing: 0.14em }
+.nav a { text-decoration: none; color: var(--ink-2); padding: 12px 0; min-height: 44px; display: inline-flex; align-items: center; border-bottom: 1px solid transparent }
+.nav a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion) }
+
+/* the vertical title: the signature, and the reason the hero is three columns */
+.hero {
+  display: grid; grid-template-columns: auto minmax(0, 7fr) minmax(0, 4.4fr);
+  gap: 40px; align-items: start; padding: 56px 26px 46px; border-bottom: 1px solid var(--hair);
+}
+.vert {
+  writing-mode: vertical-rl; text-orientation: mixed; font: 400 14px/1.9 var(--gothic);
+  letter-spacing: 0.32em; color: var(--ink-3); border-right: 1px solid var(--hair); padding-right: 18px;
+  height: clamp(240px, 34vw, 420px);
+}
+.kicker { font-size: 12.5px; letter-spacing: 0.24em; color: var(--ink-3) }
+.hero h1 { font: 500 clamp(27px, 3.4vw, 43px)/1.5 var(--mincho); letter-spacing: 0.05em; margin-top: 22px; max-width: 19ch }
+.rule-thin { height: 1px; background: var(--hair); margin: 28px 0 24px; max-width: 240px }
+.lede { color: var(--ink-2); font-size: 16.5px; max-width: 40ch }
+.cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px }
+.cta-a {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 26px;
+  background: var(--ink); color: var(--paper); text-decoration: none; border-radius: 2px;
+  font-size: 13.5px; letter-spacing: 0.14em;
+}
+.cta-a:hover { background: var(--ink-2) }
+.cta-b {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 26px;
+  border: 1px solid var(--ink); color: var(--ink); text-decoration: none; border-radius: 2px;
+  font-size: 13.5px; letter-spacing: 0.14em;
+}
+.cta-b:hover { background: var(--paper-2) }
+.hero-fig svg { width: 100%; height: auto; display: block }
+.cap { margin-top: 16px; font-size: 12.5px; letter-spacing: 0.14em; color: var(--ink-3); border-top: 1px solid var(--hair); padding-top: 10px }
+
+.sec { padding: 46px 26px; border-bottom: 1px solid var(--hair) }
+.sec-h {
+  display: flex; align-items: baseline; gap: 18px; justify-content: space-between;
+  font: 500 13.5px var(--gothic); letter-spacing: 0.24em; color: var(--ink-3); margin-bottom: 30px;
+}
+.sec-h .num { font: 400 24px var(--mincho); color: var(--vermilion); letter-spacing: 0 }
+.sec > .feat, .sec > .stats, .sec > blockquote, .sec > .plans { margin-top: 6px }
+
+.feat li { display: grid; grid-template-columns: 5ch minmax(0, 1fr); gap: 26px; padding: 26px 0; border-top: 1px solid var(--hair) }
+.feat li:first-child { border-top: 0; padding-top: 0 }
+.feat li:last-child { border-bottom: 1px solid var(--hair) }
+.feat .idx { font: 400 17px var(--mincho); color: var(--vermilion-ink); letter-spacing: 0.04em; font-variant-numeric: tabular-nums }
+.feat h3 { font: 500 21px/1.6 var(--mincho); letter-spacing: 0.05em }
+.feat p { color: var(--ink-2); margin-top: 8px; max-width: 56ch }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 }
+.stat { border-left: 1px solid var(--hair); padding: 0 30px }
+.stat:first-child { border-left: 0; padding-left: 0 }
+.stat b { display: block; font: 500 clamp(32px, 3.8vw, 48px)/1.2 var(--mincho); letter-spacing: 0.02em; font-variant-numeric: tabular-nums }
+.stat .u { display: block; margin-top: 14px; font-size: 13px; letter-spacing: 0.18em }
+.stat em { display: block; margin-top: 6px; font-style: normal; font-size: 14.5px; color: var(--ink-3); line-height: 1.8; max-width: 22ch }
+
+blockquote { border-left: 1px solid var(--ink); padding-left: 30px; max-width: 720px }
+blockquote p { font: 400 clamp(18px, 2.1vw, 23px)/1.95 var(--mincho); letter-spacing: 0.03em }
+blockquote footer { margin-top: 20px; display: grid }
+blockquote footer b { font: 500 15px var(--gothic); letter-spacing: 0.12em }
+blockquote footer i { font-style: normal; font-size: 13.5px; color: var(--ink-3); letter-spacing: 0.06em; margin-top: 4px }
+
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 }
+.plans article { border-top: 1px solid var(--ink); padding: 26px 34px 30px 0 }
+.plans article + article { border-left: 1px solid var(--hair); padding-left: 34px }
+.flag { display: flex; gap: 10px; align-items: center; font-size: 12.5px; letter-spacing: 0.16em; color: var(--vermilion-ink); margin-bottom: 14px }
+.flag::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--vermilion) }
+.plans h3 { font: 500 21px var(--mincho); letter-spacing: 0.06em }
+.price { font: 500 34px/1.4 var(--mincho); margin: 12px 0 20px; font-variant-numeric: tabular-nums }
+.price em { font: 400 13px var(--gothic); font-style: normal; color: var(--ink-3); letter-spacing: 0.14em; margin-left: 10px }
+.plans ul { margin-bottom: 26px; color: var(--ink-2); font-size: 15.5px }
+.plans li { padding: 12px 0; border-bottom: 1px solid var(--hair) }
+
+footer { background: var(--paper-2) }
+.foot { padding-top: 40px; padding-bottom: 46px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr); gap: 40px }
+.made { color: var(--ink-2); max-width: 32ch; margin-bottom: 22px }
+.foot label { display: block; font-size: 13px; letter-spacing: 0.16em }
+.hint { font-size: 14px; color: var(--ink-3); margin: 8px 0 14px }
+.field { display: flex; gap: 12px; flex-wrap: wrap }
+.field input {
+  flex: 1 1 200px; min-width: 0; height: 50px; padding: 0 14px; border: 1px solid var(--ink); border-radius: 2px;
+  background: #fff; font: 400 15.5px var(--gothic); color: var(--ink);
+}
+.field input::placeholder { color: #8b857a }
+.field input:focus-visible { outline: 2px solid var(--vermilion); outline-offset: 2px }
+.field button {
+  min-height: 50px; padding: 0 22px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+  font: 400 13px var(--gothic); letter-spacing: 0.14em; cursor: pointer; border-radius: 2px;
+}
+.field button:hover { background: var(--ink-2) }
+.status { font-size: 14px; color: var(--vermilion-ink); min-height: 1.9em; margin-top: 12px }
+.foot-b { display: grid; gap: 4px; align-content: start; font-size: 14.5px; letter-spacing: 0.1em }
+.foot-b a { text-decoration: none; color: var(--ink-2); padding: 12px 0; min-height: 44px; display: inline-flex; align-items: center; border-bottom: 1px solid var(--hair) }
+.foot-b a:hover { color: var(--vermilion) }
+.foot-c { display: flex; gap: 16px; align-items: flex-start }
+.legal { font-size: 13.5px; color: var(--ink-3); line-height: 1.9 }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 30px; padding: 34px 26px 34px }
+  .vert { writing-mode: horizontal-tb; height: auto; border-right: 0; border-bottom: 1px solid var(--hair); padding: 0 0 12px; letter-spacing: 0.24em; font-size: 12.5px }
+  .hero h1 { font-size: 27px; line-height: 1.65 }
+  .stats { grid-template-columns: 1fr }
+  .stat { border-left: 0; padding: 20px 0; border-top: 1px solid var(--hair) }
+  .stat:first-child { padding-top: 0; border-top: 0 }
+  .plans { grid-template-columns: 1fr }
+  .plans article { padding: 22px 0 }
+  .plans article + article { border-left: 0; padding-left: 0; border-top: 1px solid var(--ink) }
+  .foot { grid-template-columns: 1fr; gap: 28px }
+  .sec { padding: 34px 26px }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }

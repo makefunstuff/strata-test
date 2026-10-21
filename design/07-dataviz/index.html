@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The line that rises, the datum that moved — Harrow Estuary, 1994–2024</title>
+<meta name="description" content="A data story about rising spring tides on a fictional estuary: 31 years of maxima, twelve gauges, monthly distributions, and one datum change that moves the whole series. All numbers are synthetic and generated from a seed.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.3.1/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.3.1/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2316181c'/%3E%3Cpath d='M2.5,12.5 L13.5,3.5' stroke='%2320857a' stroke-width='2'/%3E%3Cpath d='M2.5,12.5 L13.5,3.5' stroke='%23e0a338' stroke-width='1' stroke-dasharray='3 3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#story">Skip to the charts</a>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="kicker">Harrow Estuary Authority · gauge network · <span class="synth">synthetic data</span></div>
+    <h1>The line that rises,<br>the datum that moved</h1>
+    <p class="stand">Thirty-one years of spring-tide maxima at Harrow Mouth climb about <b>31&nbsp;cm</b> in
+      total — and then, in 2011, the series falls by 28&nbsp;cm in a single year. That fall is not the sea:
+      it is the gauges being re-referenced from Ordnance Datum to Chart Datum. Everything in this story is
+      drawn around that one fact, because a chart of a rising sea is only as honest as the floor it stands on.</p>
+    <div class="byline">
+      <span>Harrow Estuary Authority, data office</span><span>1994 – 2024</span>
+      <span>units: <span id="unit-note">metres above CD</span></span>
+      <span>seed 4122</span>
+    </div>
+  </div>
+</header>
+
+<div class="bar" role="group" aria-label="Chart controls">
+  <div class="bar-in">
+    <div class="grp"><span class="grp-lab">Units</span>
+      <div class="seg" id="units" role="group" aria-label="Units">
+        <button type="button" data-unit="m" aria-pressed="true">metres</button>
+        <button type="button" data-unit="ft" aria-pressed="false">feet</button>
+      </div>
+    </div>
+    <div class="grp"><span class="grp-lab">Reading</span>
+      <div class="seg" id="nums" role="group" aria-label="Underlying numbers">
+        <button type="button" data-set="charts" aria-pressed="true">the charts</button>
+        <button type="button" data-set="numbers" aria-pressed="false">the numbers</button>
+      </div>
+    </div>
+    <div class="grp"><span class="grp-lab">Motion</span>
+      <div class="seg" id="motion" role="group" aria-label="Motion">
+        <button type="button" data-set="full" aria-pressed="true">full</button>
+        <button type="button" data-set="reduced" aria-pressed="false">reduced</button>
+      </div>
+    </div>
+    <p class="hint" id="kbHint">Keyboard: <kbd>Tab</kbd> into a chart, then <kbd>←</kbd><kbd>→</kbd> to walk the series,
+      <kbd>Home</kbd>/<kbd>End</kbd> to jump, <kbd>Esc</kbd> to clear. Each figure has the numbers under it.</p>
+  </div>
+</div>
+
+<main class="page" id="story">
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">01</span> The claim
+      <span class="sec-lede">One series, drawn so the step is visible. The trend line is fitted and drawn on the Chart Datum
+        segment only: fitting a slope across a datum change is how a rise gets hidden.</span></h2>
+    <figure class="fig" id="fig-claim">
+      <figcaption class="fig-cap">Highest spring tide each year at Harrow Mouth, 1994–2024, metres above datum</figcaption>
+      <div class="plot" id="claim"></div>
+      <div class="tabwrap" data-table="claim" aria-label="Highest spring tide by year"></div>
+      <p class="src">Source: Harrow Estuary Authority (synthetic). Values are daily maxima of the spring cycle,
+        reduced to one per year. The 1994–2010 series is Ordnance Datum; 2011 on is Chart Datum.</p>
+    </figure>
+    <div class="callouts">
+      <div class="co"><b id="coRise">+25 cm</b><span>per decade, fitted on the Chart Datum segment (2011–2024). Fitted across the whole record, over the 2011 join, the same series gives <b id="coAll">1.5</b> cm a decade: the datum step buries the rise.</span></div>
+      <div class="co"><b id="coStep">−28 cm</b><span>in 2011, in one year, from a re-levelling of the gauges. Any trend fitted across that join is wrong by that much.</span></div>
+      <div class="co"><b id="coPeakYear">2006</b><span>the highest year on the record, at <b id="coPeakLevel">4.82 m</b> — the benchmark the flood line is set against. <b id="coStorm">8</b> of <span id="coYears">31</span> years are flagged as storm years.</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">02</span> One season, twelve gauges
+      <span class="sec-lede">Twelve small charts, one axis each, a shared crosshair. A surge arrives at the mouth
+        and takes five days to reach the top of the estuary — that travel time is the whole point of the grid,
+        so the twelve are drawn at the same scale and read as one event.</span></h2>
+    <figure class="fig" id="fig-gauges">
+      <figcaption class="fig-cap">Daily maximum water level at twelve gauges, 1 November – 31 December 2024. Dashed rule: the flood line at 2.20 m.</figcaption>
+      <div class="plot" id="gauges"></div>
+      <div class="tabwrap" data-table="gauges" aria-label="Season peak by gauge"></div>
+      <p class="src">The flood line is the authority's operational threshold at the mouth; upstream it is lower,
+        which is why the inland cells cross it later and stay longer.</p>
+    </figure>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">03</span> What a month looks like
+      <span class="sec-lede">A box hides more than it shows, so the raw daily points are drawn behind every box:
+        the spread, the skew and the outliers are visible, and the summary is a drawing on top of the evidence
+        rather than a replacement for it.</span></h2>
+    <figure class="fig" id="fig-boxes">
+      <figcaption class="fig-cap">Distribution of daily maximum water level by month, 2024. Points are jittered; the box is the interquartile range.</figcaption>
+      <div class="plot" id="boxes"></div>
+      <div class="tabwrap" data-table="boxes" aria-label="Monthly distribution"></div>
+    </figure>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">04</span> Hours above the line
+      <span class="sec-lede">A stack is only honest when the parts add up to the whole. Hours in each height band
+        add up, so the top edge is the total: hours of flooding, not a shape. Bands are labelled inside
+        where there is room, and named again in the table.</span></h2>
+    <figure class="fig" id="fig-stack">
+      <figcaption class="fig-cap">Hours per month above each height band, 2024, in hours. The bands are cumulative: the top edge is total hours above CD.</figcaption>
+      <div class="plot" id="stack"></div>
+      <div class="tabwrap" data-table="stack" aria-label="Hours by band and month"></div>
+    </figure>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">05</span> Nine places, then and now
+      <span class="sec-lede">Two columns, one line per place: the level of the 1-in-50-year event in 1994 and in 2024.
+        Sorted by rise, the order is an argument. The numbers are printed at both ends, so nobody has to read
+        a distance as a quantity.</span></h2>
+    <figure class="fig" id="fig-slope">
+      <figcaption class="fig-cap">Modelled 1-in-50-year water level for nine places, 1994 and 2024, metres above CD</figcaption>
+      <div class="plot" id="slope"></div>
+      <div class="tabwrap" data-table="slope" aria-label="Then and now by place"></div>
+    </figure>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">06</span> Every day of 2024
+      <span class="sec-lede">A calendar, because the question asked at the quays is not “what is the annual mean”
+        but “which days do I move the boats”. Days over the flood line are ringed, and the legend states the
+        count in words so the ring is not the only encoding.</span></h2>
+    <figure class="fig" id="fig-calendar">
+      <figcaption class="fig-cap">Daily maximum water level at Harrow Mouth, every day of 2024. Weeks across, weekdays down.</figcaption>
+      <div class="plot" id="calendar"></div>
+      <div class="tabwrap" data-table="calendar" aria-label="Days over the flood line by month"></div>
+    </figure>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h"><span class="num">07</span> How to read this, and what it does not say</h2>
+    <div class="duo">
+      <div class="panel">
+        <h3>How to read it</h3>
+        <ul class="rules">
+          <li><b>The baseline is the datum, not zero.</b> Water level is a difference, so a line chart may start off
+            zero; the axis says which datum, every time.</li>
+          <li><b>Bars start at zero.</b> In <a href="#pat-none">the counter-example</a> below the same data is drawn
+            with a bar baseline at its own minimum, and the rise becomes a wall.</li>
+          <li><b>The y-axis carries its unit</b> in the axis label, not only in the caption, because crops and
+            screenshots lose captions.</li>
+          <li><b>Colour is never the only carrier.</b> The palette is Okabe–Ito (safe for the common forms of
+            colour-vision deficiency), every series is labelled directly, and thresholds are ringed <i>and</i> counted.</li>
+          <li><b>Hover is a convenience.</b> Every mark is reachable by keyboard, the spoken value and the painted
+            value come from the same code, and every figure has its numbers.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>What these charts do not say</h3>
+        <ul class="rules">
+          <li><b>The numbers are invented.</b> They are generated from a seed to exercise a design; no gauge exists.
+            A chart that cannot say that in the file, not in a footnote, should not be published.</li>
+          <li><b>The gauge gap is not interpolated.</b> Salt Pits and Mudmere lost 41 of the 60 days to a storm
+            damage notice in the middle of the season; the lines break at the hole, the readout prints a dash, and
+            their listed peak is the highest <i>recorded</i> day, which is not the highest day.</li>
+          <li><b>One year is not a trend.</b> Sections 02, 03, 04 and 06 are 2024. The only series long enough to
+            argue from is section 01, and it is 31 years.</li>
+          <li><b>The 1-in-50 levels in section 05 are modelled</b> from the same synthetic series; they are
+            consistent with it, not independent of it.</li>
+          <li><b>No confidence interval is drawn on the trend</b>, because a fitted straight line over a storm-spike
+            series deserves the argument, not a band.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel" id="pat-none">
+      <h3>The same data, badly: four ways this page could have lied</h3>
+      <div class="lied" id="lied"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <p><b>Provenance.</b> Every number on this page is generated by <code>data.js</code> from seed 4122 —
+      a deterministic pseudo-random series with a flood event, a datum step and a gauge gap built in.
+      The estuary, the authority, the gauges and the towns are fictional.</p>
+    <p><b>Method.</b> Charts are drawn in SVG by <code>charts.js</code>: linear scales, generated ticks, one
+      shared tooltip, one keyboard cursor, and a table generated from the same array as the marks.</p>
+    <p class="fine">No network data, no chart library, no build step. Print gives one figure per page.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Meridian mark. One ring, one horizon, one meridian at 15°, one sun.
+     Construction: 48x48 field, radii 6/12/18/24, horizon at y=30. currentColor + the signal red. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Meridian">
+  <title>Meridian</title>
+  <path d="M7.7 33.6A18 18 0 1 1 40.3 33.6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <path d="M2.4 30h43.2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 4.6 24 24" transform="rotate(15 24 24)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="30" r="5.4" fill="#c8402f"/>
+</svg>

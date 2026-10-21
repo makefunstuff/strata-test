@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>logtrail — rendered terminal capture</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.3.0/index.css">
+<style>
+  :root {
+    --bg: #0d1217; --panel: #10161c; --chrome: #1a232a; --chrome-ink: #96a5b0;
+    --ink: #dfe7ee; --line: #26333d; --shadow: 0 24px 60px rgba(0,0,0,.55);
+    --chrome-title: #c6d1da; --cap-ink: #97a5b0;
+  }
+  [data-theme="light"] {
+    --bg: #eef1f3; --panel: #ffffff; --chrome: #dfe5ea; --chrome-ink: #55636e;
+    --ink: #1d2831; --line: #ccd5dc; --shadow: 0 18px 40px rgba(30,45,60,.18);
+    --chrome-title: #2b3945; --cap-ink: #55626d;
+  }
+  * { box-sizing: border-box }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    display: grid; place-items: center; padding: 28px;
+    background-image: radial-gradient(circle at 20% 0%, color-mix(in oklab, var(--ink) 6%, transparent), transparent 60%);
+  }
+  .term { width: 100%; max-width: 1560px; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line) }
+  .chrome {
+    display: flex; align-items: center; gap: 14px; padding: 9px 14px;
+    background: var(--chrome); color: var(--chrome-ink); font-size: 11.5px; letter-spacing: .04em;
+  }
+  .dots { display: flex; gap: 6px }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in oklab, var(--chrome-ink) 45%, transparent) }
+  .dots i:first-child { background: #e0705f } .dots i:nth-child(2) { background: #e0b45c } .dots i:nth-child(3) { background: #58c08f }
+  .title { font-weight: 600; color: var(--chrome-title) }
+  .grow { flex: 1 }
+  .meta { font-size: 11px; opacity: .8 }
+  pre {
+    margin: 0; padding: 14px 16px 18px; background: var(--panel); color: var(--ink);
+    font: inherit; line-height: 1.24; white-space: pre; overflow: hidden; tab-size: 4;
+  }
+  .b { font-weight: 700 } .d { opacity: .66 } .i { font-style: italic }
+  .cap {
+    display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-size: 12px;
+    color: var(--cap-ink); letter-spacing: .02em;
+  }
+  .cap b { color: var(--ink); font-weight: 600 }
+  .r { background: var(--ink); color: var(--panel) }
+</style>
+</head>
+<body data-theme="dark">
+<main>
+  <div class="term" id="term">
+    <div class="chrome">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="title" id="title">logtrail</span>
+      <span class="grow"></span>
+      <span class="meta" id="meta"></span>
+    </div>
+    <pre id="screen" aria-label="terminal capture of logtrail">loading…</pre>
+  </div>
+  <div class="cap" id="cap"></div>
+</main>
+<script>
+/* ANSI → HTML: SGR only (24-bit fg/bg, bold, dim, italic, reverse). Written for this
+   task so the capture shows the *bytes the program prints*, not a redraw. */
+const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+function ansi2html(src, pal) {
+  let html = "", open = null, st = { fg: null, bg: null, b: 0, d: 0, i: 0, r: 0 };
+  const style = (s) => {
+    const bits = [];
+    if (s.r) { bits.push(`color:${s.bg || pal.ink}`, `background:${s.fg || pal.panel}`); }
+    else { if (s.fg) bits.push(`color:${s.fg}`); if (s.bg) bits.push(`background:${s.bg}`); }
+    return bits.join(";");
+  };
+  const cls = (s) => (s.b ? "b " : "") + (s.d ? "d " : "") + (s.i ? "i " : "") + (s.r ? "r" : "");
+  const close = () => { if (open !== null) { html += "</span>"; open = null; } };
+  const re = /\x1b\[([0-9;]*)m/g;
+  let last = 0, m;
+  const emit = (text) => {
+    if (!text) return;
+    const key = JSON.stringify(st);
+    if (key !== open) { close(); const s = style(st), c = cls(st).trim(); html += `<span${c ? ` class="${c}"` : ""}${s ? ` style="${s}"` : ""}>`; open = key; }
+    html += esc(text);
+  };
+  while ((m = re.exec(src))) {
+    emit(src.slice(last, m.index));
+    last = m.index + m[0].length;
+    const p = m[1].split(";").map(Number);
+    for (let i = 0; i < p.length; i++) {
+      const c = p[i];
+      if (c === 0) st = { fg: null, bg: null, b: 0, d: 0, i: 0, r: 0 };
+      else if (c === 1) st.b = 1;
+      else if (c === 2) st.d = 1;
+      else if (c === 3) st.i = 1;
+      else if (c === 7) st.r = 1;
+      else if (c === 27) st.r = 0;
+      else if (c === 39) st.fg = null;
+      else if (c === 49) st.bg = null;
+      else if (c === 38 && p[i + 1] === 2) { st.fg = `rgb(${p[i + 2]},${p[i + 3]},${p[i + 4]})`; i += 4; }
+      else if (c === 48 && p[i + 1] === 2) { st.bg = `rgb(${p[i + 2]},${p[i + 3]},${p[i + 4]})`; i += 4; }
+    }
+  }
+  emit(src.slice(last));
+  close();
+  return html;
+}
+
+const FRAMES = {
+  stream: { cols: 148, rows: 40, title: "harbour-gateway — logtrail — tail", note: "the main screen: 420 lines in a 4-minute window, a 60-bucket volume histogram, and the selected line decomposed on the right" },
+  endpoints: { cols: 148, rows: 34, title: "harbour-gateway — logtrail — endpoints", note: "the same buffer aggregated by route: volume, p50/p95, warnings, errors, and a share bar in the cell" },
+  help: { cols: 148, rows: 34, title: "harbour-gateway — logtrail — keys", note: "the help overlay is a modal box over a blanked screen; nine keys run the whole app" },
+  filtered: { cols: 148, rows: 30, title: "harbour-gateway — logtrail — filter", note: "a live filter: lvl= and svc= tokens plus free text, applied to both the tail and the endpoint table" },
+  empty: { cols: 148, rows: 26, title: "harbour-gateway — logtrail — no match", note: "the empty state says what matched nothing and shows the levels that do exist in the window" },
+  light: { cols: 148, rows: 34, title: "harbour-gateway — logtrail — light", note: "the same frame in the light palette, for a terminal on a bright desk" },
+  narrow: { cols: 80, rows: 24, title: "harbour-gateway — logtrail — 80×24", note: "at 80 columns the endpoint and latency columns drop out and the app bar shortens" },
+  frozen: { cols: 148, rows: 34, title: "harbour-gateway — logtrail — frozen", note: "f freezes the tail; the buffer keeps filling and the histogram cursor stops moving" },
+};
+
+const q = new URLSearchParams(location.search);
+const name = FRAMES[q.get("frame")] ? q.get("frame") : "stream";
+const f = FRAMES[name];
+const theme = q.get("theme") || (name === "light" ? "light" : "dark");
+document.body.dataset.theme = theme;
+const PAL = { ink: theme === "dark" ? "#dfe7ee" : "#1d2831", panel: theme === "dark" ? "#10161c" : "#ffffff" };
+document.getElementById("title").textContent = f.title;
+document.getElementById("meta").textContent = `${f.cols}×${f.rows} · JetBrains Mono · 24-bit`;
+document.getElementById("cap").innerHTML =
+  `<span><b>${name}</b> ${f.cols}×${f.rows}</span><span style="flex:1;min-width:220px">${f.note}</span><span>the bytes the program prints, rendered</span>`;
+document.title = `logtrail — ${name}`;
+
+fetch(`capture/${name}.ansi?v=${Date.now()}`)
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then((txt) => {
+    const pre = document.getElementById("screen");
+    pre.innerHTML = ansi2html(txt.replace(/\n$/, ""), PAL);
+    const avail = Math.min(1560, document.querySelector(".term").clientWidth) - 34;
+    const size = Math.max(9, Math.min(15, avail / (f.cols * 0.6)));
+    pre.style.fontSize = size + "px";
+    document.documentElement.style.setProperty("--cols", f.cols);
+  })
+  .catch((e) => { document.getElementById("screen").textContent = "capture missing: capture/" + name + ".ansi (" + e.message + ") — run tools/capture.sh"; });
+</script>
+</body>
+</html>

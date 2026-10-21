@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion study — Halyard in motion</title>
+<meta name="description" content="Twelve micro-interactions built as scrubbable Web Animations, with the tokens behind them, the reason for each curve, and what reduced motion replaces them with. Synthetic demo, no framework, no build.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2314181c'/%3E%3Cpath d='M2 12c4 0 5-8 8-8s4 4 4 4' stroke='%2357c98d' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/sora@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/dm-sans@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="motion.js"></script>
+</head>
+<body>
+<header class="mast">
+  <p class="kick">Halyard · motion study · twelve interactions, one system</p>
+  <h1>Motion is an answer to a question about space.</h1>
+  <p class="lede">A sheet that slides in from the bottom says <i>this came from the tab bar</i>. A
+    row that grows says <i>something was added here</i>. A fade with no movement says
+    <i>this changed and nothing moved</i>. Where the frame comes from is the sentence.
+    Everything on this page is a real animation that the page can scrub: the strips show
+    the frames a person sees, not paintings of them.</p>
+  <div class="mast-meta">
+    <p><b>Synthetic.</b> Fictional product, invented data, no network calls, no framework, no build step.</p>
+    <p><b>Scrubbed, not staged.</b> Every frame in a strip is a paused Web Animation with its
+      <span class="mono">currentTime</span> set to a millisecond. <span class="mono">Play</span> runs the same animation.</p>
+    <p id="rmNote"><b>Reduced motion.</b> The tokens drop to 0 ms and each study says what replaces the
+      movement. <span class="mono" id="rmState">checking…</span></p>
+  </div>
+</header>
+
+<main>
+  <!-- ── the system ─────────────────────────────────────────────────── -->
+  <section class="sec" id="system">
+    <h2 class="sec-h"><span class="num">01</span> The system</h2>
+    <p class="sec-lede">Four durations, four curves, one rule: a thing that enters decelerates, a thing
+      that leaves accelerates, and nothing animates a property that moves other things.</p>
+
+    <div class="sys-grid">
+      <div class="tok">
+        <h3 class="mini">Durations</h3>
+        <table class="tok-t">
+          <thead><tr><th>Token</th><th>Value</th><th>Used for</th><th></th></tr></thead>
+          <tbody id="tokDur"></tbody>
+        </table>
+      </div>
+      <div class="tok">
+        <h3 class="mini">Curves</h3>
+        <div class="curves" id="curves">
+          <svg viewBox="0 0 240 120" role="img" aria-label="Four easing curves drawn as progress against time: standard, decelerate, accelerate, and a spring-like overshoot.">
+            <g class="grid"></g>
+          </svg>
+        </div>
+        <ul class="curve-list" id="curveList"></ul>
+      </div>
+    </div>
+
+    <div class="rules">
+      <div class="rule"><h3 class="mini">Two properties, at most</h3><p class="rb">Only <span class="mono">transform</span> and <span class="mono">opacity</span> are animated. They are composited; <span class="mono">width</span>, <span class="mono">top</span>, <span class="mono">box-shadow</span> and <span class="mono">font-size</span> make the browser lay out and paint the page 60 times a second. Height changes are hidden behind a grid row or a clip, so the layout work happens once.</p></div>
+      <div class="rule"><h3 class="mini">Enter decelerates, leaves accelerates</h3><p class="rb">A thing arriving has to be catchable, so it starts fast and settles: <span class="mono">cubic-bezier(0.16, 1, 0.3, 1)</span>. A thing leaving is already gone from the person's attention, so it speeds up: <span class="mono">cubic-bezier(0.4, 0, 1, 1)</span> at a shorter duration. Nothing bounces for cheer.</p></div>
+      <div class="rule"><h3 class="mini">Movement is a pointer, not a decoration</h3><p class="rb">A transition must answer “where did that come from, and where did it go?”. A shared element, a parent-child link, a row that grows: the movement names the relationship. If a strip of frames would not teach a person anything, the animation is cut.</p></div>
+      <div class="rule"><h3 class="mini">Nothing waits for the animation</h3><p class="rb">Input is accepted during a transition, and the state is final the moment the intent is. The toast is dismissible while it flies in; the sheet is scrollable before it settles; the row is added to the data before it grows.</p></div>
+      <div class="rule"><h3 class="mini">Announce the fact, not the movement</h3><p class="rb">Every animated change has a text equivalent that is not animation-dependent: the toast is a live region, the sheet is a dialog, the row is in the list, the count is in the button's label. A person on a screen reader gets the same news.</p></div>
+      <div class="rule"><h3 class="mini">Reduced motion is a redesign, not an off switch</h3><p class="rb">Durations go to 0 ms. Where movement carried meaning, it is replaced with a static cue: a spatial relationship becomes a heading and a scrim; a growing row becomes a row at the top of a list labelled “added”; a spinner becomes the word “Saving”.</p></div>
+    </div>
+  </section>
+
+  <!-- ── the studies ────────────────────────────────────────────────── -->
+  <section class="sec" id="studies">
+    <h2 class="sec-h"><span class="num">02</span> Twelve studies</h2>
+    <p class="sec-lede">Each study is one card: the live demo, then the same animation held at
+      0 ms, at the mid-point, and at the end, then the specification and what reduced motion does.
+      Press <span class="mono">Play</span> on a card to run it.</p>
+    <div class="studies" id="studies-list"></div>
+  </section>
+
+  <!-- ── reduced motion ─────────────────────────────────────────────── -->
+  <section class="sec" id="reduced">
+    <h2 class="sec-h"><span class="num">03</span> Reduced motion: what is kept</h2>
+    <p class="sec-lede">With <span class="mono">prefers-reduced-motion: reduce</span> every duration on
+      this page is 0 ms, so the three frames of every strip become identical. The
+      information the movement carried has to arrive some other way, and each study names
+      the replacement. Below, the same three strips with the setting on.</p>
+    <div class="rm-grid" id="rmGrid"></div>
+  </section>
+
+  <!-- ── the receipts ───────────────────────────────────────────────── -->
+  <section class="sec" id="audit">
+    <h2 class="sec-h"><span class="num">04</span> Checks</h2>
+    <div class="audit" id="audit-list"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Fictional design system, synthetic data, one page, no framework, no build step. Fonts from
+    jsDelivr, pinned. Every animation on this page is a <span class="mono">Web Animation</span>
+    the page can seek; the strips are its frames.</p>
+</footer>
+</body>
+</html>

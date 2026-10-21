@@ -1,0 +1,550 @@
+[
+ {
+  "label": "09-motion/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/masthead.jpg",
+  "bytes": 252151,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/system",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#system"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/system.jpg",
+  "bytes": 317801,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/rules",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.rules"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/rules.jpg",
+  "bytes": 329923,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/sheet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-sheet"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/sheet.jpg",
+  "bytes": 211558,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/modal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-modal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/modal.jpg",
+  "bytes": 213963,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-toast"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/toast.jpg",
+  "bytes": 206872,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/insert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-insert"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/insert.jpg",
+  "bytes": 198822,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reorder",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-reorder"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reorder.jpg",
+  "bytes": 192736,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/tabs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-tabs"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/tabs.jpg",
+  "bytes": 202623,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/skeleton",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-skeleton"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/skeleton.jpg",
+  "bytes": 184673,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/like",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-like"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/like.jpg",
+  "bytes": 171682,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/button",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-button",
+   "eval: \"0=1 0.2=0 0.3=0.256685 0.45=0.653195 0.66=0.901602 0.8=0.970948 1=1\"",
+   "eval:return (function(){const el=document.createElement(\"div\");el.style.opacity=\"0.5\";document.body.append(el);const a=el.animate([{opacity:1,offset:0},{opacity:0,offset:0.2},{opacity:0,offset:0.66},{opacity:1,offset:1}],{duration:1000,fill:\"both\",easing:\"cubic-bezier(0.2,0.7,0.3,1)\"});a.pause();const out=[];for(const t of [0,0.2,0.3,0.45,0.66,0.8,1]){a.currentTime=t*1000;out.push(t+\"=\"+getComputedStyle(el).opacity)}a.cancel();el.remove();return out.join(\" \")})()"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/button.jpg",
+  "bytes": 192834,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/accordion",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-accordion"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/accordion.jpg",
+  "bytes": 230610,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reveal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-reveal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reveal.jpg",
+  "bytes": 164857,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/pointer",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-pointer"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/pointer.jpg",
+  "bytes": 210720,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#reduced"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced.jpg",
+  "bytes": 375500,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-sheet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-sheet"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-sheet.jpg",
+  "bytes": 211443,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-button",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-button"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-button.jpg",
+  "bytes": 193366,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-insert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-insert"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-insert.jpg",
+  "bytes": 212579,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/checks-reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#audit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/checks-reduced.jpg",
+  "bytes": 392005,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/audit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#audit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/audit.jpg",
+  "bytes": 392678,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/phone.jpg",
+  "bytes": 1339868,
+  "px": "390x26283",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/full.jpg",
+  "bytes": 1403441,
+  "px": "1400x11043",
+  "actions_failed": []
+ }
+]

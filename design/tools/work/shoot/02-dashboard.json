@@ -1,0 +1,345 @@
+[
+ {
+  "label": "02-dashboard/light",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/light.jpg",
+  "bytes": 332838,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/dark",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/dark.jpg",
+  "bytes": 314539,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/full.jpg",
+  "bytes": 229299,
+  "px": "1440x1771",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/dark-full",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/dark-full.jpg",
+  "bytes": 238177,
+  "px": "1440x1771",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/chart-hover",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "hover:#area"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/chart-hover.jpg",
+  "bytes": 338515,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/filtered",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#depotChecks input[value=awl]",
+   "click:#depotChecks input[value=stk]",
+   "type:#q:hall"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/filtered.jpg",
+  "bytes": 327652,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/sorted-buses",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:th button.sort[data-key=buses]",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/sorted-buses.jpg",
+  "bytes": 334958,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/compact",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#density",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/compact.jpg",
+  "bytes": 352989,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "eval:document.querySelectorAll('#depotChecks input').forEach(i=>{i.checked=false;i.dispatchEvent(new Event('change',{bubbles:true}))})",
+   "eval:document.getElementById('table').scrollIntoView({block:'center'})"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/empty.jpg",
+  "bytes": 185559,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#export"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/toast.jpg",
+  "bytes": 340286,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/phone.jpg",
+  "bytes": 191848,
+  "px": "390x5043",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-drawer",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#drawer"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/phone-drawer.jpg",
+  "bytes": 73783,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-top",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/phone-top.jpg",
+  "bytes": 87571,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-table",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-60)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/phone-table.jpg",
+  "bytes": 90649,
+  "px": "780x1688",
+  "actions_failed": []
+ }
+]

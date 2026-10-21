@@ -1,0 +1,487 @@
+[
+ {
+  "label": "06-identity/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/full.jpg",
+  "bytes": 714395,
+  "px": "1440x5770",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/masthead.jpg",
+  "bytes": 382300,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/construction",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#construction"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/construction.jpg",
+  "bytes": 296132,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/lockups",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#lockups"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/lockups.jpg",
+  "bytes": 291961,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/scale",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#scale"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/scale.jpg",
+  "bytes": 282580,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/onebit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#onebit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/onebit.jpg",
+  "bytes": 244613,
+  "px": "2600x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/grid",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#grid"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/grid.jpg",
+  "bytes": 338399,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/wall",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#icons"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/wall.jpg",
+  "bytes": 325754,
+  "px": "2880x2360",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/sizes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#icons",
+   "scroll:+1100"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/sizes.jpg",
+  "bytes": 170139,
+  "px": "2400x1240",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/inuse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/inuse.jpg",
+  "bytes": 276612,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/inuse-tabs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse",
+   "scroll:+620"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/inuse-tabs.jpg",
+  "bytes": 251541,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/misuse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#misuse"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/misuse.jpg",
+  "bytes": 303948,
+  "px": "2600x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/toolbar-on",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse",
+   "click:#toolbar .tb:nth-child(3)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "06-identity/shots/toolbar-on.jpg",
+  "bytes": 216822,
+  "px": "2400x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/phone.jpg",
+  "bytes": 660820,
+  "px": "390x12369",
+  "actions_failed": []
+ }
+]

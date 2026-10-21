@@ -1,0 +1,283 @@
+/* Meridian — identity system. Two type roles, four colours, one red. */
+:root {
+  --ink: #14161a; --ink-2: #3d4550; --ink-3: #626b76; --ink-invert: #f7f6f3;
+  --paper: #f6f5f2; --paper-2: #fffefb; --paper-3: #eeece6;
+  --line: #e2dfd8; --line-strong: #a8a49a;
+  --sea: #1d4b6f; --sea-soft: #dee9f1;
+  --signal: #c8402f; --signal-text: #b03626;
+  --f-display: "Instrument Serif", Georgia, serif;
+  --f-text: "Inter Variable", "Inter", ui-sans-serif, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r-1: 2px; --r-2: 4px; --r-3: 8px; --r-4: 14px;
+  --sh-1: 0 1px 2px rgba(20, 22, 26, .07);
+  --sh-2: 0 6px 18px rgba(20, 22, 26, .1);
+  color-scheme: light;
+}
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+html { -webkit-text-size-adjust: 100% }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-text); font-size: 15px; line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; letter-spacing: -.015em; margin: 0 0 .3em; line-height: 1.06 }
+h1 { font-size: clamp(30px, 3.6vw, 46px) }
+h2 { font-size: 27px }
+h3 { font-size: 19px }
+p { margin: 0 0 10px; max-width: 70ch }
+.mono { font-family: var(--f-mono); font-size: .86em; letter-spacing: .02em }
+b { font-weight: 600 }
+em { font-style: italic }
+.ic { display: inline-block; width: 24px; height: 24px; flex: none; color: currentColor; vertical-align: middle }
+.ic svg { display: block; width: 100%; height: 100% }
+a:focus-visible, button:focus-visible, .focusable:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; border-radius: var(--r-1) }
+.rule {
+  font-size: 12.5px; color: var(--ink-2); border-left: 2px solid var(--signal);
+  padding: 2px 0 2px 10px; max-width: 66ch;
+}
+.note { font-size: 12px; color: var(--ink-3); max-width: 62ch }
+
+.wrap { display: grid; grid-template-columns: 226px minmax(0, 1fr) }
+@media (max-width: 980px) { .wrap { grid-template-columns: 1fr } .nav { position: static !important; height: auto !important } }
+.nav {
+  position: sticky; top: 0; height: 100vh; overflow: auto; padding: 22px 18px 30px;
+  border-right: 1px solid var(--line); background: var(--paper-2);
+}
+.nav .mark { width: 30px; height: 30px; color: var(--ink) }
+.nav .mark svg { width: 100%; height: 100% }
+.nav .wm { font-family: var(--f-display); font-size: 21px; letter-spacing: -.01em; margin: 6px 0 2px }
+.nav .ver { font-size: 10.5px; color: var(--ink-3); letter-spacing: .05em; margin-bottom: 20px }
+.nav h4 { font-family: var(--f-mono); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; color: var(--ink-3); margin: 18px 0 5px; font-weight: 400 }
+.nav a { display: block; padding: 5px 8px; border-radius: var(--r-2); color: var(--ink-2); text-decoration: none; font-size: 13.5px; border-left: 2px solid transparent }
+.nav a:hover { background: var(--paper-3); color: var(--ink) }
+.nav a[aria-current="true"] { background: var(--sea-soft); color: var(--ink); border-left-color: var(--sea) }
+
+.main { min-width: 0; padding: 0 0 90px }
+section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var(--line) }
+.sec-head { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; margin-bottom: 16px }
+.sec-head .n { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: .12em }
+.sec-head p { color: var(--ink-3); font-size: 13.5px; margin: 0; flex: 1; min-width: 220px; max-width: 60ch }
+
+/* ── masthead ─────────────────────────────────────────────────────── */
+.mast { padding: 26px clamp(16px, 3vw, 42px) 22px; border-bottom: 1px solid var(--line); background: var(--paper-2) }
+.mast-top { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(18px, 3vw, 40px); align-items: start }
+@media (max-width: 760px) { .mast-top { grid-template-columns: 1fr } }
+.lockup { display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-4); background: var(--paper); }
+.lg-mark { width: 76px; height: 76px; color: var(--ink) }
+.lg-name { font-family: var(--f-display); font-size: 30px; line-height: 1; letter-spacing: -.01em }
+.lg-sub { font-size: 9.5px; color: var(--ink-3); letter-spacing: .16em; margin-top: 5px }
+.mast-copy p { color: var(--ink-2); font-size: 14.5px }
+.mast-spec { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px }
+.mast-spec span { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-2); border: 1px solid var(--line); border-radius: var(--r-2); padding: 3px 7px; background: var(--paper-2) }
+
+/* ── panels ───────────────────────────────────────────────────────── */
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 16px; align-items: start }
+.panel { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-4); box-shadow: var(--sh-1); min-width: 0 }
+.panel-hd { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid var(--line) }
+.panel-hd b { font-size: 14px }
+.panel-hd .tag { margin-left: auto; font-size: 9.5px; color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase }
+.panel-bd { padding: 14px }
+
+/* ── 01 construction ──────────────────────────────────────────────── */
+.build { display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); gap: 16px; align-items: start }
+.build-grid { width: 100%; color: var(--ink) }
+.g-lines path { stroke: var(--line-strong); stroke-width: .18; fill: none; opacity: .55 }
+.g-circles circle { stroke: var(--sea); stroke-width: .2; fill: none; stroke-dasharray: 1.4 1.4; opacity: .8 }
+.g-horizon, .g-meridian { stroke: var(--signal); stroke-width: .22; fill: none; stroke-dasharray: 1.2 1.2 }
+.g-marks circle { fill: var(--signal) }
+.g-final { opacity: .96 }
+.build-notes { display: grid; gap: 9px }
+.build-notes > div { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; font-size: 12.5px; color: var(--ink-2) }
+.build-notes b { font-family: var(--f-mono); font-size: 11px; color: var(--ink); font-weight: 500 }
+.build-notes .rule { grid-column: 1 / -1 }
+
+/* the construction panel is the one two-column grid whose right column is text: the notes'
+   min-content — a 92 px mono label (`r 6 · 12 · 18 · 24` does not break) plus the longest word —
+   is wider than a phone, so below 620 the grid stacks and the label sits above its text.
+   Position matters: a media query carries no specificity, so at equal specificity the later rule
+   wins. The same override written above the base rule (as it was first) did nothing at all. */
+@media (max-width: 620px) {
+  .build { grid-template-columns: minmax(0, 1fr) }
+  .build-notes > div { grid-template-columns: minmax(0, 1fr); gap: 2px }
+  .build-notes > div > span { min-width: 0; white-space: normal; overflow-wrap: anywhere }
+  .build-notes > div > b { display: inline-block }
+}
+.reading { display: grid; gap: 10px }
+.read-row { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: baseline }
+.read-row .k { font-size: 10px; color: var(--signal); letter-spacing: .1em }
+.read-row p { font-size: 12.5px; color: var(--ink-2); margin: 2px 0 0 }
+.reading .rule { margin-top: 4px }
+
+/* ── 02 lockups ───────────────────────────────────────────────────── */
+.lock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px }
+.lk { margin: 0; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-4); overflow: hidden }
+.lk-stage { display: flex; align-items: center; gap: 12px; padding: 22px 16px; min-height: 108px; background: var(--paper); border-bottom: 1px solid var(--line) }
+.lk-stage.col { flex-direction: column; gap: 8px; justify-content: center }
+.lk-stage.solo { justify-content: center }
+.lk-stage.tiny { gap: 18px; align-items: center; flex-wrap: wrap }
+.lk-stage.dark { background: var(--ink); border-bottom-color: #2a2f36 }
+.lm { width: 52px; height: 52px; color: var(--ink); flex: none }
+.lm.big { width: 84px; height: 84px }
+.lk-stage.dark .lt-n { color: var(--ink-invert) }
+.lk-stage.dark .lt-s { color: #9aa4b0 }
+.lt-n { font-family: var(--f-display); font-size: 25px; line-height: 1; letter-spacing: -.01em }
+.lt-s { font-size: 9px; letter-spacing: .15em; color: var(--ink-3); margin-top: 5px }
+.lk figcaption { padding: 10px 13px 12px; font-size: 12px; color: var(--ink-3) }
+.lk figcaption b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 3px }
+.stamp { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-display); font-size: 21px; color: var(--ink) }
+.stamp svg { width: 24px; height: 24px }
+.stamp.sm { font-size: 14px; gap: 5px } .stamp.sm svg { width: 16px; height: 16px }
+.stamp.xs { font-family: var(--f-mono); font-size: 9px; letter-spacing: .1em; gap: 4px }
+.stamp.xs svg { width: 12px; height: 12px }
+
+/* ── 03 scale ─────────────────────────────────────────────────────── */
+.ladder { display: flex; align-items: flex-end; gap: 22px; flex-wrap: wrap }
+.ladder .rung { text-align: center; color: var(--ink) }
+.ladder .rung .box { display: grid; place-items: center; min-height: 40px }
+.ladder .rung .cap { font-family: var(--f-mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: .06em; margin-top: 7px }
+.ladder .rung .cap b { display: block; color: var(--ink); font-weight: 500; font-size: 10.5px }
+.pixel { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center }
+.px16 { width: 16px; height: 16px; color: var(--ink) }
+/* the 8 px box is a declared size, not an aspect-ratio box: inside `.pixel { auto 1fr }` the svg's
+   width:100% is cyclic against a track sized by the item's own content, the box collapsed to 2 px
+   and the 48-unit glyph drew at its intrinsic 43 px — fourteen px past a 390 viewport */
+.px8 { width: 190px; max-width: 100%; aspect-ratio: 1; color: var(--ink); border: 1px solid var(--line); background: var(--paper-2) }
+.px8 svg { width: 100%; height: 100%; display: block }
+.clear { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center }
+.clear-box { position: relative; width: 116px; height: 116px; padding: 29px; border: 1px dashed var(--signal); }
+.clear-box svg { width: 100%; height: 100%; color: var(--ink) }
+.clear-box .cs { position: absolute; background: var(--signal); opacity: .16 }
+.clear-box .cs-t, .clear-box .cs-b { left: 0; right: 0; height: 29px }
+.clear-box .cs-t { top: 0 } .clear-box .cs-b { bottom: 0 }
+.clear-box .cs-l, .clear-box .cs-r { top: 0; bottom: 0; width: 29px }
+.clear-box .cs-l { left: 0 } .clear-box .cs-r { right: 0 }
+.clear-box i { position: absolute; top: 7px; left: 7px; font-size: 9px; color: var(--signal-text) }
+
+/* ── 04 one colour ────────────────────────────────────────────────── */
+.bits { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 168px), 1fr)); gap: 12px }
+.bit { border-radius: var(--r-3); padding: 16px; display: grid; gap: 10px; justify-items: center; border: 1px solid var(--line) }
+.bit svg { width: 62px; height: 62px }
+.bit .cap { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .07em; text-align: center }
+.bit .cap b { display: block; font-size: 11.5px; font-family: var(--f-text); letter-spacing: 0; margin-bottom: 3px }
+.bit.ink { background: var(--paper-2); color: var(--ink) }
+.bit.navy { background: var(--sea); color: #fff; border-color: #17405f }
+.bit.navy .cap { color: #cfe0ec }
+.bit.onink { background: var(--ink); color: #fff; border-color: #2a2f36 }
+.bit.onink .cap { color: #9aa4b0 }
+.bit.brass { background: #b8a271; color: #4a3c1c; border-color: #9d8857 }
+.bit.brass .cap { color: #4a3c1c }
+.bit.mono1 { background: #fff; color: #000; border-color: #d8d5cf }
+.bit.mono0 { background: #000; color: #fff; border-color: #333 }
+.bit.tint { background: var(--sea-soft); color: var(--sea); border-color: #c3d6e4 }
+.bit .sun-ring circle { fill: none; stroke: currentColor; stroke-width: 3 }
+
+/* ── 05 grid ──────────────────────────────────────────────────────── */
+.keylines { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start }
+.kl { position: relative; width: 132px; height: 132px }
+.kl .g { position: absolute; inset: 0; stroke: var(--line-strong); stroke-width: .5; fill: none; opacity: .6 }
+.kl svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--ink) }
+.kl .live { position: absolute; inset: 11.1%; border: 1px dashed var(--sea); opacity: .8 }
+.kl .lab { position: absolute; left: 0; bottom: -17px; font-family: var(--f-mono); font-size: 9px; color: var(--ink-3); letter-spacing: .07em }
+.ic-rules ul { margin: 0; padding-left: 17px; display: grid; gap: 8px; font-size: 12.5px; color: var(--ink-2) }
+.ic-rules li::marker { color: var(--signal) }
+
+/* ── 06 the wall ──────────────────────────────────────────────────── */
+/* the bounded minmax idiom: an unbounded 88 px min track plus gaps lands one px past a
+   390 viewport, which is a 1 px sideways scroll on the whole page */
+.wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 88px), 1fr)); gap: 2px; background: var(--line) }
+.cell { background: var(--paper-2); padding: 11px 6px 9px; display: grid; justify-items: center; gap: 7px; position: relative }
+.cell .ic { width: 24px; height: 24px }
+.cell .nm { font-family: var(--f-mono); font-size: 8.5px; color: var(--ink-3); letter-spacing: .03em; text-align: center; word-break: break-word }
+.cell .key { position: absolute; top: 4px; right: 5px; font-family: var(--f-mono); font-size: 8px; color: var(--line-strong) }
+.sizes { display: grid; gap: 0 }
+.sizes .r { display: grid; grid-template-columns: minmax(0, 1fr) repeat(4, 84px); gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line) }
+.sizes .r:last-child { border-bottom: 0 }
+.sizes .r .nm { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-2) }
+.sizes .c { display: flex; align-items: center; justify-content: center; gap: 6px }
+.sizes .hd { font-family: var(--f-mono); font-size: 9px; color: var(--ink-3); letter-spacing: .08em; text-transform: uppercase; display: flex; justify-content: center }
+.sizes .r.hd { padding: 0 0 6px; border-bottom: 1px solid var(--line-strong) }
+/* A row's min-content is 4 × 84 px of swatches plus four gaps: 368 px, which lands nine px
+   past a 390 viewport (the icon set is the widest table on the page). The override sits here,
+   after the base rules, because a media block earlier in the file loses on order alone. */
+@media (max-width: 470px) { .sizes .r { grid-template-columns: minmax(0, 1fr) repeat(4, minmax(0, 62px)) } }
+
+/* ── 07 in use ────────────────────────────────────────────────────── */
+.toolbar { display: flex; flex-wrap: wrap; gap: 3px; padding: 5px; border: 1px solid var(--line); border-radius: var(--r-3); background: var(--paper) }
+.tb { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 28px; min-width: 28px; padding: 0 5px; border: 1px solid transparent; border-radius: var(--r-2); background: transparent; color: var(--ink-2); cursor: pointer; font: inherit }
+.tb .ic { width: 18px; height: 18px }
+.tb:hover { background: var(--paper-3); color: var(--ink) }
+.tb[aria-pressed="true"] { background: var(--sea-soft); color: var(--sea); border-color: #c3d6e4 }
+.tb[aria-current="true"] { box-shadow: inset 0 -2px 0 var(--signal) }
+.tb .lb { font-size: 11.5px }
+.tool-status { font-size: 11.5px; color: var(--ink-3); padding: 8px 2px 0 }
+.chartline { margin-top: 8px; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--paper); overflow: hidden }
+.chartline svg { display: block; width: 100%; height: 96px }
+.chartline .sds text { font-family: var(--f-mono); font-size: 7.5px; fill: var(--sea) }
+.chartlist { list-style: none; margin: 0; padding: 0 }
+.chartlist li { display: flex; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13px }
+.chartlist li:last-child { border-bottom: 0 }
+.chartlist .ic { width: 20px; height: 20px; color: var(--sea) }
+.chartlist .t { font-weight: 600 }
+.chartlist .s { font-size: 11.5px; color: var(--ink-3) }
+.chartlist .r { margin-left: auto; font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); white-space: nowrap }
+.chartlist .pill { font-family: var(--f-mono); font-size: 9px; letter-spacing: .06em; padding: 2px 6px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-2) }
+.chartlist .pill.new { border-color: var(--signal); color: var(--signal-text) }
+
+.phone { width: 100%; max-width: 320px; border: 1px solid var(--line); border-radius: var(--r-4); background: var(--paper-2); overflow: hidden; box-shadow: var(--sh-1) }
+.ph-bar { display: flex; padding: 6px 10px; font-size: 9.5px; color: var(--ink-3); border-bottom: 1px solid var(--line) }
+.ph-bar .grow { flex: 1 }
+.ph-title { padding: 10px 12px 8px; font-family: var(--f-display); font-size: 19px; display: flex; align-items: baseline; gap: 8px }
+.ph-title span { font-size: 8.5px; color: var(--ink-3); letter-spacing: .08em; text-transform: uppercase; font-family: var(--f-mono) }
+.ph-rows { padding: 0 12px }
+.ph-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12.5px }
+.ph-row:last-child { border-bottom: 0 }
+.ph-row .ic { width: 20px; height: 20px; color: var(--sea) }
+.ph-row b { margin-left: auto; font-family: var(--f-mono); font-size: 11px; font-weight: 500 }
+.ph-tabs { display: flex; border-top: 1px solid var(--line); background: var(--paper) }
+.ph-tabs button { flex: 1; display: grid; justify-items: center; gap: 3px; padding: 8px 0 9px; border: 0; background: transparent; color: var(--ink-3); font: inherit; cursor: pointer }
+.ph-tabs button .ic { width: 22px; height: 22px }
+.ph-tabs button b { font-size: 9px; font-weight: 500; letter-spacing: .04em }
+.ph-tabs button[aria-current="page"] { color: var(--sea); box-shadow: inset 0 2px 0 var(--signal) }
+
+.chrome { display: flex; gap: 4px; border-bottom: 1px solid var(--line); padding-top: 4px }
+.chrome .tab { display: flex; align-items: center; gap: 7px; padding: 6px 9px; font-size: 11px; color: var(--ink-2); border: 1px solid var(--line); border-bottom: 0; border-radius: var(--r-3) var(--r-3) 0 0; background: var(--paper) }
+.chrome .tab.active { background: var(--paper-2); color: var(--ink); border-color: var(--line-strong) }
+.chrome .tab .ic { width: 13px; height: 13px; color: var(--ink-3) }
+.chrome .tab svg { flex: none }
+.chrome .tab span { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.apps { display: flex; gap: 14px; padding: 14px 0 4px; flex-wrap: wrap }
+.app { width: 64px }
+.app .tile { border-radius: 15px; display: grid; place-items: center; color: #fff; background: var(--ink); box-shadow: var(--sh-1) }
+.app .tile svg { width: 68%; height: 68% }
+.app .cap { font-family: var(--f-mono); font-size: 8.5px; color: var(--ink-3); text-align: center; margin-top: 5px }
+.app.a64 .tile { width: 64px; height: 64px } .app.a48 .tile { width: 48px; height: 48px; border-radius: 11px }
+.app.a32 .tile { width: 32px; height: 32px; border-radius: 7px }
+.app.dark .tile { background: var(--sea) }
+
+/* ── 08 misuse ────────────────────────────────────────────────────── */
+.misuse { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 215px), 1fr)); gap: 12px }
+.mis { border: 1px solid var(--line); border-radius: var(--r-3); background: var(--paper-2); overflow: hidden }
+.mis .stage { display: flex; gap: 12px; align-items: center; justify-content: center; padding: 16px; background: var(--paper); border-bottom: 1px solid var(--line); min-height: 96px }
+.mis .stage svg { width: 54px; height: 54px; color: var(--ink) }
+.mis .stage svg.ok { color: var(--ink) }
+.mis .cap { padding: 9px 11px 11px; font-size: 11.5px; color: var(--ink-2) }
+.mis .cap b { display: block; font-size: 12px; margin-bottom: 2px }
+.mis .cap .no { color: var(--signal-text) }
+.st-stretch { transform: scaleX(1.45) }
+.st-rotate { transform: rotate(-17deg) }
+.st-crowd { margin: 0 -13px }
+.crowd-word { font-family: var(--f-display); font-size: 25px; letter-spacing: -.01em }
+.crowd-rule { width: 26px; height: 3px; background: var(--signal) }
+.st-shadow { filter: drop-shadow(3px 3px 0 var(--signal)) }
+.st-thin { stroke-width: 1.1 }
+.st-blur { filter: blur(.6px) }
+.fill-sun circle { fill: var(--sea) }
+
+/* ── 09 files ─────────────────────────────────────────────────────── */
+.files { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 12px }
+.file { border: 1px solid var(--line); border-radius: var(--r-3); padding: 12px 13px; background: var(--paper-2) }
+.file b { display: block; font-size: 12px; color: var(--sea); margin-bottom: 6px }
+.file span { font-size: 12px; color: var(--ink-2) }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 1ms !important } }

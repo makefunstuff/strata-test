@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternmark — Cyber</title>
+<meta name="description" content="The Ternmark home page as a heads-up display: cut-corner panels, neon outlines, monospace telemetry, a blueprint grid.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20fill='%2305070d'/%3E%3Cpath%20d='M5 19V7l4 4 3-6 3 6 4-4v12z' fill='none' stroke='%2322e6ff' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/chakra-petch@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/chakra-petch@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/chakra-petch@5.3.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
+<link rel="stylesheet" href="s08-cyber.css">
+</head>
+<body data-style="s08-cyber">
+<div class="bg" aria-hidden="true"><span class="grid"></span><span class="glow"></span><span class="sweep"></span></div>
+<a class="skip" href="#main">Skip to content</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const tpl = (c) => `
+<div class="status-strip"><span>SYS ▸ FIELD LOG v4.2</span><span>LINK ▸ NO CARRIER</span><span>STORE ▸ LOCAL</span><span>BUFFER ▸ 41 208 REC</span></div>
+<header class="bar">
+  <p class="logo"><b>${esc(c.brand)}</b><i>${esc(c.brandNote)}</i></p>
+  <nav class="nav" aria-label="Sections">
+    <a href="#feat">[ FEATURES ]</a><a href="#stats">[ TELEMETRY ]</a><a href="#plans">[ ACCESS ]</a><a href="#foot">[ UPLINK ]</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="kick">// ${esc(c.kicker)}</p>
+      <h1><span class="glitch" data-text="${esc(c.h1)}">${esc(c.h1)}</span></h1>
+      <p class="lede">${esc(c.lede)}</p>
+      <p class="cta">
+        <a class="cta-a" href="#plans">▸ ${esc(c.ctaPrimary)}</a>
+        <a class="cta-b" href="#stats">◇ ${esc(c.ctaSecondary)}</a>
+      </p>
+      <dl class="meta">
+        <div><dt>MODE</dt><dd>local-first</dd></div>
+        <div><dt>UPLINK</dt><dd>when found</dd></div>
+        <div><dt>CONFLICT</dt><dd>a row you read</dd></div>
+      </dl>
+    </div>
+    <div class="panel holo">
+      <p class="p-head"><span>HOLO ▸ SANDBAR HIDE</span><span class="live">LIVE</span></p>
+      <svg viewBox="0 0 300 210" role="img" aria-label="A wireframe plan of the estuary mouth with a marked record position.">
+        <g stroke="#22e6ff" fill="none" stroke-width="1" opacity=".75">
+          <path d="M0 150 C 60 140, 110 156, 150 146 C 200 134, 250 150, 300 138"/>
+          <path d="M0 168 C 70 158, 120 176, 165 164 C 215 150, 255 168, 300 156" opacity=".6"/>
+          <path d="M96 0 L 120 210" opacity=".35"/><path d="M196 0 L 176 210" opacity=".35"/>
+        </g>
+        <circle cx="150" cy="146" r="26" fill="none" stroke="#ff2d95" stroke-width="1.2"/>
+        <circle cx="150" cy="146" r="4" fill="#ff2d95"/>
+        <path d="M150 108 v-18 M150 184 v18 M112 146 h-18 M188 146 h18" stroke="#ff2d95" stroke-width="1"/>
+        <text x="182" y="120" fill="#b6ff3b" font-family="ui-monospace,monospace" font-size="11">00:32:14 · 53.412N 001.204E</text>
+        <text x="182" y="136" fill="#22e6ff" font-family="ui-monospace,monospace" font-size="11">REC 41208 · HELD LOCALLY</text>
+      </svg>
+      <div class="rows">
+        <p><b>21:04</b><span>COMMON TERN</span><em>×14</em></p>
+        <p><b>21:11</b><span>SANDWICH TERN</span><em>×3</em></p>
+        <p><b>21:19</b><span>AVOCET</span><em>×41</em></p>
+        <p class="pend"><b>21:26</b><span>LITTLE TERN · CALL 6S</span><em>QUEUED</em></p>
+      </div>
+      <p class="p-foot"><span>0 BYTES SENT</span><span>WRITE OK</span></p>
+    </div>
+  </section>
+
+  <section class="sec" id="feat" aria-labelledby="feat-h">
+    <h2 class="sec-h" id="feat-h"><span class="en">MODULES</span><span class="tick">SYS.01—03</span></h2>
+    <div class="mods">
+      ${c.features.map((f, i) => `<article class="panel mod">
+        <p class="mod-n">MODULE 0${f.n}</p>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+        <p class="pulse" aria-hidden="true"><span style="width:${[72, 55, 88][i]}%"></span></p>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="stats" aria-labelledby="stats-h">
+    <h2 class="sec-h" id="stats-h"><span class="en">TELEMETRY</span><span class="tick">measured on the handset</span></h2>
+    <div class="tele panel">
+      ${c.stats.map((s) => `<div class="chan">
+        <p class="ch">CH ${esc(s.u.slice(0, 4))}</p>
+        <b>${esc(s.v)}</b>
+        <p class="u">${esc(s.u)}</p>
+        <p class="n">${esc(s.n)}</p>
+        <p class="bar" aria-hidden="true"><span></span></p>
+      </div>`).join("")}
+    </div>
+  </section>
+
+  <section class="sec" id="quote" aria-labelledby="quote-h">
+    <h2 class="sec-h" id="quote-h"><span class="en">TRANSMISSION</span><span class="tick">decoded</span></h2>
+    <blockquote class="panel">
+      <p class="from">FROM ▸ ${esc(c.quote.by).toUpperCase()} · ${esc(c.quote.role).toUpperCase()}</p>
+      <p class="msg">${esc(c.quote.q)}</p>
+      <p class="sig" aria-hidden="true">▮▮▮▯▮▮▯▮▮▮▮▯▮▮</p>
+    </blockquote>
+  </section>
+
+  <section class="sec" id="plans" aria-labelledby="plans-h">
+    <h2 class="sec-h" id="plans-h"><span class="en">ACCESS</span><span class="tick">two tiers, no trial</span></h2>
+    <div class="tiers">
+      ${c.plans.map((p) => `<article class="panel tier ${p.best ? "best" : ""}">
+        ${p.best ? `<p class="flag">▸ PREFERRED TIER</p>` : ""}
+        <p class="tier-id">${p.best ? "TIER 02" : "TIER 01"}</p>
+        <h3>${esc(p.t)}</h3>
+        <p class="price">${esc(p.p)}<em>/ ${esc(p.per)}</em></p>
+        <ul>${p.l.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+        <a class="${p.best ? "cta-a" : "cta-b"}" href="#foot">▸ ${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+<footer id="foot" class="sec">
+  <div class="foot panel">
+    <div class="foot-a">
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">▸ ${esc(c.foot.inputLabel)}</label>
+        <p class="hint">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org"><button type="submit">▸ ${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <nav class="foot-b" aria-label="Footer">${c.foot.lines.map((l) => `<a href="#main">[ ${esc(l)} ]</a>`).join("")}</nav>
+    <p class="legal">${esc(c.foot.legal)}<br>${esc(c.brand)} · ${esc(c.kicker)} · END OF TRANSMISSION</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — Cyber (heads-up display)` });
+</script>
+</body>
+</html>

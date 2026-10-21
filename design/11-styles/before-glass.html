@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEFORE · glassmorphism — base colour on body, gradient-clipped headline (study 11 self-critique)</title>
+<meta name="description" content="The Ternmark home page in glass: translucent panels over a drifting mesh, one light source, thin borders.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20rx='6'%20fill='%230b1220'/%3E%3Crect%20x='4'%20y='6'%20width='16'%20height='12'%20rx='4'%20fill='%23ffffff'%20fill-opacity='.25'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/manrope@5.3.0/index.css">
+<link rel="stylesheet" href="s04-glass.css">
+  <link rel="stylesheet" href="before-fixes.css">
+  
+</head>
+<body class="before-glass" data-style="s04-glass">
+<div class="mesh" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span><span class="grain"></span></div>
+<a class="skip" href="#main">Skip to content</a>
+<div id="app"></div>
+<script type="module">
+import { renderPage, esc } from "./render.js";
+
+const icon = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const ICONS = [
+  icon('<path d="M4 19V6a2 2 0 0 1 2-2h9l5 5v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 16h5"/>'),
+  icon('<path d="M4 12a8 8 0 0 1 16 0"/><path d="M8 12v3a4 4 0 0 0 8 0v-3"/><path d="M12 20v2"/>'),
+  icon('<path d="M4 7h16v12H4z"/><path d="M4 11h16"/><path d="M8 15h6"/>'),
+];
+
+const tpl = (c) => `
+<header class="bar">
+  <div class="glass pill brand"><span class="dot" aria-hidden="true"></span><b>${esc(c.brand)}</b><i>${esc(c.brandNote)}</i></div>
+  <nav class="glass pill nav" aria-label="Sections">
+    <a href="#feat">Features</a><a href="#stats">Numbers</a><a href="#plans">Plans</a><a href="#foot">Contact</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <p class="badge glass">${esc(c.kicker)}</p>
+    <h1>Every bird you saw, in the place you saw it, <em>with no signal.</em></h1>
+    <p class="lede">${esc(c.lede)}</p>
+    <p class="cta">
+      <a class="cta-a" href="#plans">${esc(c.ctaPrimary)}</a>
+      <a class="cta-b glass" href="#stats">${esc(c.ctaSecondary)}</a>
+    </p>
+    <div class="hero-panel glass">
+      <div class="hp-head"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>tonight, the Sandbar hide</span></div>
+      <ul class="log">
+        <li><b>21:04</b><span>Common tern</span><em>×14</em><i>over the mouth</i></li>
+        <li><b>21:11</b><span>Sandwich tern</span><em>×3</em><i>same line</i></li>
+        <li><b>21:19</b><span>Avocet</span><em>×41</em><i>skittled, settled</i></li>
+        <li class="pend"><b>21:26</b><span>Little tern — call, 6 s</span><em>queued</em><i>no signal; it is stored</i></li>
+      </ul>
+      <p class="hp-foot"><span>4 records written locally</span><span>0 bytes sent</span></p>
+    </div>
+  </section>
+
+  <section class="feats" id="feat" aria-labelledby="feat-h">
+    <h2 class="sec-h" id="feat-h">What it does</h2>
+    <div class="feat-grid">
+      ${c.features.map((f, i) => `<article class="glass card">
+        <span class="ic">${ICONS[i]}</span>
+        <h3>${esc(f.t)}</h3>
+        <p>${esc(f.b)}</p>
+        <span class="n">${f.n}</span>
+      </article>`).join("")}
+    </div>
+  </section>
+
+  <section class="stats glass" id="stats" aria-labelledby="stats-h">
+    <h2 class="sec-h" id="stats-h">Measured on the handset</h2>
+    <div class="stat-grid">
+      ${c.stats.map((s) => `<div class="stat"><b>${esc(s.v)}</b><span class="u">${esc(s.u)}</span><em>${esc(s.n)}</em></div>`).join("")}
+    </div>
+  </section>
+
+  <section class="quote" id="quote" aria-labelledby="quote-h">
+    <h2 class="sec-h" id="quote-h">From a user</h2>
+    <blockquote class="glass">
+      <p>${esc(c.quote.q)}</p>
+      <footer><span class="av" aria-hidden="true">HR</span><span><b>${esc(c.quote.by)}</b><i>${esc(c.quote.role)}</i></span></footer>
+    </blockquote>
+  </section>
+
+  <section id="plans" aria-labelledby="plans-h">
+    <h2 class="sec-h" id="plans-h">Two ways in</h2>
+    <div class="plan-grid">
+      ${c.plans.map((p) => `<article class="glass plan ${p.best ? "best" : ""}">
+        ${p.best ? `<p class="flag">Most records</p>` : ""}
+        <h3>${esc(p.t)}</h3>
+        <p class="price">${esc(p.p)}<em>${esc(p.per)}</em></p>
+        <ul>${p.l.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+        <a class="${p.best ? "cta-a" : "cta-b glass"}" href="#foot">${esc(c.ctaPrimary)}</a>
+      </article>`).join("")}
+    </div>
+  </section>
+</main>
+<footer id="foot">
+  <div class="foot glass">
+    <div class="foot-a">
+      <p class="made">${esc(c.foot.made)}</p>
+      <form data-subscribe>
+        <label for="em">${esc(c.foot.inputLabel)}</label>
+        <p class="hint">${esc(c.foot.inputHint)}</p>
+        <p class="field"><input id="em" type="email" name="email" placeholder="you@example.org"><button type="submit">${esc(c.foot.inputButton)}</button></p>
+        <p class="status" role="status" data-status></p>
+      </form>
+    </div>
+    <nav class="foot-b" aria-label="Footer">${c.foot.lines.map((l) => `<a href="#main">${esc(l)}</a>`).join("")}</nav>
+    <p class="legal">${esc(c.foot.legal)}<br>${esc(c.brand)} · ${esc(c.kicker)}</p>
+  </div>
+</footer>
+`;
+
+await renderPage(tpl, { title: (c) => `${c.brand} — Glass (translucent panels)` });
+</script>
+</body>
+</html>

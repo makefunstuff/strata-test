@@ -40,7 +40,8 @@ code{color:var(--amber)}
 <div class="scan"></div>
 <main>
   <h1>STRATA TEST — BROWSER LAB</h1>
-  <p class="lead">Ten three.js things in plain static files: no build step, no npm, no server. Pinned CDN
+  <p class="lead">Ten three.js things and eleven design briefs in plain static files: no
+  build step, no npm, no server. Pinned CDN
   importmap (three 0.170.0, lil-gui 0.19.2, Rapier 0.14.0), ES modules, one folder per thing. Built by
   Strata running pi headless, one task per build, each verified in headless Chromium.</p>
 
@@ -65,11 +66,32 @@ code{color:var(--amber)}
     <div class="row"><kbd>experiments/</kbd> published at <code>/experiments/</code> · measured table in <code>experiments/README.md</code></div>
   </a>
 
+  <a class="shelf" href="design/index.html">
+    <h2>DESIGN GALLERY — ELEVEN BRIEFS →</h2>
+    <p>Plain static pages built to written briefs and judged with measurements: a landing
+    page, a depot control tower, a nine-screen offline app, a terminal tool, a design
+    system, an identity, thirty years of estuary data, a six-step grant form, a motion
+    system, a flood portal redesigned against its own numbers, and one page in nine
+    visual styles. Screenshots, a console and contrast audit, a self-critique and scores
+    on every one.</p>
+    <div class="thumbs">
+      <img src="design/thumbs/11-styles.jpg" alt="One product page set in four different visual styles, side by side" loading="lazy">
+      <img src="design/thumbs/07-dataviz.jpg" alt="A tide-gauge chart with a flood line and annotated peak" loading="lazy">
+      <img src="design/thumbs/04-tui.jpg" alt="A terminal log tail with a filter bar and a selected row" loading="lazy">
+      <img src="design/thumbs/03-mobile.jpg" alt="A phone screen: today's birding log with counts" loading="lazy">
+      <img src="design/thumbs/06-identity.jpg" alt="An identity page masthead with a serif wordmark and mono captions" loading="lazy">
+    </div>
+    <div class="row"><kbd>design/</kbd> published at <code>/design/</code> · scores, verdict and the two audit blind spots in <code>design/README.md</code></div>
+  </a>
+
   <footer>
     Each page is checked in headless Chromium (software renderer on this box, so the FPS numbers are a
     floor): console, page and network errors, an interaction driven from the harness into the page's own
     <code>window.experiment</code> hook, and FPS sampled before and after it.
-    The checkers are <code>games/tools/verify.mjs</code> and <code>experiments/tools/check.mjs</code>.
+    The checkers are <code>games/tools/verify.mjs</code>, <code>experiments/tools/check.mjs</code>
+    and <code>design/tools/shoot.mjs</code> (screenshots plus a console, contrast, landmark,
+    control-name and overflow audit; the two things it used to be blind to are written down in
+    <code>design/README.md</code>).
     <br><br>Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>.
     Built by Strata, running pi headless.
   </footer>

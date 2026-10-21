@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harrow Estuary Authority :: Flood &amp; Tide Information</title>
+<style>
+[id]{scroll-margin-top:20px}
+/* The "before" page, as found. A 960 px fixed layout, 11 px grey type, a
+   carousel, a cookie wall, three columns, and the answer on page two.
+   Every sin here is a real pattern from real civic portals. */
+body { margin:0; background:#eef1f4; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#999; }
+a { color:#336699; text-decoration:underline; font-size:11px }
+a:visited { color:#663399 }
+.wrap { width:960px; margin:0 auto; background:#fff; border-left:1px solid #ccc; border-right:1px solid #ccc }
+.util { background:#f2f2f2; border-bottom:1px solid #ddd; padding:3px 10px; font-size:10px }
+.util a { font-size:10px; margin-right:9px; color:#777 }
+.head { padding:10px; border-bottom:3px solid #003366; overflow:hidden }
+.logo { font-family:Georgia, serif; font-size:26px; color:#003366; font-weight:bold; float:left }
+.logo span { color:#999; font-size:11px; font-family:Arial; font-weight:normal; display:block; margin-top:2px }
+.srch { float:right; padding-top:14px }
+.srch input { border:1px solid #ccc; padding:3px; width:130px; font-size:11px; color:#aaa }
+.srch button { border:1px solid #ccc; background:#eee; padding:3px 7px; font-size:11px }
+nav { background:#003366; height:30px }
+nav a { color:#cfd8e3; padding:8px 9px; display:block; float:left; text-decoration:none; font-size:11px; border-right:1px solid #1a4a7a }
+nav a.on { background:#00264d; color:#fff }
+.mob { display:none }
+.banner { background:#cc0000; color:#fff; padding:7px 10px; font-size:11px }
+.banner b { color:#ffcc00; text-transform:uppercase }
+.slides { position:relative; height:230px; overflow:hidden; background:#dde4ea }
+.slides .s { position:absolute; inset:0; opacity:0; transition:opacity .8s }
+.slides .s.on { opacity:1 }
+.slides .s .cap { position:absolute; left:26px; bottom:22px; color:#fff; text-shadow:0 1px 2px #000 }
+.slides .s .cap h3 { margin:0; font-size:19px; color:#f2f2f2 }
+.slides .s .cap p { margin:4px 0 8px; font-size:12px; color:#eee }
+.slides .s .cap a { background:#cc6600; color:#fff; padding:5px 10px; text-decoration:none; font-size:11px }
+.dots { position:absolute; right:14px; bottom:10px }
+.dots i { display:inline-block; width:9px; height:9px; border-radius:50%; background:#fff; opacity:.5; margin-left:5px }
+.dots i.on { opacity:1 }
+.cols { display:table; width:960px; table-layout:fixed }
+.main { display:table-cell; width:57%; padding:12px 14px; vertical-align:top }
+.side { display:table-cell; width:23%; padding:12px 8px; vertical-align:top; background:#f7f9fb; border-left:1px solid #e4e8ec }
+.side2 { display:table-cell; width:20%; padding:12px 8px; vertical-align:top; background:#fbfbfb; border-left:1px solid #eee }
+h2, h3.hd { font-size:12px; color:#003366; text-transform:uppercase; border-bottom:2px solid #cc6600; padding-bottom:3px; margin:14px 0 8px }
+.main h2:first-child { margin-top:0 }
+.news { border-bottom:1px solid #eee; padding:8px 0 }
+.news h4 { margin:0 0 3px; font-size:12px; color:#333 }
+.news .dt { color:#aaa; font-size:10px }
+table.tt { border-collapse:collapse; width:100%; font-size:10px }
+table.tt td { border:1px solid #ddd; padding:3px 4px; color:#999 }
+table.tt tr.h td { background:#003366; color:#cfd8e3; font-weight:bold }
+table.tt tr.pw td { background:#f4f7fa }
+ul.links { margin:0; padding-left:15px }
+ul.links li { margin:3px 0 }
+.doc { font-size:10px; color:#777 }
+.wbox { border:1px solid #dde3e8; margin-bottom:12px }
+.wbox .t { background:#e8eef4; color:#003366; font-weight:bold; padding:5px 7px; font-size:11px; text-transform:uppercase }
+.wbox .c { padding:7px }
+.tweets div { border-bottom:1px dotted #ccc; padding:5px 0; font-size:10px; color:#888 }
+.nl { background:#fff6e5; border:1px solid #e5d3ab; padding:9px; margin:14px 0 }
+.nl input { border:1px solid #ccc; padding:3px; width:120px }
+.nl button { background:#cc6600; color:#fff; border:1px solid #a85400; padding:3px 8px }
+.ticker { background:#ffcc00; color:#333; padding:4px 10px; font-size:11px; white-space:nowrap; overflow:hidden }
+.ticker span { display:inline-block; padding-left:100%; animation:rm 18s linear infinite }
+@keyframes rm { to { transform:translateX(-100%) } }
+.foot { background:#003366; color:#8fa6bf; padding:14px 10px; font-size:10px }
+.foot a { color:#8fa6bf; font-size:10px }
+.foot .fc { float:left; width:200px; margin-right:20px }
+.foot .fc b { color:#fff; display:block; margin-bottom:5px }
+.clear { clear:both }
+.cw { position:fixed; inset:auto 0 0 0; background:#333; color:#ccc; padding:12px; font-size:11px; z-index:99 }
+.cw button { background:#cc6600; color:#fff; border:0; padding:6px 12px; margin-left:8px }
+small { color:#aaa }
+.hint { color:#bbb; font-style:italic }
+b.tid { font-family:"Courier New", monospace; color:#666 }
+</style>
+</head>
+<body>
+<div class="cw" id="cw">
+  This site uses cookies and third-party cookies to improve your experience and for analytics.
+  By continuing to browse you agree to their use.
+  <button onclick="document.getElementById('cw').style.display='none'">Continue</button>
+  <button onclick="document.getElementById('cw').style.display='none'" style="background:#666">More information</button>
+</div>
+
+<div class="wrap">
+  <div class="util">
+    <a href="#">Home</a><a href="#">About Us</a><a href="#">Newsroom</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Accessibility</a><a href="#">Site Map</a><a href="#">A-Z</a><a href="#">Freedom of Information</a><a href="#">Modern Slavery</a>
+    <span style="float:right; color:#777">Text size: <a href="#">A</a> <a href="#">A</a> <a href="#">A</a> &nbsp; <a href="#">Welig</a></span>
+  </div>
+
+  <div class="head">
+    <div class="logo">HARROW ESTUARY AUTHORITY<span>Flood Risk Management &amp; Tidal Navigation</span></div>
+    <div class="srch"><input placeholder="Search" id="q"><button onclick="return false">&#128269;</button></div>
+    <div class="clear"></div>
+  </div>
+
+  <nav id="b-nav">
+    <a href="#" class="on">HOME</a>
+    <a href="#">FLOOD RISK</a>
+    <a href="#">TIDAL DATA</a>
+    <a href="#">PERMITS &amp; LICENCES</a>
+    <a href="#">WATER MANAGEMENT</a>
+    <a href="#">ESTUARY REPORTS</a>
+    <a href="#">COMMUNITY</a>
+    <a href="#">SERVICES</a>
+    <a href="#">DOCUMENT LIBRARY</a>
+    <a href="#" class="mob">MENU</a>
+  </nav>
+
+  <div class="banner" id="b-banner">
+    <b>Flood warning</b> &mdash; A Flood Warning is in force for Designated Area HE-07 (Reference: <b class="tid">TID/2024/1187</b>)
+    comprising the designated coastal flood zone of Harrowmouth, Lower Sandbar and Upcerne at and above 4.20 m AOD.
+    Responsible persons are advised to implement their Flood Risk Management Plan and to make application to the Authority
+    in respect of any temporary defences not already installed. Duration of the warning is indefinite pending review of the
+    Estuary Gauge Array and the Met Office Nautilus model run.
+  </div>
+
+  <div class="slides" id="sl" data-sl>
+    <div class="s on" style="background:#b7c4cf"><div class="cap"><h3>Protecting the Estuary</h3><p>Our strategy for the next twenty-five years is now open for consultation.</p><a href="#">READ MORE</a></div></div>
+    <div class="s" style="background:#8fa6bf"><div class="cap"><h3>Dredging of the Main Channel</h3><p>Vessel movements between 06:00 and 18:00 daily until the 19th.</p><a href="#">READ MORE</a></div></div>
+    <div class="s" style="background:#6f8aa8"><div class="cap"><h3>New Gauge at Salt Pits</h3><p>Improved telemetry delivers observations every six minutes.</p><a href="#">READ MORE</a></div></div>
+    <div class="s" style="background:#5f7c9b"><div class="cap"><h3>Schools Programme</h3><p>Ninety-two classes took part in the Estuary Watch scheme this term.</p><a href="#">READ MORE</a></div></div>
+    <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="ticker"><span>LIVE TIDE: HARROWMOUTH 3.94 m RISING &nbsp;&bull;&nbsp; NEXT HIGH WATER 22:14 &nbsp;&bull;&nbsp; GALE WARNING IN FORCE (FORCE 8, VEERING) &nbsp;&bull;&nbsp; FERRY SUSPENDED &nbsp;&bull;&nbsp; REPORT A FLOOD 0300 123 4567 &nbsp;&bull;&nbsp;</span></div>
+
+  <div class="cols">
+    <div class="main">
+      <h2 id="b-news">Latest News</h2>
+      <div class="news"><h4>Strategy 2024-2049 opens for consultation</h4><div class="dt">03/12/2024</div>
+        <p>The Authority's indicative flood risk map and draft management plan are available for inspection at the Estuary
+        Centre and on the document library. Written representations are to be received not later than 5:00pm on the 28th of
+        February 2025.</p><a href="#">Read more</a></div>
+      <div class="news"><h4>Tidal Defences (Maintenance) Works — Notice of Commencement</h4><div class="dt">28/11/2024</div>
+        <p>Notices pursuant to Regulation 14 have been served on the owners and occupiers of the properties listed in
+        Schedule 2. Works are expected to be executed within a period of twenty-six weeks.</p><a href="#">Read more</a></div>
+      <div class="news"><h4>Estuary Watch volunteer monitors required</h4><div class="dt">21/11/2024</div>
+        <p>Training is provided. Monitors are required to make observations twice daily during the spring tide period.</p><a href="#">Read more</a></div>
+      <div class="news"><h4>Property Flood Resilience Scheme — applications open</h4><div class="dt">14/11/2024</div>
+        <p>Grants of up to £5,000 are available for eligible properties. Two quotations are required.</p><a href="#">Read more</a></div>
+
+      <h2 id="b-table">Tide Table — Harrowmouth</h2>
+      <table class="tt">
+        <tbody>
+        <tr class="h"><td>DATE</td><td>H.W.</td><td>HGT m</td><td>L.W.</td><td>HGT m</td><td>H.W.</td><td>HGT m</td><td>L.W.</td><td>HGT m</td><td>S/G</td><td>DATUM</td></tr>
+        <tr class="pw"><td>03/12</td><td>10:42</td><td>4.31</td><td>04:26</td><td>1.02</td><td>22:14</td><td>4.48</td><td>16:12</td><td>0.86</td><td>7.2</td><td>CD</td></tr>
+        <tr><td>04/12</td><td>11:26</td><td>4.24</td><td>05:11</td><td>1.11</td><td>22:58</td><td>4.39</td><td>16:57</td><td>0.94</td><td>7.0</td><td>CD</td></tr>
+        <tr class="pw"><td>05/12</td><td>12:08</td><td>4.10</td><td>05:54</td><td>1.24</td><td>23:41</td><td>4.22</td><td>17:41</td><td>1.05</td><td>6.6</td><td>CD</td></tr>
+        <tr><td>06/12</td><td>12:49</td><td>3.92</td><td>06:36</td><td>1.38</td><td>—</td><td>—</td><td>18:24</td><td>1.18</td><td>6.1</td><td>CD</td></tr>
+        <tr class="pw"><td>07/12</td><td>13:29</td><td>3.71</td><td>07:17</td><td>1.52</td><td>00:22</td><td>4.01</td><td>19:07</td><td>1.31</td><td>5.5</td><td>CD</td></tr>
+        <tr><td>08/12</td><td>14:08</td><td>3.52</td><td>07:57</td><td>1.65</td><td>01:02</td><td>3.78</td><td>19:50</td><td>1.44</td><td>4.9</td><td>CD</td></tr>
+        <tr class="pw"><td>09/12</td><td>14:47</td><td>3.36</td><td>08:37</td><td>1.76</td><td>01:41</td><td>3.56</td><td>20:33</td><td>1.55</td><td>4.3</td><td>CD</td></tr>
+        </tbody>
+      </table>
+      <p><small>HGT = height above Chart Datum. S/G = range of the spring-tide period. Times are UTC; British Summer Time is +0100.
+      Not for navigation. Datums as per the Authority's Determination of 2011.</small></p>
+
+      <h2 id="b-notices">Notices &amp; Documents</h2>
+      <ul class="links">
+        <li><a href="#">Flood Warning TID/2024/1187 (issued 03/12/2024)</a> <span class="doc">[PDF 1.2 MB]</span></li>
+        <li><a href="#">Statement of Principles for Flood Risk Management</a> <span class="doc">[PDF 870 KB]</span></li>
+        <li><a href="#">Designated Areas Order 2019</a> <span class="doc">[PDF 2.4 MB]</span></li>
+        <li><a href="#">Estuary Gauge Array — Annual Report 2023/24</a> <span class="doc">[PDF 3.1 MB]</span></li>
+        <li><a href="#">Property Flood Resilience Grant Guidance</a> <span class="doc">[PDF 640 KB]</span></li>
+        <li><a href="#">Works Programme 2024/25</a> <span class="doc">[PDF 1.8 MB]</span></li>
+        <li><a href="#">Shellfish Harvesting Licence Application</a> <span class="doc">[PDF 410 KB]</span></li>
+      </ul>
+
+      <div class="nl">
+        <b style="color:#663300">Sign up to estuary updates</b>
+        <p style="margin:5px 0">Enter your email address to receive our newsletter, sent fortnightly.</p>
+        <input placeholder="Email address"><button>Sign up</button>
+        <span class="hint">We will never share your details.</span>
+      </div>
+
+      <h2 id="b-faq">Frequently Asked Questions</h2>
+      <p><b>Q:</b> Am I in a flood zone? <b>A:</b> Designated areas are defined in the Designated Areas Order 2019 and are
+      depicted on the indicative map, available from the document library.</p>
+      <p><b>Q:</b> What should I do in a flood? <b>A:</b> Refer to your Flood Risk Management Plan and contact the relevant
+      emergency services in the event of a danger to life.</p>
+      <p><b>Q:</b> Is a tide gauge calibrated? <b>A:</b> Gauges are verified annually against the Ordnance Datum network
+      pursuant to the Authority's Determination.</p>
+    </div>
+
+    <div class="side" id="b-side">
+      <div class="wbox"><div class="t">Quick Links</div><div class="c"><ul class="links">
+        <li><a href="#">Report a flood</a></li><li><a href="#">Tide tables</a></li><li><a href="#">Flood lines</a></li>
+        <li><a href="#">Buy a permit</a></li><li><a href="#">Pay a invoice</a></li><li><a href="#">Housing</a></li>
+        <li><a href="#">Roads</a></li><li><a href="#">Planning</a></li><li><a href="#">Bins</a></li><li><a href="#">Council tax</a></li>
+        <li><a href="#">Jobs</a></li><li><a href="#">Forms</a></li><li><a href="#">Maps</a></li><li><a href="#">Contact 101</a></li>
+      </ul></div></div>
+      <div class="wbox"><div class="t">Latest Updates</div><div class="c tweets">
+        <div>@HEATides High water 22:14, 4.48 m CD. Wind S 6.</div>
+        <div>@HEATides Ferry suspended due to gale. Next 06:00.</div>
+        <div>@HEATides Warning TID/2024/1187 extended. See site.</div>
+        <div><a href="#">Follow us</a></div>
+      </div></div>
+      <div class="wbox"><div class="t">Weather</div><div class="c">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>" width="60" height="40" style="float:left;margin-right:6px">
+        Wind S 6 gusting 9. Vis 4 km. Pressure 998 falling.<br><small>Provided by third-party widget</small>
+      </div></div>
+      <div class="wbox"><div class="t">Contact</div><div class="c">
+        Estuary Centre, Quay Wall<br>Harrowmouth<br>
+        <b>0300 123 4567</b><br><small>Mon–Fri 09:00–17:00</small>
+      </div></div>
+    </div>
+
+    <div class="side2">
+      <div class="wbox"><div class="t">Related</div><div class="c"><ul class="links">
+        <li><a href="#">Devon &amp; Severn Sounds</a></li><li><a href="#">National Flood Line</a></li>
+        <li><a href="#">Harbour Master</a></li><li><a href="#">Environment Agency</a></li>
+        <li><a href="#">Met Office</a></li><li><a href="#">Carnmar District Council</a></li>
+      </ul></div></div>
+      <div class="wbox"><div class="t">Downloads</div><div class="c"><ul class="links">
+        <li><a href="#">Tide tables 2025 (PDF)</a></li><li><a href="#">Flood plan leaflet</a></li>
+        <li><a href="#">App (iOS)</a></li><li><a href="#">App (Android)</a></li>
+      </ul></div></div>
+    </div>
+  </div>
+
+  <div class="foot" id="b-foot">
+    <div class="fc"><b>Services</b><a href="#">Report a flood</a><br><a href="#">Permits</a><br><a href="#">Grants</a><br><a href="#">Tide tables</a><br><a href="#">Flood lines</a></div>
+    <div class="fc"><b>About</b><a href="#">Our role</a><br><a href="#">Committee</a><br><a href="#">Minutes</a><br><a href="#">Budget</a><br><a href="#">Jobs</a></div>
+    <div class="fc"><b>Documents</b><a href="#">Document library</a><br><a href="#">FOI</a><br><a href="#">Data</a><br><a href="#">Tenders</a></div>
+    <div class="fc"><b>Help</b><a href="#">Accessibility</a><br><a href="#">Privacy</a><br><a href="#">Cookies</a><br><a href="#">Terms</a><br><a href="#">Sitemap</a></div>
+    <div class="clear"></div>
+    <p style="margin-top:12px">&copy; Harrow Estuary Authority 2024 &nbsp;|&nbsp; <a href="#">Privacy</a> &nbsp;|&nbsp; <a href="#">Cookies</a> &nbsp;|&nbsp;
+    <a href="#">Site by Vector Solutions</a><br>Tides are calculated by the Authority and are not for navigation. Datums as determined 2011.</p>
+  </div>
+</div>
+
+<script>
+/* the carousel advances on its own; the table is static; the search has no label */
+var i = 0, ss = document.querySelectorAll('#sl .s'), dd = document.querySelectorAll('.dots i');
+setInterval(function () {
+  ss[i].classList.remove('on'); dd[i].classList.remove('on');
+  i = (i + 1) % ss.length;
+  ss[i].classList.add('on'); dd[i].classList.add('on');
+}, 4500);
+document.getElementById('q').tabIndex = 3;
+document.querySelector('nav a.on').tabIndex = 1;
+document.querySelector('.util a').tabIndex = 2;
+</script>
+</body>
+</html>
