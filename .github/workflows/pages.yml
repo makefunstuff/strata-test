@@ -30,6 +30,7 @@ jobs:
           cp index.html _site/index.html
           rsync -a --exclude tools/ games/ _site/games/
           rsync -a --exclude tools/ experiments/ _site/experiments/
+          rsync -a --exclude tools/ design/ _site/design/
           # keep the pre-lab game URLs (/1-breakout/, ...) pointing at their new home
           for g in 1-breakout 2-runner 3-marble-maze 4-tower-defense 5-flight; do
             mkdir -p "_site/$g"
