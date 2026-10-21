@@ -410,8 +410,23 @@ function build(D) {
   registry.length = 0;
   for (const s of STUDIES) $("#studies-list").append(buildCard(s, D));
   buildTokens(D);
-  buildAudit(D);
-  buildReduced(D);
+  /* Reduced motion first, then the checks: the checks count the sections, so they have to
+     see what was built. Each builder runs inside a guard. This page shipped a regression
+     (buildAudit read r.props off a snapshot that had dropped it) and the throw emptied the
+     reduced-motion grid, the checks table and the state line, while the screenshot pass kept
+     reporting clean shots because the shots were never re-taken. A section that cannot build
+     now says so in the section. */
+  const ran = [];
+  for (const [name, sel, fn] of [["reduced motion", "#rmGrid", () => buildReduced(D)], ["the checks", "#audit-list", () => buildAudit(D)]]) {
+    try { fn(); ran.push(name) } catch (e) { failSection(name, sel, e) }
+  }
+  window.__build = { studies: $("#studies-list").children.length, rm: $("#rmGrid").children.length, audit: $("#audit-list").children.length, ran };
+}
+function failSection(name, sel, e) {
+  const el = $(sel);
+  if (el) el.innerHTML = `<div class="audit-row"><span class="k">${name}: build failed</span><span class="v">${String((e && e.message) || e)} — this section is empty because the script threw, not because there is nothing to show.</span><span class="s warn">fail</span></div>`;
+  if (name === "reduced motion") $("#rmState").textContent = "reduced-motion section failed to build — see below";
+  console.error(`${name} section failed to build`, e);
 }
 
 /* ── the system panels ──────────────────────────────────────────────── */
@@ -485,7 +500,7 @@ function mini(html) { const d = document.createElement("div"); d.innerHTML = htm
 
 /* ── the checks, measured from the page ─────────────────────────────── */
 function buildAudit(D) {
-  const snapshot = registry.map((r) => ({ key: r.key, title: STUDIES.find((s) => s.key === r.key).title, total: r.total, anims: r.anims }));
+  const snapshot = registry.map((r) => ({ key: r.key, title: STUDIES.find((s) => s.key === r.key).title, total: r.total, anims: r.anims, props: r.props }));
   /* group by the property alone: the spec writes "width (the rule)", the audit counts width */
   const prop = (p) => p.replace(/\s*\([^)]*\)/g, "").trim();
   const props = snapshot.flatMap((r) => r.props.split(/,/).map((p) => [r.key, prop(p)]));
@@ -508,6 +523,8 @@ function buildAudit(D) {
     ["Pointer play", "Study 12 runs on <span class='mono'>pointermove</span> only, is inert on touch, flat under reduced motion, and the card is a link without it.", "ok"],
     ["What is not proven", "No frame-rate measurement in this page: the animations are transform and opacity, and the layout cases are argued, not profiled. The demo surfaces are scaled-down components, so their 34 px targets are not the 44 px targets of the real product. No screen-reader walkthrough of a toast, a dialog or a re-sort.", "warn"],
   ];
+  /* pushed after the literal, because the row counts the rows of the table it is in */
+  rows.push(["Sections filled", `<span class="mono">${document.querySelectorAll("#studies-list .study").length}</span> study cards, <span class="mono">${document.querySelectorAll("#rmGrid .rm-card").length}</span> reduced-motion strips, <span class="mono">${rows.length + 1}</span> rows in this table — counted out of the live DOM after both builders ran. Both builders run in a guard, so a throw prints its own line inside the section that failed instead of leaving it empty.`, "ok"]);
   $("#audit-list").innerHTML = rows.map(([k, v, s]) => `<div class="audit-row"><span class="k">${k}</span><span class="v">${v}</span><span class="s ${s === "info" ? "" : s}">${s === "info" ? "" : s}</span></div>`).join("");
 }
 

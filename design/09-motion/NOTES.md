@@ -101,8 +101,37 @@ underline without it — so none of it is load-bearing.
    longest is the toast's 3 240 ms countdown bar, whose job is to last as long as
    the message can be read. It now names the study it found.
 
+## Round 2 → round 3: the regression the shots could not see
+1. **`TypeError: Cannot read properties of undefined (reading 'split')` on every
+   load.** `buildAudit` copied the registry into a snapshot of
+   `{ key, title, total, anims }` and then read `r.props.split(/,/)` off it. The
+   throw landed in the middle of `build()`, so the reduced-motion grid
+   (`#rmGrid`, 0 children), the Checks table (`#audit-list`, 0 children) and the
+   state line (`#rmState`, stuck on “checking…”) all rendered empty, at 1 440 and
+   at 390, with reduced motion on and off. `buildReduced` never ran.
+2. **How it stayed invisible: the code moved and the evidence did not.** Round 2's
+   fixes were written into `motion.js` and the screenshots were not re-taken, so
+   `shots/audit.jpg` in the commit above still read “3 240 ms — the scroll ruler”,
+   a string the code no longer contained, and the NOTES below claimed zero console
+   errors on the strength of a run that predated the edit. A screenshot is
+   evidence about the minute it was taken and nothing after it.
+3. The fix carries `props` through the snapshot, and runs both section builders
+   inside a guard: a throw now prints its own line inside the section
+   (“reduced motion: build failed …”) and says so on the state line, instead of
+   leaving a silent hole. `build()` publishes `window.__build = { studies, rm,
+   audit, ran }` for a harness to read.
+4. **The Checks table now counts itself.** Its last row reads “12 study cards, 3
+   reduced-motion strips, 10 rows in this table”, read out of the live DOM after
+   both builders ran. A section that emptied itself cannot pass its own audit —
+   which is the check this page needed when it shipped the bug.
+5. The harness side: `tools/shoot.mjs` now writes a per-task report
+   (`tools/work/shoot/<task>.md`) only on a run that covered every shot of that
+   task, so `09-motion.md` and the 21 shots in this folder are the same run —
+   21 shots, 0 problems, with a `pageerror` listener live.
+
+
 ## Weights
-The full desktop page is 10 642 px tall and the phone capture is 25 558 px,
+The full desktop page is 10 778 px tall and the phone capture is 25 850 px,
 because twelve studies with three frames each stack into one column on a 390 px
 screen. On a phone the frames go side-by-side at 132 px, which is small; the
 study is a reference document, and the phone view exists to prove it does not
@@ -114,6 +143,10 @@ break, not to be the way it is read.
   says so in its own Checks row.
 - The demo surfaces are scaled-down components, so their 34 px targets are not
   the 44 px targets of the real product; the audit prints that too.
+- **Nothing re-runs the harness when the code changes.** There is no CI here, and
+  the round-2 regression survived exactly because the pages were not re-shot after
+  the edit. `tools/shoot.mjs 09-motion` is four minutes; running it after a change
+  is a rule, not a step in the brief.
 - No page transition and no shared-element study: the brief's "page transitions"
   are answered by the sheet, the dialog and the scroll reveal, which is a
   narrower answer than the brief asks for.
