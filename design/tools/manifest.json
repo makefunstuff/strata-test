@@ -495,6 +495,7 @@
   },
   {
     "task": "04-tui",
+    "title": "logtrail — a log tail in the terminal",
     "shots": [
       {
         "name": "board",
@@ -577,11 +578,36 @@
         "dpr": 2,
         "settle": 1.4,
         "actions": []
+      },
+      {
+        "name": "phone",
+        "page": "index.html",
+        "width": 390,
+        "height": 844,
+        "full": true,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "press:Escape"
+        ]
+      },
+      {
+        "name": "phone-frames",
+        "page": "index.html",
+        "width": 390,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "press:Escape",
+          "reveal:.frames"
+        ]
       }
     ]
   },
   {
     "task": "05-system",
+    "title": "Halyard — one stylesheet, four themes, 24 components",
     "shots": [
       {
         "name": "full",
@@ -797,6 +823,7 @@
   },
   {
     "task": "06-identity",
+    "title": "Meridian Hydrographic — mark, type, 32 icons",
     "shots": [
       {
         "name": "full",
@@ -942,6 +969,7 @@
   },
   {
     "task": "07-dataviz",
+    "title": "Harrow Estuary — thirty years of tide data, six figures",
     "shots": [
       {
         "name": "full",
@@ -1128,6 +1156,7 @@
   },
   {
     "task": "08-form",
+    "title": "Flood Resilience grant — the six-step application",
     "shots": [
       {
         "name": "step1",
@@ -1266,6 +1295,7 @@
   },
   {
     "task": "09-motion",
+    "title": "Halyard in motion — twelve studies, scrubbed",
     "shots": [
       {
         "name": "masthead",
@@ -1478,6 +1508,7 @@
   },
   {
     "task": "10-redesign",
+    "title": "Harrow Estuary flood portal — before and after, measured",
     "shots": [
       {
         "name": "before-full",

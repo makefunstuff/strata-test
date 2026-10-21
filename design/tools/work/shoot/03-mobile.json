@@ -1,0 +1,681 @@
+[
+ {
+  "label": "03-mobile/board",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "3 · count",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "how many, which place, which list — and ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "today",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "morning count, four stats, calls heard, ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "detail",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "the field plate, why the confidence is 9",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "life list",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "grouped by family, rare marks, search, t",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board.jpg",
+  "bytes": 269422,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/board-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "3 · count",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "how many, which place, which list — and ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "today",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "morning count, four stats, calls heard, ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "detail",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "the field plate, why the confidence is 9",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "life list",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "grouped by family, rare marks, search, t",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board-full.jpg",
+  "bytes": 622267,
+  "px": "1440x4598",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/board-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board-phone.jpg",
+  "bytes": 613936,
+  "px": "390x11670",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/today",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/today.jpg",
+  "bytes": 105927,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-1",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-1.jpg",
+  "bytes": 57045,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-2",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-2.jpg",
+  "bytes": 90282,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-3",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-3.jpg",
+  "bytes": 58525,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/detail",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/detail.jpg",
+  "bytes": 90733,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list.jpg",
+  "bytes": 92385,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/trip",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/trip.jpg",
+  "bytes": 95223,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/onboard",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/onboard.jpg",
+  "bytes": 106763,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/offline",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — offline state",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/offline.jpg",
+  "bytes": 112272,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/empty.jpg",
+  "bytes": 101104,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/loading",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/loading.jpg",
+  "bytes": 91925,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/no-location",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/no-location.jpg",
+  "bytes": 111456,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list-search",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "type:#listSearch:avocet"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list-search.jpg",
+  "bytes": 56906,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list-empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "type:#listSearch:goldfinch"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list-empty.jpg",
+  "bytes": 69409,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/saved-toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#saveSighting"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/saved-toast.jpg",
+  "bytes": 109872,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/app-standalone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/app-standalone.jpg",
+  "bytes": 150411,
+  "px": "2880x1800",
+  "actions_failed": []
+ }
+]

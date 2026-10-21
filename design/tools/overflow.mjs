@@ -43,7 +43,7 @@ const out = await p.evaluate((W) => {
       });
     }
   }
-  return { docW: document.documentElement.scrollWidth, innerW: innerWidth, bad: bad.slice(0, 30) };
+  return { docW: document.documentElement.scrollWidth, innerW: innerWidth, bad: bad.sort((a,b)=>b.right-a.right).slice(0, 12) };
 }, W);
 console.log(JSON.stringify(out, null, 1));
 await browser.close();

@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 367450,
+  "bytes": 396221,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/range.jpg",
-  "bytes": 396293,
+  "bytes": 391560,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -65,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/table.jpg",
-  "bytes": 289969,
+  "bytes": 291273,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -89,7 +89,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/cards.jpg",
-  "bytes": 641579,
+  "bytes": 645714,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -109,11 +109,21 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [],
+   "lowContrast": [
+    {
+     "text": "strata/swift-1.5-flash-next-iq3_s",
+     "size": 12,
+     "ratio": 4.47,
+     "need": 4.5,
+     "fg": "rgb(107, 114, 128)",
+     "bg": "rgb(245, 246, 248)",
+     "sel": "code"
+    }
+   ],
    "focusRing": "outline"
   },
   "jpg": "./shots/verdict.jpg",
-  "bytes": 811307,
+  "bytes": 813529,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -133,11 +143,21 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [],
+   "lowContrast": [
+    {
+     "text": "strata/swift-1.5-flash-next-iq3_s",
+     "size": 12,
+     "ratio": 4.47,
+     "need": 4.5,
+     "fg": "rgb(107, 114, 128)",
+     "bg": "rgb(245, 246, 248)",
+     "sel": "code"
+    }
+   ],
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 474030,
+  "bytes": 458329,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -159,8 +179,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 1487167,
-  "px": "1440x8765",
+  "bytes": 1720054,
+  "px": "1440x9728",
   "actions_failed": []
  },
  {
@@ -181,8 +201,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 1353015,
-  "px": "390x17686",
+  "bytes": 1537289,
+  "px": "390x19617",
   "actions_failed": []
  }
 ]

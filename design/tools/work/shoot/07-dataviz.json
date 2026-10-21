@@ -1,0 +1,639 @@
+[
+ {
+  "label": "07-dataviz/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/full.jpg",
+  "bytes": 681508,
+  "px": "1440x5201",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/claim",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/claim.jpg",
+  "bytes": 250172,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/claim-cursor",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim",
+   "eval:document.querySelector(\"#claim svg\").__cursor.set(26)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/claim-cursor.jpg",
+  "bytes": 255037,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/gauges",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-gauges"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/gauges.jpg",
+  "bytes": 237118,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/gauges-cross",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-gauges",
+   "eval:document.querySelector(\"#gauges svg\").__hover(34)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/gauges-cross.jpg",
+  "bytes": 234490,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/boxes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-boxes"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/boxes.jpg",
+  "bytes": 218736,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/stack",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-stack",
+   "eval:document.querySelector(\"#stack svg\").__cursor.set(10)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/stack.jpg",
+  "bytes": 205936,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/slope",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-slope",
+   "eval:const g=[...document.querySelectorAll(\"#slope .slope\")];g[0].dispatchEvent(new PointerEvent(\"pointerenter\",{bubbles:true}));"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/slope.jpg",
+  "bytes": 203852,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/calendar",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-calendar"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/calendar.jpg",
+  "bytes": 345865,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/numbers",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#nums button[data-set=\"numbers\"]",
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/numbers.jpg",
+  "bytes": 244434,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/feet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#units button[data-unit=\"ft\"]",
+   "click:#nums button[data-set=\"numbers\"]",
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "17.29 ft",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/feet.jpg",
+  "bytes": 214771,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/feet-slope",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#units button[data-unit=\"ft\"]",
+   "reveal:#fig-slope"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/feet-slope.jpg",
+  "bytes": 197235,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim",
+   "eval:document.querySelector(\"#claim svg\").__cursor.set(4)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/reduced.jpg",
+  "bytes": 256976,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/keyboard",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-boxes",
+   "eval:document.querySelector(\"#boxes svg\").focus()",
+   "eval:document.querySelector(\"#boxes svg\").__cursor.set(9)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/keyboard.jpg",
+  "bytes": 249973,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/lied",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#lied"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/lied.jpg",
+  "bytes": 372836,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/phone.jpg",
+  "bytes": 500022,
+  "px": "390x7778",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/print",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/print.jpg",
+  "bytes": 885085,
+  "px": "1100x7547",
+  "actions_failed": []
+ }
+]

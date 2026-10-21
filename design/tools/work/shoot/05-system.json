@@ -1,0 +1,440 @@
+[
+ {
+  "label": "05-system/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/full.jpg",
+  "bytes": 1558199,
+  "px": "1440x12175",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/overview",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/overview.jpg",
+  "bytes": 389760,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/colour",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('colour').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/colour.jpg",
+  "bytes": 429602,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/type",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('type').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/type.jpg",
+  "bytes": 325311,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/space",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('space').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/space.jpg",
+  "bytes": 272785,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-paper",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/kit-paper.jpg",
+  "bytes": 416794,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-deck",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"deck\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-deck.jpg",
+  "bytes": 364242,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-field",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"field\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-field.jpg",
+  "bytes": 424048,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-terminal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"terminal\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-terminal.jpg",
+  "bytes": 393871,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/patterns",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/patterns.jpg",
+  "bytes": 375442,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/table-empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#pat-table",
+   "click:#themes button[data-set='deck']",
+   "type:#pat-search:harbourlight"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/table-empty.jpg",
+  "bytes": 386052,
+  "px": "2360x3000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/form-invalid",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+   "type:#f-email:not-an-email",
+   "key:Tab",
+   "click:#f-submit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/form-invalid.jpg",
+  "bytes": 338771,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/modal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+   "click:#open-modal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/modal.jpg",
+  "bytes": 221529,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/rules",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('rules').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/rules.jpg",
+  "bytes": 303089,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/tokens-deck",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"deck\"]",
+   "eval:document.getElementById('tokens').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/tokens-deck.jpg",
+  "bytes": 405925,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#mobile"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone.jpg",
+  "bytes": 62372,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone-kit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#mobile"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone-kit.jpg",
+  "bytes": 392143,
+  "px": "4100x2120",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone-tokens",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tokens"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone-tokens.jpg",
+  "bytes": 116789,
+  "px": "780x1688",
+  "actions_failed": []
+ }
+]

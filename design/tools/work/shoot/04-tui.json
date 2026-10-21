@@ -1,0 +1,932 @@
+[
+ {
+  "label": "04-tui/board",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/board.jpg",
+  "bytes": 665583,
+  "px": "1500x3762",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/stream",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — stream",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/stream.jpg",
+  "bytes": 601144,
+  "px": "3320x1880",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/endpoints",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — endpoints",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/endpoints.jpg",
+  "bytes": 299391,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/help",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — help",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/help.jpg",
+  "bytes": 401003,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/filtered",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — filtered",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/filtered.jpg",
+  "bytes": 340234,
+  "px": "3320x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — empty",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│└",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/empty.jpg",
+  "bytes": 182627,
+  "px": "3320x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/frozen",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — frozen",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/frozen.jpg",
+  "bytes": 514591,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/light",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — light",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "█▆▅▅▅▅▅▆▄▅▆▆▅▃▆▆▄▆▆▆▆▄▅▅▅▄▅▅▆▆▅▆▅▅▄▄▅▆█▅",
+     "size": 15,
+     "ratio": 4.03,
+     "need": 4.5,
+     "fg": "rgb(75, 138, 120)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/light.jpg",
+  "bytes": 564413,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/narrow",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — narrow",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/narrow.jpg",
+  "bytes": 205044,
+  "px": "1960x1320",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "press:Escape"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/phone.jpg",
+  "bytes": 339235,
+  "px": "390x5308",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/phone-frames",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "press:Escape",
+   "reveal:.frames"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/phone-frames.jpg",
+  "bytes": 224357,
+  "px": "780x1800",
+  "actions_failed": []
+ }
+]

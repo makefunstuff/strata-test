@@ -1,7 +1,8 @@
 /* design/tools/links.mjs — every relative href and src in the HTML files under a
  * folder must point at a file that exists. The gallery links eleven tasks, their
  * NOTES.md files, their shots folders and 21 thumbnails; a typo there is invisible
- * until a reader hits it.
+ * until a reader hits it. A folder link only counts as resolving when the folder has an
+ * index.html, because that is the rule the static host will apply to it.
  *
  *   node design/tools/links.mjs                 # design/**.html + the site index.html
  *   node design/tools/links.mjs design/11-styles
@@ -37,11 +38,17 @@ for (const f of files) {
     const clean = decodeURIComponent(t.split("#")[0].split("?")[0]);
     if (!clean) continue;
     checked++;
+    /* a reference ending in "/" is a folder, and on a static host a folder only resolves
+       if it contains an index.html — that is what GitHub Pages does with
+       design/01-landing/shots/. The first version of this tool statted the folder, reported
+       it as existing, and twelve "N shots" links 404'd in review. */
+    const target = resolve(dirname(f), clean);
+    const probe = clean.endsWith("/") ? join(target, "index.html") : target;
     try {
-      await stat(resolve(dirname(f), clean));
+      await stat(probe);
     } catch {
       misses++;
-      console.log(`MISSING  ${relative(repo, f)} -> ${t}`);
+      console.log(`MISSING  ${relative(repo, f)} -> ${t}${clean.endsWith("/") ? "  (a folder with no index.html)" : ""}`);
     }
   }
 }
