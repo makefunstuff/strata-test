@@ -1,0 +1,93 @@
+{
+  "game": "4-tower-defense",
+  "fps_play": 6,
+  "samples": [
+    {
+      "threshold": 0.82,
+      "dark": {
+        "rgb": [
+          17,
+          39,
+          20
+        ],
+        "cast": 22,
+        "lum": 33
+      },
+      "hot": {
+        "rgb": [
+          37,
+          86,
+          30
+        ],
+        "cast": 56,
+        "lum": 72
+      }
+    },
+    {
+      "threshold": 1,
+      "dark": {
+        "rgb": [
+          17,
+          38,
+          20
+        ],
+        "cast": 21,
+        "lum": 32
+      },
+      "hot": {
+        "rgb": [
+          37,
+          86,
+          30
+        ],
+        "cast": 56,
+        "lum": 72
+      }
+    },
+    {
+      "threshold": 1.25,
+      "dark": {
+        "rgb": [
+          17,
+          38,
+          20
+        ],
+        "cast": 21,
+        "lum": 32
+      },
+      "hot": {
+        "rgb": [
+          37,
+          86,
+          30
+        ],
+        "cast": 56,
+        "lum": 72
+      }
+    },
+    {
+      "threshold": 1.6,
+      "dark": {
+        "rgb": [
+          17,
+          38,
+          20
+        ],
+        "cast": 21,
+        "lum": 32
+      },
+      "hot": {
+        "rgb": [
+          37,
+          86,
+          30
+        ],
+        "cast": 56,
+        "lum": 72
+      }
+    }
+  ],
+  "errors_seen": 0,
+  "pick": 0.82,
+  "bloom_induced_cast": 1
+}

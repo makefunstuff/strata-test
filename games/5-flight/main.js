@@ -6,7 +6,7 @@ import { Sky } from "three/addons/objects/Sky.js";
 import { createPost, setupEnvironment } from "../shared/post.js";
 import { quality, autoQuality } from "../shared/mobile.js";
 import { addTouchControls } from "../shared/touch.js";
-import { crtKey } from "../shared/crt.js";
+import { crtKey, PHOSPHORS } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
 import { createSpeedLines } from "../shared/speedlines.js";
@@ -52,15 +52,46 @@ const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerH
 
 const Q = quality({ pixelRatio: 2, bloomScale: 0.5, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
-  exposure: 0.62,
-  bloom: { strength: 0.42 * Q.bloomStrength, radius: 0.5, threshold: 1.05, scale: Q.bloomScale },
-  crt: { look: "cabinet", overrides: Q.crt, bezel: { label: "FLIGHT", accent: "#8ee8ff" } },
+  // Was 0.62, which sat on top of a skydome that was clipping to white — see the sky block
+  // below for the actual cause. The level here is only the ACES exposure now that the dome
+  // writes raw HDR once; 0.55 measured the best terrain separation ([35,79,125] against the
+  // sky) and above ~0.7 the height-banded flat shading starts flattening out.
+  exposure: 0.6,
+  bloom: { strength: 0.48 * Q.bloomStrength, radius: 0.5, threshold: 1.05, scale: Q.bloomScale },
+  crt: { look: "cabinet", overrides: Q.crt, phosphor: PHOSPHORS.p4,
+         bezel: { label: "FLIGHT", accent: "#8ee8ff" } },
 });
 const auto = autoQuality({ floor: 45, onDrop: () => { if (post.bloom) post.bloom.enabled = false; } });
 
 // sky + sun
+//
+// The skydome is the reason this game looked like a white rectangle. three injects the
+// renderer's ACES curve into every material *and* OutputPass applies it again, and Preetham
+// radiance runs into the tens, so the dome clipped R, G and B to the ceiling — measured, not
+// assumed: at that point the rendered sky was [255,255,255] and did not respond to rayleigh or
+// to toneMappingExposure at all, because both were acting on already-clipped values. The fix is
+// two-part: let the dome write raw HDR into the float composer target (toneMapped:false, graded
+// once by OutputPass), and give the model an exposure of its own before it gets there.
+//
+// SKY_EXPOSURE was calibrated by sampling the rendered sky across a sweep of the uniform
+// (zenith B−R dominance peaks around 0.09–0.2; below it the sky is night, above it the channels
+// clip together again). It stays a uniform, and ?sky= sets it, so the calibration is repeatable
+// from outside instead of a magic number someone has to trust.
+//
+// Patch Sky.SkyShader before constructing, not material.fragmentShader after: mutating a
+// ShaderMaterial's source once it has been rendered invalidates three's program cache every
+// frame, which cost this game 15 fps → 10 fps on the software renderer before it was caught.
+const SKY_EXPOSURE = 0.2;
+Sky.SkyShader.uniforms.uSkyExposure = { value: SKY_EXPOSURE };
+Sky.SkyShader.fragmentShader = "uniform float uSkyExposure;\n" +
+  Sky.SkyShader.fragmentShader.replace(
+    "gl_FragColor = vec4( retColor, 1.0 );",
+    "gl_FragColor = vec4( retColor * uSkyExposure, 1.0 );");
 const sky = new Sky();
 sky.scale.setScalar(6000);
+sky.material.toneMapped = false;
+const skyQ = Number(new URLSearchParams(location.search).get("sky"));
+if (skyQ > 0) sky.material.uniforms.uSkyExposure.value = skyQ;
 scene.add(sky);
 const sunDir = new THREE.Vector3();
 {
@@ -68,10 +99,16 @@ const sunDir = new THREE.Vector3();
   // The first version of the frame was a pale grey-blue wash: at turbidity 9 and rayleigh 1.9
   // the whole sky is scattering close to white, and a jet at floor+95 has nothing in frame but
   // sky. Deeper scattering, tighter sun: the sky reads as sky and the horizon has a place.
-  u.turbidity.value = 5.5;
-  u.rayleigh.value = 1.1;
-  u.mieCoefficient.value = 0.0045;
-  u.mieDirectionalG.value = 0.86;
+  // Low turbidity matters more than a high rayleigh number, which is the opposite of what the
+  // numbers suggest: turbidity is the aerosol term that scatters the whole sky toward white,
+  // while raising rayleigh brightens all three channels together and *shrinks* the B-R gap.
+  // Swept on the rendered frame (B-R summed over zenith and two upper-band samples):
+  //   turb 3.2/mie .004/ray 3.2 -> 46 · turb 2.0/.003/3.2 -> 43 · 1.0/.0015/4.0 -> 27
+  //   turb 1.5/.002/2.6 -> 58 (kept)
+  u.turbidity.value = 1.5;
+  u.rayleigh.value = 2.6;
+  u.mieCoefficient.value = 0.002;
+  u.mieDirectionalG.value = 0.9;
   const elev = 15, azim = 118;
   const phi = THREE.MathUtils.degToRad(90 - elev), theta = THREE.MathUtils.degToRad(azim);
   sunDir.setFromSphericalCoords(1, phi, theta);
@@ -290,10 +327,12 @@ function frame() {
   const k = 1 - Math.exp(-dt * 3.4);
   camPos.lerp(scratch, k);
   camera.position.copy(camPos);
-  scratch2.copy(fwd).multiplyScalar(26).add(pos);
-  // Portrait: the tube is tall and the flight is a forward view, so a level aim puts the whole
-  // frame in the sky. A few metres of downward aim keeps the horizon and the terrain in shot.
-  if (camera.aspect < 1) scratch2.y -= 7;
+  scratch2.copy(fwd).multiplyScalar(30).add(pos);
+  // A level aim puts the whole frame in the sky — for any aspect, not just portrait: the play
+  // frame was a pale empty field with a coin-sized jet in it. Four metres of downward aim
+  // (seven in portrait, where the tube is tall and narrow) keeps the horizon high and puts the
+  // terrain and the ring gates in shot, which is the actual content of the game.
+  scratch2.y -= camera.aspect < 1 ? 7 : 4;
   camera.lookAt(scratch2);
 
   hudTick += dt;

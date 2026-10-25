@@ -36,6 +36,13 @@ const keys = (opt("keys", "") as string).split(",").filter(Boolean).map((p) => {
 const clicks = (opt("click", "") as string).split(";").filter(Boolean).map((c) => c.split(",").map(Number));
 const overjs = opt("overjs", "");
 const overWaitS = Number(opt("overwait", "1.6"));
+// --eval "<js>": run an expression against the page and print its JSON result next to the
+// measurements. It is how "is that white the skydome or the clear colour?" gets answered with a
+// number instead of a guess. --evalshot additionally screenshots the frame after it, so a live
+// uniform toggle can be shot without editing the game (the post-chain bisection the CRT bug of
+// 2026-10-19 needed, made a flag).
+const evalJs = opt("eval", "");
+const evalShot = args.includes("--evalshot");
 const phone = args.includes("--phone");   // a flag: no value (an option that swallows the next argument is how --phone silently became "--tap")
 const shotType = args.includes("--jpeg") ? "jpeg" : "png";
 const shotExt = shotType === "jpeg" ? "jpg" : "png";   // a 3D frame at quality 82 is ~1/8 the bytes of a PNG
@@ -188,6 +195,11 @@ for (const { key, ms } of keys) {
 }
 const fpsPlay = await fps(2000);
 const after = await text();
+let evalResult: unknown = null;
+if (evalJs) {
+  evalResult = await page.evaluate(evalJs).catch((e) => ({ error: e.message }));
+  if (evalShot) await shot(`${out}-eval.${shotExt}`);
+}
 const playShot = `${out}-play.${shotExt}`;
 await shot(playShot);
 await copyFile(playShot, `${out}-input.${shotExt}`).catch(() => {});
@@ -208,6 +220,7 @@ if (overjs) {
 
 console.log(JSON.stringify({
   url, gpu, gl, canvases,
+  eval: evalResult,
   fps_idle: Math.round(fpsIdle * 10) / 10,
   fps_play: Math.round(fpsPlay * 10) / 10,
   fps_over: Math.round(fpsOver * 10) / 10,

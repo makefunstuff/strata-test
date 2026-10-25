@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { createPost, setupEnvironment } from "../shared/post.js";
 import { quality, autoQuality } from "../shared/mobile.js";
 import { addTouchControls } from "../shared/touch.js";
-import { crtKey } from "../shared/crt.js";
+import { crtKey, PHOSPHORS } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
 import { createFps } from "../shared/fps.js";
@@ -63,8 +63,9 @@ camera.lookAt(0, 0, 0);
 const Q = quality({ pixelRatio: 2, bloomScale: 0.5, shadowMap: 1024, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
   exposure: 1.0,
-  bloom: { strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 0.88, scale: Q.bloomScale },
-  crt: { look: "arcade", overrides: Q.crt, bezel: { label: "TOWER DEFENSE", accent: "#ff3fa4" } },
+  bloom: { strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 1.0, scale: Q.bloomScale },
+  crt: { look: "arcade", overrides: Q.crt, phosphor: PHOSPHORS.p43,
+         bezel: { label: "TOWER DEFENSE", accent: "#ff3fa4" } },
 });
 const auto = autoQuality({ floor: 45, onDrop: () => {
   if (post.bloom) post.bloom.enabled = false;

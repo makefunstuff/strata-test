@@ -39,7 +39,10 @@ export function quality({ pixelRatio = 2, bloomScale = 0.5, shadow = 1024, spark
     shadowMap: phone ? Math.min(512, shadow) : shadow,
     sparks: phone ? Math.max(0.35, sparks * 0.55) : sparks,
     crt: phone
-      ? { uGlow: 0, uNoise: 0, uBeam: 0, uFlicker: 0, uPixel: 1.25, uSat: 1.1, uGain: 1.85 }
+      // No phosphor bleed (4 fetches/pixel), no rolling beam, no flicker, no grain. uGlow is
+      // kept small but non-zero: it also carries the phosphor's colour, and zeroing it made the
+      // phone picture the colourless one.
+      ? { uGlow: 0.06, uNoise: 0, uBeam: 0, uFlicker: 0, uPixel: 1.25, uSat: 1.1, uGain: 1.5, uFilm: 0 }
       : {},
   };
 }

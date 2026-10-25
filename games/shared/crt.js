@@ -34,10 +34,17 @@ export const CRTShader = {
     uFlicker: { value: 0.035 },
     uNoise: { value: 0.02 },
     uGain: { value: 1.6 },
+    uGainPre: { value: 1.0 },
     uSat: { value: 1.16 },
     uContrast: { value: 1.05 },
     uLift: { value: 0.012 },
+    uTint: { value: 0.06 },
+    uShadowTint: { value: new THREE.Color(0x2a3550) },
+    uHiTint: { value: new THREE.Color(0xfff2d8) },
+    uFilm: { value: 0.0 },
+    uVigColor: { value: new THREE.Color(0x000000) },
     uGlowColor: { value: new THREE.Color(0x2a6ea8) },
+    uAmbient: { value: new THREE.Color(0x10151f) },
   },
   vertexShader: /* glsl */`
     varying vec2 vUv;
@@ -46,9 +53,11 @@ export const CRTShader = {
     uniform sampler2D tDiffuse;
     uniform vec2 uResolution;
     uniform vec3 uGlowColor;
+    uniform vec3 uAmbient;
     uniform float uTime, uCurvature, uOverscan, uScan, uScanPitch, uMask, uMaskPitch,
                   uPixel, uAberration, uGlow, uVignette, uBeam, uFlicker, uNoise, uGain,
-                  uSat, uContrast, uLift;
+                  uGainPre, uSat, uContrast, uLift, uTint, uFilm;
+    uniform vec3 uShadowTint, uHiTint, uVigColor;
     uniform vec2 uTube;
     uniform float uTubeR;
     varying vec2 vUv;
@@ -93,13 +102,35 @@ export const CRTShader = {
 
       vec3 col = sampleAb(su, q);
 
-      // phosphor bleed so bright pixels bloom on the glass
+      // --- the signal, before the glass: this is the part that used to sit after the
+      // phosphor and before ACES, which is what made all five games read as one flat,
+      // milky picture. A real chain is electronics-then-tube: grade the signal first, in
+      // display terms, and only then let the phosphor multiply it. The contrast S-curve and
+      // the saturation now land before tone mapping instead of being re-crushed by it, and
+      // uGain is split: uGainPre is a linear exposure (safe before ACES), the creative level
+      // comes back afterwards as uGain.
+      col *= uGainPre;
+      float luma = dot(col, vec3(0.2126, 0.7152, 0.0722));
+      col = mix(vec3(luma), col, uSat);
+      col = clamp((col - 0.5) * uContrast + 0.5, 0.0, 1.0);
+      // split-tone: the phosphor's own warm/cool bias, shadows one way, highlights the other.
+      // This is the axis that gave every game the same blue cast: they all used one glowColor.
+      float wl = clamp(luma, 0.0, 1.0);
+      vec3 tint = mix(uShadowTint, uHiTint, smoothstep(0.18, 0.86, wl));
+      col *= mix(vec3(1.0), tint, uTint);
+
+      // --- the glass: phosphor bleed, scanlines, aperture grille
       vec2 px = 1.0 / grid;
       vec3 bleed = texture2D(tDiffuse, su + vec2(px.x, 0.0)).rgb
                  + texture2D(tDiffuse, su - vec2(px.x, 0.0)).rgb
                  + texture2D(tDiffuse, su + vec2(0.0, px.y)).rgb
                  + texture2D(tDiffuse, su - vec2(0.0, px.y)).rgb;
-      col += bleed * 0.25 * uGlow + uGlowColor * dot(col, vec3(0.333)) * uGlow * 0.22;
+      // The phosphor tints the light that comes OFF the glass, but only lightly: bleed is a
+      // physical smear of whatever is already there, and tinting it hard (uGlowColor at full
+      // chroma) painted a saturated green/blue halo around every bright object the moment the
+      // bloom pass happened to be enabled — the fps watchdog turns bloom off on this box, which
+      // is what hid it. Kept near-white on purpose; the family's colour lives in the black lift.
+      col += bleed * (0.25 + uGlowColor * 0.18) * uGlow;
 
       // scanlines, wider where the picture is bright (a beam, not a shutter)
       float sy = su.y * uResolution.y / max(1.0, uScanPitch);
@@ -118,44 +149,68 @@ export const CRTShader = {
       float beamPhase = fract(su.y + uTime * 0.08);
       float beam = exp(-pow((beamPhase - 0.5) * 5.0, 2.0));
       col *= 1.0 + beam * uBeam * 4.0;
-      col += uGlowColor * beam * uBeam * 0.9;
+      col += uGlowColor * beam * uBeam * 0.25;
       col *= 1.0 + uFlicker * (0.6 * sin(uTime * 6.3) + 0.4 * sin(uTime * 91.0));
       float n = fract(sin(dot(su * uResolution + uTime, vec2(12.9898, 78.233))) * 43758.5453);
       col += (n - 0.5) * uNoise;
+      // fine film grain, ~1/2 pixel: a little tooth in the flats instead of a painted look
+      if (uFilm > 0.0) {
+        float fn = fract(sin(dot(gl_FragCoord.xy * 0.5 + uTime, vec2(12.9898, 78.233))) * 43758.5453);
+        col += (fn - 0.5) * uFilm * (1.0 - 0.7 * clamp(luma, 0.0, 1.0));
+      }
 
-      // glass: vignette, then the rounded tube edge
+      // glass: vignette (tinted, not crushed to neutral black), then the rounded tube edge
       col *= mix(1.0, smoothstep(1.8, 0.35, length(q * vec2(0.9, 1.0))), uVignette);
+      col = mix(col, uVigColor, uVignette * 0.18 * smoothstep(0.45, 1.35, length(q * vec2(0.9, 1.0))));
       float inside = step(0.0, min(su.x, min(su.y, min(1.0 - su.x, 1.0 - su.y))));
       float d = roundedBox(p, uTube, uTubeR);
       float rim = 1.0 - smoothstep(-0.02, 0.06, d);
       float on = inside * rim;
       col = col * on + uGlowColor * 0.02 * (1.0 - on);
 
-      // Grade, in linear space, before OutputPass tone-maps: the grille and the scanlines
-      // multiply the picture flat, so the neon comes back as saturation, a gentle contrast
-      // S-curve and a small lift in the blacks (a lit tube never shows true black).
-      float lum2 = dot(col, vec3(0.2126, 0.7152, 0.0722));
-      col = mix(vec3(lum2), col, uSat);
-      col = (col - 0.5) * uContrast + 0.5 + uLift;
+      // Level and black lift come back AFTER the glass and after the tube mask: the grille and
+      // the scanlines multiply the picture flat, so the neon is restored here — and the lift
+      // only applies to lit glass, so the bezel outside the aperture stays black instead of
+      // turning into a grey rectangle (which is what a pre-mask lift did).
+      col = max(col, 0.0) * uGain;
+      // a lit tube never shows true black — the lift carries the phosphor's own colour
+      col += uLift * on * (vec3(1.0) + uAmbient) * 0.5;
       col = max(col, 0.0);
-      col *= uGain;
 
       gl_FragColor = vec4(col, 1.0);
     }`,
 };
 
+/**
+ * Phosphor families. A tube's phosphor decides its colour identity more than anything else in
+ * the chain, and until now every game used the same one (0x2a6ea8), which is most of why the
+ * five pages look like one page. `base` is the unpowered glass, `glow` the lit phosphor, and
+ * `shadow/hi` the split-tone bias the grade pulls toward. Pass one to attachCRT as `phosphor`.
+ */
+export const PHOSPHORS = {
+  p22: { base: 0x101a14, glow: 0x3f8f5a, shadow: 0x1e3a33, hi: 0xfff0da },   // green arcade
+  p31: { base: 0x1a1712, glow: 0xb08a4a, shadow: 0x3a2c1e, hi: 0xffe6bd },   // warm white / amber
+  p4:  { base: 0x12151f, glow: 0x3f74b8, shadow: 0x24304e, hi: 0xe8f3ff },   // blue, the old house look
+  p43: { base: 0x1a1216, glow: 0xa8506e, shadow: 0x3c1e2a, hi: 0xffe0d0 },   // magenta/rose
+};
+
 // look: "arcade" (chunky, heavy scanlines) | "cabinet" (medium) | "glass" (subtle)
 export const CRT_PRESETS = {
   // Each preset darkens the picture by a known amount, so uGain puts the level back.
-  arcade: { uCurvature: 0.13, uOverscan: 1.16, uTube: new THREE.Vector2(0.88, 0.82), uTubeR: 0.15, uGain: 1.72, uScan: 0.38, uScanPitch: 3.6, uMask: 0.26,
-            uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0016, uGlow: 0.38, uVignette: 0.5,
-            uBeam: 0.035, uFlicker: 0.028, uNoise: 0.018, uSat: 1.2, uContrast: 1.06, uLift: 0.014 },
-  cabinet: { uCurvature: 0.095, uOverscan: 1.12, uTube: new THREE.Vector2(0.90, 0.85), uTubeR: 0.14, uGain: 1.6, uScan: 0.27, uScanPitch: 3.2, uMask: 0.2,
-             uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0013, uGlow: 0.3, uVignette: 0.44,
-             uBeam: 0.03, uFlicker: 0.024, uNoise: 0.014, uSat: 1.18, uContrast: 1.05, uLift: 0.012 },
-  glass: { uCurvature: 0.055, uOverscan: 1.05, uTube: new THREE.Vector2(0.97, 0.94), uTubeR: 0.12, uGain: 1.4, uScan: 0.16, uScanPitch: 3.0, uMask: 0.12,
-           uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0008, uGlow: 0.22, uVignette: 0.38,
-           uBeam: 0.02, uFlicker: 0.016, uNoise: 0.007, uSat: 1.14, uContrast: 1.04, uLift: 0.01 },
+  // The grade moved in front of the phosphor, so the picture arrives at the glass already
+  // contrasted: less gain is needed to hold the level than the old flat version demanded.
+  arcade: { uCurvature: 0.13, uOverscan: 1.16, uTube: new THREE.Vector2(0.88, 0.82), uTubeR: 0.15, uGain: 1.44, uGainPre: 1.1,
+            uScan: 0.34, uScanPitch: 3.6, uMask: 0.22, uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0016,
+            uGlow: 0.14, uVignette: 0.46, uBeam: 0.03, uFlicker: 0.024, uNoise: 0.014,
+            uSat: 1.14, uContrast: 1.12, uLift: 0.016, uTint: 0.045, uFilm: 0.012 },
+  cabinet: { uCurvature: 0.095, uOverscan: 1.12, uTube: new THREE.Vector2(0.90, 0.85), uTubeR: 0.14, uGain: 1.34, uGainPre: 1.08,
+             uScan: 0.24, uScanPitch: 3.2, uMask: 0.17, uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0013,
+             uGlow: 0.11, uVignette: 0.4, uBeam: 0.026, uFlicker: 0.02, uNoise: 0.011,
+             uSat: 1.12, uContrast: 1.1, uLift: 0.014, uTint: 0.035, uFilm: 0.008 },
+  glass: { uCurvature: 0.055, uOverscan: 1.05, uTube: new THREE.Vector2(0.97, 0.94), uTubeR: 0.12, uGain: 1.18, uGainPre: 1.05,
+           uScan: 0.14, uScanPitch: 3.0, uMask: 0.1, uMaskPitch: 3.0, uPixel: 1.0, uAberration: 0.0008,
+           uGlow: 0.08, uVignette: 0.34, uBeam: 0.018, uFlicker: 0.014, uNoise: 0.006,
+           uSat: 1.08, uContrast: 1.07, uLift: 0.011, uTint: 0.025, uFilm: 0.004 },
 };
 
 /** Aperture geometry for the cabinet bezel, in canvas fractions (must match the shader). */
@@ -167,20 +222,47 @@ export function tubeRect(tx = 0.94, ty = 0.90, r = 0.14) {
  * Adds the CRT pass to a composer (last, before OutputPass) and wires the glass overlay.
  * Returns { pass, setEnabled, toggle, setSize, update }.
  */
-export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}, overlay = true, bezel = {} } = {}) {
+export function attachCRT(composer, renderer, { look = "cabinet", overrides = {}, overlay = true, bezel = {}, phosphor = null } = {}) {
   const pass = new ShaderPass(CRTShader);
   const u = pass.uniforms;
   // A uniform the shader declares and the material does not provide silently defaults to 0 in
   // WebGL — which is how a saturation grade (uSat 0) turned the whole tube flat grey for four
   // sweeps without one console message. Say it out loud instead.
   const declared = (CRTShader.fragmentShader.match(/uniform\s+\w+\s+([^;]+);/g) ?? [])
-    .flatMap((d) => d.replace(/uniform\s+\w+\s+/, "").split(",").map((s) => s.trim().replace(/\[.*/, "")));
+    .flatMap((d) => d.replace(/uniform\s+\w+\s+/, "").split(",").map((s) => s.trim().replace(/;.*/, "").replace(/\[.*/, "")))
+    .filter((n) => n && !/^(t[A-Z]|sampler)/.test(n)); // samplers are wired by ShaderPass, not presets
   const missing = declared.filter((n) => !(n in u));
   if (missing.length) console.warn(`CRTShader: uniforms declared in GLSL but not provided: ${missing.join(", ")}`);
   for (const [k, v] of Object.entries({ ...CRT_PRESETS[look], ...overrides })) {
     if (!u[k] && declared.includes(k)) console.warn(`CRTShader: preset sets ${k}, which the shader does not declare`);
     if (u[k]) u[k].value = v;
   }
+
+  // Phosphor identity: a named family, and/or the cabinet's own accent colour mixed into it so
+  // the tube, the label plate and the picture agree. Runs after the preset/overrides, then every
+  // colour uniform is normalised back to a THREE.Color — an override that assigned a hex number
+  // or a CSS string would otherwise reach WebGL as a scalar and silently read as vec3(0).
+  const ph = typeof phosphor === "string" ? (PHOSPHORS[phosphor] ?? PHOSPHORS.p4)
+    : (phosphor && typeof phosphor === "object" ? phosphor : null);
+  const accent = bezel && typeof bezel.accent === "string" ? new THREE.Color(bezel.accent) : null;
+  const glow = (ph ? new THREE.Color(ph.glow) : new THREE.Color(0x2a6ea8)).clone();
+  if (accent) glow.lerp(accent, 0.35);
+  u.uGlowColor.value.copy(glow).lerp(new THREE.Color(0xffffff), 0.6);   // tint, not a flood
+  u.uAmbient.value.copy(ph ? new THREE.Color(ph.base) : glow.clone().multiplyScalar(0.12));
+  if (ph) {
+    u.uShadowTint.value.set(ph.shadow);
+    u.uHiTint.value.set(ph.hi);
+  } else if (accent) {
+    u.uGlowColor.value.copy(new THREE.Color(0x2a6ea8).lerp(accent, 0.45));
+  }
+  for (const name of ["uGlowColor", "uAmbient", "uShadowTint", "uHiTint", "uVigColor"]) {
+    const v = u[name].value;
+    // THREE.Color.setHex/setStyle already convert sRGB hex to working (linear) space when
+    // ColorManagement is on, so no extra convertSRGBToLinear() here — that would double it.
+    u[name].value = v instanceof THREE.Color ? v : new THREE.Color(0xffffff);
+  }
+  // the vignette falls off toward the phosphor's own unpowered glass, not neutral black
+  u.uVigColor.value.copy(u.uShadowTint.value).multiplyScalar(0.55);
   composer.addPass(pass);
 
   let glass = null;
