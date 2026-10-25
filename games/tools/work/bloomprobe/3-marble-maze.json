@@ -1,0 +1,93 @@
+{
+  "game": "3-marble-maze",
+  "fps_play": 4,
+  "samples": [
+    {
+      "threshold": 0.82,
+      "dark": {
+        "rgb": [
+          13,
+          14,
+          14
+        ],
+        "cast": 1,
+        "lum": 14
+      },
+      "hot": {
+        "rgb": [
+          238,
+          181,
+          89
+        ],
+        "cast": 149,
+        "lum": 186
+      }
+    },
+    {
+      "threshold": 1,
+      "dark": {
+        "rgb": [
+          13,
+          14,
+          14
+        ],
+        "cast": 1,
+        "lum": 14
+      },
+      "hot": {
+        "rgb": [
+          237,
+          181,
+          89
+        ],
+        "cast": 148,
+        "lum": 186
+      }
+    },
+    {
+      "threshold": 1.25,
+      "dark": {
+        "rgb": [
+          13,
+          14,
+          14
+        ],
+        "cast": 1,
+        "lum": 14
+      },
+      "hot": {
+        "rgb": [
+          238,
+          181,
+          88
+        ],
+        "cast": 150,
+        "lum": 186
+      }
+    },
+    {
+      "threshold": 1.6,
+      "dark": {
+        "rgb": [
+          13,
+          14,
+          14
+        ],
+        "cast": 1,
+        "lum": 14
+      },
+      "hot": {
+        "rgb": [
+          238,
+          180,
+          88
+        ],
+        "cast": 150,
+        "lum": 186
+      }
+    }
+  ],
+  "errors_seen": 0,
+  "pick": 0.82,
+  "bloom_induced_cast": 0
+}

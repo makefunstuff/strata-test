@@ -4,11 +4,11 @@
 
 | check | result |
 |---|---|
-| 1-breakout | ok — errors=0 fps=9/8.5 hud_moves=true shows"SCORE" |
-| 2-runner | ok — errors=0 fps=10.5/11 hud_moves=true shows"STATE RUNNING" |
-| 3-marble-maze | ok — errors=0 fps=7.5/6.5 hud_moves=true shows"STATE ROLLING" |
-| 4-tower-defense | ok — errors=0 fps=10.5/9 hud_moves=true shows"MONEY" |
-| 5-flight | ok — errors=0 fps=23/22.5 hud_moves=true shows"STATE FLY" |
+| 1-breakout | ok — errors=0 fps=6/5.5 hud_moves=true shows"SCORE" |
+| 2-runner | ok — errors=0 fps=6.5/6.5 hud_moves=true shows"STATE RUNNING" |
+| 3-marble-maze | ok — errors=0 fps=5.5/4.5 hud_moves=true shows"STATE ROLLING" |
+| 4-tower-defense | ok — errors=0 fps=6.5/6 hud_moves=true shows"MONEY" |
+| 5-flight | ok — errors=0 fps=13/17.5 hud_moves=true shows"STATE FLY" |
 
 FPS is measured under SwiftShader (software rendering: the model server holds the GPU), so
 it is a floor, not the frame rate a real GPU gets. Audio numbers are peak amplitude from an

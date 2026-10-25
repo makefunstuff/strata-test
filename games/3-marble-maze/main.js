@@ -10,7 +10,7 @@ import * as L from "./level.js";
 import { createPost, setupEnvironment } from "../shared/post.js";
 import { quality, autoQuality } from "../shared/mobile.js";
 import { addTouchControls } from "../shared/touch.js";
-import { crtKey } from "../shared/crt.js";
+import { crtKey, PHOSPHORS } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createSparks, createShatter, createRings, createImpactLight } from "../shared/effects.js";
 import { createFps } from "../shared/fps.js";
@@ -66,8 +66,9 @@ camera.lookAt(0, 0, 0);
 const Q = quality({ pixelRatio: 2, bloomScale: 0.5, shadowMap: 1024, sparks: 1 });
 const post = createPost(renderer, scene, camera, {
   exposure: 1.02,
-  bloom: { strength: 0.55 * Q.bloomStrength, radius: 0.5, threshold: 0.88, scale: Q.bloomScale },
-  crt: { look: "cabinet", overrides: Q.crt, bezel: { label: "MARBLE MAZE", accent: "#ffcf5c" } },
+  bloom: { strength: 0.55 * Q.bloomStrength, radius: 0.5, threshold: 1.0, scale: Q.bloomScale },
+  crt: { look: "cabinet", overrides: Q.crt, phosphor: PHOSPHORS.p22,
+         bezel: { label: "MARBLE MAZE", accent: "#ffcf5c" } },
 });
 // a phone that cannot hold the frame rate loses the shadow map and the bloom, once
 const auto = autoQuality({ floor: 45, onDrop: () => {

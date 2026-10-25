@@ -1,0 +1,93 @@
+{
+  "game": "5-flight",
+  "fps_play": 12.5,
+  "samples": [
+    {
+      "threshold": 0.82,
+      "dark": {
+        "rgb": [
+          39,
+          74,
+          117
+        ],
+        "cast": 78,
+        "lum": 70
+      },
+      "hot": {
+        "rgb": [
+          66,
+          96,
+          133
+        ],
+        "cast": 67,
+        "lum": 92
+      }
+    },
+    {
+      "threshold": 1,
+      "dark": {
+        "rgb": [
+          37,
+          74,
+          117
+        ],
+        "cast": 80,
+        "lum": 69
+      },
+      "hot": {
+        "rgb": [
+          62,
+          95,
+          133
+        ],
+        "cast": 71,
+        "lum": 91
+      }
+    },
+    {
+      "threshold": 1.25,
+      "dark": {
+        "rgb": [
+          35,
+          73,
+          116
+        ],
+        "cast": 81,
+        "lum": 68
+      },
+      "hot": {
+        "rgb": [
+          58,
+          93,
+          133
+        ],
+        "cast": 75,
+        "lum": 88
+      }
+    },
+    {
+      "threshold": 1.6,
+      "dark": {
+        "rgb": [
+          35,
+          73,
+          116
+        ],
+        "cast": 81,
+        "lum": 68
+      },
+      "hot": {
+        "rgb": [
+          58,
+          93,
+          133
+        ],
+        "cast": 75,
+        "lum": 88
+      }
+    }
+  ],
+  "errors_seen": 0,
+  "pick": 0.82,
+  "bloom_induced_cast": 0
+}

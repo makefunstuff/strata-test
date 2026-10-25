@@ -102,6 +102,32 @@ uniforms declared in GLSL against the uniforms the material provides and warns. 
 `1-breakout/shots/bug-greywash-*.jpg`; the same failure is in `<game>/shots/bug-greywash-play.jpg`
 for the other four.
 
+## Look pass (TST-6): why five games looked like one
+
+The shelf scored itself 4/5 on look across four games and none higher — a ceiling, not a spread.
+Four causes, all in shared code or in a knob nobody had measured; each was confirmed on the
+rendered frame before it was changed, and the before/after frames (`*/shots/look0-*` control,
+`look3-*` after) plus the raw sweeps (`tools/work/bloomprobe/`) are committed. The full write-up
+with the numbers is **[`LOOK.md`](LOOK.md)**; in one paragraph:
+
+1. **The CRT graded the signal in the wrong order** — saturation/contrast/gain applied after the
+   scanlines and grille and before ACES, so the tone map re-crushed a curve that had already been
+   applied and `uGain` 1.72 fought it back up. Now: grade the signal, then let the phosphor
+   multiply it; `uGain` split into a linear pre-exposure and a post-glass level; the black lift
+   moved after the tube mask (before, it painted a grey rectangle over the bezel).
+2. **One phosphor for all five** (`uGlowColor 0x2a6ea8` for every game) — replaced by
+   `PHOSPHORS` (p22 green, p31 warm, p43 rose, p4 blue), mixed with each cabinet's accent, with a
+   tinted vignette and a fine grain.
+3. **Flight's sky was white and it was not the CRT** — three injects ACES into every material and
+   `OutputPass` applies it again, so the Preetham dome clipped to `[255,255,255]` and stopped
+   responding to `rayleigh` or `exposure` at all. `toneMapped:false` + a calibrated
+   `uSkyExposure` (swept via `?sky=`, sampled from the render) + lower turbidity, not higher
+   rayleigh, + 4 m of downward camera aim so the terrain and rings are in frame.
+4. **Bloom was colouring the frame** — Breakout's threshold sat below its near-white pastel
+   bricks, so the bloom pass blurred them over the whole tube: **+57 cast** in a dark region,
+   gone at 1.25, neon untouched. `tools/bloomprobe.mjs` measures it per game; the rule (threshold
+   in HDR, above the brightest non-emissive surface) is now in `shared/post.js`.
+
 ## What got hard as the complexity rose
 
 1. **Graphics with no assets.** Every texture, the cabinet bezel and every sound are generated
@@ -154,6 +180,10 @@ cd games/tools && npm i          # playwright-core, and nothing else
 node tools/verify.mjs            # ~3 min: five games, clean console, HUD reacts to input, FPS
 node tools/verify.mjs --full     # ~7 min: + measured audio, + the rules, + published paths
 node tools/mobilecheck.mjs       # phone: touch controls driven with real CDP touch events
+node tools/bloomprobe.mjs        # bloom as a colour source: threshold sweep, sampled per game
+node tools/smoke.ts 1-breakout --eval '(window.arcade.post.debug({bloom:false}))'
+                                 # --eval prints any expression's JSON beside the measurements;
+                                 # --evalshot also shoots the frame after it (post-chain bisection)
 tools/polish.sh before           # start / play / game-over screenshots, desktop and phone
 ```
 

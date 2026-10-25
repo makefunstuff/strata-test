@@ -7,7 +7,7 @@ import { glowTexture, skyTexture } from "../../shared/textures.js";
 import { stepBall } from "./collision.js";
 import { createInput } from "./input.js";
 import { createSparks, createShatter, createRings, createImpactLight, createScreenFlash } from "../../shared/effects.js";
-import { crtKey } from "../../shared/crt.js";
+import { crtKey, PHOSPHORS } from "../../shared/crt.js";
 import { createPost, setupEnvironment } from "../../shared/post.js";
 import { createAudio, audioKey } from "../../shared/audio.js";
 import { quality, autoQuality } from "../../shared/mobile.js";
@@ -73,9 +73,14 @@ export function createGame(canvas) {
   const post = createPost(renderer, scene, camera, {
     exposure: 1.08,
     bloom: {
-      strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 0.82, scale: Q.bloomScale,
+      // threshold 0.82 let the near-white pastel brick faces into the bloom pass, which smeared
+      // their colour across the whole tube (measured: a dark patch above the bricks read
+      // [75,88,26] — green — with the wash, [30,23,19] neutral without). The neon is unaffected:
+      // the ball and sparks are true emissives and sit far above this.
+      strength: 0.62 * Q.bloomStrength, radius: 0.5, threshold: 1.25, scale: Q.bloomScale,
     },
-    crt: { look: "arcade", overrides: Q.crt, bezel: { label: "BREAKOUT", accent: "#8ee8ff" } },
+    crt: { look: "arcade", overrides: Q.crt, phosphor: PHOSPHORS.p22,
+           bezel: { label: "BREAKOUT", accent: "#8ee8ff" } },
   });
   const audio = createAudio({ master: 0.42, delayMix: 0.14 });
   const sfx = audio.sfx;

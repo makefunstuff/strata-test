@@ -1,0 +1,93 @@
+{
+  "game": "1-breakout",
+  "fps_play": 4.5,
+  "samples": [
+    {
+      "threshold": 0.82,
+      "dark": {
+        "rgb": [
+          73,
+          84,
+          24
+        ],
+        "cast": 60,
+        "lum": 77
+      },
+      "hot": {
+        "rgb": [
+          219,
+          239,
+          221
+        ],
+        "cast": 20,
+        "lum": 233
+      }
+    },
+    {
+      "threshold": 1,
+      "dark": {
+        "rgb": [
+          49,
+          59,
+          21
+        ],
+        "cast": 38,
+        "lum": 54
+      },
+      "hot": {
+        "rgb": [
+          213,
+          238,
+          216
+        ],
+        "cast": 25,
+        "lum": 231
+      }
+    },
+    {
+      "threshold": 1.25,
+      "dark": {
+        "rgb": [
+          26,
+          21,
+          17
+        ],
+        "cast": 9,
+        "lum": 22
+      },
+      "hot": {
+        "rgb": [
+          196,
+          237,
+          206
+        ],
+        "cast": 41,
+        "lum": 226
+      }
+    },
+    {
+      "threshold": 1.6,
+      "dark": {
+        "rgb": [
+          13,
+          15,
+          16
+        ],
+        "cast": 3,
+        "lum": 15
+      },
+      "hot": {
+        "rgb": [
+          183,
+          237,
+          206
+        ],
+        "cast": 54,
+        "lum": 223
+      }
+    }
+  ],
+  "errors_seen": 0,
+  "pick": 1.25,
+  "bloom_induced_cast": 57
+}

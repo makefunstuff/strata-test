@@ -6,7 +6,7 @@ import { createPlayer } from "./player.js";
 import { createSpawner } from "./spawner.js";
 import { createGame } from "./game.js";
 import { createPost, setupEnvironment } from "../shared/post.js";
-import { crtKey } from "../shared/crt.js";
+import { crtKey, PHOSPHORS } from "../shared/crt.js";
 import { createAudio, audioKey } from "../shared/audio.js";
 import { createFps } from "../shared/fps.js";
 import { createSpeedLines } from "../shared/speedlines.js";
@@ -97,8 +97,11 @@ const game = createGame({ hud, player, spawner, track, camera, canvas, rng, fx, 
 
 const post = createPost(renderer, scene, camera, {
   exposure: 1.12,
-  bloom: { strength: 0.55 * Q.bloomStrength, radius: 0.5, threshold: 0.9, scale: Q.bloomScale },
-  crt: { look: "cabinet", overrides: Q.crt, bezel: { label: "RUNNER", accent: "#ffb45c" } },
+  // 0.88 -> 1.0 with the rest: nothing in this scene reached the bloom pass below 1.0 (measured
+  // identical frames across a 0.88..1.6 sweep), so raising it costs no glow and buys the rule.
+  bloom: { strength: 0.58 * Q.bloomStrength, radius: 0.5, threshold: 1.0, scale: Q.bloomScale },
+  crt: { look: "cabinet", overrides: Q.crt, phosphor: PHOSPHORS.p31,
+         bezel: { label: "RUNNER", accent: "#ffb45c" } },
 });
 const auto = autoQuality({
   floor: 45,

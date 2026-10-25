@@ -1,0 +1,93 @@
+{
+  "game": "2-runner",
+  "fps_play": 5.5,
+  "samples": [
+    {
+      "threshold": 0.82,
+      "dark": {
+        "rgb": [
+          10,
+          10,
+          12
+        ],
+        "cast": 2,
+        "lum": 10
+      },
+      "hot": {
+        "rgb": [
+          8,
+          63,
+          65
+        ],
+        "cast": 57,
+        "lum": 51
+      }
+    },
+    {
+      "threshold": 1,
+      "dark": {
+        "rgb": [
+          10,
+          10,
+          12
+        ],
+        "cast": 2,
+        "lum": 10
+      },
+      "hot": {
+        "rgb": [
+          8,
+          60,
+          61
+        ],
+        "cast": 53,
+        "lum": 49
+      }
+    },
+    {
+      "threshold": 1.25,
+      "dark": {
+        "rgb": [
+          10,
+          10,
+          12
+        ],
+        "cast": 2,
+        "lum": 10
+      },
+      "hot": {
+        "rgb": [
+          8,
+          60,
+          61
+        ],
+        "cast": 53,
+        "lum": 49
+      }
+    },
+    {
+      "threshold": 1.6,
+      "dark": {
+        "rgb": [
+          10,
+          10,
+          12
+        ],
+        "cast": 2,
+        "lum": 10
+      },
+      "hot": {
+        "rgb": [
+          8,
+          60,
+          61
+        ],
+        "cast": 53,
+        "lum": 49
+      }
+    }
+  ],
+  "errors_seen": 0,
+  "pick": 0.82,
+  "bloom_induced_cast": 0
+}
