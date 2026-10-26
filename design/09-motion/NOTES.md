@@ -331,3 +331,38 @@ passes.
 | Consistency | **5** | one duration scale, one curve family, and the plate's marks are the same four families at surface-safe weights |
 | Accessibility | **4.5** | 0 audit findings on 25 shots, marks ≥3:1 on their surface, timing legible as text (`0 ms · 4 animations · out · 480 ms`) and not only as a bar. Loses half a point: no profile, no reader walkthrough, unchanged |
 | Originality | **5** | the strip is still the animation; now the card also shows its clock, read out of the animation objects, so the timing claim and the demo cannot disagree |
+
+---
+
+## Correction — the frame numbers above were measured through a broken scroll
+
+The round-2 table was produced with `tools/liveliness.mjs` before it neutralised
+`scroll-behavior: smooth`. This page scrolls smoothly, the manifest's `reveal:` actions animated, and
+the shutter fell mid-flight: several frames were the same region of the page, which is why the old
+table reported **toast 25 → 9**, **button 16 → 8**, **reduced-button 16 → 7** as regressions and a
+task mean of 15.3 → 16.1. Those were the tool, not the design. Re-run on both trees with the fixed
+tool (22 frames, back to back), the same measurement is:
+
+| frame | before | after | |
+| --- | --- | --- | --- |
+| `full` — whole page | 32 · colour 10.3 · ink 0.196 | **38 · colour 12.6 · ink 0.218** | unchanged from the old table (whole-page shots never scrolled) |
+| `like` | 32 · colour 8.9 | **54 · colour 17.6** | the plate in a short card |
+| `modal` | 37 | **47** | |
+| `button` | 51 · colour 16.5 | **57 · colour 19.2** | five animations, five bars |
+| `reorder` | 33 | **40** | |
+| `insert` | 31 | **39** | |
+| `sheet` | 32 · colour 8.9 | **39 · colour 11.8** | |
+| `tabs`, `skeleton`, `accordion`, `reveal` | 33, 31, 32, 31 | **38, 36, 38, 38** | |
+| `toast`, `pointer` | 31, 46 | **35, 50** | |
+| `rules`, `system`, `masthead` | 24, 30, 22 | **26, 30, 22** | |
+| `reduced*`, `checks-reduced`, `audit` | 32, 51, 31, 24, 26 | 33, 52, 32, 24, 26 | the reduced frames barely move: in reduce mode the plate is the only ink in the column |
+| **mean, 22 frames** | **32.9** · colour 10.2 | **37.6** · colour **11.9** | |
+
+**No frame regressed.** The element frames (sheet-card 41 → 49, toast-card 40 → 45, button-card
+59 → 65) stand as published: an element screenshot scrolls its own node into view, so it never
+depended on the page's scroll behaviour — which is the reason that frame type exists.
+
+The lesson generalises past this tool: a section row that is **identical to its neighbour** is a
+smell, and a report that prints 22 rows has no way to say so. Cross-check the numbers you publish
+when you fix an instrument; a "before" measured through a broken path flatters the change, and here
+it *understated* it by three points of mean liveliness and invented three regressions.

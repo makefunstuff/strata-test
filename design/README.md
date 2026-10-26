@@ -45,7 +45,7 @@ task scores under 4 on it.
 | 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4.5 | 4 | 5 | 4.5 | 4.5 | 15 | Round 2: the manual became the chart sheet it documents — depth tints, graticule, soundings, a rose built on the mark's radii — and its own `measure.mjs` proved the 16 px claim false (0.83 device px), then fixed it. |
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
-| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 26 | Round 2: a timing plate per study, drawn from the study's own Web Animation objects, so the written clock and the demo cannot disagree. Measured as elements, the cards are livelier: 41→49, 40→45, 59→65. |
+| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 26 | Round 2: a timing plate per study, drawn from the study's own Web Animation objects, so the written clock and the demo cannot disagree. Measured as elements: 41→49, 40→45, 59→65. Re-measured as windows through the scroll fix: mean 32.9 → 37.6, no frame regressed. |
 | 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4.5 | 5 | 4.5 | 5 | 5 | 37 | Round 2 drew the subject: a tide curve in every row and a level gauge in the panel, both generated from the table's own numbers and checked dot by dot (≤ 0.008 m). It also caught the lede quoting 4.61 m for a tide the table calls 4.48 m — the fix is naming the two quantities, not renumbering them. |
 | 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 3.5 | 5 | 4 | 4 | 43 | Parity measured on rendered text (41 strings × 9 pages) and the added words counted; the layout axis is 3.5 because the nine costumes share one skeleton. |
 
@@ -315,9 +315,13 @@ before an element shot is trusted.
 runs a shot's actions; `liveliness.mjs` did not. The manifest's three `eval:` scroll actions
 animated, never landed before the shutter, and `hero`, `features` and `fold` measured as the page top
 — **three identical published rows**, 40 · 13.5 · 0.132 for all three, before *and* after. Fixed the
-same way, and `09-motion` (which also scrolls smoothly) is re-measured. A row identical to its
-neighbour is a smell, and the report never said so; the general rule is the folder's recurring one:
-**the frame you never verify is the claim you never measure.**
+same way. `09-motion` also scrolls smoothly, so its published section rows were taken through the
+broken path: re-run on both trees, the comparison is **mean 32.9 → 37.6 over 22 frames, no frame
+regressed** — and the three regressions that round reported (`toast 25 → 9`, `button 16 → 8`,
+`reduced-button 16 → 7`) were the tool, not the design. Its element frames stood, because an element
+screenshot scrolls its own node into view, which is the reason that frame type exists. A row identical
+to its neighbour is a smell, and a report that prints 22 rows has no way to say so; the general rule
+is the folder's recurring one: **the frame you never verify is the claim you never measure.**
 
 ### Tenth: the audit reads HTML, and this folder draws in SVG
 
