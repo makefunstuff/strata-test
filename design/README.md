@@ -142,7 +142,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the two things it was blind to
+## The harness, and the three things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -156,7 +156,8 @@ the text of selected regions, `tools/names.mjs` lists controls the audit calls
 unnamed, `tools/probe.mjs` is the one-page font diagnostic. `tools/thumbs.mjs`
 builds the gallery thumbnails, `tools/shotsindex.mjs` writes the page inside every
 `shots/` folder, `tools/links.mjs` checks that every relative reference resolves
-under the rule a static host applies, and `tools/serve.mjs` serves the tree over
+under the rule a static host applies, `tools/liveliness.mjs` measures whether a frame is
+visually alive (the section below), `tools/serve.mjs` serves the tree over
 http for the pages that use ES modules. Each task that needs its own measurement
 has a `measure.mjs`.
 
@@ -185,17 +186,70 @@ has a `measure.mjs`.
   The rule this teaches is not about CSS: a page width that is never requested is a
   page width that is never audited, and a report nobody prints is a report nobody reads.
 
+### Third, and the one this folder could not see at all: nothing measured whether a page was worth looking at
+
+The audit measures whether a page is *correct*. Nothing measured whether it was *alive*, which is
+the question a visitor actually asks, and the folder's answer to it had been eleven models of
+self-grading giving each other a 4/5. `tools/liveliness.mjs` screenshots each brief at 1440 and
+reads the pixels — Hasler–Süsstrunk colourfulness, how many of twelve hue bins clear 1% of pixels,
+ink coverage against the dominant background, tonal entropy of the luminance histogram, and a
+panel-depth share from the box tree — then folds them into a 0–100 index whose weights are stated
+in the file rather than fitted to a taste.
+
+The first run is the finding, and it is not flattering:
+
+| | colourfulness | hue families | liveliness |
+| --- | --- | --- | --- |
+| mean over the eleven briefs | **13.3** | **1.2** | **42.2** |
+| highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
+| lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
+| the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
+
+"Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
+**1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
+at all* above 1% of their pixels. That is the human verdict, "the taste is one taste", turned into a
+number that can be moved or refuted, which is more than an eleven-way 4/5 ever was.
+
+What it cannot do, stated plainly: it is a ranking device, not a judge. High colourfulness on a
+page whose contrast then fails AA is a regression, and `shoot.mjs` is what stops that; a page can
+be dull for a reason (a six-step grant form, a spec sheet, a print-first document) and the index
+does not know why. And it measures a *frame*, so what the frame is decides the answer: the gallery
+page reads 26 whole-page while its liveliest section measures 49 and its dullest, the verdict
+prose, 5. Two measurement traps turned up while building it, and both are now in the tool: a
+whole-page frame of a page with `loading="lazy"` images measures a *shorter, emptier* document
+depending on scroll history (10140 px against 10503 px here), so the tool scrolls the document and
+awaits the images before it shoots; and this software-raster Chromium can hand back a frame that is
+not the page, which the tool now refuses — a decoded frame that is >50% undrawn or >99.8% black is
+a FAILED shot, retried once, not a score. The first version of the tool scored one page at 72/100
+for being near-black; the "page" was the repo's own dark hub, served because a path resolved one
+directory too high.
+
+The gallery now shows the measurement instead of describing it. `#pulse` paints one tile per brief
+in the background colour *read out of that brief's own screenshot*, bars its measured
+colourfulness, and draws a hue rail whose widest segment is the grey "no hue at all" segment; the
+card lists carry the measured axis beside the five self-graded ones, dashed, so nobody confuses
+them. `tools/liveliness.mjs --per-task` regenerates `tools/liveliness-data.js`, and a filtered run
+refuses to overwrite it (one such run emptied the band and the page correctly said "no measurement
+on file" — the fallback firing as designed). Adding the band moved the frame from 19 to 26, the
+smallest honest proof that the number answers what you do to a page; the band's own section is the
+liveliest thing in the folder's frame at 49.
+
 Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **211 shots across the eleven tasks plus 8 in the gallery
-frame — 221 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **213 shots across the eleven tasks plus 9 in the gallery
+frame — 222 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
 screenshot from an earlier round of that task, kept, and its page says it is not in
-the last audit.
+the last audit. Per task, the shot counts and the deliberate contrast findings are unchanged from
+the previous run (`04-tui` 75, `10-redesign` 120, `03-mobile` 28, `07-dataviz` 24, `06-identity` 16,
+`11-styles` 13) — this round added a section to the frame page, not a change to any brief. The
+gallery frame reports `contrast 0` on all nine of its shots for the first time: its code chips
+measured 4.47 against the 4.5 they need, and `--ink-3` moved `#6b7280` → `#6a717e`, one unit of
+lightness, found by the harness and not by the eye.
 
 ## Limits
 
@@ -234,6 +288,8 @@ cd design/11-styles && node measure.mjs        # -> stats.js, the page's own num
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not
+node design/tools/liveliness.mjs --per-task    # measured liveliness -> tools/work/liveliness/ + tools/liveliness-data.js
+node design/tools/liveliness.mjs 02-dashboard --shot light,dark   # one task's frames
 node design/tools/dump.mjs 09-motion/index.html '#audit-list' --reduce --build --frames
                                               # the reduced-motion page, as the browser sees it
 node design/tools/probe.mjs 11-styles s03-editorial.html   # font diagnostic

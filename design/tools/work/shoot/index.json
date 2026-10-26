@@ -17,8 +17,32 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 394107,
+  "bytes": 379189,
   "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "./pulse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('pulse').scrollIntoView({block:'start'})"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/pulse.jpg",
+  "bytes": 461766,
+  "px": "2880x2300",
   "actions_failed": []
  },
  {
@@ -41,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/range.jpg",
-  "bytes": 391560,
+  "bytes": 406355,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -65,7 +89,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/table.jpg",
-  "bytes": 291273,
+  "bytes": 290555,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -89,7 +113,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/cards.jpg",
-  "bytes": 645714,
+  "bytes": 673451,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -109,21 +133,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "strata/swift-1.5-flash-next-iq3_s",
-     "size": 12,
-     "ratio": 4.47,
-     "need": 4.5,
-     "fg": "rgb(107, 114, 128)",
-     "bg": "rgb(245, 246, 248)",
-     "sel": "code"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "./shots/verdict.jpg",
-  "bytes": 813529,
+  "bytes": 810892,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -143,21 +157,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "strata/swift-1.5-flash-next-iq3_s",
-     "size": 12,
-     "ratio": 4.47,
-     "need": 4.5,
-     "fg": "rgb(107, 114, 128)",
-     "bg": "rgb(245, 246, 248)",
-     "sel": "code"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 458325,
+  "bytes": 469824,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -179,8 +183,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 1731051,
-  "px": "1440x9815",
+  "bytes": 1867355,
+  "px": "1440x10557",
   "actions_failed": []
  },
  {
@@ -201,8 +205,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 1570695,
-  "px": "390x19774",
+  "bytes": 1706557,
+  "px": "390x21645",
   "actions_failed": []
  }
 ]

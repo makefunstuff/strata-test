@@ -17,8 +17,32 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 394107,
+  "bytes": 379189,
   "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "./pulse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('pulse').scrollIntoView({block:'start'})"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Design gallery — eleven briefs, built and measured",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "./shots/pulse.jpg",
+  "bytes": 461766,
+  "px": "2880x2300",
   "actions_failed": []
  },
  {
@@ -41,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/range.jpg",
-  "bytes": 391560,
+  "bytes": 406355,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -65,7 +89,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/table.jpg",
-  "bytes": 291273,
+  "bytes": 290555,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -89,7 +113,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/cards.jpg",
-  "bytes": 645714,
+  "bytes": 673451,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -109,21 +133,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "strata/swift-1.5-flash-next-iq3_s",
-     "size": 12,
-     "ratio": 4.47,
-     "need": 4.5,
-     "fg": "rgb(107, 114, 128)",
-     "bg": "rgb(245, 246, 248)",
-     "sel": "code"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "./shots/verdict.jpg",
-  "bytes": 813529,
+  "bytes": 810892,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -143,21 +157,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "strata/swift-1.5-flash-next-iq3_s",
-     "size": 12,
-     "ratio": 4.47,
-     "need": 4.5,
-     "fg": "rgb(107, 114, 128)",
-     "bg": "rgb(245, 246, 248)",
-     "sel": "code"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 458325,
+  "bytes": 469824,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -179,8 +183,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 1731051,
-  "px": "1440x9815",
+  "bytes": 1867355,
+  "px": "1440x10557",
   "actions_failed": []
  },
  {
@@ -201,8 +205,7625 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 1570695,
-  "px": "390x19774",
+  "bytes": 1706557,
+  "px": "390x21645",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/hero.jpg",
+  "bytes": 407924,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/full.jpg",
+  "bytes": 621116,
+  "px": "1440x5452",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/features",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('features').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/features.jpg",
+  "bytes": 309719,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/fold",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('how').scrollIntoView({block:'start'}); window.scrollBy(0,-80)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/fold.jpg",
+  "bytes": 275884,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/pricing-annual",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:.billing .seg[data-cycle=annual]",
+   "eval:document.getElementById('pricing').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "01-landing/shots/pricing-annual.jpg",
+  "bytes": 274692,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/faq-open",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:.faq li:nth-child(2) summary",
+   "eval:document.getElementById('faq').scrollIntoView({block:'start'}); window.scrollBy(0,-90)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "01-landing/shots/faq-open.jpg",
+  "bytes": 212619,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/form-error",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('get').scrollIntoView({block:'center'})",
+   "type:#email:mairi at kestrel",
+   "click:#signup button[type=submit]"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "01-landing/shots/form-error.jpg",
+  "bytes": 194743,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/phone.jpg",
+  "bytes": 139746,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/phone-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/phone-full.jpg",
+  "bytes": 463616,
+  "px": "390x9065",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/phone-menu",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:.navtoggle"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "01-landing/shots/phone-menu.jpg",
+  "bytes": 92949,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/light",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/light.jpg",
+  "bytes": 332838,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/dark",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/dark.jpg",
+  "bytes": 314539,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/full.jpg",
+  "bytes": 229285,
+  "px": "1440x1771",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/dark-full",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/dark-full.jpg",
+  "bytes": 238177,
+  "px": "1440x1771",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/chart-hover",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "hover:#area"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/chart-hover.jpg",
+  "bytes": 338515,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/filtered",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#depotChecks input[value=awl]",
+   "click:#depotChecks input[value=stk]",
+   "type:#q:hall"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/filtered.jpg",
+  "bytes": 327652,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/sorted-buses",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:th button.sort[data-key=buses]",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/sorted-buses.jpg",
+  "bytes": 334958,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/compact",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#density",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-70)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/compact.jpg",
+  "bytes": 352989,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "eval:document.querySelectorAll('#depotChecks input').forEach(i=>{i.checked=false;i.dispatchEvent(new Event('change',{bubbles:true}))})",
+   "eval:document.getElementById('table').scrollIntoView({block:'center'})"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/empty.jpg",
+  "bytes": 185559,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#export"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/toast.jpg",
+  "bytes": 340286,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#theme"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/phone.jpg",
+  "bytes": 191848,
+  "px": "390x5043",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-drawer",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "click:#drawer"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "02-dashboard/shots/phone-drawer.jpg",
+  "bytes": 73783,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-top",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/phone-top.jpg",
+  "bytes": 87571,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/phone-table",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:(()=>{if(document.documentElement.dataset.theme===\"dark\")document.getElementById(\"theme\").click()})()",
+   "eval:document.getElementById('table').scrollIntoView({block:'start'}); window.scrollBy(0,-60)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/phone-table.jpg",
+  "bytes": 90649,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/board",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "3 · count",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "how many, which place, which list — and ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "today",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "morning count, four stats, calls heard, ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "detail",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "the field plate, why the confidence is 9",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "life list",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "grouped by family, rare marks, search, t",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board.jpg",
+  "bytes": 270273,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/board-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "3 · count",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "how many, which place, which list — and ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "today",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "morning count, four stats, calls heard, ",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "detail",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "the field plate, why the confidence is 9",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "life list",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "grouped by family, rare marks, search, t",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board-full.jpg",
+  "bytes": 622267,
+  "px": "1440x4598",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/board-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — mobile app screens · design review board",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1 · capture",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "two photos, a 4 s call, the patch pinned",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    },
+    {
+     "text": "2 · identify",
+     "size": 12,
+     "ratio": 1.25,
+     "need": 4.5,
+     "fg": "rgb(220, 230, 236)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "ranked candidates with the reason each o",
+     "size": 12,
+     "ratio": 2.5,
+     "need": 4.5,
+     "fg": "rgb(147, 165, 178)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "figcaption"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/board-phone.jpg",
+  "bytes": 614063,
+  "px": "390x11670",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/today",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/today.jpg",
+  "bytes": 105927,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-1",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-1.jpg",
+  "bytes": 57045,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-2",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-2.jpg",
+  "bytes": 90282,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/log-3",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/log-3.jpg",
+  "bytes": 58525,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/detail",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/detail.jpg",
+  "bytes": 90733,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list.jpg",
+  "bytes": 92385,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/trip",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/trip.jpg",
+  "bytes": 95223,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/onboard",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/onboard.jpg",
+  "bytes": 106763,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/offline",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — offline state",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/offline.jpg",
+  "bytes": 112272,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/empty.jpg",
+  "bytes": 101104,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/loading",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/loading.jpg",
+  "bytes": 91925,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/no-location",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/no-location.jpg",
+  "bytes": 111456,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list-search",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "type:#listSearch:avocet"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list-search.jpg",
+  "bytes": 56906,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/list-empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "type:#listSearch:goldfinch"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/list-empty.jpg",
+  "bytes": 69409,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/saved-toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#saveSighting"
+  ],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "03-mobile/shots/saved-toast.jpg",
+  "bytes": 109872,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "03-mobile/app-standalone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 5,
+   "lang": "en",
+   "title": "Ternmark — field logging for birders (app screens)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "03-mobile/shots/app-standalone.jpg",
+  "bytes": 150411,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/board",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/board.jpg",
+  "bytes": 665485,
+  "px": "1500x3762",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/stream",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — stream",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/stream.jpg",
+  "bytes": 601144,
+  "px": "3320x1880",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/endpoints",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — endpoints",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/endpoints.jpg",
+  "bytes": 299391,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/help",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — help",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/help.jpg",
+  "bytes": 401003,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/filtered",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — filtered",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/filtered.jpg",
+  "bytes": 340234,
+  "px": "3320x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/empty",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — empty",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│└",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/empty.jpg",
+  "bytes": 182627,
+  "px": "3320x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/frozen",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — frozen",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/frozen.jpg",
+  "bytes": 514591,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/light",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — light",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ ┌",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "├───────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│├──────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "│ └",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "█▆▅▅▅▅▅▆▄▅▆▆▅▃▆▆▄▆▆▆▆▄▅▅▅▄▅▅▆▆▅▆▅▅▄▄▅▆█▅",
+     "size": 15,
+     "ratio": 4.03,
+     "need": 4.5,
+     "fg": "rgb(75, 138, 120)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.81,
+     "need": 4.5,
+     "fg": "rgb(143, 156, 166)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/light.jpg",
+  "bytes": 564413,
+  "px": "3320x1660",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/narrow",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "logtrail — narrow",
+   "stylesheetsMissing": [],
+   "landmarks": "main",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "────────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "┐ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ ├─────────────────────────────────────",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "│ │",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span"
+    },
+    {
+     "text": "▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    },
+    {
+     "text": "▁▁▁▁",
+     "size": 15,
+     "ratio": 2.83,
+     "need": 4.5,
+     "fg": "rgb(77, 97, 112)",
+     "bg": "rgb(16, 22, 28)",
+     "sel": "span.b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/narrow.jpg",
+  "bytes": 205044,
+  "px": "1960x1320",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "press:Escape"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/phone.jpg",
+  "bytes": 339235,
+  "px": "390x5308",
+  "actions_failed": []
+ },
+ {
+  "label": "04-tui/phone-frames",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "press:Escape",
+   "reveal:.frames"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/phone-frames.jpg",
+  "bytes": 224357,
+  "px": "780x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/full.jpg",
+  "bytes": 1558246,
+  "px": "1440x12175",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/overview",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/overview.jpg",
+  "bytes": 389760,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/colour",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('colour').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/colour.jpg",
+  "bytes": 429602,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/type",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('type').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/type.jpg",
+  "bytes": 325311,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/space",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('space').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/space.jpg",
+  "bytes": 272981,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-paper",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/kit-paper.jpg",
+  "bytes": 416876,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-deck",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"deck\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-deck.jpg",
+  "bytes": 364315,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-field",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"field\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-field.jpg",
+  "bytes": 424051,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/kit-terminal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"terminal\"]",
+   "eval:document.getElementById('components').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/kit-terminal.jpg",
+  "bytes": 393828,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/patterns",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/patterns.jpg",
+  "bytes": 375480,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/table-empty",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#pat-table",
+   "click:#themes button[data-set='deck']",
+   "type:#pat-search:harbourlight"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/table-empty.jpg",
+  "bytes": 386025,
+  "px": "2360x3000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/form-invalid",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+   "type:#f-email:not-an-email",
+   "key:Tab",
+   "click:#f-submit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/form-invalid.jpg",
+  "bytes": 338825,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/modal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('patterns').scrollIntoView({block:'start'}); window.scrollBy(0,-72)",
+   "click:#open-modal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/modal.jpg",
+  "bytes": 221512,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/rules",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('rules').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/rules.jpg",
+  "bytes": 303089,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/tokens-deck",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#themes button[data-set=\"deck\"]",
+   "eval:document.getElementById('tokens').scrollIntoView({block:'start'}); window.scrollBy(0,-72)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "05-system/shots/tokens-deck.jpg",
+  "bytes": 405941,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#mobile"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone.jpg",
+  "bytes": 62372,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone-kit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#mobile"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone-kit.jpg",
+  "bytes": 392143,
+  "px": "4100x2120",
+  "actions_failed": []
+ },
+ {
+  "label": "05-system/phone-tokens",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tokens"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Halyard — the design system behind four products",
+   "stylesheetsMissing": [],
+   "landmarks": "main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "05-system/shots/phone-tokens.jpg",
+  "bytes": 116789,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/full.jpg",
+  "bytes": 714395,
+  "px": "1440x5770",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/masthead.jpg",
+  "bytes": 382300,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/construction",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#construction"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/construction.jpg",
+  "bytes": 296132,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/lockups",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#lockups"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/lockups.jpg",
+  "bytes": 291961,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/scale",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#scale"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/scale.jpg",
+  "bytes": 282580,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/onebit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#onebit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/onebit.jpg",
+  "bytes": 244613,
+  "px": "2600x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/grid",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#grid"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/grid.jpg",
+  "bytes": 338399,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/wall",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#icons"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/wall.jpg",
+  "bytes": 325754,
+  "px": "2880x2360",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/sizes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#icons",
+   "scroll:+1100"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/sizes.jpg",
+  "bytes": 170139,
+  "px": "2400x1240",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/inuse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/inuse.jpg",
+  "bytes": 276612,
+  "px": "2600x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/inuse-tabs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse",
+   "scroll:+620"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Etched",
+     "size": 12,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "b"
+    },
+    {
+     "text": "brass plate, 60 mm",
+     "size": 10,
+     "ratio": 4.32,
+     "need": 4.5,
+     "fg": "rgb(74, 60, 28)",
+     "bg": "rgb(184, 162, 113)",
+     "sel": "div.cap"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/inuse-tabs.jpg",
+  "bytes": 251541,
+  "px": "2600x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/misuse",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#misuse"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/misuse.jpg",
+  "bytes": 303948,
+  "px": "2600x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/toolbar-on",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#inuse",
+   "click:#toolbar .tb:nth-child(3)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "06-identity/shots/toolbar-on.jpg",
+  "bytes": 216822,
+  "px": "2400x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/phone.jpg",
+  "bytes": 660820,
+  "px": "390x12369",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/full.jpg",
+  "bytes": 681508,
+  "px": "1440x5201",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/claim",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/claim.jpg",
+  "bytes": 250172,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/claim-cursor",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim",
+   "eval:document.querySelector(\"#claim svg\").__cursor.set(26)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/claim-cursor.jpg",
+  "bytes": 255037,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/gauges",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-gauges"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/gauges.jpg",
+  "bytes": 237118,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/gauges-cross",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-gauges",
+   "eval:document.querySelector(\"#gauges svg\").__hover(34)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/gauges-cross.jpg",
+  "bytes": 234490,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/boxes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-boxes"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/boxes.jpg",
+  "bytes": 218736,
+  "px": "2800x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/stack",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-stack",
+   "eval:document.querySelector(\"#stack svg\").__cursor.set(10)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/stack.jpg",
+  "bytes": 205936,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/slope",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-slope",
+   "eval:const g=[...document.querySelectorAll(\"#slope .slope\")];g[0].dispatchEvent(new PointerEvent(\"pointerenter\",{bubbles:true}));"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/slope.jpg",
+  "bytes": 203852,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/calendar",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-calendar"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/calendar.jpg",
+  "bytes": 345865,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/numbers",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#nums button[data-set=\"numbers\"]",
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/numbers.jpg",
+  "bytes": 244434,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/feet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#units button[data-unit=\"ft\"]",
+   "click:#nums button[data-set=\"numbers\"]",
+   "reveal:#fig-claim"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "17.29 ft",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/feet.jpg",
+  "bytes": 214771,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/feet-slope",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#units button[data-unit=\"ft\"]",
+   "reveal:#fig-slope"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/feet-slope.jpg",
+  "bytes": 197235,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-claim",
+   "eval:document.querySelector(\"#claim svg\").__cursor.set(4)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/reduced.jpg",
+  "bytes": 256976,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/keyboard",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#fig-boxes",
+   "eval:document.querySelector(\"#boxes svg\").focus()",
+   "eval:document.querySelector(\"#boxes svg\").__cursor.set(9)"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/keyboard.jpg",
+  "bytes": 249973,
+  "px": "2800x1560",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/lied",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#lied"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "07-dataviz/shots/lied.jpg",
+  "bytes": 372836,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 19,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/phone.jpg",
+  "bytes": 500022,
+  "px": "390x7778",
+  "actions_failed": []
+ },
+ {
+  "label": "07-dataviz/print",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "The line that rises, the datum that moved — Harrow Estuary, 1994–2024",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "1998",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "5.27 m",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    },
+    {
+     "text": "11",
+     "size": 22,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(168, 119, 15)",
+     "bg": "rgb(255, 253, 248)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "none"
+  },
+  "jpg": "07-dataviz/shots/print.jpg",
+  "bytes": 885085,
+  "px": "1100x7547",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/step1",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/step1.jpg",
+  "bytes": 289648,
+  "px": "2360x2080",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/revealed",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:.opt:has(input[name=zone][value=yes])"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/revealed.jpg",
+  "bytes": 165964,
+  "px": "2360x1840",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/blocked",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:.opt:has(input[name=owns][value=no])",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/blocked.jpg",
+  "bytes": 303836,
+  "px": "2360x1840",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/works",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/works.jpg",
+  "bytes": 314273,
+  "px": "2360x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/errors",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/errors.jpg",
+  "bytes": 319412,
+  "px": "2360x2080",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/lookup",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "eval:window.dispatchEvent(new Event('noop'))",
+   "type:#lookup:2 Quay",
+   "click:#lookupBtn",
+   "wait:800",
+   "click:#results button"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/lookup.jpg",
+  "bytes": 256915,
+  "px": "2360x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/review",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/review.jpg",
+  "bytes": 277028,
+  "px": "2360x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/submitted",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-review .btn.big",
+   "wait:1200"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/submitted.jpg",
+  "bytes": 322495,
+  "px": "2360x2280",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/draft",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "eval:localStorage.setItem('hea-frg-draft-v1', JSON.stringify({at:new Date().toISOString(),step:'works',answers:{owns:'yes',flooded:'yes',zone:'no'},done:{eligibility:true,property:true}}))",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/draft.jpg",
+  "bytes": 237156,
+  "px": "2360x1440",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/phone.jpg",
+  "bytes": 117115,
+  "px": "390x1974",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/phone-errors",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:localStorage.clear()",
+   "reload:",
+   "click:#step-eligibility .actions .btn"
+  ],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "08-form/shots/phone-errors.jpg",
+  "bytes": 149932,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "08-form/property",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 6,
+   "lang": "en",
+   "title": "Apply for a Property Flood Resilience grant — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "08-form/shots/property.jpg",
+  "bytes": 228626,
+  "px": "2360x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/masthead.jpg",
+  "bytes": 252151,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/system",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#system"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/system.jpg",
+  "bytes": 317801,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/rules",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.rules"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/rules.jpg",
+  "bytes": 329923,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/sheet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-sheet"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/sheet.jpg",
+  "bytes": 211558,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/modal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-modal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/modal.jpg",
+  "bytes": 213963,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/toast",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-toast"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/toast.jpg",
+  "bytes": 206872,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/insert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-insert"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/insert.jpg",
+  "bytes": 198822,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reorder",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-reorder"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reorder.jpg",
+  "bytes": 192736,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/tabs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-tabs"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/tabs.jpg",
+  "bytes": 202623,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/skeleton",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-skeleton"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/skeleton.jpg",
+  "bytes": 184673,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/like",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-like"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/like.jpg",
+  "bytes": 171682,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/button",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-button",
+   "eval: \"0=1 0.2=0 0.3=0.256685 0.45=0.653195 0.66=0.901602 0.8=0.970948 1=1\"",
+   "eval:return (function(){const el=document.createElement(\"div\");el.style.opacity=\"0.5\";document.body.append(el);const a=el.animate([{opacity:1,offset:0},{opacity:0,offset:0.2},{opacity:0,offset:0.66},{opacity:1,offset:1}],{duration:1000,fill:\"both\",easing:\"cubic-bezier(0.2,0.7,0.3,1)\"});a.pause();const out=[];for(const t of [0,0.2,0.3,0.45,0.66,0.8,1]){a.currentTime=t*1000;out.push(t+\"=\"+getComputedStyle(el).opacity)}a.cancel();el.remove();return out.join(\" \")})()"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/button.jpg",
+  "bytes": 192834,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/accordion",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-accordion"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/accordion.jpg",
+  "bytes": 230610,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reveal",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-reveal"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reveal.jpg",
+  "bytes": 164857,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/pointer",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-pointer"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/pointer.jpg",
+  "bytes": 210720,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#reduced"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced.jpg",
+  "bytes": 375500,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-sheet",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-sheet"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-sheet.jpg",
+  "bytes": 211443,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-button",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-button"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-button.jpg",
+  "bytes": 193366,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/reduced-insert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#study-insert"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/reduced-insert.jpg",
+  "bytes": 212579,
+  "px": "2800x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/checks-reduced",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#audit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/checks-reduced.jpg",
+  "bytes": 392005,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/audit",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#audit"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/audit.jpg",
+  "bytes": 392678,
+  "px": "2800x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/phone.jpg",
+  "bytes": 1339868,
+  "px": "390x26283",
+  "actions_failed": []
+ },
+ {
+  "label": "09-motion/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Motion study — Halyard in motion",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "09-motion/shots/full.jpg",
+  "bytes": 1403441,
+  "px": "1400x11043",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/before-full",
+  "ok": true,
+  "errs": [
+   "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Search"
+    },
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Modern Slavery",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Text size:",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "span"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/before-full.jpg",
+  "bytes": 233444,
+  "px": "1400x1614",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/after-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/after-full.jpg",
+  "bytes": 591261,
+  "px": "1400x3681",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/before-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Flood Risk Management & Tidal Navigation",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "Flood warning",
+     "size": 11,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(255, 204, 0)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/before-phone.jpg",
+  "bytes": 224461,
+  "px": "962x1614",
+  "actions_failed": [],
+  "hOverflow": 572
+ },
+ {
+  "label": "10-redesign/after-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/after-phone.jpg",
+  "bytes": 588608,
+  "px": "390x8628",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-01b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-faq"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "16:12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "0.86",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "7.2",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "CD",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-01b.jpg",
+  "bytes": 271598,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-01a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-01a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-02b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:[data-sl]"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "28/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-02b.jpg",
+  "bytes": 253632,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-02a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-02a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-03b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-table"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "04:26",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "1.02",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "22:14",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.48",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "16:12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "0.86",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "7.2",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "CD",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-03b.jpg",
+  "bytes": 271598,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-03a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tides"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-03a.jpg",
+  "bytes": 380147,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-04b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-nav"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Flood warning",
+     "size": 11,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(255, 204, 0)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b"
+    },
+    {
+     "text": "TID/2024/1187",
+     "size": 11,
+     "ratio": 1.03,
+     "need": 4.5,
+     "fg": "rgb(102, 102, 102)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b.tid"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-04b.jpg",
+  "bytes": 316723,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-04a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.nav"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-04a.jpg",
+  "bytes": 354422,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-05b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-news"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "28/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "21/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "14/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-05b.jpg",
+  "bytes": 308948,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-05a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#news"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-05a.jpg",
+  "bytes": 269394,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-06b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-side"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "03/12/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "28/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Notices pursuant to Regulation 14 have b",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "21/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Training is provided. Monitors are requi",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "14/11/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "Grants of up to £5,000 are available for",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "10:42",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    },
+    {
+     "text": "4.31",
+     "size": 10,
+     "ratio": 2.65,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(244, 247, 250)",
+     "sel": "td"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-06b.jpg",
+  "bytes": 310073,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-06a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:.rail"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-06a.jpg",
+  "bytes": 380147,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-07b",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#b-banner"
+  ],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [
+    ">"
+   ],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Flood warning",
+     "size": 11,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(255, 204, 0)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b"
+    },
+    {
+     "text": "TID/2024/1187",
+     "size": 11,
+     "ratio": 1.03,
+     "need": 4.5,
+     "fg": "rgb(102, 102, 102)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b.tid"
+    },
+    {
+     "text": "Protecting the Estuary",
+     "size": 19,
+     "ratio": 1.59,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "h3"
+    },
+    {
+     "text": "Our strategy for the next twenty-five ye",
+     "size": 12,
+     "ratio": 1.53,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(183, 196, 207)",
+     "sel": "p"
+    },
+    {
+     "text": "READ MORE",
+     "size": 11,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "a"
+    },
+    {
+     "text": "Dredging of the Main Channel",
+     "size": 19,
+     "ratio": 2.24,
+     "need": 3,
+     "fg": "rgb(242, 242, 242)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "h3"
+    },
+    {
+     "text": "Vessel movements between 06:00 and 18:00",
+     "size": 12,
+     "ratio": 2.16,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(143, 166, 191)",
+     "sel": "p"
+    },
+    {
+     "text": "Improved telemetry delivers observations",
+     "size": 12,
+     "ratio": 3.08,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(111, 138, 168)",
+     "sel": "p"
+    },
+    {
+     "text": "Ninety-two classes took part in the Estu",
+     "size": 12,
+     "ratio": 3.74,
+     "need": 4.5,
+     "fg": "rgb(238, 238, 238)",
+     "bg": "rgb(95, 124, 155)",
+     "sel": "p"
+    },
+    {
+     "text": "03/12/2024",
+     "size": 10,
+     "ratio": 2.32,
+     "need": 4.5,
+     "fg": "rgb(170, 170, 170)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "div.dt"
+    },
+    {
+     "text": "The Authority's indicative flood risk ma",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "p"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-07b.jpg",
+  "bytes": 302487,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-07a",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#status"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-07a.jpg",
+  "bytes": 367707,
+  "px": "2800x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/c-08b",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 0,
+   "lang": "en",
+   "title": "Harrow Estuary Authority :: Flood & Tide Information",
+   "stylesheetsMissing": [],
+   "landmarks": "nav",
+   "labelledControlsMissing": [
+    {
+     "tag": "input",
+     "name": "",
+     "ph": "Email address"
+    }
+   ],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "Continue",
+     "size": 13,
+     "ratio": 3.84,
+     "need": 4.5,
+     "fg": "rgb(255, 255, 255)",
+     "bg": "rgb(204, 102, 0)",
+     "sel": "button"
+    },
+    {
+     "text": "Home",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "About Us",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Newsroom",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Careers",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Accessibility",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Site Map",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "A-Z",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Freedom of Information",
+     "size": 10,
+     "ratio": 4,
+     "need": 4.5,
+     "fg": "rgb(119, 119, 119)",
+     "bg": "rgb(242, 242, 242)",
+     "sel": "a"
+    },
+    {
+     "text": "Flood Risk Management & Tidal Navigation",
+     "size": 11,
+     "ratio": 2.85,
+     "need": 4.5,
+     "fg": "rgb(153, 153, 153)",
+     "bg": "rgb(255, 255, 255)",
+     "sel": "span"
+    },
+    {
+     "text": "Flood warning",
+     "size": 11,
+     "ratio": 3.89,
+     "need": 4.5,
+     "fg": "rgb(255, 204, 0)",
+     "bg": "rgb(204, 0, 0)",
+     "sel": "b"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-08b.jpg",
+  "bytes": 167182,
+  "px": "780x1688",
+  "actions_failed": [],
+  "hOverflow": 572
+ },
+ {
+  "label": "10-redesign/c-08a",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/c-08a.jpg",
+  "bytes": 151315,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/masthead.jpg",
+  "bytes": 378546,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/measures",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#measures"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/measures.jpg",
+  "bytes": 394812,
+  "px": "2800x2600",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/pages",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#pages"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/pages.jpg",
+  "bytes": 524013,
+  "px": "2800x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log1",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-1"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log1.jpg",
+  "bytes": 421196,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log2",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-10"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log2.jpg",
+  "bytes": 408121,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/log3",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ch-16"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/log3.jpg",
+  "bytes": 407721,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/kept",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#kept"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/kept.jpg",
+  "bytes": 567448,
+  "px": "2800x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/method",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#method"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/method.jpg",
+  "bytes": 403725,
+  "px": "2800x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/full.jpg",
+  "bytes": 3196758,
+  "px": "1400x25961",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "10 · Redesign: the estuary portal, before and after",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/phone.jpg",
+  "bytes": 168602,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone-tides",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#tideTable"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/phone-tides.jpg",
+  "bytes": 107523,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/phone-top",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "10-redesign/shots/phone-top.jpg",
+  "bytes": 151315,
+  "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/swiss-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-hero.jpg",
+  "bytes": 281990,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/swiss-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-full.jpg",
+  "bytes": 240126,
+  "px": "1440x2149",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/swiss-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Fig. 1, local first (Swiss)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/swiss-phone.jpg",
+  "bytes": 173372,
+  "px": "390x3568",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-hero.jpg",
+  "bytes": 255006,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-full.jpg",
+  "bytes": 356748,
+  "px": "1440x2832",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brutalism-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — BRUTALISM",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brutalism-phone.jpg",
+  "bytes": 251059,
+  "px": "390x4490",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-hero.jpg",
+  "bytes": 238702,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-full.jpg",
+  "bytes": 348678,
+  "px": "1440x3348",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/editorial-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — The Field Quarterly (Editorial)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/editorial-phone.jpg",
+  "bytes": 251696,
+  "px": "390x5281",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-hero.jpg",
+  "bytes": 289411,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-full.jpg",
+  "bytes": 286556,
+  "px": "1440x2959",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/glass-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/glass-phone.jpg",
+  "bytes": 210948,
+  "px": "390x4592",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-hero.jpg",
+  "bytes": 238889,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-full.jpg",
+  "bytes": 238957,
+  "px": "1440x2701",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/neumorph-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/neumorph-phone.jpg",
+  "bytes": 187342,
+  "px": "390x4998",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-hero.jpg",
+  "bytes": 405604,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-full.jpg",
+  "bytes": 389673,
+  "px": "1440x2940",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/pixel-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — PIXEL (8-bit screen)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/pixel-phone.jpg",
+  "bytes": 317552,
+  "px": "390x5606",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-hero.jpg",
+  "bytes": 151049,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-full.jpg",
+  "bytes": 201067,
+  "px": "1440x3151",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/japanese-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Japanese minimal (vertical title)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/japanese-phone.jpg",
+  "bytes": 162004,
+  "px": "390x5077",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-hero.jpg",
+  "bytes": 287448,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-full.jpg",
+  "bytes": 303544,
+  "px": "1440x2777",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/cyber-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Cyber (heads-up display)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/cyber-phone.jpg",
+  "bytes": 229836,
+  "px": "390x5151",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-hero",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-hero.jpg",
+  "bytes": 159901,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-full.jpg",
+  "bytes": 225965,
+  "px": "1440x3742",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/luxury-phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — A house of distinction (Luxury)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/luxury-phone.jpg",
+  "bytes": 163726,
+  "px": "390x5436",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/masthead",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/masthead.jpg",
+  "bytes": 266386,
+  "px": "2880x1520",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/brief",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#brief"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/brief.jpg",
+  "bytes": 296327,
+  "px": "2880x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/heroes",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#strip"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/heroes.jpg",
+  "bytes": 425064,
+  "px": "2880x2200",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/towers",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#towers"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/towers.jpg",
+  "bytes": 300056,
+  "px": "2880x1640",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-swiss",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#swiss"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-swiss.jpg",
+  "bytes": 497513,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-neumorph",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#neumorph"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-neumorph.jpg",
+  "bytes": 443380,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/card-cyber",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#cyber"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/card-cyber.jpg",
+  "bytes": 493219,
+  "px": "2880x2400",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/audit-pairs",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#before"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/audit-pairs.jpg",
+  "bytes": 503138,
+  "px": "2880x2500",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/parity",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#parity"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/parity.jpg",
+  "bytes": 321536,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/measures",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#measure"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/measures.jpg",
+  "bytes": 342318,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/ratings",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#ratings"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/ratings.jpg",
+  "bytes": 369844,
+  "px": "2880x1600",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/verdict",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#verdict"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/verdict.jpg",
+  "bytes": 529611,
+  "px": "2880x2000",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/full",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/full.jpg",
+  "bytes": 2753248,
+  "px": "1440x20883",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/phone",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/phone.jpg",
+  "bytes": 2037238,
+  "px": "390x41911",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/before-glass",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Glass (translucent panels)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "with no signal.",
+     "size": 64,
+     "ratio": 1,
+     "need": 3,
+     "fg": "rgba(0, 0, 0, 0)",
+     "bg": "rgb(11, 18, 32)",
+     "sel": "em",
+     "why": "foreground alpha 0: transparent or gradient-clipped text, no colour to measure"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/before-glass.jpg",
+  "bytes": 213218,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/before-neumorph",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Ternmark — Neumorphism (soft extrusion)",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [
+    {
+     "text": "a field log that works in the mud",
+     "size": 13,
+     "ratio": 3.43,
+     "need": 4.5,
+     "fg": "rgb(111, 125, 146)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "i"
+    },
+    {
+     "text": "Features",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Numbers",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Plans",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Contact",
+     "size": 15,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a"
+    },
+    {
+     "text": "Field log — release 4.2",
+     "size": 13,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "p.badge.inset"
+    },
+    {
+     "text": "Ternmark writes your sighting into a loc",
+     "size": 18,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "p.lede"
+    },
+    {
+     "text": "See a whole season (3.1 MB)",
+     "size": 16,
+     "ratio": 2.99,
+     "need": 4.5,
+     "fg": "rgb(124, 135, 151)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "a.inset.btn"
+    },
+    {
+     "text": "tonight · the Sandbar hide",
+     "size": 13,
+     "ratio": 3.43,
+     "need": 4.5,
+     "fg": "rgb(111, 125, 146)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "span"
+    },
+    {
+     "text": "×14",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    },
+    {
+     "text": "×3",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    },
+    {
+     "text": "×41",
+     "size": 15,
+     "ratio": 3.09,
+     "need": 4.5,
+     "fg": "rgb(77, 132, 212)",
+     "bg": "rgb(228, 233, 241)",
+     "sel": "em"
+    }
+   ],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/before-neumorph.jpg",
+  "bytes": 225755,
+  "px": "2880x1800",
   "actions_failed": []
  }
 ]

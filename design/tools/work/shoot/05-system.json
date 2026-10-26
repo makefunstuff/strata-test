@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/full.jpg",
-  "bytes": 1558199,
+  "bytes": 1558246,
   "px": "1440x12175",
   "actions_failed": []
  },
@@ -111,7 +111,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/space.jpg",
-  "bytes": 272785,
+  "bytes": 272981,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -135,7 +135,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/kit-paper.jpg",
-  "bytes": 416794,
+  "bytes": 416876,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -160,7 +160,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-deck.jpg",
-  "bytes": 364242,
+  "bytes": 364315,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -185,7 +185,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-field.jpg",
-  "bytes": 424048,
+  "bytes": 424051,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -210,7 +210,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-terminal.jpg",
-  "bytes": 393871,
+  "bytes": 393828,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -234,7 +234,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/patterns.jpg",
-  "bytes": 375442,
+  "bytes": 375480,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -260,7 +260,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/table-empty.jpg",
-  "bytes": 386052,
+  "bytes": 386025,
   "px": "2360x3000",
   "actions_failed": []
  },
@@ -287,7 +287,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/form-invalid.jpg",
-  "bytes": 338771,
+  "bytes": 338825,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -312,7 +312,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/modal.jpg",
-  "bytes": 221529,
+  "bytes": 221512,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -361,7 +361,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/tokens-deck.jpg",
-  "bytes": 405925,
+  "bytes": 405941,
   "px": "2880x2200",
   "actions_failed": []
  },

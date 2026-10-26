@@ -156,6 +156,11 @@ function cards(counts) {
         <p class="brief">${esc(t.brief)}</p>
         <ul class="scores" aria-label="self-ratings for ${esc(t.title)}">
           ${AXES.filter((k) => t.scores[k] !== undefined).map((k) => `<li><b>${fmt(t.scores[k])}</b> ${k}</li>`).join("")}
+          ${(() => {
+            // the one measured visual axis, kept visually distinct from the five self-graded ones
+            const r = (window.LIVELINESS?.rows ?? []).find((x) => x.task === t.folder);
+            return r ? `<li class="measured" title="measured from the rendered frame by tools/liveliness.mjs, not self-rated"><b>${r.lively}</b> lively (measured)</li>` : "";
+          })()}
         </ul>
         <dl>
           <div class="good"><dt>Strongest, measured</dt><dd>${esc(t.strong)}</dd></div>
@@ -277,8 +282,71 @@ function verdict(per) {
     for, and the same eleven tasks would score lower and more honestly.</p>`;
 }
 
+/* the measured-pulse band: one tile per brief, painted in the background colour measured from
+   that brief's own frame (tools/liveliness.mjs), filled by its measured colourfulness. The near-
+   white tiles with thin bars ARE the finding — this is a self-portrait, not a decoration. */
+const relLum = (css) => {
+  const m = /rgb\((\d+),(\d+),(\d+)\)/.exec(css ?? "");
+  if (!m) return 1;
+  const [r, g, b] = [1, 2, 3].map((i) => +m[i] / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+function pulse() {
+  const band = document.getElementById("pulse-band");
+  const foot = document.getElementById("pulse-foot");
+  if (!band) return;
+  const all = window.LIVELINESS?.rows ?? [];
+  const rows = all.filter((r) => r.task !== ".");
+  if (!rows.length) {
+    // never fall back to invented colours: an unmeasured folder says so
+    band.innerHTML = `<p class="note">No measurement on file. Run <code>node tools/liveliness.mjs --per-task</code>
+      and reload — this band refuses to invent colours.</p>`;
+    return;
+  }
+  band.innerHTML = `<div class="band-grid" role="img" aria-label="One tile per brief: its measured page background, its measured colourfulness as a bar, and its measured liveliness index">` +
+    rows.map((r) => {
+      const onDark = relLum(r.bg) < 0.35;
+      const pct = Math.max(4, Math.min(100, Math.round(100 * r.colourfulness / 24)));
+      const achromatic = r.dominant_hue === null || r.hues === 0;
+      return `<div class="tile${onDark ? " dark" : ""}${achromatic ? " achromatic" : ""}" style="--bg:${esc(r.bg)};--h:${r.dominant_hue ?? 0}">
+        <span class="t-name">${esc(r.task)}</span>
+        <span class="t-bar"><i style="width:${pct}%"></i></span>
+        <span class="t-nums"><b>${r.lively}</b> lively · ${r.colourfulness} colour · ${achromatic ? "no hue" : r.hues + " hue" + (r.hues === 1 ? "" : "s")}</span>
+      </div>`;
+    }).join("") + `</div>`;
+  /* the hue rail: twelve hue bins, each as wide as the number of briefs whose dominant hue
+     lands in it. Eleven frames in one bin, visually, is the "one taste" verdict without anyone
+     having to write the sentence — and the rail's colours are the measured bin centres. */
+  const bins = new Array(12).fill(0);
+  let neutral = 0;
+  for (const r of rows) {
+    if (r.dominant_hue === null || r.hues === 0) neutral++;
+    else bins[Math.min(11, Math.floor(r.dominant_hue / 30))]++;
+  }
+  const used = bins.map((c, i) => ({ c, h: i * 30 + 15 })).filter((x) => x.c > 0);
+  band.insertAdjacentHTML("beforeend",
+    `<div class="rail" role="img" aria-label="Hue histogram: ${neutral} of ${rows.length} briefs have no hue at all above 1% of pixels; the rest fall in ${used.map((x) => `the ${x.h} degree bin (${x.c})`).join(", ") || "no bins"}">` +
+    (neutral ? `<span class="neutral" style="flex:${neutral}" title="no hue above 1% of pixels"></span>` : "") +
+    used.map((x) => `<span style="flex:${x.c};background:hsl(${x.h} 68% 46%)" title="${x.c} brief(s), dominant hue ${x.h}&deg;"></span>`).join("") +
+    `</div><p class="note rail-cap">` +
+    (neutral ? `<b>${neutral}</b> of ${rows.length} frames carry <b>no hue at all</b> (grey ground, no chroma over 1% of pixels)` : "") +
+    (neutral && used.length ? "; " : "") +
+    (used.length ? `the rest: ${used.map((x) => `<b>${x.c}</b> × ${x.h}&deg;`).join(" · ")}` : "") + `</p>`);
+  const mean = (k) => rows.reduce((a, r) => a + r[k], 0) / rows.length;
+  const self = all.find((r) => r.task === ".");
+  foot.innerHTML = `Measured ${esc(String(window.LIVELINESS.generated).slice(0, 10))} by
+    <code>tools/liveliness.mjs</code>: mean liveliness <b>${mean("lively").toFixed(1)}</b> of 100, mean
+    colourfulness <b>${mean("colourfulness").toFixed(1)}</b>, mean hue families <b>${mean("hues").toFixed(1)}</b>
+    over eleven briefs — out of twelve hue bins, so a mean near one is what "one taste" looks like as a
+    number. This page is measured by the same instrument and included here: <b>${self ? self.lively : "—"}</b>
+    whole-page with this band in it; the frame scored 19 without the band, and
+    <a href="README.md">README.md</a> carries the before/after and what the index cannot tell you.`;
+}
+
 const counts = await shotCounts();
 const per = table();
+pulse();
 range();
 cards(counts);
 verdict(per);

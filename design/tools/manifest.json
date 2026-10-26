@@ -12,6 +12,17 @@
         "settle": 1200
       },
       {
+        "name": "pulse",
+        "page": "index.html",
+        "width": 1440,
+        "height": 1150,
+        "dpr": 2,
+        "settle": 1400,
+        "actions": [
+          "eval:document.getElementById('pulse').scrollIntoView({block:'start'})"
+        ]
+      },
+      {
         "name": "range",
         "page": "index.html",
         "width": 1440,
