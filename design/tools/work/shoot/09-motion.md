@@ -27,7 +27,7 @@ shots: 26 · clean: 26 · failed: 0 · with console/page/request errors: 0
 | 09-motion/audit | 383 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/phone | 1375 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/full | 1441 KB | 0 | 0 | 0 | outline | clean |
-| 09-motion/sheet-card | 230 KB | 0 | 0 | 0 | outline | clean |
-| 09-motion/toast-card | 194 KB | 0 | 0 | 0 | outline | clean |
-| 09-motion/button-card | 186 KB | 0 | 0 | 0 | outline | clean |
+| 09-motion/sheet-card | 180 KB | 0 | 0 | 0 | outline | clean |
+| 09-motion/toast-card | 168 KB | 0 | 0 | 0 | outline | clean |
+| 09-motion/button-card | 177 KB | 0 | 0 | 0 | outline | clean |
 

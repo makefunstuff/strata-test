@@ -83,7 +83,7 @@ The tide numbers are diffed cell by cell, day by day:
    8 px padding, numerals `nowrap` and tabular.
 
 ## Weights
-Desktop case study 25 961 px tall, 32 shots. The crops are 1 400 × 760 CSS px
+Desktop case study 27 083 px tall, 37 shots (round 2: five new frames, three of them element frames of the instruments, one media: print). The crops are 1 400 × 760 CSS px
 pairs; the phone shots are 390 px. `before-phone` is the only shot the harness
 marks with problems (12 contrast findings, 1 unnamed control, +572 px of
 sideways scroll, one 404) — those are the artefact, not the harness.
@@ -91,7 +91,7 @@ sideways scroll, one 404) — those are the artefact, not the harness.
 ## Remaining weak points
 - **The before page is a caricature, not an audit.** A real redesign brief starts
   from a real site's analytics, support tickets and reader tests. Everything here
-  is invented, so the 20 changes are argued from the page, not from evidence
+  is invented, so the 23 changes are argued from the page, not from evidence
   about readers. The measurements are real; the users are not.
 - **The address check is a demo of a lookup, not a lookup**: four hard-coded
   answers, no index, no map, no geocoding, and the "borderline" answer's 15 cm
@@ -126,3 +126,163 @@ sideways scroll, one 404) — those are the artefact, not the harness.
 | Consistency | 4 | one token set and one type system across the redesign and the case study; the before page is intentionally outside it, and the crops are the only place the two pages meet |
 | Accessibility | 5 | 0 contrast findings, 0 unnamed controls, 6 landmarks, one h1, no positive tabindex, 44 px controls, skip link, visible focus, 572 → 0 px overflow — all measured in the page; no reader walkthrough, no 200 % capture |
 | Originality | 5 | the redesign carries its own audit (four iframes, one measure function, 15 rows, a cell-by-cell tide diff), and the table keeps the rows that count against it |
+
+---
+
+# Round 2 — the water, drawn
+
+## What the page was
+
+The case study's frame measured **38 liveliness, 13.3 colourfulness, 2 hue families, panel depth 0**.
+Its own notes named the flatness: *"the rail is three boxes of link lists… the page's visual events
+are the amber flood tint and the red status band, and the rail has neither"*, and *"the page has two
+visual events in 3 681 px"*. The subject is a **tide**, and the page drew it as nine columns of
+numbers.
+
+Then the reading found a contradiction. The lede: *"The forecast peak is **4.61 m** at 22:14 on
+3 December — 41 cm above the flood line."* The panel: *"Next high water 22:14 · **4.48 m**."* The
+table's 22:14 row: **4.48**. So the page quoted 4.61 for the same tide it tabulates as 4.48, in the
+one sentence a resident acts on, and said nothing about the difference.
+
+The numbers are not a mistake. 4.48 m is the **predicted astronomical tide**; 4.61 m is the
+**forecast water level including the storm surge** — and the 13 cm between them is the whole
+emergency: the tide alone is 28 cm over the line, the forecast is 41 cm over. The defect is that
+only a flood engineer reading the page would know which is which. **The fix is naming, not
+renumbering** — the lede now states both and says what each is, the table's caption says the table is
+the prediction *without surge*, and the drawn gauge puts both on one scale so the gap is the
+information.
+
+## What is built
+
+- **A tide curve in every day's row**, drawn from that row's own cells: four waters in the order
+  they happen, the flood line dashed with a band above it, peaks flood-coloured where a water passes
+  the line, and a **gap** where the gauge at the mouth was out of service on 6 December — not a
+  straight line through an invented point. The curve sits under the date, in the row, beside the
+  numbers it draws, and the nine columns and the measured phone layout are unchanged.
+- **A level gauge in the panel**, on one scale: the bar to the current tide (3.94 m), the flood line
+  (4.20), the predicted high (4.48), the forecast with surge (4.61). Its key states every mark as a
+  margin — *"now 26 cm below it, above it from 21:30"*, *"28 cm over the line"*, *"41 cm over: the
+  surge is the difference"* — so the reader subtracts nothing at 11 pm.
+- **State pills on the notices** (*in force* / *applications open* / *starts 13 January*): the five
+  identically-shaped blocks are now scannable by state, in ink at 6.02–7.74:1, and every pill is a
+  word, never a colour alone.
+- **The rail's warnings box says what is happening tonight** — a warning in force, peak 4.61 m at
+  22:14 — with a red edge. The notes' complaint about the rail was that it had no visual event; the
+  box that matters tonight is now the loudest thing in the column.
+
+## The instrument: `10-redesign/measure.mjs`
+
+A drawing can lie in ways a screenshot cannot show, so the two instruments are measured against the
+text beside them, in the browser, mapping the geometry back through the scale the drawing code used.
+
+| check | result |
+| --- | --- |
+| every curve dot maps back to its cell's metres | **≤ 0.008 m** (all 27 points, seven days) |
+| peaks coloured flood only where the height is above the line | **0 wrong** (2+2+1 = 5 above, 5 coloured) |
+| a missing reading is a gap, not a point | **1 gap for 1 missing**, 3 dots on 4 waters |
+| gauge marks map back to the panel's data attributes | **0.000–0.001 m** |
+| lede arithmetic: cm above the line = (peak − line) × 100 | **41 = 41 ✓** |
+| predicted tide in the lede = the table's own 22:14 height | **4.48 = 4.48 ✓** |
+| the table names its basis | says *predicted astronomical tides, without surge* ✓ |
+| state pills: words present, ink on paper | 3 of 5, **6.02 / 6.96 / 7.74** (AA text 4.5) |
+| print, A4 794 px | **0 px** sideways overflow, **7 of 7** curves on the page, table 794 px at 12.7 px |
+| phone 390 px | **0 px** document overflow — the case study's `572 px → 0 px` row still holds |
+| console errors | **0** |
+
+The instrument was wrong twice before it was right, and both failures are in the file as comments:
+it read the tide heights by stripping punctuation from every labelled cell, so the time `04:26`
+became a tide of **426 m** and poisoned the shared scale; and its pixel-to-metre inverse multiplied
+where it divided, reporting the flood line at **15 706 m**. A measurement that cannot fail is not a
+measurement, and a measurement that has never been seen to fail is the same thing wearing a lab coat.
+
+## Two harness holes this round fell into
+
+1. **`tools/liveliness.mjs` emulated neither `motion: "reduce"` nor `print: true`.** `shoot.mjs`
+   emulates both. So the folder's published measurement rows for `03-mobile/loading`,
+   `07-dataviz/reduced`, `07-dataviz/print` and five `09-motion` rows were **silent duplicates of
+   their screen twins** — eight rows that measured the same frame twice and were cited as evidence
+   about a mode. The tool now applies `emulateMedia` per shot, exactly as the audit does.
+2. **`tools/shoot.mjs` silently ignored the `element:` key** that `liveliness.mjs` supports. Four
+   instrument frames shipped as 2 800 × 1 400 viewports — the same file size, so the report looked
+   healthy. The audit and the measurement were looking at different pictures. The harness now
+   screenshots the node's own box, and records a shot error when the selector is missing.
+
+Same lesson as the missing 390 px widths and the fixed-height card windows: **the frame you never
+ask for, or never emulate, is the claim you never measured.**
+
+## Coverage hole named and closed
+
+The notes' list included *"Print CSS exists (the tide table at 10pt) and no print capture is in the
+gallery; a tide table is a thing people put on a wall."* The manifest now carries
+**`10-redesign/after-print`** (media: print), and the print measurements above are in this file.
+
+## Liveliness, before and after
+
+The tool measures 25 of the 32 (it skips the seven 390 px phone frames; the audit covers those).
+Same instrument, both trees, back to back.
+
+| frame | before | after | |
+| --- | --- | --- | --- |
+| `after-full` — the whole redesign | 40 · colour 11.6 | **41 · colour 11.9** | the redesign, whole page |
+| `c-01a`, `c-02a`, `c-07a` — after-side crops | 41 · colour 12.5 | **44 · colour 13.4** | |
+| `c-03a`, `c-06a` — after-side tide and rail crops | 46 · colour 13.7 | **49 · colour 15.5** | |
+| `c-04a` — after-side nav crop | 42 | **44** | |
+| `c-01b` … `c-07b` — the **before** page crops | 62, 70, 62, 76, 60, 60, 75 | **identical** | untouched: the instrument's control group |
+| `full` — the case study | 38 · colour 13.3 | 38 · colour 13.0 | 3 change entries make it 1 122 px taller |
+| mean, 25 shared frames | 42.0 · colour 20.2 | **42.7 · colour 20.4** | |
+
+**The five new frames, which are the instruments themselves:**
+
+| frame | lively | colourfulness | ink | hue families |
+| --- | --- | --- | --- | --- |
+| `rail-alert` | **66** | 36.8 | 0.210 | 3 |
+| `gauge` | **58** | 20.7 | 0.112 | 2 |
+| `tides-curve` | **45** | 17.1 | 0.052 | 2 |
+| `notices-states` | **37** | 11.7 | 0.074 | 2 |
+| `after-print` (A4, media: print) | 26 | 8.0 | 0.051 | 1 |
+
+Those five numbers were taken twice. The first run put the gauge at **74** with **0.525** ink, which
+is absurd for a box containing a bar and four lines of text: an element screenshot captures what is
+**composited in that box**, and the cookie banner's confirmation toast — a dark, fixed, full-width
+strip — was lying across the bottom of the gauge. The shot actions now dismiss the banner *and* its
+toast (`click:#ckMin`, `click:#ckDone`), and the honest numbers are 37–66, a tenth lower on average.
+An element frame is not an isolated frame: it is a photograph of a place on the page.
+
+Read honestly, this is what the round did and did not do. The **whole-page** number for the redesign
+moves by one point: the page grew from **3 681 px to 4 119 px** (438 px of instruments), and 4 119 px
+of calm civic page is not moved by 438 px of instrument. It should not be moved: a flood page
+measured for liveliness is a flood page measured for the wrong thing.
+Where the instruments *are* the frame, the numbers are 37–66, mean 46.4. The before page's crops measure
+**identical** to the last run, which is the control: the instrument reports change only where a
+change was made. The case study row stays at 38 and drops a hair of colour because the page grew
+1 122 px of prose. The folder mean over the eleven briefs moves from 41.4 by less than two tenths,
+in the other direction, for the same reason.
+
+If the objective were "raise 10-redesign's liveliness number", the cheapest move is a coloured
+sidebar. It is not the objective, and the printed page — 26, colour 8 — is the frame that says what
+this page is for: a tide table on a wall, in ink.
+
+## Ratings, round 2
+
+| Axis | /5 | Note |
+|---|---|---|
+| Visual quality | **4.5** | the page has instruments now, not just two bands: a curve per day, a gauge in the panel, a state per notice, one loud box in the rail. The wall of five identical notices is the last flat stretch |
+| Layout & hierarchy | 5 | unchanged: the answer is where the eye lands, one column for the argument, one rail for actions, and the new instruments sit inside the existing grid |
+| Consistency | **4.5** | the drawings use the token set and are generated from the table's own cells, so a shape and a sentence cannot drift; the before page stays outside the system on purpose |
+| Accessibility | 5 | 0 audit findings on 37 shots; states are words as well as colour; the SVGs are `aria-hidden` because the numbers are already in the text; the print page has no sideways overflow at A4 |
+| Originality | 5 | the change log grows to 23, and the new entries come with an instrument that maps every drawn dot back to the cell it came from |
+
+## Round 2's remaining weak points
+
+- The curve is a **schematic on an index axis**, not a time axis: four evenly spaced waters per day.
+  The caption says *"in the order they happen"*, which is what is drawn; the gap on 6 December marks
+  the missing one. A real tide plot is on a continuous time axis, and the table's second high water
+  at 00:22 belongs to the next day.
+- The gauge is a **static drawing of one forecast run** (3 December, 16:40). The panel is honest that
+  it is one run; a live gauge needs a source, a clock, and an expired state.
+- The surge distinction is **stated and measured, not derived**: a real portal computes it from the
+  model run, and the reader deserves the 15 cm uncertainty band, not a clause.
+- No map. The address check answers from four hard-coded streets, and a flood page without a map of
+  the flood line is still a page of numbers.
+- The before page is a caricature, the users are invented, and the case study measures pages, not
+  readers — unchanged, and the biggest limit on the whole brief.

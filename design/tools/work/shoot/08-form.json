@@ -46,7 +46,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/revealed.jpg",
-  "bytes": 166039,
+  "bytes": 166020,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -73,7 +73,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/blocked.jpg",
-  "bytes": 303852,
+  "bytes": 303894,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -154,7 +154,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/lookup.jpg",
-  "bytes": 256822,
+  "bytes": 256895,
   "px": "2360x2000",
   "actions_failed": []
  },
@@ -232,7 +232,7 @@
    "focusRing": "outline"
   },
   "jpg": "08-form/shots/draft.jpg",
-  "bytes": 237084,
+  "bytes": 236945,
   "px": "2360x1440",
   "actions_failed": []
  },

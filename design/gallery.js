@@ -79,10 +79,10 @@ const TASKS = [
   {
     n: "10", folder: "10-redesign", title: "A flood portal, redesigned", kind: "Redesign of a real-shaped page",
     brief: "A live council flood-warning portal, deliberately built badly, then redesigned, with both kept and measured.",
-    strong: "One measure function, run over both pages in four iframes: 15 rows, contrast findings 137 → 0, 1 324 px → 429 px to the answer, sideways overflow 572 px → 0, and a cell-by-cell tide diff of 7 days and 61 values with 0 changed.",
-    weak: "The 26 000 px case study has no sticky index; nothing was tested at 200 % zoom; the users are invented.",
-    scores: { Visual: 4, Layout: 5, Consistency: 4, Accessibility: 5, Originality: 5 },
-    verdict: "The task where the measurement did the arguing, and kept the rows that counted against it.", shots: 32
+    strong: "Round 2 drew the subject: a tide curve in every day's row (four waters, the flood line dashed, peaks coloured only where the numbers clear it, a gap where the gauge was out of service) and a level gauge in the panel, so 3.94 now, 4.20 flood line, 4.48 predicted and 4.61 with surge become one picture with the margins stated in centimetres. It also found the page contradicting itself — the lede's 4.61 m against the table's 4.48 m for the same tide — and fixed it by naming the two quantities, not renumbering them. The case study's audit (137 → 0 contrast findings, 1 324 → 429 px to the answer, 572 → 0 px overflow, 61 tide values diffed with 0 changed) is now joined by 10-redesign/measure.mjs, which maps every drawn dot back to the cell it came from (≤ 0.008 m).",
+    weak: "The curve is a schematic on an index axis, not a time axis; the gauge is one forecast run, drawn, not a feed; the case study is 27 083 px with no sticky index; nothing is tested at 200 % zoom; the users are invented. Two harness holes surfaced here: liveliness emulated neither reduced motion nor print (eight published rows were duplicates of their screen twins), and shoot.mjs silently ignored the `element:` key.",
+    scores: { Visual: 4.5, Layout: 5, Consistency: 4.5, Accessibility: 5, Originality: 5 },
+    verdict: "The measurement still does the arguing. Now it argues about the drawings too: 0 peaks coloured above the line that the numbers do not support, and a printed A4 page with no sideways overflow.", shots: 37
   },
   {
     n: "11", folder: "11-styles", title: "One brief, nine styles", kind: "Style range",

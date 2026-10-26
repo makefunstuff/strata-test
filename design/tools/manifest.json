@@ -1927,6 +1927,67 @@
         "dpr": 2,
         "settle": 1200,
         "actions": []
+      },
+      {
+        "name": "after-print",
+        "page": "after.html",
+        "width": 1400,
+        "height": 900,
+        "full": true,
+        "settle": 1200,
+        "print": true
+      },
+      {
+        "name": "gauge",
+        "page": "after.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1200,
+        "element": "#gauge",
+        "actions": [
+          "click:#ckMin",
+          "click:#ckDone"
+        ]
+      },
+      {
+        "name": "tides-curve",
+        "page": "after.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1200,
+        "element": "table.tides",
+        "actions": [
+          "click:#ckMin",
+          "click:#ckDone"
+        ]
+      },
+      {
+        "name": "notices-states",
+        "page": "after.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1200,
+        "element": "ul.notices",
+        "actions": [
+          "click:#ckMin",
+          "click:#ckDone"
+        ]
+      },
+      {
+        "name": "rail-alert",
+        "page": "after.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1200,
+        "element": ".box.alert",
+        "actions": [
+          "click:#ckMin",
+          "click:#ckDone"
+        ]
       }
     ]
   },

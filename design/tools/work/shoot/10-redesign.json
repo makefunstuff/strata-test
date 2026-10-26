@@ -141,7 +141,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-full.jpg",
-  "bytes": 233444,
+  "bytes": 233297,
   "px": "1400x1614",
   "actions_failed": []
  },
@@ -163,8 +163,8 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/after-full.jpg",
-  "bytes": 591261,
-  "px": "1400x3681",
+  "bytes": 639751,
+  "px": "1400x4119",
   "actions_failed": []
  },
  {
@@ -300,7 +300,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-phone.jpg",
-  "bytes": 224596,
+  "bytes": 224461,
   "px": "962x1614",
   "actions_failed": [],
   "hOverflow": 572
@@ -323,8 +323,8 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/after-phone.jpg",
-  "bytes": 588608,
-  "px": "390x8628",
+  "bytes": 646299,
+  "px": "390x9308",
   "actions_failed": []
  },
  {
@@ -488,7 +488,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-01a.jpg",
-  "bytes": 367707,
+  "bytes": 400581,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -629,7 +629,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-02b.jpg",
-  "bytes": 253785,
+  "bytes": 253632,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -653,7 +653,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-02a.jpg",
-  "bytes": 367707,
+  "bytes": 400581,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -818,7 +818,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-03a.jpg",
-  "bytes": 380147,
+  "bytes": 313166,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -983,7 +983,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-04a.jpg",
-  "bytes": 354422,
+  "bytes": 390444,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1148,7 +1148,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-05a.jpg",
-  "bytes": 269394,
+  "bytes": 268795,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1313,7 +1313,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-06a.jpg",
-  "bytes": 380147,
+  "bytes": 313166,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1454,7 +1454,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-07b.jpg",
-  "bytes": 302440,
+  "bytes": 302487,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1478,7 +1478,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-07a.jpg",
-  "bytes": 367707,
+  "bytes": 400581,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1638,7 +1638,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-08a.jpg",
-  "bytes": 151315,
+  "bytes": 167158,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -1660,7 +1660,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/masthead.jpg",
-  "bytes": 378546,
+  "bytes": 378455,
   "px": "2800x1800",
   "actions_failed": []
  },
@@ -1684,7 +1684,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/measures.jpg",
-  "bytes": 394899,
+  "bytes": 394724,
   "px": "2800x2600",
   "actions_failed": []
  },
@@ -1708,7 +1708,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/pages.jpg",
-  "bytes": 524013,
+  "bytes": 509323,
   "px": "2800x2400",
   "actions_failed": []
  },
@@ -1732,7 +1732,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/log1.jpg",
-  "bytes": 421196,
+  "bytes": 425124,
   "px": "2800x1800",
   "actions_failed": []
  },
@@ -1756,7 +1756,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/log2.jpg",
-  "bytes": 408121,
+  "bytes": 404930,
   "px": "2800x1800",
   "actions_failed": []
  },
@@ -1780,7 +1780,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/log3.jpg",
-  "bytes": 407721,
+  "bytes": 417618,
   "px": "2800x1800",
   "actions_failed": []
  },
@@ -1804,7 +1804,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/kept.jpg",
-  "bytes": 567448,
+  "bytes": 571451,
   "px": "2800x2000",
   "actions_failed": []
  },
@@ -1850,8 +1850,8 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/full.jpg",
-  "bytes": 3196827,
-  "px": "1400x25961",
+  "bytes": 3405737,
+  "px": "1400x27083",
   "actions_failed": []
  },
  {
@@ -1872,7 +1872,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/phone.jpg",
-  "bytes": 168602,
+  "bytes": 168533,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -1896,7 +1896,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/phone-tides.jpg",
-  "bytes": 107523,
+  "bytes": 100426,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -1918,8 +1918,130 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/phone-top.jpg",
-  "bytes": 151315,
+  "bytes": 167158,
   "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/after-print",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/after-print.jpg",
+  "bytes": 528925,
+  "px": "1400x3645",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/gauge",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#ckMin",
+   "click:#ckDone"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/gauge.jpg",
+  "bytes": 33402,
+  "px": "860x282",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/tides-curve",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#ckMin",
+   "click:#ckDone"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/tides-curve.jpg",
+  "bytes": 145555,
+  "px": "1572x1208",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/notices-states",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#ckMin",
+   "click:#ckDone"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/notices-states.jpg",
+  "bytes": 259545,
+  "px": "1572x1498",
+  "actions_failed": []
+ },
+ {
+  "label": "10-redesign/rail-alert",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "click:#ckMin",
+   "click:#ckDone"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Flood warning for Harrowmouth — Harrow Estuary Authority",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "10-redesign/shots/rail-alert.jpg",
+  "bytes": 47085,
+  "px": "600x580",
   "actions_failed": []
  }
 ]

@@ -26,7 +26,7 @@ shots: 43 · clean: 43 · failed: 0 · with console/page/request errors: 0
 | 11-styles/japanese-full | 196 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/japanese-phone | 158 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/cyber-hero | 281 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/cyber-full | 296 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/cyber-full | 297 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/cyber-phone | 224 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/luxury-hero | 156 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/luxury-full | 221 KB | 0 | 0 | 0 | outline | clean |

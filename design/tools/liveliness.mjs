@@ -263,12 +263,23 @@ if (perTask) for (const t of jobs) {
   t.shots = pick ? [pick] : [];
 }
 
+/* The manifest is the specification of what is measured. shoot.mjs emulates `motion: "reduce"`
+   and `print: true` for its shots; this tool did not, so the folder's reduced-motion and print rows
+   (03-mobile loading, 07-dataviz reduced/print, five 09-motion rows) were silent duplicates of their
+   screen twins — eight published rows that measured the same frame twice and claimed to be evidence
+   of a mode. The frame you never emulate is the claim you never measure. */
+const applyMedia = (s) => page.emulateMedia({
+  reducedMotion: s.motion === "reduce" ? "reduce" : "no-preference",
+  media: s.print ? "print" : "screen",
+});
+
 const rows = [];
 for (const t of jobs) {
   for (const s of t.shots) {
     const url = `${origin}/${t.task === "." ? "" : t.task + "/"}/${s.page}`;
     try {
       await page.setViewportSize({ width: s.width ?? WIDTH, height: s.height ?? HEIGHT });
+      await applyMedia(s);
       await page.goto(url, { waitUntil: "load" });
       await page.waitForTimeout(s.settle ?? 900);
       if (s.actions) for (const a of s.actions) {
@@ -345,6 +356,7 @@ for (const t of jobs) {
         console.log(`${t.task.padEnd(14)} ${(s.name ?? "").padEnd(10)} blank frame (${e.message.slice(0, 60)}), retrying once`);
         await fresh().catch(() => {});
         await page.setViewportSize({ width: s.width ?? WIDTH, height: s.height ?? HEIGHT });
+        await applyMedia(s);
         await page.goto(url, { waitUntil: "load" });
         await page.waitForTimeout(s.settle ?? 900);
         frame = await grab();
