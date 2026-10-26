@@ -141,7 +141,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-full.jpg",
-  "bytes": 233415,
+  "bytes": 233444,
   "px": "1400x1614",
   "actions_failed": []
  },
@@ -300,7 +300,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-phone.jpg",
-  "bytes": 224461,
+  "bytes": 224596,
   "px": "962x1614",
   "actions_failed": [],
   "hOverflow": 572
@@ -629,7 +629,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-02b.jpg",
-  "bytes": 253632,
+  "bytes": 253785,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1289,7 +1289,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-06b.jpg",
-  "bytes": 310043,
+  "bytes": 310073,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1454,7 +1454,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-07b.jpg",
-  "bytes": 302487,
+  "bytes": 302440,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -1708,7 +1708,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/pages.jpg",
-  "bytes": 523901,
+  "bytes": 524013,
   "px": "2800x2400",
   "actions_failed": []
  },
@@ -1850,7 +1850,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/full.jpg",
-  "bytes": 3196918,
+  "bytes": 3196827,
   "px": "1400x25961",
   "actions_failed": []
  },

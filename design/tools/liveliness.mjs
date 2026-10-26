@@ -126,7 +126,7 @@ setTimeout(() => void stop(3, `liveliness timed out after ${MAX_MS}ms (LIVELY_MA
 for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => void stop(4, `caught ${sig}`));
 
 // One context only: a second context kills this Chromium build under --single-process.
-const base = await browser.newContext({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: DPR });
+let base = await browser.newContext({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: DPR });
 
 const measure = async (page) => page.evaluate((step) => {
   // --- pixels -------------------------------------------------------------
@@ -238,6 +238,17 @@ const index = (m) => Math.round(100 * Math.min(1,
 // decoded frame is released after every measurement instead of accumulating in the page's heap.
 let page = await base.newPage();
 const fresh = async () => { await page.close().catch(() => {}); page = await base.newPage(); };
+/* Under memory pressure this software-raster Chromium decays: shots late in a long run come back as
+   a uniform field of the page's own background colour, with no error, no console output and no
+   undrawn canvas — and the old validator scored that as a real (very dark, very dull) page. A whole
+   context restart is heavier than a page, and it is the only thing that recovers a decaying
+   renderer, so it is used for the retry. */
+const freshContext = async () => {
+  await page.close().catch(() => {});
+  await base.close().catch(() => {});
+  base = await browser.newContext({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: DPR });
+  page = await base.newPage();
+};
 
 // --per-task keeps one representative frame per task: the folder-level number should be one
 // number per brief, not one per screenshot (11 briefs, 190 wide frames otherwise).
@@ -290,8 +301,13 @@ for (const t of jobs) {
       // because a black field is indistinguishable from a dark page to a colourfulness metric.
       // So the decoded frame is validated, and a blank one is a FAILED measurement, retried once.
       const grab = async () => {
-        const png = await page.screenshot({ type: "png", fullPage: !!s.full,
-          scale: s.full ? "css" : "device", timeout: 30000 });
+        // An `element` shot is the node's own box: a card's numbers should not depend on where a
+        // fixed-height window happens to land on a page whose layout changed. That is the frame
+        // type the per-card rows of a study page need, and it is the reason the manifest has one.
+        const png = s.element
+          ? await (await page.waitForSelector(s.element, { timeout: 15000 })).screenshot({ timeout: 30000 })
+          : await page.screenshot({ type: "png", fullPage: !!s.full,
+              scale: s.full ? "css" : "device", timeout: 30000 });
         if (png.length < 2048) throw new Error(`blank screenshot (${png.length} bytes)`);
         if (process.env.LIVELINESS_DUMP) {
           const { writeFile: wF } = await import("node:fs/promises");
@@ -306,13 +322,19 @@ for (const t of jobs) {
           x.drawImage(img, 0, 0);
           const d = x.getImageData(0, 0, c.width, c.height);
           let undrawn = 0, lit = 0, n = 0;
+          const hues = new Set();
           for (let i = 0; i < d.data.length; i += 4 * 7) {
             n++; if (d.data[i + 3] === 0) undrawn++; if (d.data[i] + d.data[i + 1] + d.data[i + 2] > 24) lit++;
+            hues.add(((d.data[i] >> 3) << 10) | ((d.data[i + 1] >> 3) << 5) | (d.data[i + 2] >> 3));
           }
           if (undrawn / n > 0.5) throw new Error(`undrawn canvas (${Math.round(100 * undrawn / n)}% alpha 0) — raster produced nothing`);
           if (lit / n < 0.002) throw new Error(`all-black frame (${(100 * lit / n).toFixed(2)}% lit pixels)`);
+          // A frame with almost no distinct colours was not painted: any page with type has
+          // hundreds of quantised colours from antialiasing alone. 09-motion's run decayed to
+          // frames of one #101010, which passed every previous check and scored 6/100.
+          if (hues.size < 24) throw new Error(`flat frame (${hues.size} distinct colours) — nothing was painted`);
           window.__px = d;
-          return { w: c.width, h: c.height, bytes: src.length >> 10,
+          return { w: c.width, h: c.height, bytes: src.length >> 10, colours: hues.size,
                    lit: +(lit / n).toFixed(3), undrawn: +(undrawn / n).toFixed(3) };
         }, "data:image/png;base64," + b64);
         return check;
@@ -335,7 +357,10 @@ for (const t of jobs) {
     } catch (e) {
       console.log(`${t.task.padEnd(14)} ${(s.name ?? "").padEnd(10)} FAILED ${e.message.slice(0, 90)}`);
       // a dead target takes every later shot with it: rebuild the page rather than cascade
-      if (/Failed to open a new tab|Target (page|closed)|crashed/i.test(e.message)) await fresh().catch(() => {});
+      // a dead target takes every later shot with it: rebuild the page, and if the renderer is
+      // decaying (flat frames, closed targets) rebuild the whole context — the heavier restart is
+      // reserved for that, because under memory pressure closing a context can close the run
+      if (/Failed to open a new tab|Target (page|closed)|crashed|flat frame|has been closed/i.test(e.message)) await freshContext().catch(() => {});
     }
   }
 }

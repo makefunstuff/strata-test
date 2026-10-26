@@ -30,7 +30,7 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.05, layout 4.14, consistency 4.77, accessibility 4.05,
+the table below: **visual 4.09, layout 4.19, consistency 4.77, accessibility 4.09,
 originality 4.37** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
@@ -45,7 +45,7 @@ task scores under 4 on it.
 | 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4.5 | 4 | 5 | 4.5 | 4.5 | 15 | Round 2: the manual became the chart sheet it documents — depth tints, graticule, soundings, a rose built on the mark's radii — and its own `measure.mjs` proved the 16 px claim false (0.83 device px), then fixed it. |
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
-| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4 | 4 | 5 | 4 | 5 | 23 | The film strip *is* the animation (frames rendered from a live page, scrubbed); reduced motion is a redesign with a named replacement per study. |
+| 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 26 | Round 2: a timing plate per study, drawn from the study's own Web Animation objects, so the written clock and the demo cannot disagree. Measured as elements, the cards are livelier: 41→49, 40→45, 59→65. |
 | 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4 | 5 | 4 | 5 | 5 | 32 | One measure function over the bad page and the good one: 137 → 0 contrast findings, 1 324 → 429 px to the answer, 572 → 0 px overflow, 61 tide values 0 changed. |
 | 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 3.5 | 5 | 4 | 4 | 43 | Parity measured on rendered text (41 strings × 9 pages) and the added words counted; the layout axis is 3.5 because the nine costumes share one skeleton. |
 
@@ -63,7 +63,7 @@ the model goes there (brutalism at 3 px rules with a ticker, pixel at whole-pixe
 SVG and a blinking cursor, cyber with cut corners and a scan sweep) and the
 results keep the discipline.
 
-**Two briefs have been rebuilt against this diagnosis, and the result is not what a
+**Three briefs have been rebuilt against this diagnosis, and the results are not what a
 "make it prettier" round produces.** `02-dashboard` was the folder's least original page (3 of 5,
 its own rating) and the plainest example of the template look. It is now an instrument panel: one
 ground, hairline rules, a dominant primary readout, a single sequential ramp instead of six hues.
@@ -96,7 +96,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.14, third of five, with visual and accessibility tied last at 4.05
+layout averages 4.19, third of five, with visual and accessibility tied last at 4.09
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the four things it was blind to
+## The harness, and the seven things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -226,7 +226,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| after `02-dashboard` was rebuilt, then `06-identity` | 12.66 | 1.09 | **40.8** |
+| after `02-dashboard`, `06-identity` and `09-motion` were rebuilt | 12.87 | 1.09 | **41.4** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -267,7 +267,28 @@ URL, counts the tiles and the rail, and fails with the exclusion named. Run agai
 shipped it, that check said `tiles 0 · fallback true` — the first version of this section's own
 headliner was broken in production and only a check that leaves the machine can see that.
 
-### Fifth: the audit reads HTML, and this folder draws in SVG
+### Fifth: the measuring tool scored pages from a dead renderer
+
+`liveliness.mjs` runs a long job in one software-raster Chromium, and under memory pressure that
+renderer **decays**: shots late in a run come back as a uniform field of the page's own background
+colour, with no console error, no undrawn canvas, and not black enough to trip the >99.8%-black
+check (16,16,16 is not 0). A whole run of `09-motion` decayed monotonically and the tool dutifully
+scored those frames — 6/100 for a page with a film strip in it. The tool now counts **distinct
+colours** in the decoded frame and rejects a frame with fewer than 24 (any page with type has
+hundreds, from antialiasing alone), and a dead target gets a context restart. The rule generalises
+beyond this tool: *a measurement that cannot fail is not a measurement*, and a metric with no
+impossible value has no information in it.
+
+### Sixth: a card's numbers must not depend on where a window lands
+
+The study cards are shot through a fixed 700 px window. After the round-2 change, `toast` scored
+25 → 9 with no visual change: the card grew by one block, so the window landed on the wall above the
+strip. The frame type was wrong, not the design. The manifest now carries **`element` shots**
+(`sheet-card`, `toast-card`, `button-card`), which screenshot the node's own box, and they say what
+the window frames could not: **41 → 49, 40 → 45, 59 → 65**, each with more colour and more ink. Same
+lesson as the missing 390 px widths: the frame you never ask for is the claim you never measured.
+
+### Seventh: the audit reads HTML, and this folder draws in SVG
 
 `shoot.mjs` walks text nodes to measure contrast, and a page like `06-identity` draws its charts in
 SVG. An `<text>` element inside an `<svg>` is invisible to that walk, and the round-2 chart excerpt
@@ -346,16 +367,17 @@ Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **215 shots across the eleven tasks plus 9 in the gallery
-frame — 224 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **218 shots across the eleven tasks plus 9 in the gallery
+frame — 227 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
 screenshot from an earlier round of that task, kept, and its page says it is not in
 the last audit. Per task, the shot counts and the deliberate contrast findings are unchanged from
 the previous run (`04-tui` 75, `10-redesign` 120, `03-mobile` 28, `07-dataviz` 24, `06-identity` 16,
-`11-styles` 13, `06-identity` 16). Two briefs have been rebuilt since, and both shot counts moved
-14 → 15 to cover what changed: `02-dashboard` gained a `compare-off` shot to prove its header
+`11-styles` 13, `06-identity` 12 — down from 16 as its layout shifted). Three briefs have been
+rebuilt since, and their shot counts moved
+14 → 15, 14 → 15 and 23 → 26 to cover what changed: `02-dashboard` gained a `compare-off` shot to prove its header
 control redraws (**0 console errors, 0 contrast findings, 0 unlabelled, 0 overflow** in both themes
 and on phone), and `06-identity` gained a `tints` shot for its new colour section, with its
 contrast findings unchanged at 16 — all of them the deliberate brass-plate mock, where the defect is

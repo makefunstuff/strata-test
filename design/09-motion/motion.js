@@ -353,6 +353,36 @@ const STUDIES = [
   },
 ];
 
+/* The study's timing, drawn. Every bar is one Web Animation this card created: x is its delay,
+   width is its duration, colour is its easing family. A page about motion spent its study cards on
+   prose about timing and showed none of it; this is the subject in the card that talks about the
+   subject, and it is read out of the animation objects, so it cannot disagree with the demo above. */
+const EASE_FILL = { [EASE.std]: "var(--tl-std)", [EASE.out]: "var(--tl-out)", [EASE.in]: "var(--tl-in)", [EASE.spring]: "var(--tl-spring)" };
+const easeKey = (e) => Object.keys(EASE).find((n) => EASE[n].replace(/\s/g, "") === String(e).replace(/\s/g, "")) || "std";
+
+function timingPlate(anims, total) {
+  const W = 268, x0 = 6, iw = W - 12;
+  const rows = anims.map((a) => { const t = a.effect.getTiming(); return { d: t.delay || 0, w: t.duration, k: easeKey(t.easing) } });
+  // the plate is sized to the study's own animation count: the button study runs five, the sheet
+  // runs three, and a fixed box clipped the fifth bar out of the viewBox
+  const H = Math.max(30, 10 + rows.length * 7 + 6);
+  const bars = rows.map((r, i) => {
+    const x = x0 + (r.d / (total || 1)) * iw;
+    const w = Math.max(2, (r.w / (total || 1)) * iw);
+    // the lane groups bars by easing family, so the colour is the grouping, not a wash
+    return `<rect x="${x0}" y="${4 + i * 7}" width="${iw}" height="9" fill="${EASE_FILL[EASE[r.k]]}" opacity=".14"/>`
+      + `<rect x="${x.toFixed(1)}" y="${5 + i * 7}" width="${w.toFixed(1)}" height="7" rx="1" fill="${EASE_FILL[EASE[r.k]]}"/>`;
+  }).join("");
+  const fams = [...new Set(rows.map((r) => r.k))].join(" · ");
+  return `<div class="tl">
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Timeline of this study's ${rows.length} animations: each bar starts at its delay and spans its duration, coloured by easing family. The study settles at ${Math.round(total)} milliseconds.">
+      <line x1="${x0}" y1="${H - 6}" x2="${W - x0}" y2="${H - 6}" stroke="var(--s-line)" stroke-dasharray="2 3"/>
+      ${bars}
+    </svg>
+    <p class="tl-lab mono"><span>0 ms</span><span>${rows.length} animation${rows.length > 1 ? "s" : ""} · ${fams}</span><span>${Math.round(total)} ms</span></p>
+  </div>`;
+}
+
 /* ── build the cards ────────────────────────────────────────────────── */
 const FRAMES = [0, 0.45, 1];
 const registry = [];
@@ -365,6 +395,7 @@ function buildCard(s, D) {
       <div class="st-side">
         <div class="demo"><div class="stage" data-demo></div></div>
         <div class="playbar"><button class="play" type="button">Play</button><button class="play ghost js-reduce" type="button">End frame</button><p class="hint">the same animation, held</p></div>
+        <div class="tl-slot"></div>
       </div>
       <div>
         <div class="frames"></div>
@@ -382,6 +413,7 @@ function buildCard(s, D) {
   stage.innerHTML = s.html;
   const anims = s.mount(stage, D);
   const total = clock(anims);
+  $(".tl-slot", card).innerHTML = timingPlate(anims, total);
   if (s.live) s.live(stage);
   const frames = $(".frames", card);
   FRAMES.forEach((t) => {
@@ -446,7 +478,12 @@ function buildTokens(D) {
     4: "a scroll-linked ruler, and nothing else",
   };
   $("#tokDur").innerHTML = [1, 2, 3, 4].map((n) => `<tr><td>--dur-${n}</td><td class="v">${D[n]} ms</td><td>${uses[n]}</td>
-    <td><span class="bar"><i style="width:${Math.round((D[n] / 560) * 100)}%"></i></span></td></tr>`).join("");
+    <td><span class="bar"><i style="width:${Math.round((D[n] / 560) * 100)}%"></i></span></td>
+    <td class="z">0 ms</td></tr>`).join("");
+  /* the durations table used to end four rows into 300 px of wall; the missing column is the
+     page's central claim — every token is 0 ms under reduce — set next to the value it replaces */
+  const note = $("#tokNote");
+  if (note) note.textContent = `Read out of the stylesheet: ${D[1]} / ${D[2]} / ${D[3]} / ${D[4]} ms in force, and 0 ms in every row under prefers-reduced-motion. The bar is the duration against the 560 ms ceiling.`;
   const curves = [
     ["--ease", EASE.std, "the default: a thing that stays on screen"],
     ["--ease-out", EASE.out, "arrivals: sheets, rows, panels, dialogs"],

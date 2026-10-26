@@ -228,3 +228,106 @@ break, not to be the way it is read.
 | Consistency | 5 | one token set for duration and curve, one construction for every study, one rule for the state, one rule for reduced motion |
 | Accessibility | 4 | the states are final at the press, the roles are there, reduced motion is a designed path with a named replacement per study; no profile, no reader walkthrough |
 | Originality | 5 | the strip is the animation, scrubbed; the reduced-motion proof is three frames at 0 ms; the audit is measured and reports its own warnings |
+
+---
+
+# Round 2 — the clock, drawn
+
+## What the page was
+
+A motion system, documented on a dark wall: 32 liveliness, **10.3 colourfulness, no hue family at
+all** in the measured frame. The page's own notes admitted *"the left column of each study card
+carries dead space"*, and its rules section was six identical grey cards with no first rule. The
+subject of the page is **time**, and the page showed time in prose: `--dur-3 (360 ms) · scrim
+--dur-2` as a sentence.
+
+## What is built
+
+- **A timing plate in every study card.** The study's own Web Animation objects are read out —
+  each animation's `delay`, `duration` and `easing` — and drawn on a shared 0 → settle axis: a bar
+  per animation, a lane behind each bar grouping it by easing family, and a mono foot line
+  `0 ms · 4 animations · out · 480 ms`. Twelve cards now show their clock next to the demo the
+  clock describes, and it fills the dead column the notes named.
+- **The colour is the easing family**, so the plate's four marks are the page's four curve tokens.
+  The wall's bright `--sky/--acc/--coral/--gold` are **1.8–2.2:1 on the light surface**, so the
+  plate carries darker siblings `--tl-std/–out/–in/–spring` at **3.98–5.17:1** against the paper —
+  WCAG 1.4.11 asks 3:1 for a meaningful graphic, and a bar that encodes a category is meaningful.
+- **The durations table gained its `reduce` column.** The page's central claim is that every token
+  is 0 ms under `prefers-reduced-motion`; the token, the value and the zero now sit in one row, and
+  the foot line is read out of the stylesheet, not typed.
+- **The rules are ranked.** Six equal grey cards made the page's own hierarchy a lie; the
+  composited-properties rule is the one the others obey, so it spans and is set larger, numbered
+  01, the rest 02–06.
+
+## Three versions of the plate, each killed by a measurement
+
+1. **Dark on dark.** The first plate was a `--wall` box on the `--wall` page. It read as a hole, and
+   it broke the page's own stated law — *the wall is the studio, the light surface is the object* —
+   and in a fixed-height frame it displaced the light demo, so the card frames measured **duller**
+   (sheet 32→20 in one pass, toast 25→9).
+2. **Clipped.** A fixed 36 px box: the button study runs five animations at 7 px each, so the fifth
+   bar fell outside the viewBox. The plate is sized to the study's animation count now.
+3. **Misplaced.** Put in the card's tall column it grew the document **2 000 px** (11 258 → 13 270),
+   pushing every film strip out of its fixed-height frame — five shots went duller. The plate now
+   sits in the card's short column, where the right column sets the card height and the plate costs
+   the page nothing.
+
+## The instrument was broken, and it was scoring pages from a dead renderer
+
+Running this task exposed a fault in `tools/liveliness.mjs`: under memory pressure the software
+raster **decays**, and shots late in a run come back as a uniform field of the page's own background
+colour — no console error, no undrawn canvas, not >99.8% black (16,16,16 is not 0), so every existing
+validation passed and the tool scored `09-motion` shots at 6/100. A whole run decayed monotonically:
+sheet 32, modal 26, toast 16 … ink 0.002.
+
+The tool now counts **distinct colours** in the decoded frame and rejects a frame with fewer than 24
+(any page with type has hundreds, from antialiasing alone), and a dead target gets a context restart
+rather than a page rebuild. Every before/after number below was taken with the fixed validator, on
+both trees, back to back.
+
+## Element frames, because a card's numbers should not depend on a window
+
+The card shots are fixed-height windows into a page whose layout changed, so they moved: `toast`
+25→9 with no visual change. That is a measurement artefact, and the fix is the frame type that
+matches the claim: the manifest now carries **`element` shots** (`sheet-card`, `toast-card`,
+`button-card`) which screenshot the node's own box, so a card is measured as a card.
+
+| frame | before | after |
+| --- | --- | ---
+| whole page (`full`) | 32 · colour 10.3 · ink 0.196 · tonal 0.28 | **38 · colour 12.6 · ink 0.218 · tonal 0.30** |
+| **`sheet-card` (element)** | 41 · colour 10.8 · ink 0.353 | **49 · colour 14.4 · ink 0.383** |
+| **`toast-card` (element)** | 40 · colour 11.4 | **45 · colour 13.2** |
+| **`button-card` (element)** | 59 · colour 19.4 | **65 · colour 22.6** |
+| rules section | 20 | **25** |
+| a study card, window frame (sheet) | 12 | **20** |
+| reduced-motion section | 8 | **12** |
+| the checks section | 9 | **27** |
+| the audit table | 7 | 10 |
+| mean over the task's 25 frames | 19.1 | **21.7** · colour 5.8 → **6.7** · ink 0.08 → **0.10** |
+
+The element rows are the card-level answer: measured as a box, every sampled card is livelier
+(+8, +5, +6) with more colour and more ink. The three window-frame regressions — `modal` 18→16,
+`toast` 25→9, `button` 16→8 — are the fixed 700 px window landing on a taller card, and they are
+the reason the element frames exist.
+
+Colour is up where the plate is, ink and tonal entropy are up across the page, and the deep-black
+wall pages that measured 7–9 (audit, checks, reduced) rise most, because the plate puts a light
+instrument in a column that used to be empty. The card-window regressions are listed in the tool's
+own notes as artefacts, with the element frames as the evidence.
+
+## Audit state
+
+26 shots (three element frames added), **0 console errors, 0 contrast findings, 0 unlabelled
+controls, 0 sideways overflow**. The plate's marks are measured at 3.98–5.17:1 against the surface
+they are drawn on, and the reduced column's `0 ms` cells are `--txt-3` on the wall, which the audit
+passes.
+
+## Ratings, round 2
+
+| Axis | /5 | Note |
+|---|---|---|
+| Visual quality | **4.5** | the wall now carries an instrument per study; the light surface law is obeyed, and the colour that arrived encodes the easing family |
+| Layout & hierarchy | **4.5** | the dead column is filled and the rules have a first rule; the study card's grid is unchanged and the phone page is one 11 m column |
+| Consistency | **5** | one duration scale, one curve family, and the plate's marks are the same four families at surface-safe weights |
+| Accessibility | **4.5** | 0 audit findings on 25 shots, marks ≥3:1 on their surface, timing legible as text (`0 ms · 4 animations · out · 480 ms`) and not only as a bar. Loses half a point: no profile, no reader walkthrough, unchanged |
+| Originality | **5** | the strip is still the animation; now the card also shows its clock, read out of the animation objects, so the timing claim and the demo cannot disagree |
