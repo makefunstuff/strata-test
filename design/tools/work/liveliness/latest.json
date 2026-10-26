@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26T18:27:45.894Z",
+  "generated": "2026-10-26T19:09:26.801Z",
   "width": 1440,
   "height": 900,
   "rows": [
@@ -7,9 +7,9 @@
       "task": ".",
       "shot": "full",
       "width": 1440,
-      "frame": "1440x11062",
+      "frame": "1440x11303",
       "frame_lit": 1,
-      "colourfulness": 9.4,
+      "colourfulness": 9.3,
       "hues": 0,
       "dominant_hue": null,
       "ink": 0.074,
@@ -18,7 +18,7 @@
       "radii": 0,
       "families": 2,
       "bg": "rgb(240,240,240)",
-      "pixels": 5309760,
+      "pixels": 5425440,
       "lively": 25
     },
     {
@@ -187,18 +187,18 @@
       "task": "10-redesign",
       "shot": "full",
       "width": 1400,
-      "frame": "1400x24748",
+      "frame": "1400x26597",
       "frame_lit": 1,
-      "colourfulness": 13.3,
+      "colourfulness": 13,
       "hues": 2,
-      "dominant_hue": 195,
+      "dominant_hue": 45,
       "ink": 0.071,
       "tonal_entropy": 0.18,
       "depth": 0,
       "radii": 1,
       "families": 3,
       "bg": "rgb(240,240,240)",
-      "pixels": 11549067,
+      "pixels": 12411934,
       "lively": 38
     },
     {

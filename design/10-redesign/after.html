@@ -53,7 +53,9 @@
         <p class="lede">The tide is expected to rise above the flood line of
           <b>4.20&nbsp;metres</b> between <b>21:30 on 3 December</b> and
           <b>06:12 on 5 December</b>. The forecast peak is <b>4.61&nbsp;m</b> at
-          <b>22:14 on 3 December</b> — 41 cm above the flood line.</p>
+          <b>22:14 on 3 December</b> — 41 cm above the flood line. That peak is the tide <i>plus the storm
+          surge</i>; the tide table below is the astronomical prediction, whose 22:14 high water is
+          <b>4.48&nbsp;m</b>. The surge is what puts you over.</p>
         <div class="do">
           <h2>What to do</h2>
           <ol>
@@ -86,6 +88,10 @@
           <div><dt>Wind</dt><dd>South 6, gusting 9, veering west</dd></div>
           <div><dt>Ferry</dt><dd>Suspended until 06:00 on 4 December</dd></div>
         </dl>
+        <!-- the level, drawn: now, the flood line, the predicted tide, the forecast with surge.
+             The numbers are data attributes, so the drawing and the text are one source. -->
+        <div class="gauge" id="gauge" data-lo="0.6" data-hi="4.9" data-now="3.94" data-at="22:14"
+             data-predicted="4.48" data-forecast="4.61" data-line="4.20" data-since="21:30"></div>
         <p class="upd">Updated 3 December 2024 at 16:40, from the Estuary Gauge Array and the Nautilus model run.
           <a href="#help">Where these numbers come from</a></p>
       </div>
@@ -120,7 +126,7 @@
             </tbody>
           </table>
         </div>
-        <p class="note"><b>This estuary has four waters a day — two highs and two lows — and all four are listed, in the order they happen.</b> Rows tinted amber are days
+        <p class="note"><b>This estuary has four waters a day — two highs and two lows — and all four are listed, in the order they happen.</b> These are the <b>predicted astronomical tides</b>, without surge; the warning above quotes the forecast level with surge, which is higher. Rows tinted amber are days
           when a high water reaches the flood line of 4.20 m; the last is the evening of 5 December, at 4.22 m. The
           second high water on 6 December is shown as <span class="kv mono">—</span> because the gauge at the mouth was
           out of service that evening, and it is not estimated for you. Full tables for 2025 are
@@ -139,21 +145,21 @@
         <ul class="notices">
           <li id="notice-1187">
             <h3><a href="#notices">Flood warning TID/2024/1187</a></h3>
-            <p class="meta"><time datetime="2024-12-03">3 December 2024</time> · in force</p>
+            <p class="meta"><time datetime="2024-12-03">3 December 2024</time> · <span class="st st-force">in force</span></p>
             <p>If you are in Harrowmouth, Lower Sandbar or Upcerne at or above 4.20 m, this is the notice for you.
               It sets out the area, the times, and what the Authority and you are each required to do.</p>
             <p class="fmt"><a href="#notices">Read it on this page</a> · <a href="#notices">The official notice (PDF, 1.2 MB)</a></p>
           </li>
           <li>
             <h3><a href="#notices">Property Flood Resilience grant: guidance</a></h3>
-            <p class="meta"><time datetime="2024-11-14">14 November 2024</time> · applications open</p>
+            <p class="meta"><time datetime="2024-11-14">14 November 2024</time> · <span class="st st-open">applications open</span></p>
             <p>Up to £5,000 towards flood resistance for a home in a designated area. You need two quotations only when
               the works cost more than £1,500.</p>
             <p class="fmt"><a href="#notices">Apply (26 questions, save and return)</a> · <a href="#notices">Guidance (PDF, 640 KB)</a></p>
           </li>
           <li>
             <h3><a href="#notices">Sea defence maintenance: what the works mean for you</a></h3>
-            <p class="meta"><time datetime="2024-11-28">28 November 2024</time> · starts 13 January</p>
+            <p class="meta"><time datetime="2024-11-28">28 November 2024</time> · <span class="st st-starts">starts 13 January</span></p>
             <p>Twenty-six weeks of works along the Quay Wall section. Access to your property is kept; the hours of
               noise are listed, and there is a number to call if access is blocked.</p>
             <p class="fmt"><a href="#notices">Read the plan</a> · <a href="#notices">Notice under Regulation 14 (PDF, 1.8 MB)</a></p>
@@ -232,8 +238,10 @@
           <li><a href="#help">Protect your property: what works and what does not</a></li>
         </ul>
       </section>
-      <section class="box">
+      <section class="box alert">
         <h2>Warnings for you</h2>
+        <p class="alert-note"><b>A warning is in force now.</b> Peak <span class="num">4.61 m</span> at
+          <span class="num">22:14</span> on 3 December, for Harrowmouth, Lower Sandbar and Upcerne.</p>
         <p>Get a text or a phone call when a warning is issued for your address. It is free, and it is the only
           channel that reaches a phone in minutes.</p>
         <a class="btn wide" href="#status">Sign up for warnings</a>

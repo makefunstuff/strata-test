@@ -358,6 +358,25 @@ const CHANGES = [
     prn: "The phone is not a small desktop: it is how a person reads this page in a car, in the rain, with one hand, on a bad signal.",
     crops: ["c-08b", "c-08a", "The 960 px page on a 390 px screen, and the same content fluid."],
   },
+  {
+    t: "The tide, drawn — and the two numbers that were one number",
+    prob: "The lede says the peak is <span class='num'>4.61 m</span>, 41 cm above the flood line. The table's 22:14 high water is <span class='num'>4.48 m</span>. Nothing on the page said the first is the forecast water level, tide plus storm surge, and the second the astronomical prediction: the redesign appeared to contradict itself, in the one sentence a resident acts on.",
+    chg: "The lede names both and says what each is, and the table's caption says the table is the prediction without surge. <span class='kv'>10-redesign/measure.mjs</span> prints the arithmetic it checks: 41 = (4.61 − 4.20) × 100, and the predicted height quoted in the lede equals the table's own 22:14 height, 4.48 m.",
+    prn: "A page that shows two numbers for one event must say which is which. An unexplained difference is read as an error, and in an emergency a page that must be interpreted is not a page.",
+  },
+  {
+    t: "The shape of the water, in the row it belongs to",
+    prob: "The subject is a tide and the page drew it as nine columns of numbers. The question is not what 4.48 means, it is how far over the line the water goes and what shape it makes — and the answer sits in the row, unreadable as a shape.",
+    chg: "Each day's row carries its tide curve under the date, drawn from that row's own cells: four waters in order, the flood line dashed with the band above it, peaks flood-coloured where a water passes the line, and a gap where the gauge was out of service. The instrument maps every dot back through the scale to its cell (0.008 m) and refuses a peak coloured above the line that the numbers do not support.",
+    prn: "Draw the subject where its data is. A shape earns its place by being the same facts as the text, and by failing the measurement when it is not.",
+  },
+  {
+    t: "The margin, drawn: 26 cm below, 28 over, 41 over",
+    prob: "The panel lists 3.94 m now, a flood line of 4.20, a next high of 4.48, a forecast of 4.61. What those four add up to — how close you are tonight, and how far over it is going — the reader has to subtract at 11 pm.",
+    chg: "The panel carries a level gauge on one scale: a bar to the current tide, the flood line, the predicted high, the forecast with surge, and a key that states each mark as centimetres of margin. The marks are the panel's own data attributes and the instrument maps them back to them (0.000 m), so the picture cannot drift from the list.",
+    prn: "Where a person acts on a margin, show the margin. Colour carries the state and the words carry it too, so nothing on a flood page is colour-only.",
+  },
+
 ];
 
 function renderLog() {

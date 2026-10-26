@@ -303,7 +303,16 @@ for (const job of jobs) {
       await p.waitForTimeout(90);
       await p.evaluate("window.scrollBy(0, -1); document.body.style.transform = '';").catch(() => {});
       await p.waitForTimeout(70);
-      await p.screenshot({ path: png, fullPage: !!shot.full, scale: shot.full ? "css" : "device", timeout: 30000 });
+      // An `element` shot photographs the node's own box: a component's frame should not depend
+      // on where a fixed-height window lands, and the published shot must be the same picture
+      // tools/liveliness.mjs measures. That tool supports `element`; this harness ignored the key,
+      // so four instrument frames shipped as 2 800 x 1 400 viewports. The audit below stays
+      // document-wide by design: contrast and naming are page properties, not box properties.
+      const box = shot.element ? await p.waitForSelector(shot.element, { timeout: 15000 }).catch(() => null) : null;
+      if (shot.element && !box) rec.shotError = "element not found: " + shot.element;
+      await (box
+        ? box.screenshot({ path: png, timeout: 30000 })
+        : p.screenshot({ path: png, fullPage: !!shot.full, scale: shot.full ? "css" : "device", timeout: 30000 }));
       rec.audit = await p.evaluate(`(${audit.toString()})()`).catch((e) => ({ auditError: String(e).slice(0, 120) }));
       // re-encode PNG -> JPEG (see encode())
       const b64 = await encode(png);

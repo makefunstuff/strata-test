@@ -77,7 +77,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/masthead.jpg",
-  "bytes": 442768,
+  "bytes": 442736,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -466,7 +466,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/phone.jpg",
-  "bytes": 775720,
+  "bytes": 775629,
   "px": "390x13885",
   "actions_failed": []
  }

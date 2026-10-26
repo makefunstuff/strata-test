@@ -30,7 +30,7 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.09, layout 4.19, consistency 4.77, accessibility 4.09,
+the table below: **visual 4.14, layout 4.19, consistency 4.82, accessibility 4.09,
 originality 4.37** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
@@ -46,7 +46,7 @@ task scores under 4 on it.
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
 | 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 26 | Round 2: a timing plate per study, drawn from the study's own Web Animation objects, so the written clock and the demo cannot disagree. Measured as elements, the cards are livelier: 41→49, 40→45, 59→65. |
-| 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4 | 5 | 4 | 5 | 5 | 32 | One measure function over the bad page and the good one: 137 → 0 contrast findings, 1 324 → 429 px to the answer, 572 → 0 px overflow, 61 tide values 0 changed. |
+| 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4.5 | 5 | 4.5 | 5 | 5 | 37 | Round 2 drew the subject: a tide curve in every row and a level gauge in the panel, both generated from the table's own numbers and checked dot by dot (≤ 0.008 m). It also caught the lede quoting 4.61 m for a tide the table calls 4.48 m — the fix is naming the two quantities, not renumbering them. |
 | 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 3.5 | 5 | 4 | 4 | 43 | Parity measured on rendered text (41 strings × 9 pages) and the added words counted; the layout axis is 3.5 because the nine costumes share one skeleton. |
 
 `Fidelity` is scored only on 11 (4), the one task that asks for styles by name.
@@ -96,7 +96,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.19, third of five, with visual and accessibility tied last at 4.09
+layout averages 4.19, third of five, with accessibility last at 4.09 and visual second-last at 4.14
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the seven things it was blind to
+## The harness, and the ten things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -226,7 +226,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| after `02-dashboard`, `06-identity` and `09-motion` were rebuilt | 12.87 | 1.09 | **41.4** |
+| after `02-dashboard`, `06-identity`, `09-motion` and `10-redesign` were rebuilt | 12.85 | 1.09 | **41.4** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -288,7 +288,28 @@ strip. The frame type was wrong, not the design. The manifest now carries **`ele
 the window frames could not: **41 → 49, 40 → 45, 59 → 65**, each with more colour and more ink. Same
 lesson as the missing 390 px widths: the frame you never ask for is the claim you never measured.
 
-### Seventh: the audit reads HTML, and this folder draws in SVG
+### Eighth: the instrument emulated neither reduced motion nor print
+
+`shoot.mjs` emulates `motion: "reduce"` and `print: true` for the shots that ask for them.
+`liveliness.mjs` did not. So the folder's published rows for `03-mobile/loading`,
+`07-dataviz/reduced`, `07-dataviz/print` and five `09-motion` rows — **eight rows, cited as evidence
+about a mode** — were silent duplicates of their screen twins, measured on the same frame under a
+different name. Nothing was wrong with the frames; the manifest is an interface, and the second tool
+that reads it simply did not implement every key.
+
+### Ninth: the audit and the measurement were looking at different pictures
+
+`liveliness.mjs` supports `element` shots — screenshot the node's own box. `shoot.mjs`, the harness
+that produces the published shot, the contrast audit and the console log, **ignored the key** and
+photographed the viewport. Four instrument frames shipped at 2 800 × 1 400 and the report looked
+healthy, because a viewport is a perfectly good file. Both tools now implement the key, and the
+harness records a shot error when a selector is missing. The follow-on lesson, from `10-redesign`:
+an element frame is a photograph of a **place**, not an isolated object. The cookie banner's
+confirmation toast — fixed, full-width, dark — lay across the bottom of the gauge, and the gauge
+measured 74 with half its box ink. The actions must clear overlays (`click:#ckMin`, `click:#ckDone`)
+before an element shot is trusted.
+
+### Tenth: the audit reads HTML, and this folder draws in SVG
 
 `shoot.mjs` walks text nodes to measure contrast, and a page like `06-identity` draws its charts in
 SVG. An `<text>` element inside an `<svg>` is invisible to that walk, and the round-2 chart excerpt
@@ -367,8 +388,8 @@ Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **218 shots across the eleven tasks plus 9 in the gallery
-frame — 227 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **223 shots across the eleven tasks plus 9 in the gallery
+frame — 232 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
@@ -425,6 +446,9 @@ cd design/02-dashboard && node measure.mjs      # chart legibility: band separat
 node design/02-dashboard/measure.mjs --url <dir> --out /tmp/before.md
                                             #   the same measurement against an old commit
                                             #   (git worktree add /tmp/old HEAD~1)
+node design/10-redesign/measure.mjs         # the drawings against the text: every tide-curve dot
+                                            #   mapped back to its cell, the gauge's marks, the
+                                            #   lede's arithmetic, state pills, A4 print, 390 px
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not

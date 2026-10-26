@@ -567,8 +567,8 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/sheet-card.jpg",
-  "bytes": 235261,
-  "px": "2800x1400",
+  "bytes": 184483,
+  "px": "2144x1128",
   "actions_failed": []
  },
  {
@@ -591,8 +591,8 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/toast-card.jpg",
-  "bytes": 198728,
-  "px": "2800x1400",
+  "bytes": 171815,
+  "px": "2144x1126",
   "actions_failed": []
  },
  {
@@ -615,8 +615,8 @@
    "focusRing": "outline"
   },
   "jpg": "09-motion/shots/button-card.jpg",
-  "bytes": 190269,
-  "px": "2800x1400",
+  "bytes": 181564,
+  "px": "2144x1288",
   "actions_failed": []
  }
 ]

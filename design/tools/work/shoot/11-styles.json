@@ -105,7 +105,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-full.jpg",
-  "bytes": 356748,
+  "bytes": 356207,
   "px": "1440x2832",
   "actions_failed": []
  },
@@ -215,7 +215,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-hero.jpg",
-  "bytes": 289486,
+  "bytes": 289411,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -501,7 +501,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303544,
+  "bytes": 303885,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -523,7 +523,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229836,
+  "bytes": 229818,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -659,7 +659,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425051,
+  "bytes": 425069,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -683,7 +683,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 300056,
+  "bytes": 300002,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -755,7 +755,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 493506,
+  "bytes": 493480,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -779,7 +779,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 503005,
+  "bytes": 503138,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -897,7 +897,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2753058,
+  "bytes": 2753248,
   "px": "1440x20883",
   "actions_failed": []
  },
@@ -919,7 +919,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2037237,
+  "bytes": 2037238,
   "px": "390x41911",
   "actions_failed": []
  },

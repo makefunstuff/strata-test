@@ -26,6 +26,48 @@
   --dur: 180ms;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
+/* ---- the water, drawn ---------------------------------------------------------
+   The page's subject is a tide, and the page drew it as a table. Two instruments
+   close that gap, both built from numbers already printed on the page, so a shape
+   and the sentence beside it cannot drift apart (10-redesign/measure.mjs checks it).
+   Colour carries a job: flood amber is "above the flood line", green is "now",
+   blue is "predicted", red is "forecast with surge" — and every one of them is
+   written as text in the key, so none of it is colour-only. */
+.tide-curve { display: block; margin-top: 5px }
+.tide-curve .above { fill: var(--flood-soft) }
+.tide-curve .line { stroke: var(--flood); stroke-width: 1; stroke-dasharray: 3 2 }
+.tide-curve .water { fill: none; stroke: var(--ink-2); stroke-width: 1.5; stroke-linejoin: round }
+.tide-curve .pt { fill: var(--ink-2) }
+.tide-curve .peak { fill: var(--flood) }
+.tide-curve .gap { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 2 }
+
+.gauge { margin-top: 10px }
+.gauge svg { display: block; width: 100%; height: 26px }
+.gauge .g-track { fill: var(--paper-3) }
+.gauge .g-now { fill: var(--accent) }
+.gauge .g-line { stroke: var(--flood); stroke-width: 2 }
+.gauge .g-pred { stroke: var(--info); stroke-width: 2 }
+.gauge .g-fc { stroke: var(--danger); stroke-width: 2; stroke-dasharray: 3 2 }
+.g-key { list-style: none; margin: 7px 0 0; padding: 0; font-size: 12.5px; color: var(--ink-2) }
+.g-key li { display: flex; gap: 7px; align-items: baseline; margin: 3px 0 }
+.g-key .sw { flex: 0 0 12px; height: 10px; align-self: center; border-radius: 1px }
+.g-key .sw.now { background: var(--accent) }
+.g-key .sw.line { background: var(--flood) }
+.g-key .sw.pred { background: var(--info) }
+.g-key .sw.fc { background: var(--danger) }
+.g-key .num { font-family: var(--mono); font-size: 12px }
+
+/* the notices are five blocks of the same shape; the state is the thing you scan */
+.st { display: inline-block; font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+      text-transform: uppercase; padding: 1px 6px 1px 5px; border-left: 3px solid; }
+.st-force { color: var(--danger); border-color: var(--danger); background: var(--danger-soft) }
+.st-open  { color: var(--accent); border-color: var(--accent); background: var(--accent-soft) }
+.st-starts { color: var(--info); border-color: var(--info); background: #e8eff6 }
+
+.box.alert { border-left: 4px solid var(--danger) }
+.alert-note { font-size: 13px; margin: 0 0 9px; color: var(--ink) }
+.alert-note .num { font-family: var(--mono) }
+
 * { box-sizing: border-box }
 [hidden] { display: none !important }
 html { background: #ffffff }
@@ -222,6 +264,8 @@ dl.gl dd { margin: 3px 0 0; color: var(--ink-2); font-size: 15px }
   table.tides tr { border: 1px solid var(--line); border-radius: var(--r); margin: 10px 0; padding: 8px 12px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px; row-gap: 8px; align-items: baseline; max-width: 100% }
   table.tides tr.over { border-color: #e0b96f; background: var(--flood-soft) }
+  .tide-curve, .gauge { break-inside: avoid }
+  .tide-curve .above { print-color-adjust: exact; -webkit-print-color-adjust: exact }
   table.tides tbody th { border-bottom: 1px solid var(--line); font-size: 15.5px; padding: 0 0 7px; grid-column: 1 / -1; width: auto }
   table.tides td { border-bottom: 0; padding: 0 }
   table.tides td::before { content: attr(data-l); color: var(--ink-3); font: 400 13px var(--text) }
