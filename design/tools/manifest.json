@@ -1558,6 +1558,42 @@
         "width": 1400,
         "full": true,
         "height": 900
+      },
+      {
+        "name": "sheet-card",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1100,
+        "element": "#study-sheet",
+        "actions": [
+          "eval:document.querySelector('#study-sheet').scrollIntoView({block:'center'})"
+        ]
+      },
+      {
+        "name": "toast-card",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1100,
+        "element": "#study-toast",
+        "actions": [
+          "eval:document.querySelector('#study-toast').scrollIntoView({block:'center'})"
+        ]
+      },
+      {
+        "name": "button-card",
+        "page": "index.html",
+        "width": 1400,
+        "height": 700,
+        "dpr": 2,
+        "settle": 1100,
+        "element": "#study-button",
+        "actions": [
+          "eval:document.querySelector('#study-button').scrollIntoView({block:'center'})"
+        ]
       }
     ]
   },

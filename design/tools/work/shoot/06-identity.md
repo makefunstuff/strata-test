@@ -18,5 +18,5 @@ shots: 15 · clean: 15 · failed: 0 · with console/page/request errors: 0
 | 06-identity/inuse-tabs | 233 KB | 0 | 2 | 0 | outline | clean |
 | 06-identity/misuse | 310 KB | 0 | 0 | 0 | outline | clean |
 | 06-identity/toolbar-on | 216 KB | 0 | 0 | 0 | none | clean |
-| 06-identity/phone | 757 KB | 0 | 0 | 0 | outline | clean |
+| 06-identity/phone | 758 KB | 0 | 0 | 0 | outline | clean |
 

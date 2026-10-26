@@ -41,9 +41,10 @@
       <div class="tok">
         <h3 class="mini">Durations</h3>
         <table class="tok-t">
-          <thead><tr><th>Token</th><th>Value</th><th>Used for</th><th></th></tr></thead>
+          <thead><tr><th>Token</th><th>Value</th><th>Used for</th><th></th><th>reduce</th></tr></thead>
           <tbody id="tokDur"></tbody>
         </table>
+        <p class="tok-note" id="tokNote"></p>
       </div>
       <div class="tok">
         <h3 class="mini">Curves</h3>
@@ -57,12 +58,12 @@
     </div>
 
     <div class="rules">
-      <div class="rule"><h3 class="mini">Two properties, at most</h3><p class="rb">Only <span class="mono">transform</span> and <span class="mono">opacity</span> are animated. They are composited; <span class="mono">width</span>, <span class="mono">top</span>, <span class="mono">box-shadow</span> and <span class="mono">font-size</span> make the browser lay out and paint the page 60 times a second. Height changes are hidden behind a grid row or a clip, so the layout work happens once.</p></div>
-      <div class="rule"><h3 class="mini">Enter decelerates, leaves accelerates</h3><p class="rb">A thing arriving has to be catchable, so it starts fast and settles: <span class="mono">cubic-bezier(0.16, 1, 0.3, 1)</span>. A thing leaving is already gone from the person's attention, so it speeds up: <span class="mono">cubic-bezier(0.4, 0, 1, 1)</span> at a shorter duration. Nothing bounces for cheer.</p></div>
-      <div class="rule"><h3 class="mini">Movement is a pointer, not a decoration</h3><p class="rb">A transition must answer “where did that come from, and where did it go?”. A shared element, a parent-child link, a row that grows: the movement names the relationship. If a strip of frames would not teach a person anything, the animation is cut.</p></div>
-      <div class="rule"><h3 class="mini">Nothing waits for the animation</h3><p class="rb">Input is accepted during a transition, and the state is final the moment the intent is. The toast is dismissible while it flies in; the sheet is scrollable before it settles; the row is added to the data before it grows.</p></div>
-      <div class="rule"><h3 class="mini">Announce the fact, not the movement</h3><p class="rb">Every animated change has a text equivalent that is not animation-dependent: the toast is a live region, the sheet is a dialog, the row is in the list, the count is in the button's label. A person on a screen reader gets the same news.</p></div>
-      <div class="rule"><h3 class="mini">Reduced motion is a redesign, not an off switch</h3><p class="rb">Durations go to 0 ms. Where movement carried meaning, it is replaced with a static cue: a spatial relationship becomes a heading and a scrim; a growing row becomes a row at the top of a list labelled “added”; a spinner becomes the word “Saving”.</p></div>
+      <div class="rule lead"><span class="rn">01 · the rule the others obey</span><h3 class="mini">Two properties, at most</h3><p class="rb">Only <span class="mono">transform</span> and <span class="mono">opacity</span> are animated. They are composited; <span class="mono">width</span>, <span class="mono">top</span>, <span class="mono">box-shadow</span> and <span class="mono">font-size</span> make the browser lay out and paint the page 60 times a second. Height changes are hidden behind a grid row or a clip, so the layout work happens once.</p></div>
+      <div class="rule"><span class="rn">02</span><h3 class="mini">Enter decelerates, leaves accelerates</h3><p class="rb">A thing arriving has to be catchable, so it starts fast and settles: <span class="mono">cubic-bezier(0.16, 1, 0.3, 1)</span>. A thing leaving is already gone from the person's attention, so it speeds up: <span class="mono">cubic-bezier(0.4, 0, 1, 1)</span> at a shorter duration. Nothing bounces for cheer.</p></div>
+      <div class="rule"><span class="rn">03</span><h3 class="mini">Movement is a pointer, not a decoration</h3><p class="rb">A transition must answer “where did that come from, and where did it go?”. A shared element, a parent-child link, a row that grows: the movement names the relationship. If a strip of frames would not teach a person anything, the animation is cut.</p></div>
+      <div class="rule"><span class="rn">04</span><h3 class="mini">Nothing waits for the animation</h3><p class="rb">Input is accepted during a transition, and the state is final the moment the intent is. The toast is dismissible while it flies in; the sheet is scrollable before it settles; the row is added to the data before it grows.</p></div>
+      <div class="rule"><span class="rn">05</span><h3 class="mini">Announce the fact, not the movement</h3><p class="rb">Every animated change has a text equivalent that is not animation-dependent: the toast is a live region, the sheet is a dialog, the row is in the list, the count is in the button's label. A person on a screen reader gets the same news.</p></div>
+      <div class="rule"><span class="rn">06</span><h3 class="mini">Reduced motion is a redesign, not an off switch</h3><p class="rb">Durations go to 0 ms. Where movement carried meaning, it is replaced with a static cue: a spatial relationship becomes a heading and a scrim; a growing row becomes a row at the top of a list labelled “added”; a spinner becomes the word “Saving”.</p></div>
     </div>
   </section>
 

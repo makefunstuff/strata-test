@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 356833,
+  "bytes": 356853,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 332266,
+  "bytes": 332265,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -111,7 +111,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/chart-hover.jpg",
-  "bytes": 355937,
+  "bytes": 355869,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -188,7 +188,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/sorted-buses.jpg",
-  "bytes": 322299,
+  "bytes": 322339,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -214,7 +214,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 329186,
+  "bytes": 329056,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -240,7 +240,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 237213,
+  "bytes": 237224,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -264,7 +264,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/toast.jpg",
-  "bytes": 361788,
+  "bytes": 361805,
   "px": "2880x1800",
   "actions_failed": []
  },

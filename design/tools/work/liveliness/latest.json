@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26T17:45:55.528Z",
+  "generated": "2026-10-26T18:27:45.894Z",
   "width": 1440,
   "height": 900,
   "rows": [
@@ -7,7 +7,7 @@
       "task": ".",
       "shot": "full",
       "width": 1440,
-      "frame": "1440x10928",
+      "frame": "1440x11062",
       "frame_lit": 1,
       "colourfulness": 9.4,
       "hues": 0,
@@ -18,7 +18,7 @@
       "radii": 0,
       "families": 2,
       "bg": "rgb(240,240,240)",
-      "pixels": 5245440,
+      "pixels": 5309760,
       "lively": 25
     },
     {
@@ -169,19 +169,19 @@
       "task": "09-motion",
       "shot": "full",
       "width": 1400,
-      "frame": "1400x11043",
+      "frame": "1400x11258",
       "frame_lit": 1,
-      "colourfulness": 10.3,
+      "colourfulness": 12.6,
       "hues": 0,
       "dominant_hue": null,
-      "ink": 0.196,
-      "tonal_entropy": 0.28,
+      "ink": 0.218,
+      "tonal_entropy": 0.3,
       "depth": 0.14,
       "radii": 0,
       "families": 3,
       "bg": "rgb(16,16,16)",
-      "pixels": 5153400,
-      "lively": 32
+      "pixels": 5253734,
+      "lively": 38
     },
     {
       "task": "10-redesign",

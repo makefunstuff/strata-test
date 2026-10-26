@@ -37,6 +37,11 @@
   --s-ok: #0b6b46;
   --s-warn: #8a5a06;
   --s-danger: #a6342a;
+  /* the timing plate's four marks: the curve families are the categories, so on the light surface
+     each needs 3:1 against the paper (WCAG 1.4.11 for a meaningful graphic). The wall's bright
+     --sky/--acc/--coral/--gold are 1.8-2.2:1 on white, so the plate carries darker siblings:
+     this is the same four families, legible on the surface the bars live on. */
+  --tl-std: #2f6fb5; --tl-out: #17864f; --tl-in: #c05a45; --tl-spring: #a8761a;
   --display: "Sora Variable", "Sora", system-ui, sans-serif;
   --text: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -88,6 +93,10 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 24px 40px }
 .tok-t th { text-align: left; font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--txt-3); padding: 0 8px 8px 0; border-bottom: 1px solid var(--rule) }
 .tok-t td { padding: 9px 8px 9px 0; border-bottom: 1px solid var(--rule); color: var(--txt-2); vertical-align: middle }
 .tok-t tr:last-child td { border-bottom: 0 }
+/* the reduced column is not decoration: the page's central claim is that reduce turns every
+   duration to 0 ms, and a reader should see the token, the value and the zero in one place */
+.tok-t td.z { font-family: var(--mono); color: var(--txt-3); white-space: nowrap }
+.tok-note { margin-top: 12px; font-size: 12px; color: var(--txt-2); border-left: 2px solid var(--acc); padding-left: 10px }
 .tok-t td:first-child { font-family: var(--mono); color: var(--txt); white-space: nowrap; padding-right: 16px }
 .tok-t .v { font-family: var(--mono); color: var(--acc); white-space: nowrap }
 .bar { display: block; height: 6px; background: var(--wall-3); border-radius: 99px; overflow: hidden; min-width: 70px }
@@ -100,13 +109,36 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 24px 40px }
 .curve-list .sw { display: inline-block; width: 9px; height: 9px; margin-right: 6px }
 
 .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule) }
-.rule { background: var(--wall-2); padding: 16px }
+.rule { background: var(--wall-2); padding: 16px; position: relative }
+.rule .rn { font: 500 10px/1 var(--mono); letter-spacing: .12em; color: var(--txt-3); display: block; margin-bottom: 7px }
+/* the first rule is the one every other rule is subordinate to — composited properties only —
+   so it spans and is set larger; six equal cards made the page's own hierarchy a lie */
+.rule.lead { grid-column: span 2 }
+.rule.lead .rb { font-size: 15px; max-width: 62ch }
+.rule.lead .mini { font-size: 12px; color: var(--txt) }
+@media (max-width: 900px) { .rule.lead { grid-column: auto } }
 .rb { font-size: 13.5px; color: var(--txt-2); line-height: 1.6 }
 .rb .mono { color: var(--gold) }
 
 /* ── studies ────────────────────────────────────────────────────────── */
 .studies { display: grid; gap: 30px }
 .study { border: 1px solid var(--rule); background: var(--wall-2) }
+/* the timing plate: the study's own animation objects, drawn on a shared 0 → settle axis, so the
+   twelve cards can be compared by their timing at a glance. Colour is the easing family only —
+   sky standard, green decelerate, coral accelerate, gold spring — the same four tokens the curve
+   panel uses, so the wall is not repainted, it is annotated. */
+/* the page's own law: the wall is the studio, the light surface is the object. The first version of
+   the plate was a dark box on the dark wall — it read as a hole, and in a fixed-height frame it
+   displaced the light demo, which is exactly why the measured card frames went duller. */
+/* The plate sits in the card's short column, under the playbar. The right column is what sets the
+   card's height, so the plate costs the page nothing there; placed in the tall column it grew the
+   document by 2 000 px and pushed every film strip out of its fixed-height frame, and five shots
+   measured duller for it — which is how the placement was found. */
+.tl { margin: 10px 0 0; border: 1px solid var(--s-line); background: var(--s-paper); padding: 8px 10px 6px }
+.tl svg { display: block; width: 100%; height: auto }
+.tl-lab { display: flex; justify-content: space-between; gap: 8px; margin: 4px 0 0;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .04em; color: var(--s-ink-2) }
+.tl-lab span:nth-child(2) { color: var(--s-ink-3) }
 .st-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; padding: 14px 18px; border-bottom: 1px solid var(--rule) }
 .st-head h3 { font: 700 19px/1.2 var(--display); letter-spacing: -.015em; flex: 1; min-width: 200px }
 .st-head .ix { font: 400 11px/1 var(--mono); color: var(--acc) }

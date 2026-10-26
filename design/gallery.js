@@ -71,10 +71,10 @@ const TASKS = [
   {
     n: "09", folder: "09-motion", title: "Motion", kind: "Motion system",
     brief: "A motion language, twelve interactions, and the frames as evidence.",
-    strong: "Each study is a film strip you scrub — the frames were rendered from a live page and stitched offline, so the strip *is* the animation. Reduced motion is a redesign with a named replacement per study, and the audit reports its own warnings.",
-    weak: "It is 31 keyframe blocks, not one animation engine; nothing is timed; the page's own frame timings are estimates from a render loop, not the browser's.",
-    scores: { Visual: 4, Layout: 4, Consistency: 5, Accessibility: 4, Originality: 5 },
-    verdict: "The best evidence-capture in the folder, and the most honest audit.", shots: 21
+    strong: "Round 2 put the subject in the cards: a timing plate per study, drawn from the study's own Web Animation objects (delay, duration, easing family) on a shared 0 → settle axis, so the written timing and the demo cannot disagree. It fills the dead column the page's own notes named, its four marks are the four curve families at 3.98–5.17:1 on the surface they sit on, and the durations table finally shows its `reduce` column. The film strips remain the best evidence-capture in the folder.",
+    weak: "The page's frame timings are still estimates from a render loop, not the browser's, and 31 keyframe blocks is not an engine. Three placements of the plate were killed by measurement (dark-on-dark, a clipped fixed box, and a tall-column version that grew the document 2 000 px); the card-window shots that moved — toast 25→9 — are artefacts of a fixed-height frame over a taller page, and the manifest now carries element frames to measure a card as a card.",
+    scores: { Visual: 4.5, Layout: 4.5, Consistency: 5, Accessibility: 4.5, Originality: 5 },
+    verdict: "The strip is still the animation; now the card shows its clock, read out of the animation objects. Measured as elements, the cards are livelier: 41→49, 40→45, 59→65; the full-page frame 32 → 38.", shots: 26
   },
   {
     n: "10", folder: "10-redesign", title: "A flood portal, redesigned", kind: "Redesign of a real-shaped page",
