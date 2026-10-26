@@ -49,6 +49,18 @@ for (const f of files) {
     } catch {
       misses++;
       console.log(`MISSING  ${relative(repo, f)} -> ${t}${clean.endsWith("/") ? "  (a folder with no index.html)" : ""}`);
+      continue;
+    }
+    /* Publishing is "rsync design/ minus design/tools/", so a page that exists on the live
+       site may link straight into a directory that never gets copied. This was invisible:
+       the gallery's footer linked the harness report at tools/work/shoot/latest.md, this
+       tool reported 0 missing (the file exists in the repo, which is all it checked), and the
+       live page 404'd. Existence in the repo is not the publishing rule. */
+    const fromPublished = !relative(designDir, f).startsWith("tools/");
+    const intoTools = relative(designDir, target).startsWith("tools/");
+    if (fromPublished && intoTools) {
+      misses++;
+      console.log(`UNPUBLISHED  ${relative(repo, f)} -> ${t}  (under design/tools/, which publishing excludes — print it as text, not a link)`);
     }
   }
 }

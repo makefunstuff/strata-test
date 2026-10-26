@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the thirteen things it was blind to
+## The harness, and the fourteen things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -462,6 +462,15 @@ The rule this leaves: *a claim about layout is only evidence when it is read off
 tree.* A stylesheet says what the author meant; the browser says what the page does. And a
 generated file that carries a claim (here `stats.js`, drawn by the probe) is better than prose in
 `NOTES.md`, because the next run overwrites it.
+
+### Fourteenth: a reference can exist in the repo and 404 on the site
+
+Publishing is `rsync design/ — excluding design/tools/`. The gallery's footer linked the harness
+report at `tools/work/shoot/latest.md`; `links.mjs` reported **0 missing**, because the file exists
+in the repo, which is the only thing it checked, and the published page 404'd on it. `links.mjs` now
+knows the publishing rule: a reference from a page that *is* published, resolving into
+`design/tools/`, is reported as `UNPUBLISHED` and counted as a miss. The rule generalises: the site
+is not the repo, and a link checker that only knows the repo is checking the wrong artifact.
 
 ## Limits
 

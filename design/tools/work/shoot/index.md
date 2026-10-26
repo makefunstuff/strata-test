@@ -10,7 +10,7 @@ shots: 9 · clean: 9 · failed: 0 · with console/page/request errors: 0
 | ./table | 313 KB | 0 | 0 | 0 | outline | clean |
 | ./cards | 706 KB | 0 | 0 | 0 | outline | clean |
 | ./verdict | 796 KB | 0 | 0 | 0 | outline | clean |
-| ./limits | 459 KB | 0 | 0 | 0 | outline | clean |
-| ./full | 2224 KB | 0 | 0 | 0 | outline | clean |
-| ./phone | 2044 KB | 0 | 0 | 0 | outline | clean |
+| ./limits | 446 KB | 0 | 0 | 0 | outline | clean |
+| ./full | 2228 KB | 0 | 0 | 0 | outline | clean |
+| ./phone | 2055 KB | 0 | 0 | 0 | outline | clean |
 
