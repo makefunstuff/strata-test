@@ -195,6 +195,26 @@ gradient and the colour, not the grid, and that is a legitimate thing for those 
 Parity is untouched at **41/41** in all nine (the words did not move; the structure did).
 44 shots, 0 with problems: no contrast findings, no console errors, no unnamed controls.
 
+**The liveliness index over the round** (`tools/liveliness.mjs 11-styles`, 34 frames, measured
+back-to-back on this tree and on `main`):
+
+| frame | before → after | note |
+|---|---|---|
+| brutalism-hero / -full | 60 → **64**, 69 → **73** | hue families 1 → 2: the browser's blue counters against the acid tags |
+| skeleton (index) | 15 → **20** | the new table: 27 accent squares on a page that was text |
+| towers (index) | 42 → **44** | the nine whole pages, redrawn |
+| pixel-hero / -full | 58 → **59**, 71 → 71 | the HUD is denser (48.1 → 49.5) and the same score |
+| swiss-hero / -full | 16 → **17**, 16 → **15** | the page gained a module and lost ink (0.055 → 0.048) and colour (6.1 → 5.6): the rail is empty space, and the index reads air as dull |
+| editorial-full | 20 → **19** | the ruled table is greyer than three boxed numbers |
+| all 34 frames | mean **35.71 → 36.15**, colourfulness 14.40 → 14.68, hue families 0.91 → 0.97 |
+
+The index moved by half a point on a round that rebuilt four of nine layouts, and two of the
+four pages it *lowered* are the two that got more rigorous. That is the known shape of this
+instrument: it ranks colour area and ink coverage, and a Swiss grid is neither. The number that
+belongs to this round is the skeleton similarity, 0.441 → 0.389, and it is in the page's own
+table — the liveliness rows are published beside it because hiding them would be the same
+category of error as the pages that quote a peak their chart does not draw.
+
 **What this round leaves weak**
 
 - The module rule counts spacings ≥ 8 px. A page that laid everything out on 4 px measures 4,

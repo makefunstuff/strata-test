@@ -44,7 +44,7 @@ shots: 44 · clean: 44 · failed: 0 · with console/page/request errors: 0
 | 11-styles/skeleton | 274 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/ratings | 365 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/verdict | 519 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/full | 2849 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/full | 2848 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/phone | 2075 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/before-glass | 208 KB | 0 | 1 | 0 | outline | clean |
 | 11-styles/before-neumorph | 220 KB | 0 | 12 | 0 | outline | clean |

@@ -105,7 +105,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-full.jpg",
-  "bytes": 404328,
+  "bytes": 404938,
   "px": "1440x3998",
   "actions_failed": []
  },
@@ -215,7 +215,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-hero.jpg",
-  "bytes": 289449,
+  "bytes": 289411,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -237,7 +237,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286656,
+  "bytes": 286658,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -479,7 +479,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-hero.jpg",
-  "bytes": 287461,
+  "bytes": 287473,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -501,7 +501,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303604,
+  "bytes": 303516,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -523,7 +523,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229817,
+  "bytes": 229818,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -659,7 +659,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 414584,
+  "bytes": 414579,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -683,7 +683,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 307644,
+  "bytes": 307609,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -755,7 +755,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 492776,
+  "bytes": 492982,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -779,7 +779,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 502529,
+  "bytes": 502571,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -921,7 +921,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2917546,
+  "bytes": 2916811,
   "px": "1440x22766",
   "actions_failed": []
  },
@@ -943,7 +943,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2124875,
+  "bytes": 2124759,
   "px": "390x44232",
   "actions_failed": []
  },
