@@ -281,6 +281,12 @@ for (const t of jobs) {
       await page.setViewportSize({ width: s.width ?? WIDTH, height: s.height ?? HEIGHT });
       await applyMedia(s);
       await page.goto(url, { waitUntil: "load" });
+      /* The audit neutralises smooth scrolling before it runs a shot's actions; this tool did not,
+         so on 01-landing (which sets `scroll-behavior: smooth`) the manifest's three `eval:` scroll
+         actions animated, never landed before the capture, and hero / features / fold measured as
+         the same frame — three identical rows, published. A scroll that has not arrived is the top
+         of the page wearing a label. */
+      await page.addStyleTag({ content: "html,body{scroll-behavior:auto!important}" }).catch(() => {});
       await page.waitForTimeout(s.settle ?? 900);
       if (s.actions) for (const a of s.actions) {
         if (a.startsWith("scroll:")) await page.evaluate(`window.scrollTo(0,${a.slice(7)})`).catch(() => {});
@@ -311,6 +317,7 @@ for (const t of jobs) {
       // error at all — and the tool scored that page as the liveliest in the folder (73/100),
       // because a black field is indistinguishable from a dark page to a colourfulness metric.
       // So the decoded frame is validated, and a blank one is a FAILED measurement, retried once.
+      await page.waitForTimeout(260);   // let a scroll settle before the shutter
       const grab = async () => {
         // An `element` shot is the node's own box: a card's numbers should not depend on where a
         // fixed-height window happens to land on a page whose layout changed. That is the frame

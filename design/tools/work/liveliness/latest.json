@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-26T19:09:26.801Z",
+  "generated": "2026-10-26T19:36:05.395Z",
   "width": 1440,
   "height": 900,
   "rows": [
@@ -7,7 +7,7 @@
       "task": ".",
       "shot": "full",
       "width": 1440,
-      "frame": "1440x11303",
+      "frame": "1440x11589",
       "frame_lit": 1,
       "colourfulness": 9.3,
       "hues": 0,
@@ -18,7 +18,7 @@
       "radii": 0,
       "families": 2,
       "bg": "rgb(240,240,240)",
-      "pixels": 5425440,
+      "pixels": 5562720,
       "lively": 25
     },
     {
@@ -27,17 +27,17 @@
       "width": 1440,
       "frame": "2880x1800",
       "frame_lit": 1,
-      "colourfulness": 13.5,
+      "colourfulness": 13.8,
       "hues": 1,
       "dominant_hue": 45,
-      "ink": 0.132,
-      "tonal_entropy": 0.32,
+      "ink": 0.148,
+      "tonal_entropy": 0.33,
       "depth": 0.04,
       "radii": 5,
       "families": 2,
       "bg": "rgb(240,240,224)",
       "pixels": 1728000,
-      "lively": 40
+      "lively": 41
     },
     {
       "task": "02-dashboard",
@@ -187,19 +187,19 @@
       "task": "10-redesign",
       "shot": "full",
       "width": 1400,
-      "frame": "1400x26597",
+      "frame": "1400x29269",
       "frame_lit": 1,
-      "colourfulness": 13,
-      "hues": 2,
-      "dominant_hue": 45,
-      "ink": 0.071,
-      "tonal_entropy": 0.18,
+      "colourfulness": 15.4,
+      "hues": 3,
+      "dominant_hue": 195,
+      "ink": 0.082,
+      "tonal_entropy": 0.2,
       "depth": 0,
       "radii": 1,
       "families": 3,
       "bg": "rgb(240,240,240)",
-      "pixels": 12411934,
-      "lively": 38
+      "pixels": 13658867,
+      "lively": 47
     },
     {
       "task": "11-styles",

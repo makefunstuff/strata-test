@@ -30,14 +30,14 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.14, layout 4.19, consistency 4.82, accessibility 4.09,
-originality 4.37** (and fidelity 4.00, scored on task 11 alone). Visual and
+the table below: **visual 4.18, layout 4.23, consistency 4.86, accessibility 4.14,
+originality 4.41** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
 
 | # | Task | Folder | V | L | C | A | O | Shots | One-line verdict |
 |--:|---|---|--:|--:|--:|--:|--:|--:|---|
-| 01 | Landing page — Foldline, offline topo maps | [`01-landing`](01-landing/index.html) | 4 | 4 | 4.5 | 4 | 4.5 | 10 | The hero earns the page: a generated map sheet whose elevation profile matches the drawn route; the sections under it are a familiar marketing structure. |
+| 01 | Landing page — Foldline, offline topo maps | [`01-landing`](01-landing/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 13 | Round 2 asked the hero's sentences what they draw: the sheet's scale bar makes the route **7.6 km** and the legend, the plate and the `aria-label` all said **11.4**. Every number is derived now, checked by `measure.mjs` against the drawn path; the card wall became a map key in the sheet's own hand. |
 | 02 | Dashboard — Gridwatch depot control tower | [`02-dashboard`](02-dashboard/index.html) | 4 | 5 | 5 | 4 | 4 | 15 | Round 2: the card wall became an instrument panel, and `measure.mjs` says the chart is more readable (band separation 1.07 → 1.16, greyscale rank −0.33 → 1.00) while the liveliness index went *down* (56.4 → 53.0). |
 | 03 | Mobile app — Ternmark birding log | [`03-mobile`](03-mobile/index.html) | 4 | 4 | 5 | 4 | 4 | 19 | Nine screens that agree with each other, with offline as the premise and the states that happen; no device was touched. |
 | 04 | TUI — logtrail, a log tail | [`04-tui`](04-tui/index.html) | 4 | 4 | 5 | 3 | 4 | 11 | Real no-dependency TypeScript, and a capture pipeline that renders the program's own ANSI bytes; accessibility 3 because a terminal makes colour carry the level. |
@@ -96,7 +96,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.19, third of five, with accessibility last at 4.09 and visual second-last at 4.14
+layout averages 4.23, third of five, with accessibility last at 4.14 and visual second-last at 4.18
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the ten things it was blind to
+## The harness, and the eleven things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -226,7 +226,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| after `02-dashboard`, `06-identity`, `09-motion` and `10-redesign` were rebuilt | 12.85 | 1.09 | **41.4** |
+| after `02`, `06`, `09`, `10` and `01` were rebuilt, with the scroll fix | 13.09 | 1.18 | **42.3** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -309,6 +309,16 @@ confirmation toast — fixed, full-width, dark — lay across the bottom of the 
 measured 74 with half its box ink. The actions must clear overlays (`click:#ckMin`, `click:#ckDone`)
 before an element shot is trusted.
 
+### Eleventh: the tool measured the same frame three times
+
+`01-landing` sets `scroll-behavior: smooth`. `shoot.mjs` neutralises that with a style tag before it
+runs a shot's actions; `liveliness.mjs` did not. The manifest's three `eval:` scroll actions
+animated, never landed before the shutter, and `hero`, `features` and `fold` measured as the page top
+— **three identical published rows**, 40 · 13.5 · 0.132 for all three, before *and* after. Fixed the
+same way, and `09-motion` (which also scrolls smoothly) is re-measured. A row identical to its
+neighbour is a smell, and the report never said so; the general rule is the folder's recurring one:
+**the frame you never verify is the claim you never measure.**
+
 ### Tenth: the audit reads HTML, and this folder draws in SVG
 
 `shoot.mjs` walks text nodes to measure contrast, and a page like `06-identity` draws its charts in
@@ -388,8 +398,8 @@ Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **223 shots across the eleven tasks plus 9 in the gallery
-frame — 232 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **226 shots across the eleven tasks plus 9 in the gallery
+frame — 235 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
@@ -449,6 +459,9 @@ node design/02-dashboard/measure.mjs --url <dir> --out /tmp/before.md
 node design/10-redesign/measure.mjs         # the drawings against the text: every tide-curve dot
                                             #   mapped back to its cell, the gauge's marks, the
                                             #   lede's arithmetic, state pills, A4 print, 390 px
+node design/01-landing/measure.mjs          # the hero's sentences against its drawing: the route
+                                            #   path's own length as the ruler, field heights, the
+                                            #   byte budget, the fragments' stroke family, 390 px
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not

@@ -68,13 +68,22 @@
           <div><dt>Battery per day</dt><dd>4&nbsp;%</dd></div>
           <div><dt>Bars needed</dt><dd>0</dd></div>
         </dl>
+        <!-- The route the sheet draws, at hero scale: the same 64 field samples as the plate's
+             profile strip, and every number on it is derived by terrain-boot.js from the elevation
+             field and the sheet's own scale bar. 01-landing/measure.mjs refuses a page whose
+             sentences and whose drawing disagree — which is how 11.4 km, 812 m and +640 m went. -->
+        <figure class="hero-prof" id="heroProfile" aria-live="off"></figure>
+        <p class="hero-prof-cap"><span class="mono" id="heroKm">7.6 km</span> of route ·
+          <span class="mono" id="heroGain">+551 m</span> · the summit at
+          <span class="mono" id="heroPeak">860 m</span> · the car park at
+          <span class="mono" id="heroStart">309 m</span></p>
       </div>
 
       <figure class="map" id="map">
         <div class="map-sheet">
           <canvas id="terrain" aria-hidden="true"></canvas>
           <svg id="overlay" viewBox="0 0 1200 760" role="img"
-               aria-label="A Foldline map sheet: contour lines around the 812-metre peak of Stob Bàn, with a red route climbing from the loch to the summit.">
+               aria-label="A Foldline map sheet: contour lines around the 860-metre peak of Stob Bàn, with a 7.6 km route climbing from the loch to the summit.">
             <defs>
               <filter id="halo" x="-30%" y="-30%" width="160%" height="160%">
                 <feMorphology operator="dilate" radius="2.4" in="SourceAlpha" result="d"/>
@@ -90,7 +99,7 @@
             <g id="labels" font-family="Inter, sans-serif"></g>
           </svg>
           <div class="sheet-legend">
-            <span><i class="sw sw-route" aria-hidden="true"></i> route, 11.4&nbsp;km</span>
+            <span><i class="sw sw-route" aria-hidden="true"></i> route, <span id="legendKm">7.6&nbsp;km</span></span>
             <span><i class="sw sw-index" aria-hidden="true"></i> index contour 50&nbsp;m</span>
             <span><i class="sw sw-way" aria-hidden="true"></i> waypoint</span>
           </div>
@@ -125,42 +134,96 @@
         you are actually asking: where does the fence end, is that a path or a drain, and how steep
         is the last 200&nbsp;metres.</p>
       </header>
-      <ul class="grid features">
+      <!-- The pack, as a map key: the section's headline is "cartography, not a map tile cache",
+           so each layer is drawn in the sheet's own hand — index contour with its label, region box
+           over ground, route with the profile it implies, ridge shade and tide line, printed sheet
+           with its fold — and the 38 MB the hero quotes is broken into the layers that spend it.
+           The bar is one quantity, so it is one ramp; every number is text as well as a width. -->
+      <div class="pack-bar" role="img"
+           aria-label="What spends the 38 megabytes: contours 12.4, hillshade 8.6, paths and rights of way 5.9, buildings 3.7, names and spot heights 2.9, walls and fences 2.3, the 1 metre terrain model 2.2, of 38 megabytes.">
+        <div class="pb-segs" aria-hidden="true">
+          <span class="s1" style="width:32.6%"></span><span class="s2" style="width:22.6%"></span><span class="s3" style="width:15.8%"></span><span class="s4" style="width:9.7%"></span><span class="s5" style="width:7.6%"></span><span class="s6" style="width:6.1%"></span><span class="s7" style="width:5.6%"></span>
+        </div>
+        <ul class="pb-key">
+          <li><i class="k k1" aria-hidden="true"></i><span>Contours, 10 m with a 50 m index</span><b class="mono">12.4 MB</b><em class="mono">33 %</em></li>
+          <li><i class="k k2" aria-hidden="true"></i><span>Hillshade and hypsometric bands</span><b class="mono">8.6 MB</b><em class="mono">23 %</em></li>
+          <li><i class="k k3" aria-hidden="true"></i><span>Paths and rights of way</span><b class="mono">5.9 MB</b><em class="mono">15 %</em></li>
+          <li><i class="k k4" aria-hidden="true"></i><span>Buildings and structures</span><b class="mono">3.7 MB</b><em class="mono">10 %</em></li>
+          <li><i class="k k5" aria-hidden="true"></i><span>Names and spot heights</span><b class="mono">2.9 MB</b><em class="mono">8 %</em></li>
+          <li><i class="k k6" aria-hidden="true"></i><span>Walls, fences and boundaries</span><b class="mono">2.3 MB</b><em class="mono">6 %</em></li>
+          <li><i class="k k7" aria-hidden="true"></i><span>The 1 m terrain model</span><b class="mono">2.2 MB</b><em class="mono">5 %</em></li>
+        </ul>
+      </div>
+      <ul class="pack">
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M2 24c4-4 6 2 9-2s5 3 9-1 5 3 10-1"/><path d="M3 18c4-4 6 2 9-2s5 3 9-1 5 3 10-1"/><path d="M4 12c4-4 6 2 9-2s5 3 9-1 5 3 9-1"/><circle cx="19" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg></span>
-          <h3>10-metre contours, 50-metre index</h3>
-          <p>Derived from a 1&nbsp;m LiDAR terrain model, simplified the way a cartographer
-          simplifies: folds kept, spurs smoothed, noise dropped.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <path d="M6 78c22-16 34 6 52-6s26 10 46-4 26 6 38-2" class="mi"/>
+      <path d="M6 66c20-14 32 4 50-6s28 8 46-4 26 4 40-2" class="mi"/>
+      <path d="M4 52c20-16 34 2 52-8s28 6 44-4 30 2 44-4" class="ix"/>
+      <path d="M8 40c18-12 30 0 46-6s26 4 42-4 24 0 40-4" class="mi"/>
+      <path d="M14 28c14-8 26-2 40-6s24 4 38-2 22 0 34-2" class="mi"/>
+      <text x="10" y="49" class="fx ix-l">500</text>
+      <path d="M104 20l7 13h-14z" class="sp"/>
+      <text x="114" y="30" class="fx">860 m</text>
+    </svg></span>
+          <div><h3>10-metre contours, 50-metre index</h3><p>Derived from a 1&nbsp;m LiDAR terrain model, simplified the way a cartographer simplifies: folds kept, spurs smoothed, noise dropped.</p></div>
         </li>
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v24M4 16h24" stroke-dasharray="3 3"/><rect x="9" y="9" width="14" height="14" rx="2.5"/><path d="M12 20l3-5 3 4 2-2 2 3z"/></svg></span>
-          <h3>Whole regions offline</h3>
-          <p>Download by county, by mountain range, or by drawing a box. A region keeps its contours,
-          paths, buildings, names and elevation together — 38&nbsp;MB for a national park.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <path d="M10 86c18-12 30 4 46-6s26 8 42-4 24 4 40-2" class="mi"/>
+      <path d="M12 70c16-10 28 2 44-6s26 6 40-4 24 2 40-2" class="mi"/>
+      <path d="M16 54c14-8 26 0 42-6s24 4 38-4" class="mi"/>
+      <path d="M20 40c12-6 22-2 36-6s22 4 34-2" class="mi"/>
+      <rect x="34" y="22" width="86" height="62" class="box"/>
+      <text x="38" y="36" class="fx">41</text>
+      <text x="38" y="78" class="fx bx-l">38 MB</text>
+    </svg></span>
+          <div><h3>Whole regions offline</h3><p>Download by county, by mountain range, or by drawing a box. A region keeps its contours, paths, buildings, names and elevation together — 38&nbsp;MB for a national park.</p></div>
         </li>
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 26c3-9 8-13 10-13s3 3 6 1 5-8 7-9"/><circle cx="6" cy="26" r="2.2"/><circle cx="29" cy="5" r="2.2"/><path d="M13 27h9M13 22h6" stroke-dasharray="2 3"/></svg></span>
-          <h3>GPX, FIT and a route planner</h3>
-          <p>Drop a file on the app and it draws on the map with elevation profile. Tap to plan:
-          distance, ascent, estimated time on Naismith with a rough-ground factor.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <path d="M10 80c16-12 26 2 40-8s24 6 38-6 22 2 40-6" class="mi"/>
+      <path d="M10 62c14-10 26 0 40-8s24 4 36-6" class="mi"/>
+      <path d="M22 84c14-18 20-6 32-24s26-14 44-32" class="rt"/>
+      <circle cx="22" cy="84" r="3" class="wp"/><circle cx="98" cy="28" r="3" class="wp"/>
+      <path d="M22 100h104" class="ax"/>
+      <path d="M22 98 40 92 58 96 76 84 98 72" class="pf"/>
+      <text x="22" y="14" class="fx">7.6 km · +551 m</text>
+    </svg></span>
+          <div><h3>GPX, FIT and a route planner</h3><p>Drop a file on the app and it draws on the map with elevation profile. Tap to plan: distance, ascent, estimated time on Naismith with a rough-ground factor.</p></div>
         </li>
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M16 5v3M16 24v3M5 16h3M24 16h3"/><path d="M16 16l6-6" stroke-width="2.4"/><path d="M16 16l-3 5"/><circle cx="16" cy="16" r="1.6" fill="currentColor" stroke="none"/></svg></span>
-          <h3>Sun, tide and wind on the map</h3>
-          <p>A sun-angle overlay shows when the ridge leaves shadow, and coastal sheets carry tide
-          times against the footpath that floods at high water.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <path d="M6 60 40 26l26 22 30-26 40 30v32H6z" class="rdg"/>
+      <path d="M66 48l30-26 40 30v30H66z" class="shd"/>
+      <circle cx="28" cy="18" r="9" class="sun"/>
+      <path d="M6 82c22-6 42 4 64-2s44 4 72-2" class="ti"/>
+      <text x="6" y="97" class="fx">HW 14:12 · 4.4 m</text>
+    </svg></span>
+          <div><h3>Sun, tide and wind on the map</h3><p>A sun-angle overlay shows when the ridge leaves shadow, and coastal sheets carry tide times against the footpath that floods at high water.</p></div>
         </li>
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="6" y="9" width="18" height="14" rx="3"/><path d="M24 14h3v4h-3"/><path d="M10 13v6M14 13v6" stroke-width="2.6"/><path d="M19 15l-3 3h3l-3 3" stroke-linejoin="round"/></svg></span>
-          <h3>Two days of GPS on 4&nbsp;%</h3>
-          <p>Position runs on the coarse motion core, the map stays in memory, the screen is off.
-          Track recording costs about 2&nbsp;% an hour.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <rect x="24" y="14" width="70" height="68" rx="8" class="dev"/>
+      <path d="M34 72c10-14 16-4 26-18s18-10 26-22" class="rt"/>
+      <circle cx="34" cy="72" r="2.6" class="wp"/><circle cx="86" cy="32" r="2.6" class="wp"/>
+      <rect x="102" y="30" width="14" height="38" rx="2" class="bat"/>
+      <path d="M104 57h10M104 49h10M104 41h10" class="lvl"/>
+      <path d="M106 24h6v6h-6z" class="tip"/>
+      <text x="24" y="96" class="fx">4 % a day · 2 days</text>
+    </svg></span>
+          <div><h3>Two days of GPS on 4&nbsp;%</h3><p>Position runs on the coarse motion core, the map stays in memory, the screen is off. Track recording costs about 2&nbsp;% an hour.</p></div>
         </li>
         <li>
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 4h13l5 5v19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M20 4v5h5"/><path d="M9 14h13M9 19h13M9 24h8" stroke-dasharray="2 2"/></svg></span>
-          <h3>The kitchen-table sheet</h3>
-          <p>Export an A3 or A2 sheet at 300&nbsp;dpi with grid, scale bar, magnetic variation and a
-          fold line marked, so the paper folds the way it goes in the bag.</p>
+          <span class="frag" aria-hidden="true"><svg viewBox="0 0 148 104" aria-hidden="true" focusable="false">
+      <rect x="14" y="12" width="120" height="80" class="pap"/>
+      <path d="M14 32h120M14 52h120M14 72h120M44 12v80M74 12v80M104 12v80" class="gd"/>
+      <path d="M74 12v80" class="fold"/>
+      <g class="scl"><rect x="24" y="80" width="12" height="5"/><rect x="36" y="80" width="12" height="5" fill="none"/><rect x="48" y="80" width="12" height="5"/><rect x="60" y="80" width="12" height="5" fill="none"/></g>
+      <text x="84" y="86" class="fx sm">1 km</text>
+      <text x="18" y="26" class="fx">A3 · 300 dpi</text>
+    </svg></span>
+          <div><h3>The kitchen-table sheet</h3><p>Export an A3 or A2 sheet at 300&nbsp;dpi with grid, scale bar, magnetic variation and a fold line marked, so the paper folds the way it goes in the bag.</p></div>
         </li>
       </ul>
     </div>

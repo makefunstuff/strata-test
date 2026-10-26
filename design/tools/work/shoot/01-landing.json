@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/hero.jpg",
-  "bytes": 407924,
+  "bytes": 411940,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -39,8 +39,8 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/full.jpg",
-  "bytes": 621116,
-  "px": "1440x5452",
+  "bytes": 660034,
+  "px": "1440x5782",
   "actions_failed": []
  },
  {
@@ -63,7 +63,7 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/features.jpg",
-  "bytes": 309719,
+  "bytes": 307813,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -87,7 +87,7 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/fold.jpg",
-  "bytes": 275884,
+  "bytes": 275958,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -112,7 +112,7 @@
    "focusRing": "none"
   },
   "jpg": "01-landing/shots/pricing-annual.jpg",
-  "bytes": 274692,
+  "bytes": 274696,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -137,7 +137,7 @@
    "focusRing": "none"
   },
   "jpg": "01-landing/shots/faq-open.jpg",
-  "bytes": 212619,
+  "bytes": 212733,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -185,7 +185,7 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/phone.jpg",
-  "bytes": 139746,
+  "bytes": 124226,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -207,8 +207,8 @@
    "focusRing": "outline"
   },
   "jpg": "01-landing/shots/phone-full.jpg",
-  "bytes": 463616,
-  "px": "390x9065",
+  "bytes": 491250,
+  "px": "390x9367",
   "actions_failed": []
  },
  {
@@ -231,8 +231,74 @@
    "focusRing": "none"
   },
   "jpg": "01-landing/shots/phone-menu.jpg",
-  "bytes": 92949,
+  "bytes": 76609,
   "px": "780x1688",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/hero-prof",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/hero-prof.jpg",
+  "bytes": 24767,
+  "px": "932x310",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/pack-bar",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/pack-bar.jpg",
+  "bytes": 58714,
+  "px": "2224x316",
+  "actions_failed": []
+ },
+ {
+  "label": "01-landing/pack-rows",
+  "ok": true,
+  "errs": [],
+  "actions": [],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Foldline — offline topographic maps that print like paper",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "01-landing/shots/pack-rows.jpg",
+  "bytes": 207045,
+  "px": "2224x912",
   "actions_failed": []
  }
 ]

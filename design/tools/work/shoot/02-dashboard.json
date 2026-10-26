@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 356848,
+  "bytes": 356765,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 332337,
+  "bytes": 332211,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -111,7 +111,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/chart-hover.jpg",
-  "bytes": 355949,
+  "bytes": 355929,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -162,7 +162,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/filtered.jpg",
-  "bytes": 344536,
+  "bytes": 344523,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -214,7 +214,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 329056,
+  "bytes": 329198,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -240,7 +240,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 237224,
+  "bytes": 237199,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -337,7 +337,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-top.jpg",
-  "bytes": 85709,
+  "bytes": 85677,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -362,7 +362,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-table.jpg",
-  "bytes": 94777,
+  "bytes": 94771,
   "px": "780x1688",
   "actions_failed": []
  }
