@@ -31,6 +31,13 @@ jobs:
           rsync -a --exclude tools/ games/ _site/games/
           rsync -a --exclude tools/ experiments/ _site/experiments/
           rsync -a --exclude tools/ design/ _site/design/
+          # One file under tools/ is part of the site: the gallery page fetches the harness
+          # manifest at runtime, so its shot counts are the harness's own numbers and not a
+          # transcription. With tools/ excluded, that fetch 404'd on Pages and the page silently
+          # fell back to transcribed counts, which is the thing the comment promised not to do.
+          # Everything else under tools/ — scripts, reports, the shooting output — stays out.
+          mkdir -p _site/design/tools
+          cp design/tools/manifest.json _site/design/tools/manifest.json
           # keep the pre-lab game URLs (/1-breakout/, ...) pointing at their new home
           for g in 1-breakout 2-runner 3-marble-maze 4-tower-defense 5-flight; do
             mkdir -p "_site/$g"

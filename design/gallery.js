@@ -101,18 +101,27 @@ const avg = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
 /* shot counts come from the harness manifest when it can be read, so the totals on
    this page are the harness's own numbers, not a transcription of them. */
+let countsAreTranscribed = false;
 async function shotCounts() {
   const m = {};
   try {
     const r = await fetch("tools/manifest.json");
+    if (!r.ok) throw new Error(String(r.status));
     for (const t of await r.json()) m[t.task] = t.shots.length;
-  } catch { /* file:// or a partial checkout: the authored counts stand */ }
+  } catch {
+    /* file:// refuses the fetch and a partial checkout has no manifest, so the authored counts
+       stand — but the page says so under the table. A silent fallback is how this page ran on
+       Pages for a round: the manifest lived under tools/, publishing excludes tools/, the fetch
+       404'd, and every reader saw a transcribed number under a comment promising the harness's
+       own. A 404 in a console nobody opens is not a signal. */
+    countsAreTranscribed = true;
+  }
   return m;
 }
 
 const axisScores = (a) => AXES.filter((k) => a[k] !== undefined).map((k) => a[k]);
 
-function table() {
+function table(counts) {
   const per = {};
   for (const k of AXES) {
     const xs = TASKS.map((t) => t.scores[k]).filter((x) => x !== undefined);
@@ -123,10 +132,10 @@ function table() {
     <td class="n"><a href="${t.folder}/index.html">${t.n}</a></td>
     <td class="t"><b>${esc(t.title)}</b><span>${esc(t.kind)} — ${esc(t.verdict)}</span></td>
     ${AXES.map((k) => `<td class="n">${t.scores[k] === undefined ? "—" : fmt(t.scores[k])}</td>`).join("")}
-    <td class="n">${t.shots}</td></tr>`).join("");
+    <td class="n">${counts[t.folder] ?? t.shots}</td></tr>`).join("");
   const foot = `<tfoot><tr><td class="n"></td><td>Average of eleven self-ratings</td>
     ${AXES.map((k) => `<td class="n">${fmt(per[k].avg)}</td>`).join("")}
-    <td class="n">${TASKS.reduce((a, t) => a + t.shots, 0)}</td></tr></tfoot>`;
+    <td class="n">${TASKS.reduce((a, t) => a + (counts[t.folder] ?? t.shots), 0)}</td></tr></tfoot>`;
   document.getElementById("score-table").innerHTML = head + `<tbody>${rows}</tbody>` + foot;
 
   const best = AXES.filter((k) => per[k].n > 3).sort((a, b) => per[b].avg - per[a].avg);
@@ -139,7 +148,13 @@ function table() {
     + `spread, not the mean: Layout is the only axis carrying a 3.5. ` +
     `Spread on ${best[0]}: ${fmt(per[best[0]].min)}–${fmt(per[best[0]].max)}. ` +
     `Lowest single score in the table: <b>3</b> — originality on 02 Gridwatch, and accessibility on 04 logtrail. ` +
-    `Fidelity is scored only on 11, the one task that asks for styles by name.`;
+    `Fidelity is scored only on 11, the one task that asks for styles by name. ` +
+    (countsAreTranscribed
+      ? `<b>The shot counts are transcribed from the last full run</b> — the harness manifest at
+         <code>tools/manifest.json</code> could not be read from this page, which is what happens
+         on <code>file://</code> and on any publish that excludes <code>tools/</code>.`
+      : `Shot counts are read from the harness manifest (<code>tools/manifest.json</code>) at page
+         load, so they are the harness's own numbers, not a transcription.`);
   return per;
 }
 
@@ -345,7 +360,7 @@ function pulse() {
 }
 
 const counts = await shotCounts();
-const per = table();
+const per = table(counts);
 pulse();
 range();
 cards(counts);
