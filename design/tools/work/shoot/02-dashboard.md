@@ -7,7 +7,7 @@ shots: 14 · clean: 14 · failed: 0 · with console/page/request errors: 0
 | 02-dashboard/light | 325 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/dark | 307 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/full | 224 KB | 0 | 0 | 0 | outline | clean |
-| 02-dashboard/dark-full | 233 KB | 0 | 0 | 0 | none | clean |
+| 02-dashboard/dark-full | 232 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/chart-hover | 331 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/filtered | 320 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/sorted-buses | 327 KB | 0 | 0 | 0 | none | clean |

@@ -228,11 +228,21 @@ The gallery now shows the measurement instead of describing it. `#pulse` paints 
 in the background colour *read out of that brief's own screenshot*, bars its measured
 colourfulness, and draws a hue rail whose widest segment is the grey "no hue at all" segment; the
 card lists carry the measured axis beside the five self-graded ones, dashed, so nobody confuses
-them. `tools/liveliness.mjs --per-task` regenerates `tools/liveliness-data.js`, and a filtered run
+them. `tools/liveliness.mjs --per-task` regenerates `liveliness-data.js`, and a filtered run
 refuses to overwrite it (one such run emptied the band and the page correctly said "no measurement
 on file" — the fallback firing as designed). Adding the band moved the frame from 19 to 26, the
 smallest honest proof that the number answers what you do to a page; the band's own section is the
 liveliest thing in the folder's frame at 49.
+
+And a lesson about the difference between *measured* and *deployed*. The band's data first lived at
+`tools/liveliness-data.js`, which is where every local check said it should be — and Pages publishes
+`design/` with `rsync --exclude tools/` (the harness is not a page), so the file 404'd in production
+and every visitor got the "no measurement on file" fallback while the whole local suite stayed
+green. It moved to `liveliness-data.js`, beside `gallery.js`, inside the published set, and
+`tools/liveliness.mjs --live [url]` now asserts the published page has the band: it loads the live
+URL, counts the tiles and the rail, and fails with the exclusion named. Run against the deploy that
+shipped it, that check said `tiles 0 · fallback true` — the first version of this section's own
+headliner was broken in production and only a check that leaves the machine can see that.
 
 Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
@@ -288,8 +298,9 @@ cd design/11-styles && node measure.mjs        # -> stats.js, the page's own num
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not
-node design/tools/liveliness.mjs --per-task    # measured liveliness -> tools/work/liveliness/ + tools/liveliness-data.js
+node design/tools/liveliness.mjs --per-task    # measured liveliness -> tools/work/liveliness/ + liveliness-data.js
 node design/tools/liveliness.mjs 02-dashboard --shot light,dark   # one task's frames
+node design/tools/liveliness.mjs --live            # assert the PUBLISHED frame page has the band's data
 node design/tools/dump.mjs 09-motion/index.html '#audit-list' --reduce --build --frames
                                               # the reduced-motion page, as the browser sees it
 node design/tools/probe.mjs 11-styles s03-editorial.html   # font diagnostic

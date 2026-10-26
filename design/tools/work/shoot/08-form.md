@@ -14,6 +14,6 @@ shots: 12 · clean: 12 · failed: 0 · with console/page/request errors: 0
 | 08-form/submitted | 315 KB | 0 | 0 | 0 | none | clean |
 | 08-form/draft | 232 KB | 0 | 0 | 0 | outline | clean |
 | 08-form/phone | 114 KB | 0 | 0 | 0 | outline | clean |
-| 08-form/phone-errors | 146 KB | 0 | 0 | 0 | none | clean |
+| 08-form/phone-errors | 150 KB | 0 | 0 | 0 | none | clean |
 | 08-form/property | 223 KB | 0 | 0 | 0 | outline | clean |
 

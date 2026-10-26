@@ -26,7 +26,7 @@ shots: 222 · clean: 221 · failed: 0 · with console/page/request errors: 1
 | 02-dashboard/light | 325 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/dark | 307 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/full | 224 KB | 0 | 0 | 0 | outline | clean |
-| 02-dashboard/dark-full | 233 KB | 0 | 0 | 0 | none | clean |
+| 02-dashboard/dark-full | 232 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/chart-hover | 331 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/filtered | 320 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/sorted-buses | 327 KB | 0 | 0 | 0 | none | clean |
@@ -37,7 +37,7 @@ shots: 222 · clean: 221 · failed: 0 · with console/page/request errors: 1
 | 02-dashboard/phone-drawer | 72 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/phone-top | 86 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/phone-table | 89 KB | 0 | 0 | 0 | outline | clean |
-| 03-mobile/board | 264 KB | 0 | 12 | 0 | outline | clean |
+| 03-mobile/board | 263 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-full | 608 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-phone | 600 KB | 0 | 4 | 0 | outline | clean |
 | 03-mobile/today | 103 KB | 0 | 0 | 0 | none | clean |
@@ -71,7 +71,7 @@ shots: 222 · clean: 221 · failed: 0 · with console/page/request errors: 1
 | 05-system/overview | 381 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/colour | 420 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/type | 318 KB | 0 | 0 | 0 | outline | clean |
-| 05-system/space | 267 KB | 0 | 0 | 0 | outline | clean |
+| 05-system/space | 266 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/kit-paper | 407 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/kit-deck | 356 KB | 0 | 0 | 0 | none | clean |
 | 05-system/kit-field | 414 KB | 0 | 0 | 0 | none | clean |
@@ -126,7 +126,7 @@ shots: 222 · clean: 221 · failed: 0 · with console/page/request errors: 1
 | 08-form/submitted | 315 KB | 0 | 0 | 0 | none | clean |
 | 08-form/draft | 232 KB | 0 | 0 | 0 | outline | clean |
 | 08-form/phone | 114 KB | 0 | 0 | 0 | outline | clean |
-| 08-form/phone-errors | 146 KB | 0 | 0 | 0 | none | clean |
+| 08-form/phone-errors | 150 KB | 0 | 0 | 0 | none | clean |
 | 08-form/property | 223 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/masthead | 246 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/system | 310 KB | 0 | 0 | 0 | outline | clean |
