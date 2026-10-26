@@ -226,7 +226,12 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| after `02`, `06`, `09`, `10`, `01` and `04` were rebuilt, with the scroll fix | 13.09 | 1.18 | **42.3** |
+| after `02`, `06`, `09`, `10`, `01`, `04` and `11` were rebuilt, with the scroll fix | 13.09 | 1.18 | **42.3** |
+
+The `11-styles` round is the cleanest illustration of what that mean is: it rebuilt four of the
+nine page structures, and its task frame measured **40 → 39** — the Swiss page gained a module and
+lost ink (0.055 → 0.048), the editorial page replaced three boxed numbers with a ruled table — while
+brutalism rose 60 → 64 and 69 → 73 on two hue families. Folder mean: unmoved, to two decimals.
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
