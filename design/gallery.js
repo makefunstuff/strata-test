@@ -31,10 +31,10 @@ const TASKS = [
   {
     n: "04", folder: "04-tui", title: "logtrail", kind: "Terminal UI",
     brief: "A log tail in a terminal: three views, a filter language, freeze, a light palette, 80-column mode.",
-    strong: "No dependencies, TypeScript only, and a capture pipeline that renders the program's own bytes: a browser reads the ANSI stream an ANSI writer produced, so what is shot is what the terminal draws.",
-    weak: "Its own accessibility rating: 3. No screen reader, no mouse, no resize, and the colour ramp carries the level in the densest view.",
-    scores: { Visual: 4, Layout: 4, Consistency: 5, Accessibility: 3, Originality: 4 },
-    verdict: "Real software, honestly captured, weak on the axes a terminal makes hard.", shots: 11
+    strong: "Round 2 interrogated the page’s claims against the bytes the program prints, and seven were false. The rules were drawn at **2.81–2.83:1**: box-drawing is structure, so WCAG 1.4.11’s 3:1 applies — 60 of the 75 contrast findings, and the audit had been applying the *text* bar, the wrong test. The help overlay printed **18 keys** under a heading that said **“nine keys”**, and the page’s caption repeated it. **`/`, `enter` and `o` were advertised and not bound** — they now insert the next filter term, copy the selected line over OSC 52, and copy the trace id, which the line pane links as OSC 8. **“lines per 10 s” and “10 s buckets”** sat on a 60-bucket histogram over a 116-second buffer, so a bucket is **2 s**: five times off, in three labels. The latency strip printed **“06:11:58 → 06:12:44” for every selection**, when its span belongs to the selected route’s last 26 rows. The palette declared **a violet and a panel fill no widget used**. And the endpoints frame emitted 22 lines into a 22-row terminal, scrolling its bottom row off. Every number is derived now, and `04-tui/measure.mjs` (25 checks) reads the captured `.ansi` to enforce it.",
+    weak: "No terminal emulator is in the loop: the instrument proves the OSC sequences are in the bytes and that the width maths skips them, so “copies to the clipboard” stays a claim about emulator support. The strip’s palette data is a hand-written mirror of the app’s table, kept equal by the instrument rather than by construction. The severity counters are buffer-wide above a frame that draws a window. No screen reader, no mouse, no resize, no 200 % capture; the help overlay is still the flattest screen.",
+    scores: { Visual: 4.5, Layout: 4, Consistency: 5, Accessibility: 5, Originality: 5 },
+    verdict: "Real software, honestly captured — and now honestly labelled: 75 contrast findings to 0 on 14 shots, the rules at 3.15–3.18:1, and a palette strip that prints each colour’s job, its hex and the ratio the audit will measure.", shots: 14
   },
   {
     n: "05", folder: "05-system", title: "Halyard", kind: "Design system",

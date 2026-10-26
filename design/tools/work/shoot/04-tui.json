@@ -17,8 +17,8 @@
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/board.jpg",
-  "bytes": 665485,
-  "px": "1500x3762",
+  "bytes": 810186,
+  "px": "1500x4513",
   "actions_failed": []
  },
  {
@@ -35,111 +35,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ ┌",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "├───────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│├──────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ └",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/stream.jpg",
-  "bytes": 601144,
+  "bytes": 604515,
   "px": "3320x1880",
   "actions_failed": []
  },
@@ -157,84 +57,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ └",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/endpoints.jpg",
-  "bytes": 299391,
+  "bytes": 291393,
   "px": "3320x1660",
   "actions_failed": []
  },
@@ -252,102 +79,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ ┌",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ └",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│├──────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/help.jpg",
-  "bytes": 401003,
+  "bytes": 402447,
   "px": "3320x1660",
   "actions_failed": []
  },
@@ -365,93 +101,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ ┌",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "├───────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│├──────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/filtered.jpg",
-  "bytes": 340234,
+  "bytes": 348009,
   "px": "3320x1520",
   "actions_failed": []
  },
@@ -469,84 +123,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ ┌",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "├───────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│└",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/empty.jpg",
-  "bytes": 182627,
+  "bytes": 182386,
   "px": "3320x1400",
   "actions_failed": []
  },
@@ -564,102 +145,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "├───────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│├──────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ └",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/frozen.jpg",
-  "bytes": 514591,
+  "bytes": 517663,
   "px": "3320x1660",
   "actions_failed": []
  },
@@ -677,120 +167,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ ┌",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "├───────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "│├──────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "│ └",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "█▆▅▅▅▅▅▆▄▅▆▆▅▃▆▆▄▆▆▆▆▄▅▅▅▄▅▅▆▆▅▆▅▅▄▄▅▆█▅",
-     "size": 15,
-     "ratio": 4.03,
-     "need": 4.5,
-     "fg": "rgb(75, 138, 120)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.81,
-     "need": 4.5,
-     "fg": "rgb(143, 156, 166)",
-     "bg": "rgb(255, 255, 255)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/light.jpg",
-  "bytes": 564413,
+  "bytes": 571004,
   "px": "3320x1660",
   "actions_failed": []
  },
@@ -808,75 +189,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "────────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "┐ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ ├─────────────────────────────────────",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "│ │",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span"
-    },
-    {
-     "text": "▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    },
-    {
-     "text": "▁▁▁▁",
-     "size": 15,
-     "ratio": 2.83,
-     "need": 4.5,
-     "fg": "rgb(77, 97, 112)",
-     "bg": "rgb(16, 22, 28)",
-     "sel": "span.b"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/narrow.jpg",
-  "bytes": 205044,
+  "bytes": 205081,
   "px": "1960x1320",
   "actions_failed": []
  },
@@ -900,8 +217,8 @@
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/phone.jpg",
-  "bytes": 339235,
-  "px": "390x5308",
+  "bytes": 496022,
+  "px": "390x8023",
   "actions_failed": []
  },
  {
@@ -925,8 +242,86 @@
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/phone-frames.jpg",
-  "bytes": 224357,
+  "bytes": 224355,
   "px": "780x1800",
   "actions_failed": []
+ },
+ {
+  "label": "04-tui/palette-dark",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/palette-dark.jpg",
+  "bytes": 110910,
+  "px": "1414x848",
+  "actions_failed": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ]
+ },
+ {
+  "label": "04-tui/palette-light",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/palette-light.jpg",
+  "bytes": 118045,
+  "px": "1414x848",
+  "actions_failed": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ]
+ },
+ {
+  "label": "04-tui/keys-legend",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "logtrail — a terminal log explorer, frame by frame",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "none"
+  },
+  "jpg": "04-tui/shots/keys-legend.jpg",
+  "bytes": 62741,
+  "px": "1204x670",
+  "actions_failed": [
+   "eval:document.querySelector(+element+).scrollIntoView({block:center}) -> FAILED Error: page.evaluate: SyntaxError: Unexpected token ')'"
+  ]
  }
 ]

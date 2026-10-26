@@ -44,7 +44,7 @@ shots: 43 · clean: 43 · failed: 0 · with console/page/request errors: 0
 | 11-styles/ratings | 361 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/verdict | 517 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/full | 2689 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/phone | 1989 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/phone | 1990 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/before-glass | 208 KB | 0 | 1 | 0 | outline | clean |
 | 11-styles/before-neumorph | 220 KB | 0 | 12 | 0 | outline | clean |
 

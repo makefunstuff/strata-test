@@ -53,6 +53,24 @@
   @media (max-width: 1040px) { .two { grid-template-columns: minmax(0, 1fr) } }
   .panel { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 18px 20px }
   .panel h3 { margin: 0 0 10px; font-size: 16px; font-weight: 600 }
+  /* The palette strip: one cell per colour, and every cell states the job, the hex, the measured
+     ratio and the bar it must clear. The swatch is the shortest part of the cell — a colour that
+     needs looking at is a colour that needs reading. */
+  .palwrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px }
+  @media (max-width: 1040px) { .palwrap { grid-template-columns: minmax(0, 1fr) } }
+  .pal .phead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
+    font-family: "JetBrains Mono Variable", monospace; font-size: 12px; color: var(--dim) }
+  .pal .phead b { color: var(--ink); font-size: 13px; font-weight: 600 }
+  .pal .phead .grow { flex: 1 }
+  .grid-sw { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 148px), 1fr)); gap: 12px 14px }
+  .sw { display: grid; gap: 3px; min-width: 0 }
+  .sw .bar { height: 14px; border-radius: 4px; border: 1px solid rgba(128,128,128,.35) }
+  .sw .nm { font-size: 12px; font-weight: 600 }
+  .sw .meta { font-size: 11px; color: var(--faint) }
+  .sw .job { font-size: 11px; color: var(--dim); overflow-wrap: anywhere }
+  .pal.lightp { background: #ffffff; border-color: #cfd8de }
+  .pal.lightp .phead { color: #5c6a75 } .pal.lightp .phead b { color: #1d2831 }
+  .pal.lightp .sw .nm { color: #1d2831 } .pal.lightp .sw .meta { color: #5c6a75 } .pal.lightp .sw .job { color: #5c6a75 }
   .keys { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; font-family: "JetBrains Mono Variable", monospace; font-size: 12.5px }
   .keys b { color: var(--accent); font-weight: 500 }
   .keys span { min-width: 0; overflow-wrap: anywhere }
@@ -116,17 +134,17 @@ P.push(clip(row, listW - 1) + fg(pal.line) + <span class="s">"│"</span>);   <s
       sideways.</p>
     </div>
     <div style="display:grid;gap:18px">
-      <div class="panel">
+      <div class="panel" id="keys-panel">
         <h3>Keys</h3>
         <div class="keys">
           <b>j k ↑ ↓</b><span>move the selection</span>
           <b>g G</b><span>oldest / newest line</span>
-          <b>/ … Esc</b><span>filter by <span class="mono">lvl=warn svc=gateway</span>, substring, or clear</span>
+          <b>/ Esc</b><span>insert the next filter term (<span class="mono">lvl= svc= ep= code=</span>); Esc clears it and closes overlays</span>
           <b>f</b><span>freeze the tail (the buffer keeps filling)</span>
           <b>t</b><span>light / dark palette</span>
           <b>s S</b><span>cycle the sort column in endpoints, reverse it</span>
-          <b>1 2 3 · ?</b><span>stream · endpoints · help, <span class="mono">?</span> toggles help</span>
-          <b>enter · o</b><span>copy the line, open the trace id</span>
+          <b>1 2 3 ?</b><span>stream · endpoints · help; <span class="mono">?</span> toggles help and the bar repeats it</span>
+          <b>enter o</b><span>copy the selected line (OSC 52); <span class="o">o</span> copies the trace id, which the line pane links as <span class="mono">trace://</span></span>
           <b>q</b><span>quit</span>
         </div>
       </div>
@@ -139,6 +157,24 @@ P.push(clip(row, listW - 1) + fg(pal.line) + <span class="s">"│"</span>);   <s
           <li><b>The data is invented and says so</b> — a fictional gateway fleet, seeded so every capture is reproducible.</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The palette, and what each colour is for</h2>
+    <p class="why">The program declares two palettes, one table each, and every colour in them has a job:
+      the <em>thresholds</em> are colour (over 300 ms amber, over 900 ms red), the <em>levels</em> are
+      colour (trace faint, debug blue, info teal), and the rules are structure. The ratio beside each
+      swatch is computed in the page from the same hexes the program prints, on the ground each palette
+      sits on — type is held to 4.5:1, rules and bars to 3:1, and the need is printed next to the number
+      so a pass is not a colour-coded claim. <span class="mono">04-tui/measure.mjs</span> re-reads the
+      table from <span class="mono">src/logtrail.ts</span> and fails if a swatch drifts, a ratio is
+      misprinted, a colour has no job, or a colour falls under its bar. Two colours that were in the
+      table with no job anywhere in the program (a violet, a panel fill) were deleted rather than
+      displayed.</p>
+    <div class="palwrap">
+      <div class="panel pal" id="pal-dark" data-theme="dark" data-ground="#10161c"></div>
+      <div class="panel pal lightp" id="pal-light" data-theme="light" data-ground="#ffffff"></div>
     </div>
   </section>
 
@@ -156,13 +192,63 @@ P.push(clip(row, listW - 1) + fg(pal.line) + <span class="s">"│"</span>);   <s
 const FRAMES = [
   ["frames-main", "stream", "stream", "148 × 40", 1500, 148, 40, "the tail, the volume histogram, and the selected line as key/value pairs, a latency strip of the last 26 requests on the same route, and its JSON"],
   ["frames-main", "endpoints", "endpoints", "148 × 22", 1500, 148, 22, "the same buffer by route: volume, p50/p95, warnings, errors and a share bar in the cell; s cycles the sort, S reverses"],
-  ["frames-main", "help", "help", "148 × 34", 1500, 148, 34, "the help overlay: a modal box that blanks the screen behind it, listing all nine keys"],
+  ["frames-main", "help", "help", "148 × 34", 1500, 148, 34, "the help overlay: a modal box that blanks the screen behind it, listing all 18 keys; the status bar repeats 9 of them — both counts come from the app's key table, and the overlay prints them"],
   ["frames-states", "filtered", "filtered", "148 × 30", 1500, 148, 30, "lvl=warn svc=ledger — the filter narrows both views and the counters on the filter line"],
   ["frames-states", "empty", "no match", "148 × 26", 1500, 148, 26, "the empty state names the filter that matched nothing and shows the levels that exist in the window"],
   ["frames-states", "frozen", "frozen", "148 × 34", 1500, 148, 34, "f freezes the tail so you can read a burst; the buffer keeps filling and the status line says so"],
   ["frames-more", "light", "light palette", "148 × 34", 1500, 148, 34, "the t key switches to a light palette for a terminal on a bright desk — the same thresholds, recoloured"],
   ["frames-more", "narrow", "80 × 24", "80 × 24", 860, 80, 24, "at 80 columns the endpoint and latency columns drop out, the tab labels shorten, and the detail pane disappears"],
 ];
+/* The palette as the program declares it, and the job each colour does. src/logtrail.ts is the
+   source of truth: 04-tui/measure.mjs parses its DARK and LIGHT tables and fails if this mirror
+   drifts, if a printed ratio is not the true one, if a colour falls under its bar, or if a colour
+   here has no job. Ratios are computed, not typed. */
+const PALETTES = {
+  dark: { ink: "dfe7ee", dim: "94a2ae", faint: "7d8b96", line: "536979", accent: "6fd4b8",
+    accentDim: "4f9c88", gold: "e3b05c", red: "ef7d6b", blue: "7fa9e8", sel: "1c3b36",
+    selInk: "e9f5f1", chip: "24313a" },
+  light: { ink: "1d2831", dim: "5c6a75", faint: "5f6c77", line: "85939e", accent: "0f6b57",
+    accentDim: "4b8a78", gold: "8a5c07", red: "a63a27", blue: "2a5aa8", sel: "d7e9e3",
+    selInk: "10221d", chip: "eef2f5" },
+};
+const PAL_JOBS = [
+  ["ink", "text", "the tail's message text, the app title"],
+  ["dim", "text", "columns, counters, the bar's key names"],
+  ["faint", "text", "the trace level, volume captions, hints"],
+  ["accent", "text", "info level, the live dot, the selected tab"],
+  ["gold", "text", "warn, and p95 over 300 ms"],
+  ["red", "text", "error, and p95 over 900 ms"],
+  ["blue", "text", "debug level"],
+  ["accentDim", "graphic", "latency strip bars under 300 ms"],
+  ["line", "graphic", "pane borders, column separators, box rules"],
+  ["sel", "fill", "the selected row's fill; its text is selInk"],
+  ["chip", "fill", "the status bar's fill; its text is ink"],
+];
+const lum = (h) => { const [r, g, b] = h.replace("#", "").match(/../g).map((x) => parseInt(x, 16));
+  const f = (v) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+const crat = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+for (const el of document.querySelectorAll(".pal")) {
+  const theme = el.dataset.theme, ground = el.dataset.ground, pal = PALETTES[theme];
+  const cells = PAL_JOBS.map(([name, kind, job]) => {
+    const hex = "#" + pal[name];
+    const on = kind === "fill" ? "#" + (name === "sel" ? pal.selInk : pal.ink) : ground;
+    const need = kind === "text" ? 4.5 : 3;
+    const r = crat(hex, on);
+    const ok = r >= need;
+    return `<div class="sw" role="img" aria-label="${name} ${hex} on ${on}, ${r.toFixed(1)} to 1, needs ${need}, ${kind}: ${job}">
+      <div class="bar" style="background:${hex}"></div>
+      <div class="nm mono">${name}</div>
+      <div class="meta mono">${hex} on ${on} · ${r.toFixed(1)}:1 / ${need}${ok ? "" : " ✗ under"}</div>
+      <div class="job">${kind} · ${job}</div>
+    </div>`;
+  }).join("");
+  el.insertAdjacentHTML("beforeend",
+    `<div class="phead"><b>${theme} palette</b><span class="grow"></span>
+       <span>on ${ground} · ${PAL_JOBS.length} colours, each with a job</span></div>
+     <div class="grid-sw">${cells}</div>`);
+}
+
 const LINE = 18.6, CHROME = 34, PAD = 32, CAPTION = 44, BODY = 56;
 for (const [host, key, label, size, sceneW, cols, rows, cap] of FRAMES) {
   const el = document.createElement("div");

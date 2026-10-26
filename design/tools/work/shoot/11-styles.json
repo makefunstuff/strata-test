@@ -83,7 +83,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-hero.jpg",
-  "bytes": 255006,
+  "bytes": 255101,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -237,7 +237,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286556,
+  "bytes": 286640,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -259,7 +259,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-phone.jpg",
-  "bytes": 210948,
+  "bytes": 210937,
   "px": "390x4592",
   "actions_failed": []
  },
@@ -523,7 +523,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229819,
+  "bytes": 229813,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -659,7 +659,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425093,
+  "bytes": 425071,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -683,7 +683,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 300002,
+  "bytes": 300121,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -755,7 +755,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 493656,
+  "bytes": 493618,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -897,7 +897,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2753248,
+  "bytes": 2753321,
   "px": "1440x20883",
   "actions_failed": []
  },
@@ -919,7 +919,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2037238,
+  "bytes": 2037298,
   "px": "390x41911",
   "actions_failed": []
  },
@@ -943,6 +943,7 @@
      "size": 64,
      "ratio": 1,
      "need": 3,
+     "kind": "text",
      "fg": "rgba(0, 0, 0, 0)",
      "bg": "rgb(11, 18, 32)",
      "sel": "em",
@@ -976,6 +977,7 @@
      "size": 13,
      "ratio": 3.43,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(111, 125, 146)",
      "bg": "rgb(228, 233, 241)",
      "sel": "i"
@@ -985,6 +987,7 @@
      "size": 15,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "a"
@@ -994,6 +997,7 @@
      "size": 15,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "a"
@@ -1003,6 +1007,7 @@
      "size": 15,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "a"
@@ -1012,6 +1017,7 @@
      "size": 15,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "a"
@@ -1021,6 +1027,7 @@
      "size": 13,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "p.badge.inset"
@@ -1030,6 +1037,7 @@
      "size": 18,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "p.lede"
@@ -1039,6 +1047,7 @@
      "size": 16,
      "ratio": 2.99,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(124, 135, 151)",
      "bg": "rgb(228, 233, 241)",
      "sel": "a.inset.btn"
@@ -1048,6 +1057,7 @@
      "size": 13,
      "ratio": 3.43,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(111, 125, 146)",
      "bg": "rgb(228, 233, 241)",
      "sel": "span"
@@ -1057,6 +1067,7 @@
      "size": 15,
      "ratio": 3.09,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(77, 132, 212)",
      "bg": "rgb(228, 233, 241)",
      "sel": "em"
@@ -1066,6 +1077,7 @@
      "size": 15,
      "ratio": 3.09,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(77, 132, 212)",
      "bg": "rgb(228, 233, 241)",
      "sel": "em"
@@ -1075,6 +1087,7 @@
      "size": 15,
      "ratio": 3.09,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(77, 132, 212)",
      "bg": "rgb(228, 233, 241)",
      "sel": "em"

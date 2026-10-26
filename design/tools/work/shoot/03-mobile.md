@@ -4,7 +4,7 @@ shots: 19 · clean: 19 · failed: 0 · with console/page/request errors: 0
 
 | shot | size | console errors | low contrast | unlabelled | focus ring | notes |
 |--|--|--|--|--|--|--|
-| 03-mobile/board | 263 KB | 0 | 12 | 0 | outline | clean |
+| 03-mobile/board | 264 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-full | 608 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-phone | 600 KB | 0 | 4 | 0 | outline | clean |
 | 03-mobile/today | 103 KB | 0 | 0 | 0 | none | clean |
