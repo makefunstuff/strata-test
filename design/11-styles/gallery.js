@@ -168,6 +168,47 @@ el("measure-note").innerHTML = `Nine pages, ${new Set(R.map((r) => r.h1font)).si
   <em>Times New Roman</em>, the browser's own serif, with its pinned faces registered and never fetched —
   and the screenshots of that pass are in the git history.`;
 
+/* ---------- the skeleton, measured in the rendered page ---------- */
+const SK = S.skeleton;
+const shapeBoxes = (shape) =>
+  shape.split(",").map((part) => {
+    const [cols, tracks] = part.split("/");
+    const n = Math.max(1, Number(cols));
+    const cls = part === "3/3" ? " three" : tracks === "0" ? " flow" : "";
+    return `<span class="secshape${cls}" title="${cols} columns laid out on a ${tracks}-track grid">${Array.from({ length: Math.min(n, 6) }, () => "<i></i>").join("")}</span>`;
+  }).join("");
+const restyled = (sig) => !sig.shape.includes("3/3,3/3");
+el("skeleton-table").innerHTML = `
+  <thead><tr><th>Style</th><th>The sections, as rendered</th><th class="num">module</th><th class="num">measure</th><th class="num">radius</th><th>the features grid</th><th>nav links</th><th>what the row says</th></tr></thead>
+  <tbody>${R.map((r) => {
+    const sig = SK && SK.signatures[r.key];
+    if (!sig) return "";
+    return `<tr>
+      <th>${esc(nameOf(r.key))}</th>
+      <td class="shapecell">${shapeBoxes(sig.shape)}</td>
+      <td class="num">${sig.module} px</td>
+      <td class="num">${sig.maxMeasure} ch</td>
+      <td class="num">${sig.radiusMax}</td>
+      <td><code>${sig.featureTag}</code> — ${esc((sig.hosts.split(" · ")[1] || "—"))}</td>
+      <td>${(sig.navUnderlines || []).join("/") || "—"}</td>
+      <td>${restyled(sig)
+        ? "the armature itself is restyled, not only the skin"
+        : `a <strong>surface study</strong>: three boxes, three numbers, two plans, like the rest`}</td>
+    </tr>`;
+  }).join("")}</tbody>`;
+el("skeleton-note").innerHTML = `The module is the greatest common divisor of every padding, margin and gap
+  the page computes above 8 px, so a page whose spacing was typed as it looked right measures 1 px.
+  Four pages restyle the armature itself: the Swiss page is a twelve-column sheet on an 8 px module
+  with the numerals in a hanging rail; brutalism is a single-column document with the browser's own
+  list counters and underlined links; editorial sets its figures as a ruled table; the pixel page is a
+  2 × 2 HUD on an 8 px module. Five remain <em>surface studies</em>, and the row says so — for those the
+  style is the glass, the shadow, the gradient and the colour, not the grid. Mean pairwise skeleton
+  similarity across the nine is <strong>${SK ? SK.meanSimilarity.toFixed(3) : "—"}</strong>
+  (36 pairs; 1.000 would be nine copies of one layout) from <strong>0.441</strong> before this round,
+  and no two pages share a skeleton (${SK && SK.twinStyles.length ? SK.twinStyles.join(", ") : "none"});
+  before the round it was five. Every page's nav links are unadorned — measured, 8 links per page in
+  all nine styles at <code>text-decoration: none</code>, until brutalism put the underline back.`;
+
 /* ---------- the ratings ---------- */
 el("rating-table").innerHTML = `
   <thead><tr><th>Style</th><th class="num">Fidelity</th><th class="num">Craft</th><th>The judgement</th></tr></thead>

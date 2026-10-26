@@ -128,3 +128,13 @@ footer { border-top: 1px solid var(--hair); padding-top: 20px; padding-bottom: 4
   body { font-size: 16px }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto } }
+
+/* the skeleton table: each section of a page drawn as the columns it renders. A row of
+   identical three-column blocks is the shape the study was built to find; a section with no
+   grid at all (a prose flow, a ruled table) is drawn faint with one bar. */
+.shapecell { white-space: nowrap }
+.secshape { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--hair); margin-right: 6px; vertical-align: middle }
+.secshape i { width: 9px; height: 15px; background: var(--ink-3); display: block }
+.secshape.three i { background: var(--accent) }
+.secshape.flow { opacity: 0.45 }
+.secshape.flow i { width: 34px; height: 6px; align-self: center }

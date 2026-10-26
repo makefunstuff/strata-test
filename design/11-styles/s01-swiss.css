@@ -11,7 +11,7 @@
   --rule: #111111;
   --rule-2: #d8d8d8;
   --red: #dd0324;
-  --gap: 28px;
+  --gap: 32px;
   --text: "Archivo Variable", Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 * { box-sizing: border-box }
@@ -28,7 +28,7 @@ h2 { font-size: clamp(19px, 2.1vw, 25px); text-transform: uppercase; letter-spac
 h3 { font-size: 19px }
 a { color: inherit }
 .skip {
-  position: absolute; left: -1px; top: -1px; padding: 10px 14px; background: var(--ink); color: #fff;
+  position: absolute; left: -1px; top: -1px; padding: 8px 16px; background: var(--ink); color: #fff;
   text-decoration: none; transform: translateY(-110%); z-index: 9;
 }
 .skip:focus { transform: none }
@@ -39,26 +39,33 @@ a { color: inherit }
 
 /* top bar: brand left, sections right, a 2px rule under everything */
 .bar {
-  max-width: 1220px; margin: 0 auto; padding: 16px var(--gap) 14px;
-  display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 20px;
+  max-width: 1220px; margin: 0 auto; padding: 16px var(--gap) 16px;
+  display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px;
   border-bottom: 2px solid var(--rule);
 }
-.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap }
+.brand { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap }
 .brand .mark { width: 15px; height: 15px; background: var(--red); align-self: center }
 .brand b { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase }
 .brand span { font-size: 12px; color: var(--ink-3); letter-spacing: 0.04em }
-.bar nav { display: flex; gap: 22px; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.1em }
+.bar nav { display: flex; gap: 24px; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.1em }
 .bar nav a { text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent }
 .bar nav a:hover { border-bottom-color: var(--red) }
 
-/* hero: the copy in 7 columns, the figure in 5, aligned on the same baseline grid */
-.hero { max-width: 1220px; margin: 0 auto; padding: 40px var(--gap) 46px; border-bottom: 1px solid var(--rule) }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end }
-.kicker { font: 500 11px var(--text); text-transform: uppercase; letter-spacing: 0.16em; color: var(--red); margin-bottom: 20px }
-.lede { margin-top: 22px; max-width: 52ch; color: var(--ink-2); font-size: 17px }
-.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px }
+/* The module grid, measured. The style's founding rule is a grid of modules, and the
+   page used to declare two flex columns and no module at all: 11-styles/measure.mjs takes
+   the gcd of the section tops in the rendered page and it came back 1 px, i.e. every
+   section top sat wherever its content left it, on a one-pixel grid. It is an 8 px module
+   now (the gcd measures 8), the hero is 7 of 12 and 5 of 12, the features are a numbered
+   list in a hanging rail, and the numbers 01 02 03 are the reason the list is an <ol>. */
+.hero { max-width: 1224px; margin: 0 auto; padding: 40px var(--gap) 48px; border-bottom: 1px solid var(--rule) }
+.hero-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end }
+.hero-copy { grid-column: 1 / span 7 }
+.hero-fig { grid-column: 8 / span 5 }
+.kicker { font: 500 11px var(--text); text-transform: uppercase; letter-spacing: 0.16em; color: var(--red); margin-bottom: 16px }
+.lede { margin-top: 24px; max-width: 52ch; color: var(--ink-2); font-size: 17px }
+.cta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px }
 .btn {
-  display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px;
+  display: inline-flex; align-items: center; min-height: 46px; padding: 0 24px;
   background: var(--ink); color: #fff; text-decoration: none; border: 1px solid var(--ink);
   font: 500 12.5px var(--text); text-transform: uppercase; letter-spacing: 0.11em;
 }
@@ -66,94 +73,109 @@ a { color: inherit }
 .btn.out { background: transparent; color: var(--ink) }
 .btn.out:hover { background: var(--ink); color: #fff }
 .fig { width: 100%; height: auto; display: block }
-.hero-fig { padding-bottom: 6px }
+.hero-fig { padding-bottom: 8px }
 
 /* blocks: a 2px rule above, a head row with a right-aligned measure, then the grid */
-.block { max-width: 1220px; margin: 0 auto; padding: 34px var(--gap) 40px; border-bottom: 1px solid var(--rule) }
+.block { max-width: 1224px; margin: 0 auto; padding: 40px var(--gap) 48px; border-bottom: 1px solid var(--rule) }
 .block-head {
-  display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: baseline;
-  border-bottom: 1px solid var(--rule-2); padding-bottom: 8px; margin-bottom: 26px;
+  display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline;
+  border-bottom: 1px solid var(--rule-2); padding-bottom: 8px; margin-bottom: 24px;
 }
 .block-head span { font: 400 11px var(--text); text-transform: uppercase; letter-spacing: 0.13em; color: var(--ink-3) }
 
-.feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 }
-.feat-grid article { padding: 0 26px 6px 0; border-left: 1px solid var(--rule-2); padding-left: 22px }
-.feat-grid article:first-child { border-left: 0; padding-left: 0 }
+.feat-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 }
+/* each row spans the twelve columns, and the row itself is twelve columns: the numeral in
+   a two-column rail, the text in six, leaving the last four empty. That ragged right edge is
+   the point — the three equal boxes the page used to draw are a grid, not a layout. */
+.feat-grid li {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px;
+  border-top: 1px solid var(--rule-2); padding: 24px 0 32px;
+}
+.feat-grid li > .txt { grid-column: 4 / span 6 }
+.feat-grid li > .n { grid-column: 1 / span 2 }
 .feat-grid .n {
   display: block; font: 700 40px/1 var(--text); font-variation-settings: "wdth" 118;
-  color: var(--ink); margin-bottom: 14px; letter-spacing: -0.03em;
+  color: var(--ink); margin-bottom: 16px; letter-spacing: -0.03em;
 }
-.feat-grid h3 { margin-bottom: 10px }
+.feat-grid h3 { margin-bottom: 8px }
 .feat-grid p { color: var(--ink-2); font-size: 15.5px; max-width: 34ch }
 
-.stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px }
+.stat-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px }
+.stat-grid .stat { grid-column: span 4 }
 .stat b {
   display: block; font: 700 clamp(38px, 4.6vw, 62px)/0.92 var(--text);
   font-variation-settings: "wdth" 118; letter-spacing: -0.035em;
 }
-.stat .u { display: block; margin-top: 10px; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.11em }
+.stat .u { display: block; margin-top: 8px; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.11em }
 .stat .n { display: block; margin-top: 4px; font-size: 14px; color: var(--ink-3); max-width: 26ch }
 
-.quote blockquote { margin: 0; display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 34px }
+.quote blockquote { margin: 0; display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 32px }
 .quote blockquote p {
   font: 500 clamp(20px, 2.5vw, 30px)/1.24 var(--text); letter-spacing: -0.018em; max-width: 26ch;
   font-variation-settings: "wdth" 105;
 }
-.quote blockquote footer { font-size: 14px; color: var(--ink-2); align-self: end; border-top: 2px solid var(--rule); padding-top: 10px }
+.quote blockquote footer { font-size: 14px; color: var(--ink-2); align-self: end; border-top: 2px solid var(--rule); padding-top: 8px }
 .quote blockquote footer b { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px }
 
-.plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px }
-.plan-grid article { border-top: 2px solid var(--rule); padding-top: 18px }
+.plan-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px }
+.plan-grid > article { grid-column: span 6 }
+.plan-grid article { border-top: 2px solid var(--rule); padding-top: 16px }
 .plan-grid article.best { border-top-color: var(--red) }
 .plan-grid header { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; margin-bottom: 16px }
 .plan-grid .price { font: 700 34px/1 var(--text); font-variation-settings: "wdth" 115; letter-spacing: -0.03em }
 .plan-grid .price small { font: 400 13px var(--text); letter-spacing: 0.02em; color: var(--ink-3) }
-.plan-grid ul { list-style: none; margin: 0 0 22px; padding: 0; font-size: 15.5px; color: var(--ink-2) }
-.plan-grid li { padding: 9px 0 9px 20px; border-bottom: 1px solid var(--rule-2); position: relative }
+.plan-grid ul { list-style: none; margin: 0 0 24px; padding: 0; font-size: 15.5px; color: var(--ink-2) }
+.plan-grid li { padding: 8px 0 8px 16px; border-bottom: 1px solid var(--rule-2); position: relative }
 .plan-grid li::before { content: ""; position: absolute; left: 0; top: 17px; width: 9px; height: 2px; background: var(--ink) }
 .plan-grid article.best li::before { background: var(--red) }
 
 .foot-grid {
-  max-width: 1220px; margin: 0 auto; padding: 30px var(--gap) 46px;
+  max-width: 1220px; margin: 0 auto; padding: 32px var(--gap) 48px;
   display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr); gap: 40px;
 }
 #foot { border-top: 2px solid var(--rule) }
-.made { font-size: 15px; color: var(--ink-2); max-width: 40ch; margin-bottom: 20px }
+.made { font-size: 15px; color: var(--ink-2); max-width: 40ch; margin-bottom: 16px }
 .foot-about label { display: block; font: 500 11px var(--text); text-transform: uppercase; letter-spacing: 0.13em }
-.hint { font-size: 13.5px; color: var(--ink-3); margin: 6px 0 10px }
+.hint { font-size: 13.5px; color: var(--ink-3); margin: 8px 0 8px }
 .field { display: flex; gap: 0 }
 .field input {
-  min-width: 0; flex: 1; height: 46px; padding: 0 12px; border: 1px solid var(--ink); border-right: 0;
+  min-width: 0; flex: 1; height: 46px; padding: 0 16px; border: 1px solid var(--ink); border-right: 0;
   font: 400 15px var(--text); background: #fff; color: var(--ink); border-radius: 0;
 }
 .field button {
-  height: 46px; padding: 0 18px; background: var(--ink); color: #fff; border: 1px solid var(--ink);
+  height: 46px; padding: 0 16px; background: var(--ink); color: #fff; border: 1px solid var(--ink);
   font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.11em; cursor: pointer; border-radius: 0;
 }
 .field button:hover { background: var(--red); border-color: var(--red) }
-.status { font-size: 13.5px; color: var(--red); min-height: 1.4em; margin-top: 10px }
-.foot-links { display: grid; gap: 10px; align-content: start; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.1em }
-.foot-links a { text-decoration: none; border-bottom: 1px solid var(--rule-2); padding: 6px 0 }
+.status { font-size: 13.5px; color: var(--red); min-height: 1.4em; margin-top: 8px }
+.foot-links { display: grid; gap: 8px; align-content: start; font: 500 12px var(--text); text-transform: uppercase; letter-spacing: 0.1em }
+.foot-links a { text-decoration: none; border-bottom: 1px solid var(--rule-2); padding: 8px 0 }
 .foot-links a:hover { border-bottom-color: var(--red) }
 .legal { font-size: 13px; color: var(--ink-3); align-self: end }
 
 @media (max-width: 900px) {
-  .hero { padding-bottom: 34px }
-  .hero-grid { grid-template-columns: 1fr; gap: 30px; align-items: start }
+  .hero { padding-bottom: 40px }
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; align-items: start }
+  .hero-copy, .hero-fig { grid-column: 1 / -1 }
   .hero-fig { max-width: 460px }
   .feat-grid { grid-template-columns: 1fr; gap: 24px }
-  .feat-grid article { border-left: 0; border-top: 1px solid var(--rule-2); padding: 18px 0 0; }
-  .feat-grid article:first-child { border-top: 0; padding-top: 0 }
+  .feat-grid li { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 24px 0 32px }
+  .feat-grid li > .txt { grid-column: 1 / -1 }
+  .feat-grid li > .n { grid-column: 1 / span 4 }
+  .stat-grid { grid-template-columns: 1fr; gap: 24px }
+  .stat-grid .stat, .plan-grid > article { grid-column: 1 / -1 }
   .feat-grid .n { font-size: 30px }
-  .stat-grid { grid-template-columns: 1fr; gap: 22px }
-  .quote blockquote { grid-template-columns: 1fr; gap: 18px }
+  .feat-grid .n { font-size: 30px }
+  .stat-grid { grid-template-columns: 1fr; gap: 24px }
+  .quote blockquote { grid-template-columns: 1fr; gap: 16px }
   .quote blockquote p { max-width: 30ch }
-  .plan-grid { grid-template-columns: 1fr; gap: 26px }
-  .foot-grid { grid-template-columns: 1fr; gap: 26px; padding-bottom: 40px }
+  .plan-grid { grid-template-columns: 1fr; gap: 24px }
+  .foot-grid { grid-template-columns: 1fr; gap: 24px; padding-bottom: 40px }
   .legal { align-self: auto }
-  .bar { grid-template-columns: 1fr; gap: 10px }
+  .bar { grid-template-columns: 1fr; gap: 8px }
   .bar nav { gap: 0; flex-wrap: wrap; row-gap: 8px }
-  .bar nav a { padding: 10px 12px 10px 0; min-height: 44px; display: inline-flex; align-items: center; font-size: 13px }
+  .bar nav a { padding: 8px 16px 8px 0; min-height: 44px; display: inline-flex; align-items: center; font-size: 13px }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important }

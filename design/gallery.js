@@ -87,10 +87,10 @@ const TASKS = [
   {
     n: "11", folder: "11-styles", title: "One brief, nine styles", kind: "Style range",
     brief: "The same product copy set in nine visual styles: Swiss, brutalism, editorial, glass, neumorphism, pixel, Japanese minimal, cyber, luxury.",
-    strong: "Parity measured on rendered text: 41 content strings present in all nine pages, and every style's added words counted (12–42). It caught the editorial page inventing two paragraphs of prose (+53 words) and the Swiss page inventing section names.",
-    weak: "Its own layout rating: 3.5. A 40 px numeral over a caps label, a three-column feature grid, two plan panels and a copy-left hero appear in all nine — the structure was not restyled, only its skin.",
-    scores: { Visual: 4, Layout: 3.5, Consistency: 5, Accessibility: 4, Originality: 4, Fidelity: 4 },
-    verdict: "Range in surfaces and type; the armature stays, and the page says so.", shots: 43
+    strong: "Parity measured on rendered text: 41 content strings present in all nine pages, and every style's added words counted (12–42). Round 3 stopped grading the CSS and measured the rendered page (`skeleton-probe.js`): each section's columns over its declared tracks, the gcd of every computed spacing as the page's **module**, the widest measure in `ch`, the list tag under the numerals, nav links against text links. It found seven of nine pages with one identical section shape, **no page on any module** (gcd 1–2 px over 114–203 spacing values, the Swiss page included, where a comment claimed a baseline grid), and **72 links, not one underlined** — brutalism among them. Four styles were rebuilt at the armature: Swiss on a twelve-column 8 px module with numerals in a hanging rail, brutalism as a single-column document on the browser's own counters with underlined links, editorial's figures as a ruled table, pixel as a 2 × 2 HUD on 8 px. Skeleton similarity 0.441 → **0.389**, identical skeletons 5 → **none**, parity 41/41 unchanged.",
+    weak: "Five pages are **surface studies** by the table's own rule (glass, neumorphism, cyber, Japanese, luxury): their grid is three boxes like everyone's, and they were left alone on purpose, because restyling them to move 0.389 is the number driving the design. A flex section reports `n/0` like a prose flow, so four pages are credited with less structure than they have; the module rule says which pages have a grid, not that the ones without are wrong. No reader, keyboard or zoom pass.",
+    scores: { Visual: 4, Layout: 4, Consistency: 5, Accessibility: 4, Originality: 4.5, Fidelity: 4 },
+    verdict: "The armature was asserted for two rounds and measured in the third: four styles restyled at the grid, five disclosed as surfaces, and the similarity number published both ways.", shots: 44
   }
 ];
 

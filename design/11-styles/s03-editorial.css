@@ -110,11 +110,19 @@ b, strong { font-weight: 600 }
 /* the numbers */
 .numbers { margin-top: 44px; border-top: 3px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 18px 0 24px }
 .num-h { font: 400 11px var(--text); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 18px }
-.num-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px }
-.num { border-left: 1px solid var(--rule); padding-left: 18px }
-.num b { display: block; font: 400 clamp(34px, 4.4vw, 56px)/0.98 var(--display); font-variant-numeric: oldstyle-nums; letter-spacing: 0 }
-.num .u { display: block; margin-top: 10px; font: 400 12px var(--text); letter-spacing: 0.16em; text-transform: uppercase }
-.num em { display: block; margin-top: 6px; font: 400 italic 15.5px var(--text); color: var(--ink-3); max-width: 24ch }
+.num-grid { width: 100%; border-collapse: collapse; caption-side: top; text-align: left }
+.num-grid caption {
+  font: 400 11px var(--text); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3);
+  text-align: left; padding-bottom: 12px;
+}
+.num-grid tr { border-top: 1px solid var(--rule) }
+.num-grid th, .num-grid td { padding: 14px 12px 14px 0; vertical-align: baseline }
+.num-grid th { font: 400 12px var(--text); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); width: 22ch }
+.num-grid td.v {
+  font: 400 clamp(34px, 4.4vw, 56px)/0.98 var(--display); font-variant-numeric: oldstyle-nums;
+  text-align: right; width: 6ch; white-space: nowrap;
+}
+.num-grid td.n { font: 400 italic 15.5px var(--text); color: var(--ink-3) }
 
 /* the pull quote */
 blockquote {

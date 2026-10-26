@@ -166,8 +166,111 @@ for (let i = 0; i < STYLES.length; i += 1) {
   });
 }
 
+/* ── the skeleton, measured on the rendered pages ────────────────────────────
+   The CSS patterns above (threeCol, heroSplit) read the stylesheet's text, which is
+   not the same as what the page lays out: a grid-template-columns declaration is not a
+   rendered column. The ratings' weakest axis — "the structure of the argument is not
+   restyled, only its skin" — is a claim about layout, so it is measured in the
+   browser: per section, how many tracks it resolves to, how many boxes sit on how
+   many distinct x positions, the widest body measure in ch, the biggest type, the
+   largest radius, whether links keep their underline, and the largest unit the
+   section tops fall on (a page on a module grid has one). Two pages with the same
+   signature have the same skeleton whatever their CSS says. */
+import { createRequire } from "node:module";
+import { createServer } from "node:http";
+import { statSync } from "node:fs";
+const { chromium } = createRequire(path.join(here, "..", "tools", "noop.cjs"))("playwright-core");
+const TYPES2 = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".jpg": "image/jpeg", ".png": "image/png" };
+const srv = createServer(async (req, res) => {
+  const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "");
+  const file = path.join(here, rel === "" ? "index.html" : rel);
+  try {
+    if (!statSync(file).isFile()) throw 0;
+    res.setHeader("content-type", TYPES2[path.extname(file)] ?? "application/octet-stream");
+    res.end(await readFile(file));
+  } catch { res.statusCode = 404; res.end("nope"); }
+});
+await new Promise((r) => srv.listen(0, "127.0.0.1", r));
+const origin = `http://127.0.0.1:${srv.address().port}`;
+const browser = await chromium.launch({
+  executablePath: process.env.CHROMIUM ?? path.join(here, "..", "tools", "chromium-capped.sh"),
+  args: ["--no-sandbox", "--disable-dev-shm-usage"],
+});
+const PROBE_FILE = path.join(here, "skeleton-probe.js");
+const sigs = {};
+for (let i = 0; i < STYLES.length; i += 1) {
+  const key = STYLES[i];
+  const pg = await browser.newPage();
+  await pg.setViewportSize({ width: 1440, height: 900 });
+  await pg.goto(`${origin}/s${String(i + 1).padStart(2, "0")}-${key}.html`, { waitUntil: "load" });
+  await pg.waitForTimeout(900);
+  await pg.addScriptTag({ path: PROBE_FILE });
+  sigs[key] = await pg.evaluate(() => window.__ternmarkProbe());
+  await pg.close();
+}
+/* gradient-clipped type: the audit reports "no colour to measure" for a transparent
+   foreground, which is true of the CSS and false of the screen. Screenshot the element,
+   decode it in the browser from the bytes, and measure what was painted. */
+const gradientProbe = async () => {
+  const out = [];
+  for (let i = 0; i < STYLES.length; i += 1) {
+    const key = STYLES[i];
+    const pg = await browser.newPage();
+    await pg.setViewportSize({ width: 1440, height: 900 });
+    await pg.goto(`${origin}/s${String(i + 1).padStart(2, "0")}-${key}.html`, { waitUntil: "load" });
+    await pg.waitForTimeout(700);
+    const targets = await pg.evaluate(() => [...document.querySelectorAll("main *")]
+      .filter((el) => el.children.length === 0 && el.textContent.trim().length > 4 &&
+        (/alpha:\s*0\b|^rgba\(0,\s*0,\s*0,\s*0\)/.test(getComputedStyle(el).color)) &&
+        /text/.test((getComputedStyle(el).backgroundClip || "") + (getComputedStyle(el).webkitBackgroundClip || "")))
+      .map((el) => { const r = el.getBoundingClientRect(); return { text: el.textContent.trim().slice(0, 24), x: r.x, y: r.y + scrollY, w: r.width, h: r.height }; }));
+    for (const t of targets) {
+      if (t.w < 8 || t.h < 8) continue;
+      const shot = (await pg.screenshot({ clip: { x: Math.max(0, t.x), y: Math.max(0, Math.min(t.y - 4, 800)), width: Math.min(t.w, 1200), height: Math.min(t.h + 8, 200) } })).toString("base64");
+      await pg.addScriptTag({ path: PROBE_FILE });
+      const px = await pg.evaluate((b64) => window.__ternmarkPixels(b64), shot).catch(() => null);
+      out.push({ key, text: t.text, px });
+    }
+    await pg.close();
+  }
+  return out;
+};
+const painted = await gradientProbe();
+await browser.close();
+srv.close();
+
+/* signature similarity: two pages match on a field when the field is equal */
+const SIG_KEYS = ["module", "topRhythm", "radiusMax", "listFeatures", "featureTag", "figureMode", "maxMeasure"];
+const secShape = (s2) => s2.sections.map((x) => `${x.cols}/${x.tracks}`).join(",");
+const secHosts = (s2) => s2.sections.map((x) => `${x.host}:${x.cols}x${x.tracks}`).join(" · ");
+const sim = {};
+for (const a of STYLES) for (const b of STYLES) {
+  if (a === b) continue;
+  let m = 0; const total = SIG_KEYS.length + 2;
+  for (const k of SIG_KEYS) if (JSON.stringify(sigs[a][k]) === JSON.stringify(sigs[b][k])) m += 1;
+  if (secShape(sigs[a]) === secShape(sigs[b])) m += 1;
+  if (JSON.stringify(sigs[a].scale) === JSON.stringify(sigs[b].scale)) m += 1;
+  sim[`${a}>${b}`] = m / total;
+}
+const twin = STYLES.filter((a) => STYLES.some((b) => b !== a && sim[`${a}>${b}`] >= 0.99));
+const meanSim = (Object.values(sim).reduce((x, y) => x + y, 0) / Object.keys(sim).length);
+
 const out = {
-  generatedFrom: `content.json + rendered.json (tools/rendered.mjs) + tools/work/shoot/${path.basename(report)}`,
+  generatedFrom: `content.json + rendered.json (tools/rendered.mjs) + tools/work/shoot/${path.basename(report)} + the rendered pages at 1440 px`,
+  skeleton: {
+    note: "signatures measured in the browser: sections' rendered tracks and column counts, the module the section tops fall on, the widest body measure, the type scale, radius, link underlines, and how features are structured",
+    twinStyles: twin,
+    meanSimilarity: +meanSim.toFixed(3),
+    signatures: Object.fromEntries(STYLES.map((k) => [k, {
+      module: sigs[k].module, topRhythm: sigs[k].topRhythm, spacingValues: sigs[k].spacingValues, radiusMax: sigs[k].radiusMax, maxMeasure: sigs[k].maxMeasure,
+      listFeatures: sigs[k].listFeatures, featureTag: sigs[k].featureTag, figureSize: sigs[k].figureSize,
+      figureMode: sigs[k].figureMode, navUnderlines: sigs[k].navUnderlines,
+      textLinkUnderlines: sigs[k].textLinkUnderlines, textLinkCount: sigs[k].textLinkCount, scale: sigs[k].scale,
+      shape: secShape(sigs[k]), hosts: secHosts(sigs[k]),
+    }])),
+    painted,
+  },
+  contentStrings: strings.length,
   contentStrings: strings.length,
   contentWords: contentWords.size,
   content,

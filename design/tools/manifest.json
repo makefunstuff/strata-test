@@ -2409,6 +2409,17 @@
         ]
       },
       {
+        "name": "skeleton",
+        "page": "index.html",
+        "width": 1440,
+        "height": 980,
+        "dpr": 2,
+        "settle": 1500,
+        "actions": [
+          "reveal:#skeleton"
+        ]
+      },
+      {
         "name": "ratings",
         "page": "index.html",
         "width": 1440,

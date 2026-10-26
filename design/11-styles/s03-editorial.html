@@ -70,13 +70,20 @@ const tpl = (c) => `
 
     <section id="stats" class="numbers" aria-labelledby="stats-h">
       <h4 class="num-h" id="stats-h">By the numbers</h4>
-      <div class="num-grid">
-        ${c.stats.map((s) => `<div class="num">
-          <b>${esc(s.v)}</b>
-          <span class="u">${esc(s.u)}</span>
-          <em>${esc(s.n)}</em>
-        </div>`).join("")}
-      </div>
+      <!-- three big numbers in boxes is a dashboard gesture; on a newspaper page a column of
+           figures is a table, and a table is also what the tabular reading order means -->
+      <table class="num-grid">
+        <!-- the section heading already says "By the numbers"; the caption is the table's
+             name for the screen reader, not a second printed line above it -->
+        <caption class="visually-hidden">Measured on the handset</caption>
+        <tbody>
+        ${c.stats.map((s) => `<tr class="num">
+          <th scope="row">${esc(s.u)}</th>
+          <td class="v">${esc(s.v)}</td>
+          <td class="n">${esc(s.n)}</td>
+        </tr>`).join("")}
+        </tbody>
+      </table>
     </section>
 
     <section id="quote" aria-labelledby="quote-h">

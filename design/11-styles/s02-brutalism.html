@@ -52,25 +52,26 @@ const tpl = (c) => `
 
   <section class="sec" id="feat" aria-labelledby="feat-h">
     <h2 class="sec-h" id="feat-h">[FEATURES]<span class="sec-n">section 1 of 4</span></h2>
-    <div class="feat">
-      ${c.features.map((f) => `<article class="box">
-        <p class="num">${f.n}</p>
+    <!-- the list is numbered and the counter is the browser's: the numeral is the document's
+         own, not a 54 px display figure laid over it -->
+    <ol class="feat">
+      ${c.features.map((f) => `<li class="box">
         <h3>${esc(f.t)}</h3>
         <p>${esc(f.b)}</p>
         <p class="tag">[NO NETWORK]</p>
-      </article>`).join("")}
-    </div>
+      </li>`).join("")}
+    </ol>
   </section>
 
   <section class="sec" id="stats" aria-labelledby="stats-h">
     <h2 class="sec-h" id="stats-h">[STATS]<span class="sec-n">measured on the handset</span></h2>
-    <div class="stats">
-      ${c.stats.map((s) => `<div class="box stat">
+    <ul class="stats">
+      ${c.stats.map((s) => `<li class="box stat">
         <b>${esc(s.v)}</b>
         <p class="u">${esc(s.u)}</p>
         <p class="n">${esc(s.n)}</p>
-      </div>`).join("")}
-    </div>
+      </li>`).join("")}
+    </ul>
   </section>
 
   <section class="sec" id="quote" aria-labelledby="quote-h">

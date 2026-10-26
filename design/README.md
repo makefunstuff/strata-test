@@ -30,8 +30,8 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.23, layout 4.23, consistency 4.86, accessibility 4.32,
-originality 4.50** (and fidelity 4.00, scored on task 11 alone). Visual and
+the table below: **visual 4.23, layout 4.27, consistency 4.86, accessibility 4.32,
+originality 4.55** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
 
@@ -47,7 +47,7 @@ task scores under 4 on it.
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
 | 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 26 | Round 2: a timing plate per study, drawn from the study's own Web Animation objects, so the written clock and the demo cannot disagree. Measured as elements: 41→49, 40→45, 59→65. Re-measured as windows through the scroll fix: mean 32.9 → 37.6, no frame regressed. |
 | 10 | Redesign — a flood portal, both versions | [`10-redesign`](10-redesign/index.html) | 4.5 | 5 | 4.5 | 5 | 5 | 37 | Round 2 drew the subject: a tide curve in every row and a level gauge in the panel, both generated from the table's own numbers and checked dot by dot (≤ 0.008 m). It also caught the lede quoting 4.61 m for a tide the table calls 4.48 m — the fix is naming the two quantities, not renumbering them. |
-| 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 3.5 | 5 | 4 | 4 | 43 | Parity measured on rendered text (41 strings × 9 pages) and the added words counted; the layout axis is 3.5 because the nine costumes share one skeleton. |
+| 11 | Style range — one brief, nine styles | [`11-styles`](11-styles/index.html) | 4 | 4 | 5 | 4 | 4.5 | 44 | Parity on rendered text (41 strings × 9 pages) and the added words counted; round 3 measures the **rendered skeleton** — section columns over declared tracks, the gcd of computed spacing as the page's module, links' underlines — found seven of nine on one shape, no page on a module, 72 links and none underlined; four styles rebuilt at the armature, similarity 0.441 → 0.389, twins 5 → 0, and the other five published as surface studies. |
 
 `Fidelity` is scored only on 11 (4), the one task that asks for styles by name.
 
@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the twelve things it was blind to
+## The harness, and the thirteen things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -417,7 +417,7 @@ complete run of that task — all eleven tasks have one, and `tools/shotsindex.m
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
 serve. The last full sweep: **229 shots across the eleven tasks plus 9 in the gallery
-frame — 238 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+frame — 239 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
@@ -436,6 +436,27 @@ the point. `06-identity`'s measured frame moves 27 → 31 lively. The
 gallery frame reports `contrast 0` on all nine of its shots for the first time: its code chips
 measured 4.47 against the 4.5 they need, and `--ink-3` moved `#6b7280` → `#6a717e`, one unit of
 lightness, found by the harness and not by the eye.
+
+### Thirteenth: the study measured the stylesheet, not the page
+
+`11-styles` set out to prove that nine costumes share one armature, and its first two rounds
+graded the **declarations**: grep the stylesheets for `repeat(3`, count `border-radius`, read the
+grid off the CSS text. That produced a layout rating of 3.5 and a sentence in three documents —
+"three columns, a numeral over every feature, two plan panels, in all nine". The claim was about
+CSS, and CSS is a statement of intent.
+
+Round 3 injected a probe into the **rendered page** and asked the box tree. It found a section
+declared as a three-track grid rendering five items at five x positions (glass's hero), a features
+section declared 3-up rendering as one prose column (editorial, Japanese), four pages whose
+computed spacing has a greatest common divisor of **1 px** — no module at all, the Swiss page
+among them, where a stylesheet comment says "aligned on the same baseline grid" — and **72 links,
+not one underlined**, in a study of styles whose traditions are documents. Nothing in the harness
+looked at `text-decoration` in three rounds, because nothing asked the question.
+
+The rule this leaves: *a claim about layout is only evidence when it is read off the rendered box
+tree.* A stylesheet says what the author meant; the browser says what the page does. And a
+generated file that carries a claim (here `stats.js`, drawn by the probe) is better than prose in
+`NOTES.md`, because the next run overwrites it.
 
 ## Limits
 
@@ -470,7 +491,8 @@ is the one that runs the page: the shots, `dump.mjs --reduce --build --frames`,
 node design/tools/shoot.mjs 11-styles          # screenshots + audit for one task
 node design/tools/shoot.mjs 11-styles --only swiss-hero,swiss-full
 node design/tools/rendered.mjs 11-styles       # rendered text, computed styles, fonts
-cd design/11-styles && node measure.mjs        # -> stats.js, the page's own numbers
+cd design/11-styles && node measure.mjs        # -> stats.js: parity, added words, and the
+#                                      rendered-skeleton probe (skeleton-probe.js)
 cd design/02-dashboard && node measure.mjs      # chart legibility: band separation, 1.4.11 floor,
                                             #   greyscale rank, KPI hierarchy -> measure.md
 node design/02-dashboard/measure.mjs --url <dir> --out /tmp/before.md
