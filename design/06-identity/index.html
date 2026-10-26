@@ -24,6 +24,7 @@
     <a href="#lockups">Lockups</a>
     <a href="#scale">Scale &amp; minimum</a>
     <a href="#onebit">One colour</a>
+    <a href="#tints">Chart colours</a>
     <h4>The kit</h4>
     <a href="#grid">The 24 px grid</a>
     <a href="#icons">32 icons</a>
@@ -39,12 +40,35 @@
     <header class="mast">
       <div class="mast-top">
         <div class="lockup">
-          <svg class="lg-mark" viewBox="0 0 48 48" role="img" aria-label="The Meridian mark: a rising meridian inside a horizon ring">
-            <use href="#m-mark-glyph" width="48" height="48"/>
-          </svg>
-          <div class="lg-type">
-            <div class="lg-name">Meridian</div>
-            <div class="lg-sub mono">HYDROGRAPHIC · 54°04′N 4°44′W</div>
+          <!-- a chart plate, not a logo card: the mark sits on the depth bands of the sheet, over
+               the mark's own graticule, with a compass rose built from the same radii (12 and 18)
+               and the 15° meridian, and depth numerals set the way a chart sets them — fine italic
+               serif, the tens digit raised. The title block in the margin is a chart's title block. -->
+          <div class="mast-plate">
+          <div class="plate-field">
+            <svg class="lg-mark" viewBox="0 0 48 48" role="img" aria-label="The Meridian mark: a rising meridian inside a horizon ring">
+              <use href="#m-mark-glyph" width="48" height="48"/>
+            </svg>
+            <svg class="rose" viewBox="0 0 48 48" role="img" aria-label="Compass rose: eight points on the mark's own radii">
+              <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="1"/>
+              <circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width=".6" stroke-dasharray="2 2"/>
+              <g stroke="currentColor" stroke-width="1" stroke-linecap="round">
+                <path d="M24 6v36M6 24h36"/><path d="M11.3 11.3l25.4 25.4M36.7 11.3L11.3 36.7"/>
+              </g>
+              <path d="M24 6l3.4 9h-6.8z" fill="currentColor"/>
+              <circle cx="24" cy="24" r="2.6" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="plate-band">
+            <div class="lg-type">
+              <div class="lg-name">Meridian</div>
+              <div class="lg-sub mono">HYDROGRAPHIC · 54°04′N 4°44′W</div>
+            </div>
+            <span class="sounding" aria-hidden="true"><b>7</b>4 · 12 · <b>5</b>8 · 3 · <i>12</i></span>
+          </div>
+          </div>
+          <div class="plate-tb">
+            <span><b>SHEET 01</b> IDENTITY</span><span>SCALE 1:1</span><span>DATUM OSGB36</span>
           </div>
         </div>
         <div class="mast-copy">
@@ -56,6 +80,7 @@
           <div class="mast-spec mono">
             <span>viewBox 0 0 48 48</span><span>unit r = 24</span><span>horizon at y = 30</span>
             <span>radii 6 · 12 · 18</span><span>stroke 3 / 1.5</span><span>ink #14161a</span><span>signal #c8402f</span>
+            <span>tints 5</span><span>danger #a63a86</span>
           </div>
         </div>
       </div>
@@ -75,12 +100,21 @@
                 <path d="M0 6h48M0 12h48M0 18h48M0 24h48M0 30h48M0 36h48M0 42h48"/>
                 <path d="M6 0v48M12 0v48M18 0v48M24 0v48M30 0v48M36 0v48M42 0v48"/>
               </g>
+              <!-- the page's own copy says below the horizon is water; the diagram now shows it,
+                   in the identity's depth tint, under the grid and the mark -->
+              <rect class="g-water" x="0" y="30" width="48" height="18"/>
               <g class="g-circles"><circle cx="24" cy="24" r="24"/><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="6"/></g>
               <path class="g-horizon" d="M0 30h48"/>
               <path class="g-meridian" d="M24 0v48" transform="rotate(15 24 24)"/>
               <g class="g-marks"><circle cx="24" cy="24" r="1.2"/><circle cx="24" cy="6" r="1.2"/><circle cx="24" cy="30" r="1.2"/></g>
               <g class="g-final"><use href="#m-mark-glyph" width="48" height="48"/></g>
             </svg>
+            <!-- a chart's diagram carries a scale bar. It also fills the column: the diagram used
+                 to float at the top of a card with three hundred pixels of nothing under it. -->
+            <div class="scalebar" role="img" aria-label="Scale bar for the 48 unit construction field, four divisions, one unit is one pixel at the base size">
+              <div class="bars"><i></i><i></i><i></i><i></i></div>
+              <div class="ticks"><span>0</span><span>12</span><span>24</span><span>36</span><span>48</span></div>
+            </div>
             <div class="build-notes">
               <div><b>0 0 48 48</b><span>the field; every construction point is an integer</span></div>
               <div><b>r 6 · 12 · 18 · 24</b><span>four concentric circles; the ring is r 18, the sun is r 6</span></div>
@@ -124,6 +158,14 @@
           <div class="lk-stage col"><svg viewBox="0 0 48 48" class="lm" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg>
             <div class="lt" style="text-align:center"><div class="lt-n">Meridian</div><div class="lt-s mono">HYDROGRAPHIC SURVEY</div></div></div>
           <figcaption><b>Stacked</b><span>Square placements: app icon plate, market stall, buoy plaque.</span></figcaption>
+        </figure>
+        <figure class="lk">
+          <div class="lk-stage field">
+            <div class="field-mark"><svg viewBox="0 0 48 48" class="lm big" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg></div>
+          </div>
+          <figcaption><b>On the sheet</b>The tint is not a backdrop: it is the water, and the horizon
+            of the mark is the line it divides. The field is the only place a tint is allowed in a
+            lockup, and it is drawn at the mark's own y = 30.</figcaption>
         </figure>
         <figure class="lk">
           <div class="lk-stage solo"><svg viewBox="0 0 48 48" class="lm big" aria-hidden="true"><use href="#m-mark-glyph" width="48" height="48"/></svg></div>
@@ -194,8 +236,39 @@
         stencil cuts the horizon where the meridian crosses it, so the crossing reads on a rough surface.</div>
     </section>
 
+    <section id="tints">
+      <div class="sec-head"><span class="n">05</span><h2>Chart colours</h2>
+        <p>The identity's colour is the chart's colour, and a chart's colour has rules.
+          Four roles and one ramp: ink carries the words, signal red is the one point inside
+          the mark, magenta marks an isolated danger because that is what a chart uses for
+          one, and five tints are the seabed. <b>A tint is data, not a background: no word
+          sits on a tint</b> — on the sheet and on this page, which is also what keeps every
+          text pair at AA with the tints in play.</p></div>
+      <div class="tints">
+        <div class="trow"><span class="sw" style="background:var(--ink)"></span><div><b>Sheet ink</b>
+          <span class="hex mono">#14161a</span><span class="role">Every word, and the mark at every size.</span></div></div>
+        <div class="trow"><span class="sw" style="background:var(--signal)"></span><div><b>Signal red</b>
+          <span class="hex mono">#c8402f</span><span class="role">The sun in the mark, and one alert per surface. The only colour allowed inside a glyph.</span></div></div>
+        <div class="trow"><span class="sw" style="background:var(--magenta)"></span><div><b>Danger magenta</b>
+          <span class="hex mono">#a63a86</span><span class="role">An isolated danger, a wreck, a single marked hazard. Never a brand accent, never decorative — that is the chart's rule, inherited whole.</span></div></div>
+        <div class="trow"><span class="sw" style="background:var(--sea)"></span><div><b>Sea</b>
+          <span class="hex mono">#1d4b6f</span><span class="role">Links, focus, construction guides, sounding numerals.</span></div></div>
+        <div class="tintblock">
+          <div class="ramp" role="img" aria-label="Five depth tints from shallow to deep, palest to deepest, in measured bands"><i style="background:var(--tint-1)"></i><i style="background:var(--tint-2)"></i><i style="background:var(--tint-3)"></i><i style="background:var(--tint-4)"></i><i style="background:var(--tint-5)"></i></div>
+          <div class="ramp-lab mono"><span>tint 1 · 0–5 m</span><span>tint 2 · 5–10</span><span>tint 3 · 10–20</span><span>tint 4 · 20–30</span><span>tint 5 · 30+</span></div>
+          <div class="rule">Depth tints are the only fills in the system, and they mean a band of
+            depth: a chart that colours a restaurant photo teal is lying. <b>Measured, because a
+            rule you have not computed is a wish:</b> ink on tints 1–4 is 7.2–16:1, and tint 5 is
+            4.09:1 for ink and 4.10:1 for white — the deepest band is in the dead zone for both, so
+            <b>tint 5 carries no words in either direction.</b> Every text-on-tint pair in the
+            identity is in <span class="mono">measure.mjs</span>, and the audit cannot see SVG
+            text, so the chart excerpt's own label is in that file too.</div>
+        </div>
+      </div>
+    </section>
+
     <section id="grid">
-      <div class="sec-head"><span class="n">05</span><h2>The 24 px grid</h2>
+      <div class="sec-head"><span class="n">06</span><h2>The 24 px grid</h2>
         <p>Every icon lives in a 24 × 24 box with a 2 px gutter, a 20 px live area, a
           1.5 stroke, round caps and joins, and a 30° step for every diagonal. Two icons
           are shown with the grid on: the compass rose and the tide clock.</p></div>
@@ -212,7 +285,7 @@
               <li><b>Round caps and joins, 2 px gutter.</b> Shapes stop 2 px from the box edge so a row of icons reads as a row, not a fence.</li>
               <li><b>Diagonals in 30° steps.</b> Free angles break the pixel grid at 16 px and the set looks drunk.</li>
               <li><b>Optical, not mathematical, centring.</b> The compass rose is drawn 0.25 px high: a 24-circle is optically small in a 24 box.</li>
-              <li><b>16 px is a second drawing.</b> Stroke 1.25, the two innermost details dropped — the 16 px row is not a scale, it is an edit.</li>
+              <li><b>16 px is a second drawing.</b> The stroke is picked in device pixels, not units: at 16 px the icon scales by 0.667, so a 1.25 stroke is a 0.83 px grey hairline — which is what the first version shipped, and <span class="mono">measure.mjs</span> reported it. The edit is 1.5 units, one device pixel, and the two innermost details are dropped.</li>
               <li><b>An icon never carries the only meaning.</b> Every icon in the product has a label beside it; icons are signposts, not the sentence.</li>
             </ul>
           </div>
@@ -221,7 +294,7 @@
     </section>
 
     <section id="icons">
-      <div class="sec-head"><span class="n">06</span><h2>32 icons</h2>
+      <div class="sec-head"><span class="n">07</span><h2>32 icons</h2>
         <p>Drawn for the product, not for the showcase: the survey toolbar, the chart
           list, the tide panel, the account. Names in mono, keyboard letters in the corner,
           and the same glyph at 24, 20, 16 with the 16 px redraw.</p></div>
@@ -236,7 +309,7 @@
     </section>
 
     <section id="inuse">
-      <div class="sec-head"><span class="n">07</span><h2>In use</h2>
+      <div class="sec-head"><span class="n">08</span><h2>In use</h2>
         <p>The identity is not the page above. It is a toolbar at 28 px, a chart list at
           20 px, a tab bar at 24 px on a phone, and a browser tab — the sizes where a
           mark is decided.</p></div>
@@ -247,10 +320,20 @@
             <div class="toolbar" role="toolbar" aria-label="Chart tools" id="toolbar"></div>
             <div class="tool-status" id="toolStatus" role="status">Soundings · <span class="mono">40 m</span></div>
             <div class="chartline" aria-hidden="true">
-              <svg viewBox="0 0 320 96" preserveAspectRatio="none">
-                <path d="M0 74 L28 66 L52 70 L84 44 L112 52 L142 30 L170 38 L206 20 L240 30 L276 14 L320 24" fill="none" stroke="var(--sea)" stroke-width="1.5"/>
-                <path d="M0 74 L28 66 L52 70 L84 44 L112 52 L142 30 L170 38 L206 20 L240 30 L276 14 L320 24 L320 96 L0 96 Z" fill="var(--sea-soft)"/>
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none" role="img" aria-label="Chart excerpt: the seabed track over four depth bands, with sounding numerals and a magenta mark for an isolated danger">
+                <!-- depth bands are the identity's tints doing the job they are for: the shallow
+                     water at the top of the sheet deepening to the channel, the seabed track drawn
+                     over them, one magenta diamond for the danger, exactly as a chart marks one -->
+                <g class="bands">
+                  <rect x="0" y="0" width="320" height="24" fill="var(--tint-1)"/>
+                  <rect x="0" y="24" width="320" height="24" fill="var(--tint-2)"/>
+                  <rect x="0" y="48" width="320" height="24" fill="var(--tint-3)"/>
+                  <rect x="0" y="72" width="320" height="24" fill="var(--tint-4)"/>
+                </g>
+                <path d="M0 74 L28 66 L52 70 L84 44 L112 52 L142 30 L170 38 L206 20 L240 30 L276 14 L320 24" fill="none" stroke="var(--sea-deep)" stroke-width="1.5"/>
+                <path d="M196 60l4 5-4 5-4-5z" fill="var(--magenta)"/>
                 <g class="sds"><text x="30" y="60">7</text><text x="70" y="40">12</text><text x="128" y="27">19</text><text x="196" y="17">24</text><text x="266" y="11">31</text></g>
+                <g class="depthlab"><text x="4" y="90">tint 4 · 20–30 m</text></g>
               </svg>
             </div>
           </div>
@@ -302,14 +385,14 @@
     </section>
 
     <section id="misuse">
-      <div class="sec-head"><span class="n">08</span><h2>Misuse</h2>
+      <div class="sec-head"><span class="n">09</span><h2>Misuse</h2>
         <p>Six ways the mark dies, shown as the mark, not described. Each pair is the same
           file with one crime done to it.</p></div>
       <div class="misuse" id="misuse-grid"></div>
     </section>
 
     <section id="files">
-      <div class="sec-head"><span class="n">09</span><h2>Files</h2>
+      <div class="sec-head"><span class="n">10</span><h2>Files</h2>
         <p>What ships, and the size each file is allowed to be the answer to.</p></div>
       <div class="files">
         <div class="file"><b class="mono">favicon.svg</b><span>16–32 px in a browser tab. The reduced mark: ring, horizon, meridian, no sun, stroke 3 for a sub-pixel-safe line.</span></div>
@@ -317,7 +400,7 @@
         <div class="file"><b class="mono">lockup.svg</b><span>Horizontal lockup with the word set as outlines, so a PDF of a survey report never falls back to a system serif.</span></div>
         <div class="file"><b class="mono">icons.svg</b><span>One sprite, 32 symbols, <span class="mono">&lt;use&gt;</span> by name. 5.5 kB, 1.9 kB gzipped; every icon on this page is drawn from the same data.</span></div>
         <div class="file"><b class="mono">appicon.svg</b><span>512, 180, 96, 48: the ring and sun on ink, with the safe-area grid the stores demand.</span></div>
-        <div class="file"><b class="mono">identity.css</b><span>The tokens the identity needs: ink, paper, sea, signal, and the two type roles. Nothing else is a brand decision.</span></div>
+        <div class="file"><b class="mono">identity.css</b><span>The tokens the identity needs: ink, paper, sea, signal, danger magenta, five depth tints, and the two type roles. Nothing else is a brand decision, and the tints ship as data, not as a background utility class.</span></div>
       </div>
       <div class="note" style="margin-top:14px">This page <em>is</em> the deliverable: every glyph
         above is inline SVG drawn from the construction, the favicon in the tab is the shipped file,

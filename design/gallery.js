@@ -47,10 +47,10 @@ const TASKS = [
   {
     n: "06", folder: "06-identity", title: "Meridian Hydrographic", kind: "Logo and icon set",
     brief: "A mark, five lockups, a 32-icon set, an identity page — files generated from one source.",
-    strong: "The mark is drawn as a construction (grid, compass, offset curve) with the grid left visible; 32 icons on one 24 px grid with a written drop-16 rule; every file built from one data source.",
-    weak: "The mark itself is the weakest part of the strongest-looking page — the argument about the construction is stronger than the drawing.",
-    scores: { Visual: 4, Layout: 4, Consistency: 5, Accessibility: 4, Originality: 4 },
-    verdict: "A superb manual around a mark that is one idea and two compromises.", shots: 14
+    strong: "Round 2 made the page the thing it documents: a chart sheet. The mark sits on depth tints over its own 24-unit graticule, with a compass rose built on the mark's radii, sounding numerals in the sheet's italic, and a title block; the in-use panel is a chart excerpt with a magenta danger diamond; `05 Chart colours` documents the palette with measured rules. `measure.mjs` checks the page's promises against the rendered geometry — and it caught the page lying about its own headline claim: the 16 px row shipped stroke 1.25, which at 16/24 scale is **0.83 device px**, a grey hairline. It is 1.00 px now, and the page states the arithmetic.",
+    weak: "Liveliness 28.6 → 29.9, hue families 0.9 → 1.2: a chart's tints are pale by nature and the page is 80% prose, so the index barely moves — that index is not the axis for a spec sheet. The mark itself is still the weakest part of the strongest-looking page. No dark theme, and a survey tablet at night is a real context; the graticule is CSS, so a printed sheet loses it.",
+    scores: { Visual: 4.5, Layout: 4, Consistency: 5, Accessibility: 4.5, Originality: 4.5 },
+    verdict: "The manual became the sheet, and its own measurement proved its 16 px claim false — 0.83 device px — then fixed it.", shots: 15
   },
   {
     n: "07", folder: "07-dataviz", title: "Harrow Estuary, 1994–2024", kind: "Data visualisation",

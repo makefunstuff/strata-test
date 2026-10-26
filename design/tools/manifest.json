@@ -905,6 +905,17 @@
         ]
       },
       {
+        "name": "tints",
+        "page": "index.html",
+        "width": 1300,
+        "height": 820,
+        "dpr": 2,
+        "settle": 1100,
+        "actions": [
+          "eval:document.getElementById('tints').scrollIntoView({block:'start'})"
+        ]
+      },
+      {
         "name": "grid",
         "page": "index.html",
         "width": 1300,

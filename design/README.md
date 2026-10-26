@@ -30,8 +30,8 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.00, layout 4.14, consistency 4.77, accessibility 4.00,
-originality 4.32** (and fidelity 4.00, scored on task 11 alone). Visual and
+the table below: **visual 4.05, layout 4.14, consistency 4.77, accessibility 4.05,
+originality 4.37** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
 
@@ -42,7 +42,7 @@ task scores under 4 on it.
 | 03 | Mobile app — Ternmark birding log | [`03-mobile`](03-mobile/index.html) | 4 | 4 | 5 | 4 | 4 | 19 | Nine screens that agree with each other, with offline as the premise and the states that happen; no device was touched. |
 | 04 | TUI — logtrail, a log tail | [`04-tui`](04-tui/index.html) | 4 | 4 | 5 | 3 | 4 | 11 | Real no-dependency TypeScript, and a capture pipeline that renders the program's own ANSI bytes; accessibility 3 because a terminal makes colour carry the level. |
 | 05 | Design system — Halyard | [`05-system`](05-system/index.html) | 4 | 4 | 5 | 4 | 4 | 18 | One stylesheet, four themes, 24 components, 22 contrast pairs per theme measured in the browser; the themes are derivatives of tasks 01–04. |
-| 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4 | 4 | 5 | 4 | 4 | 14 | A construction-built mark, 32 icons on one grid, files generated from one source — and the mark is the weakest part of the strongest-looking page. |
+| 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4.5 | 4 | 5 | 4.5 | 4.5 | 15 | Round 2: the manual became the chart sheet it documents — depth tints, graticule, soundings, a rose built on the mark's radii — and its own `measure.mjs` proved the 16 px claim false (0.83 device px), then fixed it. |
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
 | 08 | Form / flow — flood resilience grant | [`08-form`](08-form/index.html) | 4 | 4 | 5 | 4 | 4 | 12 | Six steps, 24 questions, one field pattern; an address lookup that fills a *later* answer and says it did; a stop screen that keeps its button enabled. |
 | 09 | Motion — a system and twelve interactions | [`09-motion`](09-motion/index.html) | 4 | 4 | 5 | 4 | 5 | 23 | The film strip *is* the animation (frames rendered from a live page, scrubbed); reduced motion is a redesign with a named replacement per study. |
@@ -63,7 +63,7 @@ the model goes there (brutalism at 3 px rules with a ticker, pixel at whole-pixe
 SVG and a blinking cursor, cyber with cut corners and a scan sweep) and the
 results keep the discipline.
 
-**One brief has been rebuilt against this diagnosis, and the result is not what a
+**Two briefs have been rebuilt against this diagnosis, and the result is not what a
 "make it prettier" round produces.** `02-dashboard` was the folder's least original page (3 of 5,
 its own rating) and the plainest example of the template look. It is now an instrument panel: one
 ground, hairline rules, a dominant primary readout, a single sequential ramp instead of six hues.
@@ -74,6 +74,16 @@ KPI hierarchy 1.00 → 1.43) and **less lively** on the folder's index (56.4 →
 colour variety on purpose, so the index that measures colour variety went down — see
 *"The counter-example"* below. That is what an evidence-based design round looks like when the
 instrument and the craft disagree: you keep the craft, publish the fall, and say why.
+
+The second round, `06-identity`, went the other way and is the more useful pair. The page documents
+a mark for a hydrographic survey firm and looked like a stationery brochure, so its colour system was
+taken from the chart the firm actually makes: depth tints, a graticule, sounding numerals, a magenta
+danger mark. The index moved **+1.3** (28.6 → 29.9) for a whole new palette — a spec sheet that is
+80% prose is as insensitive to this index as a disciplined dashboard is harshly judged by it. What
+that round's `measure.mjs` produced is the argument for per-task instruments: it proved the page's
+own headline claim false. The 16 px icon row shipped stroke 1.25, and at the 16/24 scale that is
+**0.83 device px** — a grey hairline, in the section titled "16 px is a second drawing, not a
+scale". It is 1.00 device px now, and the page states the arithmetic.
 
  05's
 four themes with 22 contrast pairs per theme, 08's one field pattern across 24
@@ -86,7 +96,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.14, third of five, with visual and accessibility tied last at 4.00
+layout averages 4.14, third of five, with visual and accessibility tied last at 4.05
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -216,7 +226,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| the same run, after `02-dashboard` was rebuilt (next section) | **12.5** | **1.09** | **40.5** |
+| after `02-dashboard` was rebuilt, then `06-identity` | 12.66 | 1.09 | **40.8** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -256,6 +266,16 @@ green. It moved to `liveliness-data.js`, beside `gallery.js`, inside the publish
 URL, counts the tiles and the rail, and fails with the exclusion named. Run against the deploy that
 shipped it, that check said `tiles 0 · fallback true` — the first version of this section's own
 headliner was broken in production and only a check that leaves the machine can see that.
+
+### Fifth: the audit reads HTML, and this folder draws in SVG
+
+`shoot.mjs` walks text nodes to measure contrast, and a page like `06-identity` draws its charts in
+SVG. An `<text>` element inside an `<svg>` is invisible to that walk, and the round-2 chart excerpt
+had its depth-band label set **white on tint 4 at 2.32:1** — a real AA failure inside a shot that
+reported `contrast 0`. The fix is in `06-identity/measure.mjs`, which measures the page's SVG pairs
+by hand, and it found a rule worth having: across the five depth tints, ink runs 15.99 → 4.09:1 and
+white runs 1.05 → 4.10:1, so the **deepest band is a dead zone that carries no words in either
+direction**. A rule like that only exists if the ramp is measured rather than picked by eye.
 
 ### Fourth, and the one pixels cannot see: nothing checked that a page agrees with itself
 
@@ -326,18 +346,20 @@ Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **214 shots across the eleven tasks plus 9 in the gallery
-frame — 223 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **215 shots across the eleven tasks plus 9 in the gallery
+frame — 224 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
 screenshot from an earlier round of that task, kept, and its page says it is not in
 the last audit. Per task, the shot counts and the deliberate contrast findings are unchanged from
 the previous run (`04-tui` 75, `10-redesign` 120, `03-mobile` 28, `07-dataviz` 24, `06-identity` 16,
-`11-styles` 13). The one brief that changed, `02-dashboard`, is the reason its shot count moved
-14 → 15 (a `compare-off` shot, to prove the header control redraws): **0 console errors, 0
-contrast findings, 0 unlabelled controls, 0 sideways overflow** across 15 shots in both themes and
-on phone, and its `measure.mjs` table above is the evidence for the visual claim. The
+`11-styles` 13, `06-identity` 16). Two briefs have been rebuilt since, and both shot counts moved
+14 → 15 to cover what changed: `02-dashboard` gained a `compare-off` shot to prove its header
+control redraws (**0 console errors, 0 contrast findings, 0 unlabelled, 0 overflow** in both themes
+and on phone), and `06-identity` gained a `tints` shot for its new colour section, with its
+contrast findings unchanged at 16 — all of them the deliberate brass-plate mock, where the defect is
+the point. `06-identity`'s measured frame moves 27 → 31 lively. The
 gallery frame reports `contrast 0` on all nine of its shots for the first time: its code chips
 measured 4.47 against the 4.5 they need, and `--ink-3` moved `#6b7280` → `#6a717e`, one unit of
 lightness, found by the harness and not by the eye.

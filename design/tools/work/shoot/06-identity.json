@@ -36,8 +36,8 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/full.jpg",
-  "bytes": 714395,
-  "px": "1440x5770",
+  "bytes": 867266,
+  "px": "1440x6707",
   "actions_failed": []
  },
  {
@@ -77,7 +77,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/masthead.jpg",
-  "bytes": 382300,
+  "bytes": 442754,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -97,30 +97,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "Etched",
-     "size": 12,
-     "ratio": 4.32,
-     "need": 4.5,
-     "fg": "rgb(74, 60, 28)",
-     "bg": "rgb(184, 162, 113)",
-     "sel": "b"
-    },
-    {
-     "text": "brass plate, 60 mm",
-     "size": 10,
-     "ratio": 4.32,
-     "need": 4.5,
-     "fg": "rgb(74, 60, 28)",
-     "bg": "rgb(184, 162, 113)",
-     "sel": "div.cap"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/construction.jpg",
-  "bytes": 296132,
+  "bytes": 282974,
   "px": "2600x1520",
   "actions_failed": []
  },
@@ -163,7 +144,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/lockups.jpg",
-  "bytes": 291961,
+  "bytes": 276141,
   "px": "2600x1800",
   "actions_failed": []
  },
@@ -206,7 +187,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/scale.jpg",
-  "bytes": 282580,
+  "bytes": 283613,
   "px": "2600x1800",
   "actions_failed": []
  },
@@ -249,8 +230,32 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/onebit.jpg",
-  "bytes": 244613,
+  "bytes": 243513,
   "px": "2600x1400",
+  "actions_failed": []
+ },
+ {
+  "label": "06-identity/tints",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:document.getElementById('tints').scrollIntoView({block:'start'})"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Meridian — mark, lockups and a 32-icon set",
+   "stylesheetsMissing": [],
+   "landmarks": "header+nav",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "06-identity/shots/tints.jpg",
+  "bytes": 305232,
+  "px": "2600x1640",
   "actions_failed": []
  },
  {
@@ -273,7 +278,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/grid.jpg",
-  "bytes": 338399,
+  "bytes": 344140,
   "px": "2600x1520",
   "actions_failed": []
  },
@@ -297,7 +302,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/wall.jpg",
-  "bytes": 325754,
+  "bytes": 330171,
   "px": "2880x2360",
   "actions_failed": []
  },
@@ -318,30 +323,11 @@
    "labelledControlsMissing": [],
    "unnamedButtons": [],
    "imgMissingAlt": [],
-   "lowContrast": [
-    {
-     "text": "Etched",
-     "size": 12,
-     "ratio": 4.32,
-     "need": 4.5,
-     "fg": "rgb(74, 60, 28)",
-     "bg": "rgb(184, 162, 113)",
-     "sel": "b"
-    },
-    {
-     "text": "brass plate, 60 mm",
-     "size": 10,
-     "ratio": 4.32,
-     "need": 4.5,
-     "fg": "rgb(74, 60, 28)",
-     "bg": "rgb(184, 162, 113)",
-     "sel": "div.cap"
-    }
-   ],
+   "lowContrast": [],
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/sizes.jpg",
-  "bytes": 170139,
+  "bytes": 180067,
   "px": "2400x1240",
   "actions_failed": []
  },
@@ -365,7 +351,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/inuse.jpg",
-  "bytes": 276612,
+  "bytes": 283787,
   "px": "2600x1800",
   "actions_failed": []
  },
@@ -409,7 +395,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/inuse-tabs.jpg",
-  "bytes": 251541,
+  "bytes": 239077,
   "px": "2600x1520",
   "actions_failed": []
  },
@@ -433,7 +419,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/misuse.jpg",
-  "bytes": 303948,
+  "bytes": 317144,
   "px": "2600x1640",
   "actions_failed": []
  },
@@ -458,7 +444,7 @@
    "focusRing": "none"
   },
   "jpg": "06-identity/shots/toolbar-on.jpg",
-  "bytes": 216822,
+  "bytes": 220921,
   "px": "2400x1400",
   "actions_failed": []
  },
@@ -480,8 +466,8 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/phone.jpg",
-  "bytes": 660820,
-  "px": "390x12369",
+  "bytes": 775629,
+  "px": "390x13885",
   "actions_failed": []
  }
 ]
