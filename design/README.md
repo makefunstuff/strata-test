@@ -267,6 +267,18 @@ And a lesson about the difference between *measured* and *deployed*. The band's 
 `design/` with `rsync --exclude tools/` (the harness is not a page), so the file 404'd in production
 and every visitor got the "no measurement on file" fallback while the whole local suite stayed
 green. It moved to `liveliness-data.js`, beside `gallery.js`, inside the published set, and
+The same class, one round later, on the second file the frame fetches: the gallery reads
+`tools/manifest.json` at page load so its shot counts are the harness's own numbers, and
+`tools/` is excluded from publishing — so on Pages that fetch 404'd, the page fell back to the
+counts transcribed in `gallery.js`, and the suite stayed green. Two things were wrong: publishing
+excluded a file a published page loads, and **the fallback was silent**, so the page displayed a
+transcribed number under a comment promising the harness's own. The workflow now copies that one
+file into the site (everything else under `tools/` stays out), `links.mjs` knows the publish rule and
+reports a published page's reference into `design/tools/` as `UNPUBLISHED`, and the page states under
+the table which source its counts came from. The rule, stated once: *the site is not the repo; a
+reference that exists in the repo can 404 on the site, and a fallback that does not announce itself
+turns that 404 into plausible data.*
+
 `tools/liveliness.mjs --live [url]` now asserts the published page has the band: it loads the live
 URL, counts the tiles and the rail, and fails with the exclusion named. Run against the deploy that
 shipped it, that check said `tiles 0 · fallback true` — the first version of this section's own

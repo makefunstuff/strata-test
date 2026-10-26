@@ -56,9 +56,12 @@ for (const f of files) {
        the gallery's footer linked the harness report at tools/work/shoot/latest.md, this
        tool reported 0 missing (the file exists in the repo, which is all it checked), and the
        live page 404'd. Existence in the repo is not the publishing rule. */
+    /* the manifest is the deliberate exception: publishing copies that one file under
+       design/tools/ (see .github/workflows/pages.yml), because the published gallery fetches it */
+    const publishedFromTools = ["tools/manifest.json"].includes(relative(designDir, target));
     const fromPublished = !relative(designDir, f).startsWith("tools/");
     const intoTools = relative(designDir, target).startsWith("tools/");
-    if (fromPublished && intoTools) {
+    if (fromPublished && intoTools && !publishedFromTools) {
       misses++;
       console.log(`UNPUBLISHED  ${relative(repo, f)} -> ${t}  (under design/tools/, which publishing excludes — print it as text, not a link)`);
     }
