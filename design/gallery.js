@@ -7,10 +7,10 @@ const TASKS = [
   {
     n: "01", folder: "01-landing", title: "Foldline", kind: "Web landing page",
     brief: "A landing page for an offline topographic map app: hero, features, pricing, FAQ, sign-up.",
-    strong: "The hero is a generated map sheet: contours, a route and an elevation profile drawn in the page from the same numbers, so the picture and the claim cannot disagree.",
-    weak: "The sections under the hero are a familiar marketing structure; the hero's left column runs out before the map's height.",
-    scores: { Visual: 4, Layout: 4, Consistency: 4.5, Accessibility: 4, Originality: 4.5 },
-    verdict: "The hero earns the page; the rest is competent.", shots: 10
+    strong: "Round 2 asked the hero's sentences what they draw, and they flinched: the sheet's own scale bar (180 units = 2 km) makes the drawn route **7.6 km**, and the legend, the profile plate and the SVG's own `aria-label` all said **11.4 km**; the field gains 551 m, the plate said +640; the summit is 860 m, the copy said 812. Every quoted number is now derived in the generator from the drawn path and the field at each marker, and `01-landing/measure.mjs` checks it with the path's own `getTotalLength()` as the ruler. Under the hero, the six SaaS cards became a map key: the layers drawn in the sheet's own hand at the sheet's declared stroke widths, and the 38 MB the hero quotes broken into the layers that spend it (one quantity, one ramp, percentages that sum to 100).",
+    weak: "The byte budget is invented — no build makes this pack, so the seven numbers are consistent, not measured. The route's 7.6 km is arithmetically true on a synthetic field: the sheet is not Ordnance Survey data, and \"Ordnance-Survey-quality\" is a product claim. The quote band, pricing and footer are untouched, and the fragments are hand-drawn, not the generated sheet. No reader pass, no 200 % capture.",
+    scores: { Visual: 4.5, Layout: 4.5, Consistency: 5, Accessibility: 4.5, Originality: 5 },
+    verdict: "The hero earned the page; now the page's numbers come from the hero, and the instrument refuses a sentence that drifts. The liveliness index is flat (55.1 → 55.0) because cream ground replaced white cards — the honest trade, stated.", shots: 13
   },
   {
     n: "02", folder: "02-dashboard", title: "Gridwatch", kind: "Analytics dashboard",

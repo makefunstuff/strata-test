@@ -200,23 +200,81 @@ header.site.stuck { border-bottom-color: var(--line); box-shadow: 0 6px 22px -14
 }
 
 /* ── features ────────────────────────────────────────────────────────── */
+/* ── the pack: a map key, not a card wall ────────────────────────────────
+   The headline is "cartography, not a map tile cache", so the layers are drawn in the sheet's own
+   hand, at the sheet's own stroke widths: contours 0.9, index 1.7, drawing rules 1.3, the route
+   3.4 — the four numbers the hero sheet declares on its <g> elements, and 01-landing/measure.mjs
+   reads both sets back and refuses a family wider than that. Every fragment is aria-hidden: the
+   words beside the drawing are the content, and the byte budget's numbers are words as well as widths. */
 .grid { display: grid; gap: 22px }
-.features { grid-template-columns: repeat(3, 1fr) }
-.features li {
-  background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-lg);
-  padding: 26px 24px 24px; position: relative; box-shadow: var(--shadow-1);
-  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-}
-.features li::before {
-  content: ""; position: absolute; left: 24px; right: 24px; top: 0; height: 2px;
-  background: linear-gradient(90deg, var(--moss), transparent 65%); opacity: 0; transition: opacity .16s;
-}
-.features li:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-color: var(--line-2) }
-.features li:hover::before { opacity: 1 }
-.features h3 { margin: 16px 0 8px }
-.features p { margin: 0; color: var(--muted); font-size: .96rem }
-.ic { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 10px; background: #ece4d3; color: var(--moss) }
-.ic svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round }
+
+/* one quantity (megabytes), so one ramp, light through dark; every number is text as well as width */
+.pack-bar { margin: 0 0 34px }
+.pb-segs { display: flex; height: 26px; border: 1px solid var(--line-2); border-radius: var(--r-xs); overflow: hidden }
+.pb-segs span { display: block; height: 100% }
+.pb-segs .s1 { background: #2f4a3f } .pb-segs .s2 { background: #3f6350 }
+.pb-segs .s3 { background: #557761 } .pb-segs .s4 { background: #6d8b74 }
+.pb-segs .s5 { background: #89a187 } .pb-segs .s6 { background: #a7b8a2 }
+.pb-segs .s7 { background: #c4d0bd }
+.pb-key { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px 26px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); font-size: .9rem; color: var(--ink-2) }
+.pb-key li { display: grid; grid-template-columns: 12px 1fr auto auto; gap: 9px; align-items: baseline;
+  border-top: 1px solid var(--line); padding: 5px 0 }
+.pb-key .k { width: 12px; height: 12px; border-radius: 2px; align-self: center }
+.pb-key .k1 { background: #2f4a3f } .pb-key .k2 { background: #3f6350 } .pb-key .k3 { background: #557761 }
+.pb-key .k4 { background: #6d8b74 } .pb-key .k5 { background: #89a187 } .pb-key .k6 { background: #a7b8a2 }
+.pb-key .k7 { background: #c4d0bd }
+.pb-key b, .pb-key em { font-style: normal; font-variant-numeric: tabular-nums }
+.pb-key em { color: var(--muted); min-width: 3.2em; text-align: right }
+.mono { font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace; font-size: .86em }
+
+/* six rows: the drawing of the layer, the layer's name, and what it answers on the hill */
+.pack { list-style: none; margin: 0; padding: 0; display: grid; gap: 0 34px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) }
+.pack li { display: grid; grid-template-columns: 116px 1fr; gap: 18px; align-items: start;
+  border-top: 1px solid var(--line); padding: 20px 0 }
+.pack .frag { display: block; background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 2px; box-shadow: var(--shadow-1) }
+.pack .frag svg { display: block; width: 100%; height: auto }
+.pack h3 { margin: 2px 0 7px; font-size: 1.16rem }
+.pack p { margin: 0; color: var(--muted); font-size: .95rem }
+/* the sheet's own stroke family, at the size a reader sees them */
+.frag .mi { fill: none; stroke: var(--contour); stroke-width: .9; opacity: .62 }
+.frag .ix { fill: none; stroke: var(--contour); stroke-width: 1.7 }
+.frag .ix-l { fill: #4a4231; font-size: 11px; font-weight: 700 }
+/* the sheet's own halo, in CSS: every fragment label is drawn over contours, a grid or a ridge,
+   and the map solves that with a halo filter — the same trick, at the size a reader sees it */
+.frag .fx, .frag .ix-l { paint-order: stroke fill; stroke: var(--paper-2); stroke-width: 3px;
+  stroke-linejoin: round; stroke-linecap: round }
+.frag .fx { fill: #4a4231; font-size: 11.5px; font-weight: 600; font-family: ui-monospace, monospace }
+.frag .fx.sm { font-size: 10px }
+.frag .sp { fill: var(--ink); stroke: var(--paper-2); stroke-width: 1.3 }
+.frag .box { fill: none; stroke: var(--moss); stroke-width: 1.7; stroke-dasharray: 6 4 }
+.frag .bx-l { fill: var(--moss) }
+.frag .rt { fill: none; stroke: var(--route); stroke-width: 3.4; stroke-linecap: round }
+.frag .wp { fill: var(--route); stroke: var(--paper-2); stroke-width: 1.3 }
+.frag .ax { stroke: var(--line-2); stroke-width: 1.3 }
+.frag .pf { fill: none; stroke: var(--route); stroke-width: 1.3; opacity: .85 }
+.frag .rdg { fill: var(--paper-3); stroke: var(--contour); stroke-width: 1.3 }
+.frag .shd { fill: var(--ink); opacity: .13; stroke: none }
+.frag .sun { fill: none; stroke: var(--ochre); stroke-width: 1.7 }
+.frag .ti { fill: none; stroke: #4f7f8b; stroke-width: 1.7; stroke-dasharray: 5 3 }
+.frag .dev { fill: none; stroke: var(--ink-2); stroke-width: 1.7 }
+.frag .bat { fill: none; stroke: var(--moss); stroke-width: 1.7 }
+.frag .lvl { stroke: var(--moss); stroke-width: 3.4 }
+.frag .tip { fill: var(--moss); stroke: none; stroke-width: 0 }
+.frag .pap { fill: var(--paper); stroke: var(--line-2); stroke-width: 1.3 }
+.frag .gd { stroke: var(--line-2); stroke-width: .9; opacity: .8 }
+.frag .fold { stroke: var(--route); stroke-width: 1.3; stroke-dasharray: 4 3; opacity: .9 }
+.frag .scl rect { fill: var(--ink); stroke: var(--ink); stroke-width: 1.3 }
+
+/* the hero's route profile: the notes named the left column's "soft gap"; this is the subject,
+   drawn from the same 64 field samples as the sheet's plate */
+.hero-prof { margin: 26px 0 0 }
+.hero-prof svg { display: block; width: 100%; height: auto; border-radius: var(--r) }
+.hero-prof .hp-t { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; fill: var(--ink-2) }
+.hero-prof-cap { margin: 9px 0 0; font-size: .86rem; color: var(--muted) }
+.hero-prof-cap .mono { font-size: .95em; color: var(--ink-2); font-variant-numeric: tabular-nums }
 
 /* ── how it works ────────────────────────────────────────────────────── */
 .how { background: var(--paper-3); border-block: 1px solid var(--line) }
@@ -348,14 +406,14 @@ footer.site nav a:hover { color: #fbf7ee; text-decoration: underline }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-copy > *, .map { animation: none }
-  .features li, .btn, .nav a::after, .faq summary::after { transition: none }
+  .btn, .nav a::after, .faq summary::after { transition: none }
 }
 
 /* ── responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 1060px) {
   .hero-grid { grid-template-columns: 1fr; gap: 38px }
   .map { max-width: 760px }
-  .features { grid-template-columns: repeat(2, 1fr) }
+  .pack { grid-template-columns: 1fr }
   .quote-grid, .faq-grid, .cta-grid, .how-grid { grid-template-columns: 1fr }
   .fold { max-width: 620px }
   .foot-grid { grid-template-columns: 1fr 1fr }
@@ -384,7 +442,7 @@ footer.site nav a:hover { color: #fbf7ee; text-decoration: underline }
 }
 @media (max-width: 640px) {
   body { font-size: 16px }
-  .features { grid-template-columns: 1fr }
+
   .foot-grid { grid-template-columns: 1fr }
   .map-sheet { box-shadow: var(--shadow-2), 0 0 0 5px var(--paper-2), 0 0 0 6px var(--line) }
   .sheet-legend { font-size: .64rem; gap: 10px; padding: 6px 9px }

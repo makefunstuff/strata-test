@@ -191,6 +191,33 @@
         "actions": [
           "click:.navtoggle"
         ]
+      },
+      {
+        "name": "hero-prof",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 2600,
+        "element": ".hero-prof"
+      },
+      {
+        "name": "pack-bar",
+        "page": "index.html",
+        "width": 1400,
+        "height": 760,
+        "dpr": 2,
+        "settle": 2600,
+        "element": ".pack-bar"
+      },
+      {
+        "name": "pack-rows",
+        "page": "index.html",
+        "width": 1400,
+        "height": 900,
+        "dpr": 2,
+        "settle": 2600,
+        "element": ".pack"
       }
     ]
   },
