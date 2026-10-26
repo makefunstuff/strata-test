@@ -21,7 +21,15 @@ body {
 }
 h1, h2, h3, p, ul, blockquote, pre { margin: 0 }
 ul { list-style: none; padding: 0 }
-a { color: inherit }
+/* Brutalism's gesture is the browser's own document. The page had taken the underline off
+   every link, like the other eight: 11-styles/measure.mjs records the rendered
+   text-decoration-line of every page's links, and all nine said "none". Content links get
+   the default back; the nav keeps its boxes because that is the design's own mark. */
+a { color: inherit; text-decoration: underline; text-underline-offset: 3px }
+/* only the buttons and the skip link; the nav is a row of raw underlined links, which is
+   the document this style is imitating. Measured: before this change, all nine styles had 8
+   links each and not one of them was underlined. */
+a.btn, .skip { text-decoration: none }
 .skip {
   position: absolute; left: 0; top: 0; z-index: 9; padding: 12px 16px; background: var(--ink); color: var(--acid);
   font: 700 13px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; transform: translateY(-120%);
@@ -45,7 +53,7 @@ a { color: inherit }
 .bn { font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: 0.16em; color: #444 }
 .nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px }
 .nav a {
-  font: 700 12px var(--mono); text-decoration: none; padding: 10px 12px; min-height: 44px;
+  font: 700 12px var(--mono); text-decoration: underline; text-underline-offset: 4px; padding: 10px 12px; min-height: 44px;
   display: inline-flex; align-items: center; border: 3px solid var(--ink); background: var(--card);
 }
 .nav a:hover { background: var(--ink); color: var(--acid) }
@@ -56,7 +64,7 @@ a { color: inherit }
   font: 700 clamp(26px, 5.4vw, 58px)/1.02 var(--mono); text-transform: uppercase; letter-spacing: -0.02em;
   max-width: 24ch; word-break: break-word;
 }
-.hero-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; margin-top: 26px; align-items: start }
+.hero-cols { display: block; margin-top: 26px }
 .lede { font-size: 19px; max-width: 44ch; border-left: 6px solid var(--orange); padding-left: 16px }
 .ascii { background: var(--card); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--blue); padding: 12px }
 .ascii pre { font: 400 12.5px/1.35 var(--mono); overflow-x: auto }
@@ -79,14 +87,15 @@ a { color: inherit }
 .sec-n { font: 400 11px var(--mono); letter-spacing: 0.12em; color: #cfcfcf }
 .sec > .feat, .sec > .stats, .sec > .plans, .sec > blockquote { margin-top: 26px }
 
-.feat { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px }
-.feat article { padding: 18px }
-.feat .num { font: 700 54px/0.9 var(--mono); color: var(--blue) }
+.feat { display: block; list-style: decimal; padding-left: 30px; margin: 0 }
+.feat li { margin: 0 0 22px; padding: 18px }
+.feat::marker { font: 700 22px var(--mono); color: var(--blue) }
 .feat h3 { font: 700 19px var(--mono); text-transform: uppercase; margin: 14px 0 10px }
 .feat p { font-size: 16px }
 .feat .tag { margin-top: 14px; font: 700 11px var(--mono); letter-spacing: 0.14em; display: inline-block; border: 2px solid var(--ink); padding: 4px 8px; background: var(--acid) }
 
-.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px }
+.stats { display: block; list-style: square; padding-left: 30px; margin: 0 }
+.stats li { margin: 0 0 22px; padding: 18px }
 .stat { padding: 18px }
 .stat b { font: 700 clamp(30px, 4.4vw, 54px)/1 var(--mono); display: block; word-break: break-word }
 .stat .u { font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 12px; background: var(--ink); color: #fff; display: inline-block; padding: 4px 8px }
@@ -98,7 +107,8 @@ blockquote.box { padding: 22px; max-width: 760px; box-shadow: 8px 8px 0 var(--bl
 blockquote p { font: 400 clamp(19px, 2.4vw, 26px)/1.32 var(--serif) }
 blockquote footer { margin-top: 16px; font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: 0.1em }
 
-.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px }
+.plans { display: block }
+.plans article { margin: 0 0 22px }
 .plan { padding: 0 }
 .plan h3 { font: 700 20px var(--mono); text-transform: uppercase; padding: 16px 18px 0 }
 .plan .price { font: 700 40px var(--mono); padding: 12px 18px }

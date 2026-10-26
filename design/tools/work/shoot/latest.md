@@ -1,18 +1,18 @@
 # design screenshot run
 
-shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
+shots: 239 · clean: 238 · failed: 0 · with console/page/request errors: 1
 
 | shot | size | console errors | low contrast | unlabelled | focus ring | notes |
 |--|--|--|--|--|--|--|
 | ./masthead | 370 KB | 0 | 0 | 0 | outline | clean |
 | ./pulse | 450 KB | 0 | 0 | 0 | outline | clean |
-| ./range | 441 KB | 0 | 0 | 0 | outline | clean |
+| ./range | 436 KB | 0 | 0 | 0 | outline | clean |
 | ./table | 313 KB | 0 | 0 | 0 | outline | clean |
-| ./cards | 707 KB | 0 | 0 | 0 | outline | clean |
-| ./verdict | 791 KB | 0 | 0 | 0 | outline | clean |
-| ./limits | 452 KB | 0 | 0 | 0 | outline | clean |
-| ./full | 2162 KB | 0 | 0 | 0 | outline | clean |
-| ./phone | 1978 KB | 0 | 0 | 0 | outline | clean |
+| ./cards | 706 KB | 0 | 0 | 0 | outline | clean |
+| ./verdict | 796 KB | 0 | 0 | 0 | outline | clean |
+| ./limits | 459 KB | 0 | 0 | 0 | outline | clean |
+| ./full | 2224 KB | 0 | 0 | 0 | outline | clean |
+| ./phone | 2044 KB | 0 | 0 | 0 | outline | clean |
 | 01-landing/hero | 402 KB | 0 | 0 | 0 | outline | clean |
 | 01-landing/full | 645 KB | 0 | 0 | 0 | outline | clean |
 | 01-landing/features | 301 KB | 0 | 0 | 0 | outline | clean |
@@ -27,7 +27,7 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 01-landing/pack-bar | 57 KB | 0 | 0 | 0 | outline | clean |
 | 01-landing/pack-rows | 202 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/light | 348 KB | 0 | 0 | 0 | outline | clean |
-| 02-dashboard/dark | 325 KB | 0 | 0 | 0 | none | clean |
+| 02-dashboard/dark | 324 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/full | 205 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/dark-full | 221 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/chart-hover | 348 KB | 0 | 0 | 0 | outline | clean |
@@ -41,7 +41,7 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 02-dashboard/phone-drawer | 72 KB | 0 | 0 | 0 | none | clean |
 | 02-dashboard/phone-top | 84 KB | 0 | 0 | 0 | outline | clean |
 | 02-dashboard/phone-table | 93 KB | 0 | 0 | 0 | outline | clean |
-| 03-mobile/board | 264 KB | 0 | 12 | 0 | outline | clean |
+| 03-mobile/board | 263 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-full | 608 KB | 0 | 12 | 0 | outline | clean |
 | 03-mobile/board-phone | 600 KB | 0 | 4 | 0 | outline | clean |
 | 03-mobile/today | 103 KB | 0 | 0 | 0 | none | clean |
@@ -78,7 +78,7 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 05-system/overview | 381 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/colour | 420 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/type | 318 KB | 0 | 0 | 0 | outline | clean |
-| 05-system/space | 266 KB | 0 | 0 | 0 | outline | clean |
+| 05-system/space | 267 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/kit-paper | 407 KB | 0 | 0 | 0 | outline | clean |
 | 05-system/kit-deck | 356 KB | 0 | 0 | 0 | none | clean |
 | 05-system/kit-field | 414 KB | 0 | 0 | 0 | none | clean |
@@ -132,9 +132,9 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 08-form/lookup | 251 KB | 0 | 0 | 0 | none | clean |
 | 08-form/review | 271 KB | 0 | 0 | 0 | outline | clean |
 | 08-form/submitted | 315 KB | 0 | 0 | 0 | none | clean |
-| 08-form/draft | 231 KB | 0 | 0 | 0 | outline | clean |
+| 08-form/draft | 232 KB | 0 | 0 | 0 | outline | clean |
 | 08-form/phone | 114 KB | 0 | 0 | 0 | outline | clean |
-| 08-form/phone-errors | 150 KB | 0 | 0 | 0 | none | clean |
+| 08-form/phone-errors | 146 KB | 0 | 0 | 0 | none | clean |
 | 08-form/property | 223 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/masthead | 247 KB | 0 | 0 | 0 | outline | clean |
 | 09-motion/system | 291 KB | 0 | 0 | 0 | outline | clean |
@@ -164,7 +164,7 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 09-motion/button-card | 177 KB | 0 | 0 | 0 | outline | clean |
 | 10-redesign/before-full | 228 KB | 1 | 12 | 2 | outline | clean |
 | 10-redesign/after-full | 625 KB | 0 | 0 | 0 | outline | clean |
-| 10-redesign/before-phone | 219 KB | 0 | 12 | 1 | outline | h-overflow +572px |
+| 10-redesign/before-phone | 220 KB | 0 | 12 | 1 | outline | h-overflow +572px |
 | 10-redesign/after-phone | 631 KB | 0 | 0 | 0 | outline | clean |
 | 10-redesign/c-01b | 265 KB | 0 | 12 | 1 | outline | clean |
 | 10-redesign/c-01a | 391 KB | 0 | 0 | 0 | outline | clean |
@@ -183,7 +183,7 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 10-redesign/c-08b | 163 KB | 0 | 12 | 1 | outline | h-overflow +572px |
 | 10-redesign/c-08a | 163 KB | 0 | 0 | 0 | outline | clean |
 | 10-redesign/masthead | 370 KB | 0 | 0 | 0 | none | clean |
-| 10-redesign/measures | 385 KB | 0 | 0 | 0 | none | clean |
+| 10-redesign/measures | 386 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/pages | 497 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/log1 | 415 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/log2 | 395 KB | 0 | 0 | 0 | none | clean |
@@ -199,14 +199,14 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 10-redesign/tides-curve | 142 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/notices-states | 253 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/rail-alert | 46 KB | 0 | 0 | 0 | none | clean |
-| 11-styles/swiss-hero | 275 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/swiss-full | 234 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/swiss-phone | 169 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/brutalism-hero | 249 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/brutalism-full | 348 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/brutalism-phone | 245 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/swiss-hero | 233 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/swiss-full | 243 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/swiss-phone | 164 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/brutalism-hero | 251 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/brutalism-full | 395 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/brutalism-phone | 242 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/editorial-hero | 233 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/editorial-full | 341 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/editorial-full | 347 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/editorial-phone | 246 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/glass-hero | 283 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/glass-full | 280 KB | 0 | 0 | 0 | outline | clean |
@@ -214,9 +214,9 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 11-styles/neumorph-hero | 233 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/neumorph-full | 233 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/neumorph-phone | 183 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/pixel-hero | 396 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/pixel-full | 381 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/pixel-phone | 310 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/pixel-hero | 395 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/pixel-full | 390 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/pixel-phone | 305 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/japanese-hero | 148 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/japanese-full | 196 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/japanese-phone | 158 KB | 0 | 0 | 0 | outline | clean |
@@ -228,18 +228,19 @@ shots: 238 · clean: 237 · failed: 0 · with console/page/request errors: 1
 | 11-styles/luxury-phone | 160 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/masthead | 260 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/brief | 289 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/heroes | 415 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/towers | 293 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/card-swiss | 486 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/card-neumorph | 433 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/card-cyber | 482 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/heroes | 405 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/towers | 300 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/card-swiss | 446 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/card-neumorph | 440 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/card-cyber | 481 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/audit-pairs | 491 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/parity | 314 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/measures | 334 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/ratings | 361 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/verdict | 517 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/full | 2689 KB | 0 | 0 | 0 | outline | clean |
-| 11-styles/phone | 1990 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/parity | 317 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/measures | 332 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/skeleton | 274 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/ratings | 365 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/verdict | 519 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/full | 2848 KB | 0 | 0 | 0 | outline | clean |
+| 11-styles/phone | 2075 KB | 0 | 0 | 0 | outline | clean |
 | 11-styles/before-glass | 208 KB | 0 | 1 | 0 | outline | clean |
 | 11-styles/before-neumorph | 220 KB | 0 | 12 | 0 | outline | clean |
 

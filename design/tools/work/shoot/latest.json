@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 379244,
+  "bytes": 379231,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -65,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/range.jpg",
-  "bytes": 452016,
+  "bytes": 445988,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -113,7 +113,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/cards.jpg",
-  "bytes": 724044,
+  "bytes": 723075,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -137,7 +137,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/verdict.jpg",
-  "bytes": 810105,
+  "bytes": 814686,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -161,7 +161,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 462514,
+  "bytes": 470211,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -183,8 +183,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 2213880,
-  "px": "1440x11984",
+  "bytes": 2277021,
+  "px": "1440x12336",
   "actions_failed": []
  },
  {
@@ -205,8 +205,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 2025753,
-  "px": "390x24471",
+  "bytes": 2093435,
+  "px": "390x24995",
   "actions_failed": []
  },
  {
@@ -529,7 +529,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 356815,
+  "bytes": 356846,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -553,7 +553,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 332326,
+  "bytes": 332275,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -623,7 +623,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/chart-hover.jpg",
-  "bytes": 355929,
+  "bytes": 355922,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -700,7 +700,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/sorted-buses.jpg",
-  "bytes": 322285,
+  "bytes": 322327,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -726,7 +726,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 329113,
+  "bytes": 329186,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -752,7 +752,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 237288,
+  "bytes": 237214,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -776,7 +776,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/toast.jpg",
-  "bytes": 361765,
+  "bytes": 361763,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -849,7 +849,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-top.jpg",
-  "bytes": 85739,
+  "bytes": 85666,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -874,7 +874,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-table.jpg",
-  "bytes": 94761,
+  "bytes": 94763,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -1017,7 +1017,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board.jpg",
-  "bytes": 270296,
+  "bytes": 269422,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -1160,7 +1160,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-full.jpg",
-  "bytes": 622267,
+  "bytes": 622306,
   "px": "1440x4598",
   "actions_failed": []
  },
@@ -1223,7 +1223,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-phone.jpg",
-  "bytes": 613976,
+  "bytes": 614032,
   "px": "390x11670",
   "actions_failed": []
  },
@@ -1928,7 +1928,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/full.jpg",
-  "bytes": 1558150,
+  "bytes": 1558408,
   "px": "1440x12175",
   "actions_failed": []
  },
@@ -2022,7 +2022,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/space.jpg",
-  "bytes": 272785,
+  "bytes": 272914,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -2046,7 +2046,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/kit-paper.jpg",
-  "bytes": 416876,
+  "bytes": 416950,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2071,7 +2071,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-deck.jpg",
-  "bytes": 364309,
+  "bytes": 364319,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2096,7 +2096,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-field.jpg",
-  "bytes": 424051,
+  "bytes": 424074,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2121,7 +2121,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-terminal.jpg",
-  "bytes": 393937,
+  "bytes": 393983,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2247,7 +2247,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/rules.jpg",
-  "bytes": 303089,
+  "bytes": 302933,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -2272,7 +2272,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/tokens-deck.jpg",
-  "bytes": 405982,
+  "bytes": 405800,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2387,7 +2387,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/full.jpg",
-  "bytes": 867205,
+  "bytes": 867202,
   "px": "1440x6707",
   "actions_failed": []
  },
@@ -2430,7 +2430,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/masthead.jpg",
-  "bytes": 442751,
+  "bytes": 442718,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -2827,7 +2827,7 @@
    "focusRing": "outline"
   },
   "jpg": "06-identity/shots/phone.jpg",
-  "bytes": 775629,
+  "bytes": 775670,
   "px": "390x13885",
   "actions_failed": []
  },
@@ -3539,7 +3539,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/revealed.jpg",
-  "bytes": 166102,
+  "bytes": 166076,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -3566,7 +3566,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/blocked.jpg",
-  "bytes": 303894,
+  "bytes": 303722,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -3647,7 +3647,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/lookup.jpg",
-  "bytes": 256940,
+  "bytes": 256971,
   "px": "2360x2000",
   "actions_failed": []
  },
@@ -3725,7 +3725,7 @@
    "focusRing": "outline"
   },
   "jpg": "08-form/shots/draft.jpg",
-  "bytes": 236988,
+  "bytes": 237220,
   "px": "2360x1440",
   "actions_failed": []
  },
@@ -3776,7 +3776,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/phone-errors.jpg",
-  "bytes": 153620,
+  "bytes": 149932,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -4576,7 +4576,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-full.jpg",
-  "bytes": 233444,
+  "bytes": 233535,
   "px": "1400x1614",
   "actions_failed": []
  },
@@ -4747,7 +4747,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/before-phone.jpg",
-  "bytes": 224461,
+  "bytes": 224882,
   "px": "962x1614",
   "actions_failed": [],
   "hOverflow": 572
@@ -5100,7 +5100,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-02b.jpg",
-  "bytes": 253632,
+  "bytes": 253729,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -5454,7 +5454,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-04b.jpg",
-  "bytes": 316723,
+  "bytes": 316714,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -6227,7 +6227,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/measures.jpg",
-  "bytes": 394724,
+  "bytes": 394802,
   "px": "2800x2600",
   "actions_failed": []
  },
@@ -6251,7 +6251,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/pages.jpg",
-  "bytes": 509439,
+  "bytes": 509415,
   "px": "2800x2400",
   "actions_failed": []
  },
@@ -6393,7 +6393,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/full.jpg",
-  "bytes": 3405920,
+  "bytes": 3405858,
   "px": "1400x27083",
   "actions_failed": []
  },
@@ -6605,7 +6605,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-hero.jpg",
-  "bytes": 281990,
+  "bytes": 238210,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -6627,8 +6627,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-full.jpg",
-  "bytes": 240126,
-  "px": "1440x2149",
+  "bytes": 249239,
+  "px": "1440x2539",
   "actions_failed": []
  },
  {
@@ -6649,8 +6649,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-phone.jpg",
-  "bytes": 173372,
-  "px": "390x3568",
+  "bytes": 167976,
+  "px": "390x3872",
   "actions_failed": []
  },
  {
@@ -6671,7 +6671,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-hero.jpg",
-  "bytes": 255101,
+  "bytes": 256744,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -6693,8 +6693,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-full.jpg",
-  "bytes": 356207,
-  "px": "1440x2832",
+  "bytes": 404938,
+  "px": "1440x3998",
   "actions_failed": []
  },
  {
@@ -6715,8 +6715,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-phone.jpg",
-  "bytes": 251059,
-  "px": "390x4490",
+  "bytes": 247543,
+  "px": "390x4432",
   "actions_failed": []
  },
  {
@@ -6759,8 +6759,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-full.jpg",
-  "bytes": 348678,
-  "px": "1440x3348",
+  "bytes": 355686,
+  "px": "1440x3471",
   "actions_failed": []
  },
  {
@@ -6781,8 +6781,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-phone.jpg",
-  "bytes": 251696,
-  "px": "390x5281",
+  "bytes": 252162,
+  "px": "390x5300",
   "actions_failed": []
  },
  {
@@ -6825,7 +6825,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286640,
+  "bytes": 286658,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -6847,7 +6847,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-phone.jpg",
-  "bytes": 210937,
+  "bytes": 210945,
   "px": "390x4592",
   "actions_failed": []
  },
@@ -6935,7 +6935,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-hero.jpg",
-  "bytes": 405604,
+  "bytes": 404931,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -6957,8 +6957,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-full.jpg",
-  "bytes": 389673,
-  "px": "1440x2940",
+  "bytes": 399780,
+  "px": "1440x3089",
   "actions_failed": []
  },
  {
@@ -6979,8 +6979,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-phone.jpg",
-  "bytes": 317552,
-  "px": "390x5606",
+  "bytes": 312602,
+  "px": "390x5471",
   "actions_failed": []
  },
  {
@@ -7067,7 +7067,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-hero.jpg",
-  "bytes": 287435,
+  "bytes": 287473,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -7089,7 +7089,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303544,
+  "bytes": 303516,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -7111,7 +7111,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229813,
+  "bytes": 229818,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -7199,7 +7199,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/masthead.jpg",
-  "bytes": 266386,
+  "bytes": 266476,
   "px": "2880x1520",
   "actions_failed": []
  },
@@ -7247,7 +7247,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425071,
+  "bytes": 414579,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -7271,7 +7271,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 300121,
+  "bytes": 307609,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -7295,7 +7295,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-swiss.jpg",
-  "bytes": 497513,
+  "bytes": 456295,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -7319,7 +7319,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-neumorph.jpg",
-  "bytes": 443380,
+  "bytes": 450614,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -7343,7 +7343,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 493618,
+  "bytes": 492982,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -7367,7 +7367,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 503138,
+  "bytes": 502571,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -7391,7 +7391,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/parity.jpg",
-  "bytes": 321536,
+  "bytes": 324768,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -7415,8 +7415,32 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/measures.jpg",
-  "bytes": 342318,
+  "bytes": 340349,
   "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/skeleton",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#skeleton"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/skeleton.jpg",
+  "bytes": 280653,
+  "px": "2880x1960",
   "actions_failed": []
  },
  {
@@ -7439,7 +7463,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/ratings.jpg",
-  "bytes": 369844,
+  "bytes": 373713,
   "px": "2880x1600",
   "actions_failed": []
  },
@@ -7463,7 +7487,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/verdict.jpg",
-  "bytes": 529611,
+  "bytes": 531211,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -7485,8 +7509,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2753321,
-  "px": "1440x20883",
+  "bytes": 2916811,
+  "px": "1440x22766",
   "actions_failed": []
  },
  {
@@ -7507,8 +7531,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2037298,
-  "px": "390x41911",
+  "bytes": 2124759,
+  "px": "390x44232",
   "actions_failed": []
  },
  {

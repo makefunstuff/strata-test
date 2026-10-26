@@ -134,6 +134,105 @@ the browser loaded and the font files it fetched; the study page prints the
 count (28 files across the nine pages) and every body and headline names a
 pinned family.
 
+## Round 2 → round 3: the skeleton, measured
+
+The layout axis was the folder's weakest, and the note that made it weakest was a claim about
+CSS declarations: "three columns, numerals over boxes, two plan panels, in all nine". Nothing
+had looked at the rendered page. So this round built an instrument that reads the rendered
+page, and then changed four styles where the instrument said the tradition was being ignored.
+
+**The instrument** — `skeleton-probe.js`, injected into each live style page at 1440 px by
+`measure.mjs`, and `11-styles/stats.js` carries the result:
+
+- **section shape** — for every section, the number of distinct x positions its content grid's
+  children occupy, over the number of tracks that grid declares. `3/3` is three boxes on three
+  tracks; `1/0` is a section with no grid at all (prose, a ruled table).
+- **module** — the gcd of every computed padding, margin and gap above 8 px. A page built on an
+  8 px module measures 8; a page whose numbers were typed as they looked right measures 1.
+  Optical nudges below 8 px are excluded, so a page cannot claim "1 px" as its grid.
+- **top rhythm**, the same gcd over the gaps between section tops.
+- **measure** — the widest paragraph in `ch`; **radius**, the largest corner; **figure** — the
+  largest bare number on the page and whether it hangs in a rail or sits above its heading;
+  **list tag** — the element the numbered features use; **underlines** — the computed
+  `text-decoration-line` of the nav links and of the links in the text, measured separately,
+  because in these pages the links inside `main` are buttons.
+- a **painted-text** probe for `background-clip: text`: it screenshots the element and decodes
+  the PNG in a canvas in the same page, taking the dominant ground and the glyph colour and
+  their ratio. The audit walks HTML text nodes and reports "no colour to measure" for a
+  gradient headline; this reports a number (it is the audit's blind spot from round 2, made
+  measurable).
+- **pairwise skeleton similarity** over 10 signature fields, 36 pairs.
+
+**What it found, before anything was changed**
+
+1. Seven of the nine pages had the *same* section shape — `2/2, 3/3, 3/3, 1/0, 2/2` — and five
+   of them were identical on every field the probe scores (brutalism, glass, neumorphism,
+   pixel, cyber). Mean pairwise similarity **0.441**.
+2. **No page sits on a module.** The spacing gcd is 1 px on four pages and 2 px on five, across
+   114–203 spacing values each — including the Swiss page, whose founding rule *is* the module
+   grid, and whose comment said "aligned on the same baseline grid".
+3. **No page underlines a link.** 8 links per page in nine pages, 72 links, all
+   `text-decoration: none` — including brutalism, whose whole gesture is the browser's own
+   document, and whose stylesheet said `a { text-decoration: none }` in three places.
+4. Seven pages print the numerals `01 02 03` over a `<ul>`. The numbers make the list ordered;
+   the markup said it was not.
+
+**What changed, and what it measures now**
+
+| style | change | module before → after | shape before → after |
+|---|---|---|---|
+| Swiss | 12-column sheet, features an `<ol>` with the numeral in a hanging rail, stats on 12 tracks, 43 spacing values moved onto the module | 1 → **8 px** | `2/2,3/3,3/3,1/0,2/2` → `2/12, 1/12, 3/12, 2/2, 2/2` |
+| Brutalism | single-column document: the browser's own list counters (`decimal`, `square`), one column everywhere, nav links underlined | 2 (unchanged: the style refuses a grid) | → **`1/0` in all five sections** |
+| Editorial | the three big numbers became a ruled **table** with a caption that names it for the reader (a newspaper's column of figures is a table, and a table is what the reading order means) | 1 (unchanged) | stats `3/3` → **`1/0`** |
+| Pixel | 8 px module (50 spacing values), features as a 2 × 2 HUD with the third panel spanning the bottom row | 2 → **8 px** | features `3/3` → **`2/2`** |
+
+After: **mean pairwise skeleton similarity 0.441 → 0.389**, identical skeletons **five → none**,
+and four of the nine pages now restyle the armature rather than the surface. The remaining five
+(glass, neumorphism, cyber, Japanese, luxury) are labelled **surface studies** in the study's own
+table, from the same rule the table is built with — their style is the glass, the shadow, the
+gradient and the colour, not the grid, and that is a legitimate thing for those styles to be.
+
+Parity is untouched at **41/41** in all nine (the words did not move; the structure did).
+44 shots, 0 with problems: no contrast findings, no console errors, no unnamed controls.
+
+**The liveliness index over the round** (`tools/liveliness.mjs 11-styles`, 34 frames, measured
+back-to-back on this tree and on `main`):
+
+| frame | before → after | note |
+|---|---|---|
+| brutalism-hero / -full | 60 → **64**, 69 → **73** | hue families 1 → 2: the browser's blue counters against the acid tags |
+| skeleton (index) | 15 → **20** | the new table: 27 accent squares on a page that was text |
+| towers (index) | 42 → **44** | the nine whole pages, redrawn |
+| pixel-hero / -full | 58 → **59**, 71 → 71 | the HUD is denser (48.1 → 49.5) and the same score |
+| swiss-hero / -full | 16 → **17**, 16 → **15** | the page gained a module and lost ink (0.055 → 0.048) and colour (6.1 → 5.6): the rail is empty space, and the index reads air as dull |
+| editorial-full | 20 → **19** | the ruled table is greyer than three boxed numbers |
+| all 34 frames | mean **35.71 → 36.15**, colourfulness 14.40 → 14.68, hue families 0.91 → 0.97 |
+
+The index moved by half a point on a round that rebuilt four of nine layouts, and two of the
+four pages it *lowered* are the two that got more rigorous. That is the known shape of this
+instrument: it ranks colour area and ink coverage, and a Swiss grid is neither. The number that
+belongs to this round is the skeleton similarity, 0.441 → 0.389, and it is in the page's own
+table — the liveliness rows are published beside it because hiding them would be the same
+category of error as the pages that quote a peak their chart does not draw.
+
+**What this round leaves weak**
+
+- The module rule counts spacings ≥ 8 px. A page that laid everything out on 4 px measures 4,
+  which is correct; a page that laid out on 6 px measures 6. Nothing here says a module of 1 is
+  *bad* — brutalism refuses grids on principle — the point is that the study now says which
+  pages have one, instead of asserting it.
+- The section shape is computed from the grid the section declares. A flex layout with the same
+  visible columns reports `n/0`, the same as a prose flow, so a flex page is credited with less
+  structure than it has. Four pages (editorial, glass, Japanese, luxury heroes) are flex, and
+  their rows read fainter than they are.
+- The painted-text probe has nothing to measure on the nine style pages (`painted: []`): the
+  gradient headline lives in `before-glass.html`. It is wired and proven on that page only.
+- Similarity is a distance over ten hand-picked fields, not a perceptual metric. It ranks how
+  alike the armatures are; it cannot say a page is good.
+- The five surface studies were left as they are on purpose. Restyling them to raise 0.389
+  would be the instrument's number driving the design, which is the thing this folder exists to
+  refuse.
+
 ## Weights
 
 43 shots: 27 style (hero 1 440 × 900, whole page, phone 390 × 844), 14 study
@@ -201,7 +300,7 @@ Measured across the nine pages:
 |---|---|---|
 | Style fidelity | 4 | the four type-led styles are close to textbook and keep the expensive rules (Swiss spends its red three times, luxury sets a headline at a size that slows you, Japanese runs its title vertically); pixel, brutalism and cyber invent in the style's own language; neumorphism and glass keep the recipe and inherit its damage |
 | Visual quality | 4 | the strongest pages (Swiss, editorial, Japanese, luxury) are the cheapest to build; the pixel and neumorph pages look better than they read, which is the same fact seen from the other side |
-| Layout & hierarchy | 3.5 | the weakest axis and the honest one: a 40 px numeral over every feature, a three-column grid, two plan panels and a copy-left hero appear in all nine — the structure of the argument is not restyled, only its skin |
-| Consistency | 5 | one content file, one renderer, one section order, one audit; 41/41 parity and 43 clean shots; the only repeated face is Nunito Sans, and that is the style |
-| Accessibility | 4 | 0 contrast findings, 0 unnamed controls, 0 console errors across 27 style shots under a text-node audit; landmarks, one h1, skip links, 44 px controls, reduced-motion blocks in all nine; smallest text 10.5 px; no reader, keyboard or zoom walkthrough |
+| Layout & hierarchy | 4 | the weakest axis, now measured in the rendered page (`skeleton-probe.js`): seven of nine pages shared one section shape, no page had a spacing module (gcd 1–2 px), and all 72 links were unadorned. Four styles were restyled at the armature — Swiss on an 8 px twelve-column module, brutalism as a single-column document, editorial's figures as a ruled table, pixel as a 2 × 2 HUD — similarity 0.441 → 0.389, identical skeletons 5 → none; the other five are labelled surface studies in the study's own table |
+| Consistency | 5 | one content file, one renderer, one section order, one audit; 41/41 parity after four pages changed their structure, and 44 clean shots; the only repeated face is Nunito Sans, and that is the style |
+| Accessibility | 4 | 0 contrast findings, 0 unnamed controls, 0 console errors across 28 style shots under a text-node audit; landmarks, one h1, skip links, 44 px controls, reduced-motion blocks in all nine; smallest text 10.5 px; no reader, keyboard or zoom walkthrough |
 | Originality | 4 | the parity and added-word measurement over rendered text, the specimen-data disclosure, and the audit-blindness experiment (a before shot the old audit passed with 0) are the parts with something new in them; the styles themselves are known styles, performed |

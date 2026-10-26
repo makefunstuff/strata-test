@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-hero.jpg",
-  "bytes": 281990,
+  "bytes": 238210,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -39,8 +39,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-full.jpg",
-  "bytes": 240126,
-  "px": "1440x2149",
+  "bytes": 249239,
+  "px": "1440x2539",
   "actions_failed": []
  },
  {
@@ -61,8 +61,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/swiss-phone.jpg",
-  "bytes": 173372,
-  "px": "390x3568",
+  "bytes": 167976,
+  "px": "390x3872",
   "actions_failed": []
  },
  {
@@ -83,7 +83,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-hero.jpg",
-  "bytes": 255101,
+  "bytes": 256744,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -105,8 +105,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-full.jpg",
-  "bytes": 356207,
-  "px": "1440x2832",
+  "bytes": 404938,
+  "px": "1440x3998",
   "actions_failed": []
  },
  {
@@ -127,8 +127,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-phone.jpg",
-  "bytes": 251059,
-  "px": "390x4490",
+  "bytes": 247543,
+  "px": "390x4432",
   "actions_failed": []
  },
  {
@@ -171,8 +171,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-full.jpg",
-  "bytes": 348678,
-  "px": "1440x3348",
+  "bytes": 355686,
+  "px": "1440x3471",
   "actions_failed": []
  },
  {
@@ -193,8 +193,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/editorial-phone.jpg",
-  "bytes": 251696,
-  "px": "390x5281",
+  "bytes": 252162,
+  "px": "390x5300",
   "actions_failed": []
  },
  {
@@ -237,7 +237,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286640,
+  "bytes": 286658,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -259,7 +259,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-phone.jpg",
-  "bytes": 210937,
+  "bytes": 210945,
   "px": "390x4592",
   "actions_failed": []
  },
@@ -347,7 +347,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-hero.jpg",
-  "bytes": 405604,
+  "bytes": 404931,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -369,8 +369,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-full.jpg",
-  "bytes": 389673,
-  "px": "1440x2940",
+  "bytes": 399780,
+  "px": "1440x3089",
   "actions_failed": []
  },
  {
@@ -391,8 +391,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/pixel-phone.jpg",
-  "bytes": 317552,
-  "px": "390x5606",
+  "bytes": 312602,
+  "px": "390x5471",
   "actions_failed": []
  },
  {
@@ -479,7 +479,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-hero.jpg",
-  "bytes": 287435,
+  "bytes": 287473,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -501,7 +501,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303544,
+  "bytes": 303516,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -523,7 +523,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229813,
+  "bytes": 229818,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -611,7 +611,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/masthead.jpg",
-  "bytes": 266386,
+  "bytes": 266476,
   "px": "2880x1520",
   "actions_failed": []
  },
@@ -659,7 +659,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425071,
+  "bytes": 414579,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -683,7 +683,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 300121,
+  "bytes": 307609,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -707,7 +707,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-swiss.jpg",
-  "bytes": 497513,
+  "bytes": 456295,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -731,7 +731,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-neumorph.jpg",
-  "bytes": 443380,
+  "bytes": 450614,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -755,7 +755,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 493618,
+  "bytes": 492982,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -779,7 +779,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 503138,
+  "bytes": 502571,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -803,7 +803,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/parity.jpg",
-  "bytes": 321536,
+  "bytes": 324768,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -827,8 +827,32 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/measures.jpg",
-  "bytes": 342318,
+  "bytes": 340349,
   "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "11-styles/skeleton",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "reveal:#skeleton"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "11 · Style range — one brief, nine visual styles",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "11-styles/shots/skeleton.jpg",
+  "bytes": 280653,
+  "px": "2880x1960",
   "actions_failed": []
  },
  {
@@ -851,7 +875,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/ratings.jpg",
-  "bytes": 369844,
+  "bytes": 373713,
   "px": "2880x1600",
   "actions_failed": []
  },
@@ -875,7 +899,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/verdict.jpg",
-  "bytes": 529611,
+  "bytes": 531211,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -897,8 +921,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2753321,
-  "px": "1440x20883",
+  "bytes": 2916811,
+  "px": "1440x22766",
   "actions_failed": []
  },
  {
@@ -919,8 +943,8 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2037298,
-  "px": "390x41911",
+  "bytes": 2124759,
+  "px": "390x44232",
   "actions_failed": []
  },
  {

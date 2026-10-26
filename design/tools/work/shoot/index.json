@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 379244,
+  "bytes": 379231,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -65,7 +65,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/range.jpg",
-  "bytes": 452016,
+  "bytes": 445988,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -113,7 +113,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/cards.jpg",
-  "bytes": 724044,
+  "bytes": 723075,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -137,7 +137,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/verdict.jpg",
-  "bytes": 810105,
+  "bytes": 814686,
   "px": "2880x2800",
   "actions_failed": []
  },
@@ -161,7 +161,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 462514,
+  "bytes": 470211,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -183,8 +183,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 2213880,
-  "px": "1440x11984",
+  "bytes": 2277021,
+  "px": "1440x12336",
   "actions_failed": []
  },
  {
@@ -205,8 +205,8 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 2025753,
-  "px": "390x24471",
+  "bytes": 2093435,
+  "px": "390x24995",
   "actions_failed": []
  }
 ]

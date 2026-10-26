@@ -6,7 +6,7 @@ shots: 37 · clean: 36 · failed: 0 · with console/page/request errors: 1
 |--|--|--|--|--|--|--|
 | 10-redesign/before-full | 228 KB | 1 | 12 | 2 | outline | clean |
 | 10-redesign/after-full | 625 KB | 0 | 0 | 0 | outline | clean |
-| 10-redesign/before-phone | 219 KB | 0 | 12 | 1 | outline | h-overflow +572px |
+| 10-redesign/before-phone | 220 KB | 0 | 12 | 1 | outline | h-overflow +572px |
 | 10-redesign/after-phone | 631 KB | 0 | 0 | 0 | outline | clean |
 | 10-redesign/c-01b | 265 KB | 0 | 12 | 1 | outline | clean |
 | 10-redesign/c-01a | 391 KB | 0 | 0 | 0 | outline | clean |
@@ -25,7 +25,7 @@ shots: 37 · clean: 36 · failed: 0 · with console/page/request errors: 1
 | 10-redesign/c-08b | 163 KB | 0 | 12 | 1 | outline | h-overflow +572px |
 | 10-redesign/c-08a | 163 KB | 0 | 0 | 0 | outline | clean |
 | 10-redesign/masthead | 370 KB | 0 | 0 | 0 | none | clean |
-| 10-redesign/measures | 385 KB | 0 | 0 | 0 | none | clean |
+| 10-redesign/measures | 386 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/pages | 497 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/log1 | 415 KB | 0 | 0 | 0 | none | clean |
 | 10-redesign/log2 | 395 KB | 0 | 0 | 0 | none | clean |

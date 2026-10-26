@@ -55,19 +55,18 @@ const tpl = (c) => `
 
   <section class="block" id="features" aria-labelledby="features-h">
     <div class="block-head"><h2 id="features-h">Fonctions</h2><span>01 — 03</span></div>
-    <div class="feat-grid">
-      ${c.features.map((f) => `<article>
+    <ol class="feat-grid">
+      ${c.features.map((f) => `<li>
         <span class="n">${f.n}</span>
-        <h3>${esc(f.t)}</h3>
-        <p>${esc(f.b)}</p>
-      </article>`).join("")}
-    </div>
+        <div class="txt"><h3>${esc(f.t)}</h3><p>${esc(f.b)}</p></div>
+      </li>`).join("")}
+    </ol>
   </section>
 
   <section class="block" id="stats" aria-labelledby="stats-h">
     <div class="block-head"><h2 id="stats-h">Chiffres</h2><span>mesuré sur l’appareil</span></div>
     <div class="stat-grid">
-      ${c.stats.map((s) => `<div class="stat">
+      ${c.stats.map((s) => `<div class="stat" role="group">
         <b>${esc(s.v)}</b>
         <span class="u">${esc(s.u)}</span>
         <span class="n">${esc(s.n)}</span>
