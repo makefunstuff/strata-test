@@ -15,10 +15,10 @@ const TASKS = [
   {
     n: "02", folder: "02-dashboard", title: "Gridwatch", kind: "Analytics dashboard",
     brief: "A depot load control tower: KPIs, a 24-hour load chart, a vehicle table, filters, two themes, phone.",
-    strong: "Hand-drawn SVG charts with an annotated peak; filters, sort, empty state, a phone drawer; audit clean in both themes.",
-    weak: "Its own rating for originality: 3 of 5 — a control-room layout with a point of view, not a new one.",
-    scores: { Visual: 4, Layout: 4, Consistency: 4, Accessibility: 4, Originality: 3 },
-    verdict: "Dense, legible, and the least original thing in the folder.", shots: 14
+    strong: "Round 2 made it an instrument panel instead of a card wall: one ground and hairline rules, a dominant primary readout, one sequential ramp ordered by depot size. Measured, not asserted — weakest boundary between neighbouring bands 1.07 → 1.16, palest fill against the panel 2.94 → 4.60, greyscale rank −0.33 → 1.00, primary/secondary KPI type 1.00 → 1.43 (`02-dashboard/measure.mjs`). It also found the page quoting a peak its own chart did not draw (7.82 MW at 19:10 in the headline, the figcaption and the aria-label; the series peaks at 6.35 MW at 18:00).",
+    weak: "The liveliness index went *down*, 56.4 → 53.0, and hue families 2.2 → 1.0: the page gave up colour variety on purpose, and the index ranks colour variety. It is still a dashboard as a genre; chart exploration is pointer-only; and the energy units do not integrate (412.6 MWh headline against a curve summing to ~67 MWh) — a content bug that survived the round.",
+    scores: { Visual: 4, Layout: 5, Consistency: 5, Accessibility: 4, Originality: 4 },
+    verdict: "The measured legibility went up and the measured liveliness went down; that gap is the most interesting number in the folder.", shots: 15
   },
   {
     n: "03", folder: "03-mobile", title: "Ternmark", kind: "Mobile app screens",

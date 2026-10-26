@@ -7,9 +7,9 @@
 <meta name="description" content="Gridwatch control tower: an electric bus fleet's charging load, cost, carbon and depot status.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27><rect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230e1317%27/><path d=%27M17 4 8 18h6l-2 10 12-16h-7z%27 fill=%27%2335c3ae%27/></svg>">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.3.0/400.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.3.0/500.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.3.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/archivo@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/archivo@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/archivo@5.3.0/600.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
 <link rel="stylesheet" href="styles.css">
@@ -119,32 +119,32 @@
     <main id="main">
 
       <!-- KPI cards -->
-      <section class="kpis" id="kpis" aria-label="Key indicators">
-        <article class="card kpi">
+      <section class="rail" id="kpis" aria-label="Key indicators">
+        <article class="kpi kpi-primary">
           <p class="lab">Energy today</p>
           <p class="big"><b id="k-energy">412.6</b><span>MWh</span></p>
-          <p class="delta up">▲ 3.1 % vs last Sunday</p>
+          <p class="delta flat">▲ 3.1 % vs last Sunday</p>
           <svg class="spark" id="spark1" viewBox="0 0 120 34" role="img" aria-label="Seven-day trend, rising"></svg>
         </article>
-        <article class="card kpi">
+        <article class="kpi">
           <p class="lab">Grid cost</p>
           <p class="big"><b id="k-cost">£61,890</b></p>
-          <p class="delta down">▼ 1.8 % · £1,140 under budget</p>
+          <p class="delta up">▼ 1.8 % · £1,140 under budget</p>
           <svg class="spark" id="spark2" viewBox="0 0 120 34" role="img" aria-label="Seven-day trend, falling"></svg>
         </article>
-        <article class="card kpi">
+        <article class="kpi">
           <p class="lab">kWh per km</p>
           <p class="big"><b id="k-eff">1.31</b><span>/ km</span></p>
           <p class="delta warn">▲ 0.07 over the 1.24 target</p>
           <svg class="spark" id="spark3" viewBox="0 0 120 34" role="img" aria-label="Seven-day trend, above target"></svg>
         </article>
-        <article class="card kpi">
+        <article class="kpi">
           <p class="lab">Fleet online</p>
           <p class="big"><b id="k-fleet">466</b><span>of 532</span></p>
           <p class="delta up">▲ 12 charge-ready for 05:00</p>
           <svg class="spark" id="spark4" viewBox="0 0 120 34" role="img" aria-label="Seven-day trend, steady"></svg>
         </article>
-        <article class="card kpi">
+        <article class="kpi">
           <p class="lab">CO₂ intensity</p>
           <p class="big"><b id="k-co2">11.2</b><span>t today</span></p>
           <p class="delta up">▼ 0.9 t · solar closed at 70 MWh</p>
@@ -157,23 +157,23 @@
         <figure class="card wide">
           <div class="card-head">
             <h2>Depot charging load, 24 hours</h2>
-            <p class="sub">stacked kW, metered at each depot transformer · <span id="arealegend" class="legend"></span></p>
+            <p class="sub">stacked kW by hour, metered at each depot transformer · <span id="chartMeta">peak —, ceiling —, headroom —</span> · click a depot to toggle · <span id="arealegend" class="legend"></span></p>
           </div>
           <div class="plot" id="plot">
-            <svg id="area" role="img" aria-label="Stacked area chart of charging load per depot over 24 hours, peaking at 7.82 megawatts at 19:10" aria-describedby="area-d"></svg>
-            <p id="area-d" class="sr-only">Stacked area chart of charging load per depot. The numbers are in the depot table below.</p>
+            <svg id="area" role="img" aria-label="Stacked column chart of charging load per depot by hour over 24 hours, with the 8.03 megawatt contract ceiling; the total peaks at 6.35 megawatts at 18:00, under the ceiling" aria-describedby="area-d"></svg>
+            <p id="area-d" class="sr-only">Stacked columns of charging load per depot by hour, with a total line and the contract ceiling. The numbers are in the depot table below.</p>
             <div class="tip" id="tip" hidden></div>
           </div>
-          <figcaption class="note">The dip at 19:00 is Well Hall's charger bank 3 going offline; the peak of 7.82 MW at 19:10 is 212 kW under the contract ceiling.</figcaption>
+          <figcaption class="note">The dip at 19:00 is Well Hall's charger bank 3 going offline. The day's peak, <b>6.35 MW at 18:00</b>, sits 1.68 MW under the contract ceiling — the headroom the price band buys.</figcaption>
         </figure>
 
         <figure class="card" id="source">
           <div class="card-head">
             <h2>Where the power came from</h2>
-            <p class="sub">day total, share of 412.6 MWh</p>
+            <p class="sub">share of the day total<span class="pw-total"><b>412.6</b><span>MWh</span></span></p>
           </div>
-          <div class="donut-wrap">
-            <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Grid import 71 per cent, on-site solar 17 per cent, battery discharge 12 per cent"></svg>
+          <div class="pw">
+            <svg id="donut" viewBox="0 0 320 34" role="img" aria-label="One hundred per cent bar: grid import 71 per cent, on-site solar 17 per cent, battery discharge 12 per cent"></svg>
             <ul class="keys" id="donutKeys"></ul>
           </div>
           <figcaption class="note">Battery discharge is timed to the price band C peak (17:00–20:00).</figcaption>
@@ -184,7 +184,7 @@
         <figure class="card">
           <div class="card-head">
             <h2>kWh per km by depot</h2>
-            <p class="sub">target 1.24 · bar = today, tick = last Sunday</p>
+            <p class="sub">target 1.24 (dashed) · bar = today, tick = last Sunday · red cap = over target</p>
           </div>
           <svg id="bars" viewBox="0 0 560 230" role="img" aria-label="kWh per kilometre by depot against the 1.24 target; New Cross is furthest over target"></svg>
           <figcaption class="note">Brentford runs the longest circuits; New Cross is the draggiest, and the only depot over target on both days.</figcaption>

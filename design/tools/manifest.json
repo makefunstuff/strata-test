@@ -242,6 +242,17 @@
         ]
       },
       {
+        "name": "compare-off",
+        "page": "index.html",
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "settle": 1200,
+        "actions": [
+          "eval:const s=document.getElementById('compare'); s.value='compare: no comparison'; s.dispatchEvent(new Event('change'));"
+        ]
+      },
+      {
         "name": "filtered",
         "page": "index.html",
         "width": 1440,

@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/full.jpg",
-  "bytes": 1558344,
+  "bytes": 1557979,
   "px": "1440x12175",
   "actions_failed": []
  },
@@ -111,7 +111,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/space.jpg",
-  "bytes": 272775,
+  "bytes": 272981,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -135,7 +135,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/kit-paper.jpg",
-  "bytes": 416873,
+  "bytes": 416876,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -160,7 +160,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-deck.jpg",
-  "bytes": 364350,
+  "bytes": 364309,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -185,7 +185,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-field.jpg",
-  "bytes": 424075,
+  "bytes": 424051,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -210,7 +210,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-terminal.jpg",
-  "bytes": 393953,
+  "bytes": 393937,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -336,7 +336,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/rules.jpg",
-  "bytes": 303101,
+  "bytes": 303089,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -361,7 +361,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/tokens-deck.jpg",
-  "bytes": 405923,
+  "bytes": 405941,
   "px": "2880x2200",
   "actions_failed": []
  },

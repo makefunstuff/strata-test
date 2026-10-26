@@ -46,7 +46,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/revealed.jpg",
-  "bytes": 166020,
+  "bytes": 166066,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -73,7 +73,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/blocked.jpg",
-  "bytes": 303701,
+  "bytes": 304044,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -154,7 +154,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/lookup.jpg",
-  "bytes": 256852,
+  "bytes": 256964,
   "px": "2360x2000",
   "actions_failed": []
  },
@@ -232,7 +232,7 @@
    "focusRing": "outline"
   },
   "jpg": "08-form/shots/draft.jpg",
-  "bytes": 237082,
+  "bytes": 237207,
   "px": "2360x1440",
   "actions_failed": []
  },
@@ -283,7 +283,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/phone-errors.jpg",
-  "bytes": 153620,
+  "bytes": 149932,
   "px": "780x1688",
   "actions_failed": []
  },

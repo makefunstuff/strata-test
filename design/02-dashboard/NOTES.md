@@ -138,3 +138,154 @@ Fixes made after looking:
 | Originality | **3** | a control-room layout with a point of view (annotated peak,
   provenance footer, depot codes as the user's own, the unplugged-cable empty state) —
   inside a well-known dashboard genre, not a new one.
+
+---
+
+# Round 2 — the instrument panel
+
+## What was said, and what was actually wrong with it
+
+The folder's human verdict on the eleven demos was *"boring"* and *"AI sloppy"*. That is a
+taste judgement, and taste judgements are not actionable, so this round started by naming
+what a viewer is reacting to in this specific page:
+
+- **Five identical KPI cards.** Equal size, equal treatment, five numbers competing. A
+  control-room screen knows what to read first; this one did not.
+- **A rainbow stack.** Six depots carrying one quantity (kW) were painted in six unrelated
+  hues. The hues carried no order and no meaning, so the reader compares colours — the
+  measured weak point below is 1.07:1 between neighbouring bands, i.e. the same grey twice.
+- **A donut for three categories** where the interesting fact is the split of one total.
+- **Card soup.** Drop-shadowed rounded boxes at every level, so nothing in the page was
+  one surface.
+- **One grotesque font doing everything**, including the numerals.
+- The layout was a SaaS template wearing a bus-fleet costume. The subject is a **depot
+  control tower**, and control towers are instrument panels: fields, rules, references,
+  marks — not cards.
+
+## What changed
+
+**One ground, one panel, one recessed field.** Depth is carried by lightness and hairline
+rules; a single elevation token is reserved for floating layers (tooltip, drawer, toast).
+The rail is now one instrument strip with a recessed field for the primary readout, and a
+dominant/secondary type ratio: the eye lands on 412.6 MWh, then the delta, then the rest.
+
+**Two typefaces with jobs.** Archivo for the UI, IBM Plex Mono for anything that is a
+number, a code, a timestamp, a unit or an axis tick. Labels are small mono capitals with
+tracking, the way a panel labels a channel.
+
+**Colour is semantic, not decorative.** One sequential ramp for the depot series, ordered
+by size; the accent (teal) only on interactive state; ok/warn/fault/info only where a
+state is meant; amber for the contract ceiling, coral for the over-target caps. Red is
+never used on a bar that is not over target — the previous bars carried red in their
+ramp for no reason.
+
+**Charts that can be read against something.** The stacked area became stacked hourly
+columns with the contract ceiling drawn as a labelled reference, a y axis, a total line,
+an annotated peak and the "bank 3 offline 19:00" marker on the real point. The donut
+became a 100 % part–whole bar, because three parts of one total is a bar, and the bar
+shows the shares at a glance without a key hunt. The kWh/km bars got a target baseline
+axis; the in-chart target label that collided with the bar values is gone.
+
+**A comparison that compares.** The header's `compare:` select drew nothing at all: pick
+"Saturday", the page redrew identically. It is wired now — the comparison day is drawn as
+a dashed ghost curve, enters the tooltip, and the chart meta quotes the delta.
+
+## Bugs this round turned up (all of them pre-existing)
+
+1. **The page quoted a peak that its own chart did not draw.** Headline, figcaption and
+   the chart's `aria-label` all said *7.82 MW at 19:10*. The seeded series peaks at
+   **6.35 MW at 18:00**. A screen whose accessibility text describes a peak that is not on
+   the chart is not a rounding error; a controller reading the aria label and a controller
+   reading the chart are being told different things. The metrics, alerts, copy and
+   aria-label now agree, and the ceiling (8.03 MW) and headroom (1.68 MW) are computed
+   from the drawn series, so the numbers cannot drift from the picture again.
+2. **The compare control was a lie** (above).
+3. **The phone header spilled.** The sticky bar is fixed-height and translucent; at 390 px
+   the wrapped title drew over the page content below it. It grows, and is opaque on phone.
+4. **The Filters button clipped.** `.iconbtn { width: 30px }` won over the phone-only
+   button that carries a label.
+5. **Dark theme's selected day was a hole.** A near-white pressed button on a dark bar.
+   The selected state now uses the accent in dark, ink in light.
+6. **The first data ramp failed its own contrast budget.** Solved for the two constraints
+   it must satisfy at once (see the measurement below), the ramp is `--d1…--d6` at
+   ≥ 4.6:1 (light) and ≥ 3.0:1 (dark) against the panel, with every neighbouring pair
+   ≥ 1.15:1 apart.
+7. **…and it was inverted in dark.** Ordered like the light ramp, the biggest depot was
+   the palest band on a dark ground: the measured rank came out −1.00. On a dark ground
+   weight is light, so the dark ramp runs the other way.
+
+## The legibility measurement
+
+`node 02-dashboard/measure.mjs [--url <dir>] [--out <file>]` — the folder's per-task
+measurement convention, in the browser, from computed fills (with the alpha the page
+painted) and the drawn SVG geometry. Run against the previous round by pointing `--url` at
+a worktree of the old commit.
+
+| measure | round 1 | round 2 | why |
+| --- | --- | --- | ---
+| weakest boundary between neighbouring bands | 1.07 (L) · 1.08 (D) | **1.16 (L) · 1.18 (D)** | below ~1.15 the boundary is carried by the separator stroke, not by the colour |
+| palest fill against the panel | 2.94 (L) · 3.44 (D) | **4.60 (L) · 3.03 (D)** | WCAG 1.4.11 asks 3:1 for a meaningful graphic object; a stacked band is one |
+| greyscale rank (biggest depot = heaviest band) | −0.33 | **1.00 · 1.00** | the chart has to survive print, a monochrome projector and colour-blindness; a rainbow scores whatever |
+| primary / secondary KPI type size | 1.00 | **1.43** | five equal cards is 1.00; the page now says what to read first |
+| plot ink (data share of the plot box) | — | 0.17 | density |
+
+Audit state after the round: 15 shots, **0 console errors, 0 contrast findings,
+0 unlabelled controls, 0 sideways overflow**, both themes, phone included.
+
+## And the liveliness index went *down*
+
+The same instrument, the same eleven wide shots, before and after:
+
+| | round 1 | round 2
+| --- | --- | ---
+| lively | 56.4 | **53.0**
+| colourfulness | 22.9 | 21.5
+| hue families (of 12) | 2.2 | **1.0**
+| ink coverage | 0.08 | 0.08
+| tonal entropy | 0.23 | 0.19
+| panel depth | 0.16 | 0.16
+| *empty state* | **16** | **49**
+
+So the index that was built to catch "boring" rates this page *less lively* after the
+redesign. Read the components and it is not a paradox: the page deliberately gave up hue
+variety — six depots carrying one quantity get one sequential ramp, and semantic colour
+only where a state is meant — and the index is built out of colourfulness and hue
+families. It ranks colour variety; it cannot see that the colour is now doing a job.
+
+Two things it did see, both real: the **empty state went from 16 to 49** (the old empty
+page was a strip of dead grey; the new one keeps the rail, the panels and the structure,
+so an empty depot selection reads as an instrument at rest, not a broken screen), and
+`ink`/`depth` held while the table got denser.
+
+That is the index's first counter-example and it is written into the folder's README:
+use it to catch dead frames and to compare pages of the same kind, **not** to grade the
+palette of a data-dense UI. The right response to a metric going down is not to paint the
+rainbow back: that would be gaming the instrument, which is exactly the failure the folder
+accuses the demos of.
+
+## Open defects, still open
+
+- **The energy units do not integrate.** The headline says 412.6 MWh for the day; the
+  hourly curve sums to ~67 MWh. They are two authored numbers that were never reconciled,
+  and the first version of the comparison curve normalised to the headline and drew a
+  curve five times the size of the one it was comparing with (tooltip: 13,072 kW beside
+  2,427 kW). The comparison is now normalised by the *ratio* between the two days, so the
+  curve, the delta and the rail's "3.1 % vs last Sunday" tell one story. The absolute
+  inconsistency is a content bug, not a layout bug, and it is still in the data.
+- Chart exploration is pointer-only (no keyboard path to the hour tooltip).
+- KPI sparklines still have no axis and no units in the trace.
+- 900–1200 px: the table scrolls horizontally; the alerts card has empty vertical space.
+
+## Ratings, round 2
+
+The self-rated axes are the ones the folder already calls useless (every task in the
+folder rated itself 4/5 on visual quality, spread over one point), so these are recorded
+with the measurement next to them, and the measured axes are in the hub.
+
+| | | why
+| --- | --- | ---
+| Visual quality | **4** | the instrument-panel system holds: one ground, hairline rules, two typefaces with jobs, semantic colour. Not a 5: the alerts card's whitespace and the sidebar's account block are still generic.
+| Layout / hierarchy | **5** | primary readout dominant, one instrument strip, chart references (axis, ceiling, annotations), table rows designed as records on phone. The 900–1200 band is the known weak width.
+| Consistency | **5** | one token set, two themes, the ramp ordered per theme, the same chip/pill vocabulary, depot colour identical in legend, chart, checkboxes, table.
+| Accessibility | **4** | audit clean in both themes and on phone, 0 findings; the chart's aria text now agrees with the drawing (it did not). Loses a point for pointer-only chart exploration.
+| Originality | **4** | the *genre* is still a dashboard. What is new is the treatment: a control tower that reads as panels, a ceiling line the whole page is measured against, depot codes as the operator's vocabulary.
