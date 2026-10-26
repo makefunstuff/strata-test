@@ -126,7 +126,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board.jpg",
-  "bytes": 270273,
+  "bytes": 269422,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -257,7 +257,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-full.jpg",
-  "bytes": 622267,
+  "bytes": 622489,
   "px": "1440x4598",
   "actions_failed": []
  },
@@ -316,7 +316,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-phone.jpg",
-  "bytes": 614063,
+  "bytes": 614090,
   "px": "390x11670",
   "actions_failed": []
  },

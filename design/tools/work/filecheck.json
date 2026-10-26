@@ -32,7 +32,7 @@
      "console: Failed to load resource: net::ERR_FAILED"
     ],
     "built": {
-     "html": 10493,
+     "html": 10487,
      "interactive": 8,
      "bodyChildren": 7
     }
@@ -40,7 +40,7 @@
    "http": {
     "errs": [],
     "built": {
-     "html": 45579,
+     "html": 45573,
      "interactive": 54,
      "bodyChildren": 7
     }
@@ -185,29 +185,29 @@
    "url": "index.html",
    "file": {
     "errs": [
-     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1793030565959' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
-     "requestfailed: design/04-tui/capture/stream.ansi?v=1793030565959 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1793031618531' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/stream.ansi?v=1793031618531 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/endpoints.ansi?v=1793030566027' from origin 'null' has been blocked by CORS policy: Cross origin requests are only sup",
-     "requestfailed: design/04-tui/capture/endpoints.ansi?v=1793030566027 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/endpoints.ansi?v=1793031618553' from origin 'null' has been blocked by CORS policy: Cross origin requests are only sup",
+     "requestfailed: design/04-tui/capture/endpoints.ansi?v=1793031618553 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/help.ansi?v=1793030566081' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supporte",
-     "requestfailed: design/04-tui/capture/help.ansi?v=1793030566081 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/help.ansi?v=1793031618560' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supporte",
+     "requestfailed: design/04-tui/capture/help.ansi?v=1793031618560 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/filtered.ansi?v=1793030566096' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supp",
-     "requestfailed: design/04-tui/capture/filtered.ansi?v=1793030566096 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/filtered.ansi?v=1793031618562' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supp",
+     "requestfailed: design/04-tui/capture/filtered.ansi?v=1793031618562 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/empty.ansi?v=1793030566112' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
-     "requestfailed: design/04-tui/capture/empty.ansi?v=1793030566112 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/empty.ansi?v=1793031618564' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
+     "requestfailed: design/04-tui/capture/empty.ansi?v=1793031618564 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/frozen.ansi?v=1793030566133' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
-     "requestfailed: design/04-tui/capture/frozen.ansi?v=1793030566133 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/frozen.ansi?v=1793031618565' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/frozen.ansi?v=1793031618565 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/light.ansi?v=1793030566145' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
-     "requestfailed: design/04-tui/capture/light.ansi?v=1793030566145 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/light.ansi?v=1793031618567' from origin 'null' has been blocked by CORS policy: Cross origin requests are only support",
+     "requestfailed: design/04-tui/capture/light.ansi?v=1793031618567 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED",
-     "console: Access to fetch at 'design/04-tui/capture/narrow.ansi?v=1793030566158' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
-     "requestfailed: design/04-tui/capture/narrow.ansi?v=1793030566158 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/narrow.ansi?v=1793031618569' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/narrow.ansi?v=1793031618569 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED"
     ],
     "built": {
@@ -231,8 +231,8 @@
    "url": "capture.html?frame=stream",
    "file": {
     "errs": [
-     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1793030569134' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
-     "requestfailed: design/04-tui/capture/stream.ansi?v=1793030569134 net::ERR_FAILED",
+     "console: Access to fetch at 'design/04-tui/capture/stream.ansi?v=1793031620765' from origin 'null' has been blocked by CORS policy: Cross origin requests are only suppor",
+     "requestfailed: design/04-tui/capture/stream.ansi?v=1793031620765 net::ERR_FAILED",
      "console: Failed to load resource: net::ERR_FAILED"
     ],
     "built": {

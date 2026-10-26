@@ -533,7 +533,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark-full.jpg",
-  "bytes": 238177,
+  "bytes": 238079,
   "px": "1440x1771",
   "actions_failed": []
  },
@@ -915,7 +915,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board.jpg",
-  "bytes": 270273,
+  "bytes": 269422,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -1046,7 +1046,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-full.jpg",
-  "bytes": 622267,
+  "bytes": 622489,
   "px": "1440x4598",
   "actions_failed": []
  },
@@ -1105,7 +1105,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-phone.jpg",
-  "bytes": 614063,
+  "bytes": 614090,
   "px": "390x11670",
   "actions_failed": []
  },
@@ -1485,7 +1485,7 @@
    "focusRing": "none"
   },
   "jpg": "04-tui/shots/board.jpg",
-  "bytes": 665485,
+  "bytes": 665583,
   "px": "1500x3762",
   "actions_failed": []
  },
@@ -2415,7 +2415,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/full.jpg",
-  "bytes": 1558246,
+  "bytes": 1558344,
   "px": "1440x12175",
   "actions_failed": []
  },
@@ -2509,7 +2509,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/space.jpg",
-  "bytes": 272981,
+  "bytes": 272775,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -2533,7 +2533,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/kit-paper.jpg",
-  "bytes": 416876,
+  "bytes": 416873,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2558,7 +2558,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-deck.jpg",
-  "bytes": 364315,
+  "bytes": 364350,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2583,7 +2583,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-field.jpg",
-  "bytes": 424051,
+  "bytes": 424075,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2608,7 +2608,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-terminal.jpg",
-  "bytes": 393828,
+  "bytes": 393953,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -2734,7 +2734,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/rules.jpg",
-  "bytes": 303089,
+  "bytes": 303101,
   "px": "2880x2000",
   "actions_failed": []
  },
@@ -2759,7 +2759,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/tokens-deck.jpg",
-  "bytes": 405941,
+  "bytes": 405923,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -4004,7 +4004,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/revealed.jpg",
-  "bytes": 165964,
+  "bytes": 166020,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -4031,7 +4031,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/blocked.jpg",
-  "bytes": 303836,
+  "bytes": 303701,
   "px": "2360x1840",
   "actions_failed": []
  },
@@ -4112,7 +4112,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/lookup.jpg",
-  "bytes": 256915,
+  "bytes": 256852,
   "px": "2360x2000",
   "actions_failed": []
  },
@@ -4190,7 +4190,7 @@
    "focusRing": "outline"
   },
   "jpg": "08-form/shots/draft.jpg",
-  "bytes": 237156,
+  "bytes": 237082,
   "px": "2360x1440",
   "actions_failed": []
  },
@@ -4241,7 +4241,7 @@
    "focusRing": "none"
   },
   "jpg": "08-form/shots/phone-errors.jpg",
-  "bytes": 149932,
+  "bytes": 153620,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -6270,7 +6270,7 @@
    "focusRing": "outline"
   },
   "jpg": "10-redesign/shots/c-07b.jpg",
-  "bytes": 302487,
+  "bytes": 302440,
   "px": "2800x1520",
   "actions_failed": []
  },
@@ -6666,7 +6666,7 @@
    "focusRing": "none"
   },
   "jpg": "10-redesign/shots/full.jpg",
-  "bytes": 3196758,
+  "bytes": 3196820,
   "px": "1400x25961",
   "actions_failed": []
  },
@@ -6844,7 +6844,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/brutalism-full.jpg",
-  "bytes": 356748,
+  "bytes": 356207,
   "px": "1440x2832",
   "actions_failed": []
  },
@@ -6954,7 +6954,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-hero.jpg",
-  "bytes": 289411,
+  "bytes": 289351,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -6976,7 +6976,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/glass-full.jpg",
-  "bytes": 286556,
+  "bytes": 286557,
   "px": "1440x2959",
   "actions_failed": []
  },
@@ -7218,7 +7218,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-hero.jpg",
-  "bytes": 287448,
+  "bytes": 287446,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -7240,7 +7240,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-full.jpg",
-  "bytes": 303544,
+  "bytes": 303502,
   "px": "1440x2777",
   "actions_failed": []
  },
@@ -7262,7 +7262,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/cyber-phone.jpg",
-  "bytes": 229836,
+  "bytes": 229819,
   "px": "390x5151",
   "actions_failed": []
  },
@@ -7398,7 +7398,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/heroes.jpg",
-  "bytes": 425064,
+  "bytes": 425127,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -7422,7 +7422,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/towers.jpg",
-  "bytes": 300056,
+  "bytes": 300002,
   "px": "2880x1640",
   "actions_failed": []
  },
@@ -7494,7 +7494,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/card-cyber.jpg",
-  "bytes": 493219,
+  "bytes": 493506,
   "px": "2880x2400",
   "actions_failed": []
  },
@@ -7518,7 +7518,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/audit-pairs.jpg",
-  "bytes": 503138,
+  "bytes": 503116,
   "px": "2880x2500",
   "actions_failed": []
  },
@@ -7636,7 +7636,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/full.jpg",
-  "bytes": 2753248,
+  "bytes": 2753362,
   "px": "1440x20883",
   "actions_failed": []
  },
@@ -7658,7 +7658,7 @@
    "focusRing": "outline"
   },
   "jpg": "11-styles/shots/phone.jpg",
-  "bytes": 2037238,
+  "bytes": 2037085,
   "px": "390x41911",
   "actions_failed": []
  },
