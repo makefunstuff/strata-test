@@ -6,7 +6,10 @@
   --paper-2: #f5f6f8;
   --ink: #15161a;
   --ink-2: #464b57;
-  --ink-3: #6b7280;
+  /* #6a717e not #6b7280: the audit measured the code chips (ink-3 on paper-2) at 4.47 against
+     the 4.5 they need. One unit of lightness is the whole fix, and the harness is the reason it
+     is not eyeballed. */
+  --ink-3: #6a717e;
   --rule: #dfe2e8;
   --rule-2: #c8ccd4;
   --accent: #1f4fd8;
@@ -21,7 +24,7 @@ body {
   margin: 0; background: var(--paper); color: var(--ink);
   font-family: var(--sans); font-size: 16px; line-height: 1.62;
 }
-main, header.mast, footer { max-width: 1180px; margin: 0 auto; padding: 0 26px }
+main, header.mast, footer, #pulse { max-width: 1180px; margin: 0 auto; padding: 0 26px }
 header.mast { padding-top: 46px; padding-bottom: 30px; border-bottom: 2px solid var(--ink) }
 footer { border-top: 1px solid var(--rule); margin-top: 46px; padding-top: 18px; padding-bottom: 40px;
   color: var(--ink-3); font-size: 14px }
@@ -103,6 +106,37 @@ article.card > figcaption { font-family: var(--mono); font-size: 12px; color: va
 .links a { margin-right: 14px }
 .back { font-family: var(--mono); font-size: 13px }
 
+/* the measured-pulse band (#pulse). The frame's one job is to show what the folder measures;
+   colour here is data — --bg is the page background read out of each brief's own screenshot,
+   --h is that frame's dominant hue bin, the bar length its colourfulness — so nothing is painted
+   that the harness did not observe. Tiles stay legible on both grounds because the ink is chosen
+   from the measured background's relative luminance in gallery.js. */
+#pulse { padding-top: 26px; padding-bottom: 34px; border-bottom: 1px solid var(--rule) }
+.band { margin-top: 14px }
+.band-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 8px }
+.tile { background: var(--bg, var(--paper-2)); color: var(--ink); border: 1px solid var(--rule-2);
+  padding: 10px 11px 9px; min-height: 108px; display: flex; flex-direction: column; gap: 8px;
+  transition: transform .16s ease, box-shadow .16s ease }
+.tile.dark { color: #fff }
+.tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(21, 22, 26, .16) }
+.tile .t-name { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase;
+  opacity: .78 }
+.tile .t-bar { display: block; height: 10px; background: color-mix(in srgb, currentColor 18%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 34%, transparent) }
+.tile .t-bar i { display: block; height: 100%; background: hsl(var(--h, 218) 78% 46%); }
+.tile.dark .t-bar i { background: hsl(var(--h, 218) 84% 62%) }
+.tile .t-nums { font-family: var(--mono); font-size: 11.5px; line-height: 1.35; opacity: .92; margin-top: auto }
+.tile .t-nums b { font-size: 19px; letter-spacing: -0.01em }
+.rail { display: flex; height: 26px; margin-top: 8px; border: 1px solid var(--rule-2) }
+.rail span { display: block; min-width: 6px }
+.rail span.neutral { background: repeating-linear-gradient(45deg, #c8ccd4 0 5px, #eef0f3 5px 10px) }
+.tile.achromatic .t-bar i { background: color-mix(in srgb, currentColor 55%, transparent) }
+.rail-cap { font-family: var(--mono); font-size: 12px; margin-top: 6px }
+#pulse .scores li.measured { border-style: dashed }
+li.measured { border-style: dashed; background: repeating-linear-gradient(135deg,
+  color-mix(in srgb, var(--accent) 7%, transparent) 0 6px, transparent 6px 12px) }
+li.measured b { color: var(--accent) }
+
 @media (max-width: 900px) {
   ul.strip { grid-template-columns: repeat(2, 1fr) }
   article.card { grid-template-columns: 1fr }
@@ -111,4 +145,8 @@ article.card > figcaption { font-family: var(--mono); font-size: 12px; color: va
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important }
+  .tile:hover { transform: none; box-shadow: none }
+}
+@media print {
+  .tile { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact }
 }

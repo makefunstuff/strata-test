@@ -31,6 +31,20 @@
   </dl>
 </header>
 
+<section id="pulse" aria-labelledby="p-h">
+  <h2 id="p-h">The one thing this folder could not grade itself</h2>
+  <p class="note">Every task rated its own <b>visual quality 4 out of 5</b>; eleven 4/5s is a prior,
+    not a measurement, and this folder's own <a href="README.md#limits">Limits</a> says the
+    self-graded axes are its least useful numbers. So the frames were measured instead:
+    <code>node tools/liveliness.mjs --per-task</code> screenshots each brief at 1440 and reads the
+    pixels — Hasler–Süsstrunk colourfulness, hue families, ink coverage, tonal entropy, panel depth.
+    One tile per brief, painted in the background colour <em>measured from that frame</em> and
+    coloured in by <em>its measured colourfulness</em>: this band is the data, not decoration.</p>
+  <div id="pulse-band" class="band"><noscript><p class="note">The band needs script; the numbers live in
+    <code>tools/work/liveliness/latest.json</code>.</p></noscript></div>
+  <p class="note" id="pulse-foot"></p>
+</section>
+
 <main id="main">
   <section id="method-top" aria-labelledby="mt-h">
     <h2 id="mt-h">What every task had to be</h2>
@@ -134,6 +148,7 @@
     <code>strata/swift-1.5-flash-next-iq3_s</code>.</p>
 </footer>
 
+<script src="tools/liveliness-data.js" defer></script>
 <script src="gallery.js" type="module"></script>
 </body>
 </html>
