@@ -202,3 +202,158 @@ at the phone width.
 | Originality | **4** | the two-strip volume/severity figure; a filter that is a query
   language applied to both views; a capture pipeline that photographs the program's own
   bytes through an ANSI reader instead of drawing a mock-up.
+
+---
+
+# Round 2 — the page's claims, asked of the bytes the program printed
+
+## What the page was
+
+The task's measured row is the `light` frame: **40 liveliness, 12.4 colourfulness, ink 0.097, 1 hue
+family**. The audit carried **75 contrast findings** here, the folder's second-largest pile. The
+ratings said: visual 4, layout 4, and *"the help overlay is the flattest screen"*.
+
+This task is different from the rest of the folder: the frames are not drawings in the page, they are
+**the program's own output** — `tools/capture.sh` runs `src/logtrail.ts` at a fixed size and writes
+the ANSI bytes to `capture/*.ansi`, which `capture.html` renders. So the frames can be interrogated as
+data, and the page's claims can be asked of them. Fourteen of the checks in `04-tui/measure.mjs`
+read the `.ansi` files. What they found:
+
+## Seven claims that were not true of the bytes
+
+1. **The rules were drawn too faint to be structure.** Sixty of the 75 findings were the
+   box-drawing glyphs at **2.81–2.83:1**. The audit had been asking them for 4.5:1, the bar for
+   readable text, which is the wrong test: a pane border is a graphical object required to
+   understand the content, so **WCAG 1.4.11's 3:1** applies — and at 2.81 the app failed the right
+   bar in *both* palettes. Two changes, not one: the audit now classifies a node made only of
+   box-drawing (U+2500–257F), block/shade (U+2580–259F) or braille (U+2800–28FF) characters as a
+   graphic, reports it with `kind:"graphic"` and holds it to 3:1; and the palette moved — dark
+   `line: 4d6170 → 536979` (**2.83 → 3.18**), light `8f9ca6 → 85939e` (**2.81 → 3.15**), each the
+   smallest lightness step on the same hue.
+2. **"nine keys, no mouse — the bottom bar repeats them"**, printed by the help overlay over a
+   table of **18 keys** (`j k ↑ ↓ g G / Esc f t 1 2 3 s S enter o q`), and repeated by the landing
+   page's caption as *"listing all nine keys"*. The bar repeats **nine**. Both numbers now come from
+   the two tables the program already has: the overlay's key list, and `BAR_KEYS`, which the status
+   bar builds itself. The frame prints *"18 keys, no mouse — the bar repeats 9 of them"*.
+3. **Three keys the overlay advertised and the program did not implement.** `/` fell into the
+   catch-all that types into the filter, `enter` only closed help, and `o` typed an `o`. The words
+   said *insert a filter term*, *copy the selected line*, *open the trace id*. They do those things
+   now, in the terminal's own language: `/` appends the next term from `FILTER_TERMS` — the same
+   list the parser reads — `enter` puts the line on the clipboard over **OSC 52**, `o` puts the trace
+   id there, and the line pane marks the id as an **OSC 8** link with a `trace://` target: a scheme a
+   viewer registers, not a host name. The app's key handler is the source of truth for what a key
+   does, and the instrument takes its set from there.
+4. **"lines per 10 s · 06:08 → 06:12"**, **"10 s buckets"**, **"warn+error per 10 s"**: the histogram
+   is 60 buckets over a buffer that spans **116 s**, so a bucket is **2 s** — the label was five
+   times the truth in three places, and the printed window ended at 06:12 when the buffer ends at
+   06:09. All of it derives from `ALL` now.
+5. **"06:11:58 → 06:12:44"** under the latency strip, printed for every selection. The strip is the
+   last 26 requests *on the selected route*, so its span belongs to them: the frame reads
+   **06:08:54 → 06:09:53 · 26 req**, computed from the rows.
+6. **Two colours in the palette with no job** — a violet and a panel fill, declared in both palettes
+   and referenced nowhere in the program. Deleted; the instrument fails if a colour with no use
+   comes back.
+7. **The endpoints frame emitted 22 lines into a 22-row terminal.** Every other view stops at
+   `rows − 1`, because the last line of a terminal belongs to the cursor: that frame's bottom row
+   scrolled off the screen. Capped, and the instrument checks all eight frames for `rows − 1` lines
+   and the declared width.
+
+## What is built
+
+**The palette, as an instrument.** The page's chip says *2 palettes*; the section now shows them —
+11 colours in each, on the ground each palette sits on (the light row on white, because that is where
+it is used), each with its hex, its **computed** contrast ratio, the bar it must clear, and the job it
+does. Colour carries jobs here, and the section says which: thresholds (`gold` over 300 ms, `red`
+over 900 ms), levels (`faint` trace, `blue` debug, `accent` info), structure (`line`, the rules),
+fills (`sel`, `chip`, each measured against the text that sits on it). The ratios are computed in the
+page, not typed, and the *need* is printed beside the number, so a pass is not a colour-coded claim.
+The swatch is the smallest part of each cell.
+
+The keys legend's words were rewritten to the behaviour the program has, so the overlay, the legend
+and the key handler say the same thing — and the instrument checks all three, by token.
+
+## The instrument: 25 checks, and the seven ways it was wrong first
+
+`04-tui/measure.mjs`: palette parity between the source, the page's mirror and the rendered swatches;
+a job for every colour; the printed ratios; the rule colour inside the captured bytes; the key sets
+(bindings ⊇ overlay = legend, bar ⊆ overlay ∪ footer, printed counts); the filter terms in parser,
+key and help text; the histogram's 60 glyphs, its bucket seconds and its window; the latency strip's
+bars, count and span; the endpoint strips (20 bars, the share bar not counted); every capture at
+`rows − 1` lines within `cols`; 0 px overflow at 390 px; 0 console errors. **All 25 pass.**
+
+Before they did, the instrument was wrong seven times, and each is in the source as a comment:
+
+1. it imported `stat` from `fs`, which is the **callback** API; called with no callback it throws, the
+   request handler caught it, and the server answered **404 for the page it was serving** — the report
+   then described a 4-byte document with no scripts in it. A server that 404s the page under test is
+   not measuring that page.
+2. it read the captures as **latin1**. Box glyphs are multibyte: a 60-bucket histogram "had 0 glyphs",
+   and a 148-column frame "was 376 wide".
+3. it stripped **only SGR colours**, so the trace link's 33 OSC bytes counted as text width and the
+   frame read as 177 columns.
+4. the app's own `vis()`/`clip()` had that same hole, and it was worse: the width walk treated every
+   escape as an SGR colour and skipped to the next `m`; an OSC 8 sequence contains no `m`,
+   `indexOf("m")` returned −1, the walk restarted at 0, and **the capture hung forever**. Printing a
+   link introduced an infinite loop in the renderer. The width maths now skips OSC whole, and an
+   escape with no terminator ends the walk instead of spinning.
+5. it counted the endpoint row's **share bar** (18 `█`, one glyph) as part of the latency strip —
+   38 bars in a 20-request strip. The rule that works: a run with more than one glyph in it.
+6. it required the status bar's keys to be in the overlay's *table*, when `?` is in the overlay's
+   footer.
+7. it compared captured lines to `rows`, when a well-behaved TUI writes `rows − 1`.
+
+The symmetry is the point: the instrument and the app made the **same** mistake about what a terminal
+sequence is, and one of them looped.
+
+## Liveliness, before and after
+
+The 9 frames the tool takes for this task in both trees (it skips the 390 px shots), back to back,
+same instrument:
+
+| frame | before | after | |
+| --- | --- | --- | --- |
+| `board` — the whole page | 43 · colour 11.8 · ink 0.126 | **47 · colour 13.1 · ink 0.16** | the palette strip lands on the page |
+| `stream` | 47 | **48** · colour 14.5 · ink 0.123 | the rules, 0.35 log points brighter |
+| `filtered`, `narrow` | 48, 54 | **49, 55** | |
+| `frozen` | 49 | 49 | |
+| `endpoints` | 59 | 58 | one row less: the frame stopped overflowing its terminal |
+| `help`, `empty` | 42, 41 | 42, 41 | the notes' flattest screen, and the empty state, unchanged |
+| `light` — **the task row** | 40 · colour 12.4 · ink 0.097 | 40 · colour 12.4 · ink 0.102 | the light palette's rule went **2.81 → 3.15:1** and the index cannot see it |
+| mean, 9 frames | 47.0 · colour 15.1 | **47.8 · colour 15.9** | |
+
+**The three new frames** — the instruments: `palette-dark` **61** (colour 23.7), `palette-light`
+**58** (colour 20.6), `keys-legend` **26** (colour 8.6).
+
+The page moves four points; the task row moves **zero**. That is the honest outcome and it is worth
+writing down: the change inside the light frame is a hairline rule from 2.81:1 to 3.15:1, which a
+reader can see at 148 columns in a real terminal and this index cannot. The colour the strip adds
+lives in the element frames (61, 58) and the whole page (43 → 47). A liveliness index that cannot see
+a contrast fix is the same instrument that could not see a 50 % distance error in `01-landing`: it
+ranks frames, and the things that make these pages true are not in a frame.
+
+## Ratings, round 2
+
+| Axis | /5 | Note |
+|---|---|---|
+| Visual quality | **4.5** | the frames are brighter where they were dim, and the page carries a real palette instrument; the prose panels are the same panels they were |
+| Layout & hierarchy | **4** | unchanged: the strip joins the existing grid, and the notes' complaint about the help overlay is the medium's own flatness, not a layout fault |
+| Consistency | **5** | the page's colour table, the app's palette and the audit are one measurement; the key legend, the overlay and the key handler are one set; the time labels are derived, so a label cannot outlive the data it described |
+| Accessibility | **5** | 75 contrast findings → **0** across 14 shots; the rules clear 1.4.11's 3:1 in both palettes; the faintest text is 5.21:1; the strip prints the ratio and the bar for every colour, on the ground it is used on |
+| Originality | **5** | a landing page whose claims are checked against the bytes its product printed, by an instrument that divides the captured window by the captured bucket count and asks what a "10 s bucket" is |
+
+## Round 2's remaining weak points
+
+- **OSC 52 and OSC 8 are not executed by anything here.** The instrument proves the sequences are in
+  the bytes and that the width maths skips them; no terminal emulator is in the loop, so "copies to
+  the clipboard" remains a claim about the emulator's support. A real check needs a terminal that
+  answers OSC 52, which headless Chromium is not.
+- The strip's palette data is a **hand-written mirror** of the app's table. The page cannot import
+  the program's TypeScript, so equality is enforced by the instrument, not by construction: it fails
+  on drift, which is not the same as being unable to drift.
+- The severity counters are **buffer-wide** while the frame is a window on the buffer (35 w 20 e
+  printed above 2 w 1 e drawn). The instrument records that as by design; a reader can still misread
+  it, and a label that says "in the window" while counting the buffer is the kind of thing this round
+  exists to catch.
+- A palette legend is the least-read part of any page. The strip is for the reader who checks; the
+  help overlay is still the flattest screen.
+- No reader walkthrough, no 200 % text capture, no forced-colours mode: unchanged.

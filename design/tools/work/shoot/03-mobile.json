@@ -19,6 +19,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -28,6 +29,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -37,6 +39,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -46,6 +49,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -55,6 +59,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -64,6 +69,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -73,6 +79,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -82,6 +89,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -91,6 +99,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -100,6 +109,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -109,6 +119,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -118,6 +129,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -126,7 +138,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board.jpg",
-  "bytes": 269422,
+  "bytes": 270296,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -150,6 +162,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -159,6 +172,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -168,6 +182,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -177,6 +192,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -186,6 +202,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -195,6 +212,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -204,6 +222,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -213,6 +232,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -222,6 +242,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -231,6 +252,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -240,6 +262,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -249,6 +272,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -257,7 +281,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-full.jpg",
-  "bytes": 622357,
+  "bytes": 622267,
   "px": "1440x4598",
   "actions_failed": []
  },
@@ -281,6 +305,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -290,6 +315,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -299,6 +325,7 @@
      "size": 12,
      "ratio": 1.25,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(220, 230, 236)",
      "bg": "rgb(255, 253, 248)",
      "sel": "b"
@@ -308,6 +335,7 @@
      "size": 12,
      "ratio": 2.5,
      "need": 4.5,
+     "kind": "text",
      "fg": "rgb(147, 165, 178)",
      "bg": "rgb(255, 253, 248)",
      "sel": "figcaption"
@@ -316,7 +344,7 @@
    "focusRing": "outline"
   },
   "jpg": "03-mobile/shots/board-phone.jpg",
-  "bytes": 613936,
+  "bytes": 613976,
   "px": "390x11670",
   "actions_failed": []
  },

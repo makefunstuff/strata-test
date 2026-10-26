@@ -651,6 +651,42 @@
           "press:Escape",
           "reveal:.frames"
         ]
+      },
+      {
+        "name": "palette-dark",
+        "page": "index.html",
+        "width": 1500,
+        "height": 900,
+        "dpr": 2,
+        "settle": 2600,
+        "element": "#pal-dark",
+        "actions": [
+          "eval:document.querySelector(+element+).scrollIntoView({block:center})"
+        ]
+      },
+      {
+        "name": "palette-light",
+        "page": "index.html",
+        "width": 1500,
+        "height": 900,
+        "dpr": 2,
+        "settle": 2600,
+        "element": "#pal-light",
+        "actions": [
+          "eval:document.querySelector(+element+).scrollIntoView({block:center})"
+        ]
+      },
+      {
+        "name": "keys-legend",
+        "page": "index.html",
+        "width": 1500,
+        "height": 900,
+        "dpr": 2,
+        "settle": 2600,
+        "element": "#keys-panel",
+        "actions": [
+          "eval:document.querySelector(+element+).scrollIntoView({block:center})"
+        ]
       }
     ]
   },

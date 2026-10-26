@@ -197,8 +197,18 @@ const audit = async () => {
     const cs = getComputedStyle(el);
     const size = parseFloat(cs.fontSize);
     const bold = (+cs.fontWeight >= 700 && size >= 18.66) || (size >= 24);
-    const need = bold ? 3 : 4.5;
-    const key = txt.slice(0, 24) + cs.color + Math.round(size);
+    /* Twelfth blind spot: the audit scored a pane border as text.
+       04-tui draws its terminal frames with box-drawing glyphs, and the audit asked those glyphs
+       for 4.5:1, the bar for readable text. A rule is a graphical object required to understand
+       the content, so the applicable bar is WCAG 1.4.11's 3:1. Nodes made only of box-drawing
+       (U+2500-U+257F), block/shade (U+2580-U+259F) or braille (U+2800-U+28FF), spaces included —
+       a pane corner is "│ │" and a rule is "├────", so the whitespace is part of the graphic —
+       are scored as graphics and reported with kind:"graphic"; anything with a letter in it is
+       still text at 4.5. The finding is kept, not hidden: 04-tui's rules measured 2.83:1, under 3,
+       and the app's palette moved to clear the real bar. */
+    const graphic = /^[\u2500-\u257F\u2580-\u259F\u2800-\u28FF\s]+$/.test(txt);
+    const need = graphic ? 3 : (bold ? 3 : 4.5);
+    const key = txt.slice(0, 24) + cs.color + Math.round(size) + (graphic ? "g" : "");
     if (seen.has(key)) continue;
     seen.add(key);
     const bg = bgOf(el);
@@ -206,11 +216,11 @@ const audit = async () => {
     const sel = el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(/\s+/).slice(0, 2).join(".") : "");
     const a = alpha(cs.color);
     if (a < 0.5) {
-      contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: 1, need, fg: cs.color, bg: bgStr, sel, why: "foreground alpha " + a + ": transparent or gradient-clipped text, no colour to measure" });
+      contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: 1, need, kind: graphic ? "graphic" : "text", fg: cs.color, bg: bgStr, sel, why: "foreground alpha " + a + ": transparent or gradient-clipped text, no colour to measure" });
       continue;
     }
     const r = ratio(parse(cs.color), bg);
-    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need, fg: cs.color, bg: bgStr, sel });
+    if (r < need) contrast.push({ text: txt.slice(0, 40), size: Math.round(size), ratio: +r.toFixed(2), need, kind: graphic ? "graphic" : "text", fg: cs.color, bg: bgStr, sel });
   }
   let focusRing = "none";
   try {

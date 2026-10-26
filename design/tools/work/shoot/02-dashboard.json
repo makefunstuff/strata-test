@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 356765,
+  "bytes": 356815,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 332211,
+  "bytes": 332326,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -214,7 +214,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 329198,
+  "bytes": 329113,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -240,7 +240,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 237199,
+  "bytes": 237288,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -337,7 +337,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-top.jpg",
-  "bytes": 85677,
+  "bytes": 85739,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -362,7 +362,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-table.jpg",
-  "bytes": 94771,
+  "bytes": 94761,
   "px": "780x1688",
   "actions_failed": []
  }

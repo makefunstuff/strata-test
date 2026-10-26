@@ -62,34 +62,82 @@ const COUNTS = (() => {
 
 /* ── palettes ─────────────────────────────────────────────────────── */
 type Pal = Record<string, string>;
+/* `line` draws the pane borders, the column separators and the box rules: structure, not
+   decoration, so WCAG 1.4.11's 3:1 for meaningful graphics applies. The old values measured
+   2.83:1 on the gallery ground (#10161c) and 2.81:1 on the light panel (#ffffff) — under the bar
+   in both palettes. The new values are the same hue at the smallest lightness step that clears
+   3:1; 04-tui/measure.mjs computes the ratio from this table, so a palette edit that drops a rule
+   under 3:1 fails the task's own instrument. (The audit used to score these glyphs as text at
+   4.5:1, which is the wrong bar for a graphic — see the README's twelfth blind spot.) */
 const DARK: Pal = {
-  ink: "dfe7ee", dim: "94a2ae", faint: "7d8b96", line: "4d6170", accent: "6fd4b8",
-  accentDim: "4f9c88", gold: "e3b05c", red: "ef7d6b", blue: "7fa9e8", violet: "b693e6",
-  sel: "1c3b36", selInk: "e9f5f1", panel: "151d24", chip: "24313a",
+  ink: "dfe7ee", dim: "94a2ae", faint: "7d8b96", line: "536979", accent: "6fd4b8",
+  accentDim: "4f9c88", gold: "e3b05c", red: "ef7d6b", blue: "7fa9e8",
+  sel: "1c3b36", selInk: "e9f5f1", chip: "24313a",
 };
 const LIGHT: Pal = {
-  ink: "1d2831", dim: "5c6a75", faint: "5f6c77", line: "8f9ca6", accent: "0f6b57",
-  accentDim: "4b8a78", gold: "8a5c07", red: "a63a27", blue: "2a5aa8", violet: "6b3fa0",
-  sel: "d7e9e3", selInk: "10221d", panel: "ffffff", chip: "eef2f5",
+  ink: "1d2831", dim: "5c6a75", faint: "5f6c77", line: "85939e", accent: "0f6b57",
+  accentDim: "4b8a78", gold: "8a5c07", red: "a63a27", blue: "2a5aa8",
+  sel: "d7e9e3", selInk: "10221d", chip: "eef2f5",
 };
 const LEVEL: Record<Lvl, keyof Pal> = { trace: "faint", debug: "blue", info: "accent", warn: "gold", error: "red" };
+
+/* The filter's terms, as data: the parser reads them, "/" inserts the next one, and the help
+   overlay lists them in its own words. 04-tui/measure.mjs checks that the parser, the key and the
+   help text name the same terms. */
+const FILTER_TERMS = ["lvl=", "svc=", "ep=", "code="];
+
+/* The keys the status bar repeats, as data. The help overlay prints how many keys it lists and
+   how many of them the bar repeats. That sentence used to read "nine keys, no mouse — the bottom
+   bar repeats them" over a table of 18 keys: a number typed once and never re-derived, and the
+   landing page's caption repeated it. */
+/* Split a key label into its keys. A label lists keys with spaces ("j k ↑ ↓"); the bar uses a
+   slash ("j/k"), and the filter key is the slash itself — so "/" must survive as a token. The first
+   version split on slashes and swallowed it: the overlay printed "17 keys" over a table of 18, and
+   the bar counted 8 of 9. 04-tui/measure.mjs counts the same tokens from the captured bytes. */
+const keyTokens = (label: string) =>
+  label.split(/\s+/).filter(Boolean).flatMap((t) => (t === "/" ? ["/"] : t.split("/").filter(Boolean)));
+const BAR_KEYS: [string, string][] = [
+  ["j/k", "move"], ["g/G", "jump"], ["/", "filter"], ["f", "freeze"],
+  ["t", "theme"], ["?", "help"], ["q", "quit"],
+];
+const barKeyCount = () => BAR_KEYS.reduce((n, [k]) => n + keyTokens(k).length, 0);
+
+let termIdx = 0;
+let note = "";
+/* OSC 52 asks the terminal emulator to put the payload on the clipboard, so "copy" is the
+   terminal's copy and not a shell-out; OSC 8 marks the trace id as a link a viewer can register. */
+const osc52 = (s: string) => "\x1b]52;c;" + Buffer.from(s, "utf8").toString("base64") + "\x07";
 
 /* ── small ANSI helpers ───────────────────────────────────────────── */
 const rgb = (h: string) => h.match(/../g)!.map((x) => parseInt(x, 16)).join(";");
 const fg = (h: string) => `\x1b[38;2;${rgb(h)}m`;
 const bg = (h: string) => `\x1b[48;2;${rgb(h)}m`;
 const RESET = "\x1b[0m", BOLD = "\x1b[1m", DIM = "\x1b[2m", REV = "\x1b[7m", ITAL = "\x1b[3m";
-const vis = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, "").replace(/[‘’]/g, "'");
+/* The width maths has to know every sequence the program emits. The walk below counted visible
+   characters by treating every escape as the start of an SGR colour and skipping to the next "m".
+   The trace link is OSC 8, terminated by BEL or ST and containing no "m" at all: indexOf("m")
+   returned -1, the walk restarted at 0, and a capture never finished printing. So: skip OSC whole,
+   and if an escape has no SGR terminator, stop rather than spin. An infinite loop in a renderer is
+   the same class of bug as a wrong width, and this one was introduced by printing a link. */
+const OSC = /\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/y;
+const vis = (s: string) => s.replace(OSC, "").replace(/\x1b\[[0-9;]*m/g, "").replace(/[\u2018\u2019]/g, "'");
 const clip = (s: string, n: number) => {
   const plain = vis(s);
   if (plain.length <= n) return s + " ".repeat(n - plain.length);
-  // cut the visible text, keep the colour codes: walk the string, count visible chars
+  // cut the visible text, keep the codes: walk the string, count visible chars
   let out = "", seen = 0, i = 0;
   while (i < s.length && seen < n - 1) {
-    if (s[i] === "\x1b") { const j = s.indexOf("m", i); out += s.slice(i, j + 1); i = j + 1; continue; }
-    out += s[i++]; seen++;
+    if (s[i] === "\x1b") {
+      OSC.lastIndex = i;
+      const hit = OSC.exec(s);
+      if (hit) { out += hit[0]; i += hit[0].length; continue; }
+      const j = s.indexOf("m", i);
+      if (j < 0) { out += s.slice(i); break; }
+      out += s.slice(i, j + 1); i = j + 1; continue;
+    }
+    out += s[i]; seen++; i++;
   }
-  return out + "…";
+  return out;
 };
 const pad = (s: string, n: number, right = false) => {
   const p = vis(s);
@@ -98,6 +146,17 @@ const pad = (s: string, n: number, right = false) => {
 
 /* ── widgets ──────────────────────────────────────────────────────── */
 const BARS = "▁▂▃▄▅▆▇█";
+
+/* The histogram is 60 buckets over the buffer's window, so a bucket is (window / 60) seconds.
+   Three labels used to say "10 s" — in the pane header, beside the volume strip and beside the
+   severity strip — which is what a 600 s window would make it. The buffer spans 116 s, so a bucket
+   is 2 s: the printed claim was five times the truth, in three places. The window label is now the
+   buffer's own first and last row (06:08 → 06:09), which is also the end of the printed label.
+   All of it is derived now; 04-tui/measure.mjs counts the block glyphs in the captured bytes and
+   recomputes the bucket width from ALL, and fails if a printed label disagrees. */
+const BUCKET_S = Math.round(((ALL.at(-1)!.ms - ALL[0]!.ms) / 60) / 1000);
+const hhmm = (ms: number) => new Date(ms).toISOString().slice(11, 16);
+const WINDOW = hhmm(ALL[0].ms) + " → " + hhmm(ALL.at(-1)!.ms);
 /* two strips: volume in a teal ramp, severity as ticks on a dotted baseline */
 function histogram(pal: Pal, sel: number): [string, string] {
   const buckets = new Array(60).fill(0);
@@ -187,7 +246,8 @@ function frame(input: State, colsIn: number, rowsIn: number): string {
   const bar1 =
     bg(pal.accent) + fg(st.theme === "dark" ? "08201a" : "ffffff") + BOLD + " logtrail " + RESET +
     " " + fg(pal.ink) + BOLD + "harbour-gateway" + RESET + (compact ? "" : " " + fg(pal.faint) + "· 6 services · eu-west-1" + RESET) +
-    "  " + (compact ? tabsSm : tabsLine) + "  " + " ".repeat(Math.max(0, cols - 34 - 66 - 12)) + clock + (compact ? "" : fg(pal.faint) + "  1 284 ln/min" + RESET);
+    "  " + (compact ? tabsSm : tabsLine) + "  " + " ".repeat(Math.max(0, cols - 34 - 66 - 12)) + clock + (compact ? "" : fg(pal.faint) + "  1 284 ln/min" + RESET) +
+    (note ? "  " + fg(pal.gold) + BOLD + clip(note, 46) + RESET : "");
   L.push(clip(bar1, cols));
 
   /* filter line */
@@ -207,7 +267,7 @@ function frame(input: State, colsIn: number, rowsIn: number): string {
 
     /* list pane, exactly rowsShown lines of exactly listW visible cells */
     const P: string[] = [];
-    P.push(boxTop(listW, "tail", pal, st.frozen ? "" : "10 s buckets"));
+    P.push(boxTop(listW, "tail", pal, st.frozen ? "" : BUCKET_S + " s buckets"));
     P.push(clip(fg(pal.line) + "│" + RESET + fg(pal.faint) + " " + (compact ? pad("time", w.time) + " " + pad("level", w.lvl) + " " + pad("service", w.svc) + " message" : pad("time", w.time) + " " + pad("level", w.lvl) + " " + pad("service", w.svc) + " " + pad("endpoint", w.ep) + " " + pad("ms", w.ms, true) + "  message") + RESET, listW - 1) + fg(pal.line) + "│");
     P.push(clip(fg(pal.line) + "├" + "─".repeat(Math.max(0, listW - 2)) + "┤", listW));
     for (let i = 0; i < rowsShown - 4; i++) {
@@ -243,18 +303,23 @@ function frame(input: State, colsIn: number, rowsIn: number): string {
   /* volume + status */
   const [vol, sev] = histogram(pal, st.histSel);
   const nWarn = warnCount(), nErr = ALL.filter((r) => r.lvl === "error").length;
-  L.push(clip(fg(pal.faint) + " volume" + RESET + " " + vol + (compact ? "" : fg(pal.faint) + "  lines per 10 s · 06:08 → 06:12" + RESET), cols));
-  L.push(clip(fg(pal.faint) + " severity" + RESET + " " + sev + (compact ? "" : fg(pal.faint) + "  warn+error per 10 s · " + RESET + fg(pal.red) + BOLD + "red" + RESET + fg(pal.faint) + " = the bucket holds an error · " + nWarn + " w " + nErr + " e in the window" + RESET), cols));
+  L.push(clip(fg(pal.faint) + " volume" + RESET + " " + vol + (compact ? "" : fg(pal.faint) + "  lines per " + BUCKET_S + " s · " + WINDOW + RESET), cols));
+  L.push(clip(fg(pal.faint) + " severity" + RESET + " " + sev + (compact ? "" : fg(pal.faint) + "  warn+error per " + BUCKET_S + " s · " + RESET + fg(pal.red) + BOLD + "red" + RESET + fg(pal.faint) + " = the bucket holds an error · " + nWarn + " w " + nErr + " e in the window" + RESET), cols));
   const keys = st.view === "help"
     ? fg(pal.gold) + "esc: close help" + RESET
-    : fg(pal.dim) + "j/k" + RESET + fg(pal.faint) + " move  " + RESET + fg(pal.dim) + "g/G" + RESET + fg(pal.faint) + " jump  " + RESET + fg(pal.dim) + "/" + RESET + fg(pal.faint) + " filter  " + RESET + fg(pal.dim) + "f" + RESET + fg(pal.faint) + " freeze  " + RESET + fg(pal.dim) + "t" + RESET + fg(pal.faint) + " theme  " + RESET + fg(pal.dim) + "?" + RESET + fg(pal.faint) + " help  " + RESET + fg(pal.dim) + "q" + RESET + fg(pal.faint) + " quit" + RESET;
+    : BAR_KEYS.map(([k, v]) => fg(pal.dim) + k + RESET + fg(pal.faint) + " " + v).join("  ") + RESET;
   L.push(clip(bg(pal.chip) + fg(pal.ink) + " " + keys + RESET, cols));
 
   if (st.view === "help") {
     const box = helpOverlay(cols, rowsShown, pal);
     for (let i = 0; i < box.length; i++) if (box[i]) L[3 + i] = clip(box[i], cols);
   }
-  return L.join("\n");
+  /* A full-screen TUI writes rows - 1 lines and lets the last one belong to the cursor: printing
+     `rows` lines plus a newline scrolls the frame up by one and the bottom row is lost. The
+     endpoints view appends its table under a fixed prefix and overflowed into 22 lines of a
+     22-row terminal; every other view already stops at rows - 1. 04-tui/measure.mjs counts the
+     captured lines against the declared size for all eight frames. */
+  return L.slice(0, Math.max(0, rows - 1)).join("\n");
 }
 
 const warnCount = () => ALL.filter((r) => r.lvl === "warn").length;
@@ -273,19 +338,24 @@ function detailPane(r: Rec | undefined, w: number, rowsShown: number, pal: Pal):
   }
   const kv: [string, string][] = [
     ["time", r.t], ["level", r.lvl], ["service", r.svc], ["endpoint", r.ep],
-    ["status", r.k.code], ["latency", r.lat + " ms"], ["trace", r.trace], ["span", r.span],
+    ["status", r.k.code], ["latency", r.lat + " ms"], ["span", r.span],
     ["pod", r.k.pod], ["node", r.k.node], ["region", r.k.region],
+    // o copies this id; the link target is a scheme a viewer registers, not a host name
+    ["trace", "\x1b]8;;trace://" + r.trace + "\x1b\\" + r.trace + "\x1b]8;;\x1b\\"],
   ];
   D.push(cell(bg(pal.chip) + fg(pal.ink) + BOLD + " " + clip(r.msg, w - 3) + RESET));
   D.push(cell(fg(pal.dim) + "  " + r.ep + RESET));
   D.push(rule());
   for (const [k, v] of kv) D.push(cell(fg(pal.faint) + "  " + pad(k, 9) + RESET + fg(pal.ink) + clip(v, w - 14)));
   D.push(clip(fg(pal.line) + "├" + "─".repeat(w - 2) + "┤", w));
-  const lat = ALL.filter((x) => x.ep === r.ep).slice(-26).map((x) => x.lat);
+  const latRows = ALL.filter((x) => x.ep === r.ep).slice(-26);
+  const lat = latRows.map((x) => x.lat);
   const mx = Math.max(...lat);
   D.push(cell(pad(fg(pal.faint) + "  latency, last " + lat.length + RESET, w - 12 - String(mx).length) + fg(pal.dim) + "max " + mx + RESET));
   D.push(cell("  " + lat.map((v) => (v > 900 ? fg(pal.red) : v > 300 ? fg(pal.gold) : fg(pal.accent)) + BARS[Math.max(1, Math.round((v / mx) * 7))]).join("") + RESET));
-  D.push(cell(fg(pal.faint) + "  06:11:58 → 06:12:44" + RESET));
+  // the strip is the last 26 requests on the selected route, so its span is theirs, not a typed
+  // window: the label used to read "06:11:58 → 06:12:44" for every selection.
+  D.push(cell(fg(pal.faint) + "  " + (latRows[0] ? latRows[0].t.slice(0, 8) : "--") + " → " + (latRows.at(-1) ? latRows.at(-1)!.t.slice(0, 8) : "--") + " · " + lat.length + " req" + RESET));
   D.push(clip(fg(pal.line) + "├" + "─".repeat(w - 2) + "┤", w));
   const json = [`{ "ep": "${r.ep.split(" ")[1]}",`, `  "lat": ${r.lat}, "code": ${r.k.code},`, `  "trace": "${r.trace}" }`];
   for (const j of json) D.push(cell(fg(pal.faint) + "  " + j + RESET));
@@ -341,14 +411,14 @@ function helpOverlay(cols: number, rowsShown: number, pal: Pal): string[] {
   const keys: [string, string][] = [
     ["j k ↑ ↓", "move the selection one line"],
     ["g G", "jump to the oldest / newest line"],
-    ["/", "edit the filter: lvl=warn svc=gateway, or a substring"],
+    ["/", "insert the next filter term: lvl= svc= ep= code="],
     ["Esc", "clear the filter, close overlays"],
     ["f", "freeze the tail (the buffer keeps filling)"],
     ["t", "light / dark palette, for a bright terminal"],
     ["1 2 3", "stream · endpoints · help"],
     ["s S", "cycle the sort column in endpoints, reverse the order"],
-    ["enter", "copy the selected line to the clipboard"],
-    ["o", "open the trace id in the trace viewer"],
+    ["enter", "copy the selected line to the clipboard (OSC 52)"],
+    ["o", "copy the trace id; the line pane links it (OSC 8)"],
     ["q", "quit"],
   ];
   const x = Math.floor((cols - W) / 2);
@@ -356,7 +426,8 @@ function helpOverlay(cols: number, rowsShown: number, pal: Pal): string[] {
   const row = (body: string) => left + clip(fg(pal.line) + "│" + RESET + body + fg(pal.line) + "│", W);
   const out: string[] = [];
   out.push(left + boxTop(W, "keys", pal, "logtrail 0.9.2"));
-  out.push(row(fg(pal.faint) + " nine keys, no mouse — the bottom bar repeats them" + RESET));
+  const nKeys = keys.reduce((n, [k]) => n + keyTokens(k).length, 0);
+  out.push(row(fg(pal.faint) + nKeys + " keys, no mouse — the bar repeats " + barKeyCount() + " of them" + RESET));
   out.push(left + clip(fg(pal.line) + "├" + "─".repeat(Math.max(0, W - 2)) + "┤", W));
   for (const [k, v] of keys) out.push(row(fg(pal.accent) + BOLD + " " + pad(k, 10) + RESET + fg(pal.ink) + clip(v, W - 14)));
   out.push(left + boxBot(W, pal, "? toggles this panel"));
@@ -402,6 +473,7 @@ const iv = setInterval(() => { if (!st.frozen) st.histSel = (st.histSel + 1) % 6
 process.stdin.on("data", (b) => {
   const k = b.toString();
   const list = filtered(st);
+  note = "";
   if (k === "q" || k === "\x03") { process.stdout.write("\x1b[?25h\x1b[?1049l\x1b[0m\n"); clearInterval(iv); process.exit(0); }
   if (k === "j" || k === "\x1b[B") st.sel = Math.min(list.length - 1, st.sel + 1);
   if (k === "k" || k === "\x1b[A") st.sel = Math.max(0, st.sel - 1);
@@ -417,7 +489,16 @@ process.stdin.on("data", (b) => {
   if (k === "S") st.dir = st.dir === -1 ? 1 : -1;
   if (k === "\x1b") { st.q = ""; st.view = "stream"; }
   if (k === "\x7f") st.q = st.q.slice(0, -1);
-  if (k === "\r") st.view = st.view === "help" ? "stream" : st.view;
+  /* The help overlay lists /, enter and o, and the program bound none of them: "/" fell into the
+     catch-all that types into the filter, enter only closed help, and "o" typed an o. Three
+     advertised keys, no behaviour. They do what the overlay says now, in the terminal's own
+     language: OSC 52 puts text on the clipboard, OSC 8 puts a link on the trace id. */
+  if (k === "/") { st.q += (st.q && !st.q.endsWith(" ") ? " " : "") + FILTER_TERMS[termIdx++ % FILTER_TERMS.length]; }
+  if (k === "\r") {
+    if (st.view === "help") st.view = "stream";
+    else { const r = list[st.sel]; if (r) { process.stdout.write(osc52([r.t, r.lvl, r.svc, r.ep, r.lat + "ms", r.msg].join(" "))); note = "copied the selected line"; } }
+  }
+  if (k === "o") { const r = list[st.sel]; if (r) { process.stdout.write(osc52(r.trace)); note = "trace id " + r.trace + " copied, and linked in the line pane"; } }
   if (k.length === 1 && k >= " " && k !== "q" && k !== "j" && k !== "k" && k !== "g" && k !== "G" && k !== "t" && k !== "f" && k !== "?" && k !== "1" && k !== "2" && k !== "3") st.q += k;
   draw();
 });

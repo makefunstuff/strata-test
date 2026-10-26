@@ -30,8 +30,8 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.18, layout 4.23, consistency 4.86, accessibility 4.14,
-originality 4.41** (and fidelity 4.00, scored on task 11 alone). Visual and
+the table below: **visual 4.23, layout 4.23, consistency 4.86, accessibility 4.32,
+originality 4.50** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
 
@@ -40,7 +40,7 @@ task scores under 4 on it.
 | 01 | Landing page — Foldline, offline topo maps | [`01-landing`](01-landing/index.html) | 4.5 | 4.5 | 5 | 4.5 | 5 | 13 | Round 2 asked the hero's sentences what they draw: the sheet's scale bar makes the route **7.6 km** and the legend, the plate and the `aria-label` all said **11.4**. Every number is derived now, checked by `measure.mjs` against the drawn path; the card wall became a map key in the sheet's own hand. |
 | 02 | Dashboard — Gridwatch depot control tower | [`02-dashboard`](02-dashboard/index.html) | 4 | 5 | 5 | 4 | 4 | 15 | Round 2: the card wall became an instrument panel, and `measure.mjs` says the chart is more readable (band separation 1.07 → 1.16, greyscale rank −0.33 → 1.00) while the liveliness index went *down* (56.4 → 53.0). |
 | 03 | Mobile app — Ternmark birding log | [`03-mobile`](03-mobile/index.html) | 4 | 4 | 5 | 4 | 4 | 19 | Nine screens that agree with each other, with offline as the premise and the states that happen; no device was touched. |
-| 04 | TUI — logtrail, a log tail | [`04-tui`](04-tui/index.html) | 4 | 4 | 5 | 3 | 4 | 11 | Real no-dependency TypeScript, and a capture pipeline that renders the program's own ANSI bytes; accessibility 3 because a terminal makes colour carry the level. |
+| 04 | TUI — logtrail, a log tail | [`04-tui`](04-tui/index.html) | 4.5 | 4 | 5 | 5 | 5 | 14 | Round 2 asked the page's claims of the bytes the program prints: the rules were at **2.81:1** (structure ⇒ WCAG 1.4.11's 3:1 — 60 of 75 findings, and the audit was applying the text bar), the overlay printed **nine keys** over a table of **18**, `enter`/`o`/`/` were advertised and unbound, and a **"10 s bucket"** was **2 s**. All derived now; **75 findings → 0**. |
 | 05 | Design system — Halyard | [`05-system`](05-system/index.html) | 4 | 4 | 5 | 4 | 4 | 18 | One stylesheet, four themes, 24 components, 22 contrast pairs per theme measured in the browser; the themes are derivatives of tasks 01–04. |
 | 06 | Identity — Meridian Hydrographic | [`06-identity`](06-identity/index.html) | 4.5 | 4 | 5 | 4.5 | 4.5 | 15 | Round 2: the manual became the chart sheet it documents — depth tints, graticule, soundings, a rose built on the mark's radii — and its own `measure.mjs` proved the 16 px claim false (0.83 device px), then fixed it. |
 | 07 | Data visualisation — Harrow Estuary | [`07-dataviz`](07-dataviz/index.html) | 4 | 4 | 4 | 4 | 5 | 17 | The datum change is the argument; the dishonest fit is kept on the page, labelled; a gap is drawn as a gap. |
@@ -96,7 +96,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.23, third of five, with accessibility last at 4.14 and visual second-last at 4.18
+layout averages 4.23, joint third with visual, and originality is second at 4.50
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -164,7 +164,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the eleven things it was blind to
+## The harness, and the twelve things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -226,7 +226,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
-| after `02`, `06`, `09`, `10` and `01` were rebuilt, with the scroll fix | 13.09 | 1.18 | **42.3** |
+| after `02`, `06`, `09`, `10`, `01` and `04` were rebuilt, with the scroll fix | 13.09 | 1.18 | **42.3** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -308,6 +308,20 @@ an element frame is a photograph of a **place**, not an isolated object. The coo
 confirmation toast — fixed, full-width, dark — lay across the bottom of the gauge, and the gauge
 measured 74 with half its box ink. The actions must clear overlays (`click:#ckMin`, `click:#ckDone`)
 before an element shot is trusted.
+
+### Twelfth: the audit scored a pane border as text
+
+04-tui draws its terminal frames with box-drawing glyphs, and the audit asked those glyphs for
+**4.5:1**, the bar for readable text. Sixty findings — and the app failed the test that *does* apply:
+a pane border is a graphical object required to understand the content, so **WCAG 1.4.11's 3:1**
+governs, and the rules measured **2.81–2.83:1** in both palettes. The audit now classifies a node
+made only of box-drawing, block/shade or braille characters (spaces included — a rule is `├────` and a
+corner is `│ │`) as a graphic, reports it with `kind:"graphic"` and holds it to 3:1; anything with a
+letter in it is still text at 4.5. The finding is not hidden: the palette moved to 3.15–3.18:1, and
+the task's 75 findings are 0. Reading the same bytes, `04-tui/measure.mjs` found the app's own width
+maths had the mirror of this bug — it treated every escape as an SGR colour and skipped to the next
+`m`, so an OSC 8 sequence (no `m` inside) made `indexOf` return −1, the walk restarted at 0, and
+**the capture hung forever**. A renderer must know every sequence it emits.
 
 ### Eleventh: the tool measured the same frame three times
 
@@ -402,17 +416,19 @@ Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **226 shots across the eleven tasks plus 9 in the gallery
-frame — 235 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **229 shots across the eleven tasks plus 9 in the gallery
+frame — 238 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
 screenshot from an earlier round of that task, kept, and its page says it is not in
-the last audit. Per task, the shot counts and the deliberate contrast findings are unchanged from
-the previous run (`04-tui` 75, `10-redesign` 120, `03-mobile` 28, `07-dataviz` 24, `06-identity` 16,
-`11-styles` 13, `06-identity` 12 — down from 16 as its layout shifted). Three briefs have been
-rebuilt since, and their shot counts moved
-14 → 15, 14 → 15 and 23 → 26 to cover what changed: `02-dashboard` gained a `compare-off` shot to prove its header
+the last audit. Contrast findings by task, all of them deliberate on the *before* side of a case
+study where that is the point: **197 in the folder** — `10-redesign` 120 (the before page),
+`03-mobile` 28, `07-dataviz` 24, `11-styles` 13, `06-identity` 12 (the brass-plate mock), and
+**`04-tui` 0, down from 75**: its rules measured 2.81–2.83:1 against the 3:1 that governs graphics,
+and the audit had been grading them with the text bar. Rebuilt briefs moved their shot counts to
+cover what changed — 11 → 14 in `04-tui` for the palette strip and the keys legend, 10 → 13 in
+`01-landing`, 23 → 26 in `09-motion`, 32 → 37 in `10-redesign`: `02-dashboard` gained a `compare-off` shot to prove its header
 control redraws (**0 console errors, 0 contrast findings, 0 unlabelled, 0 overflow** in both themes
 and on phone), and `06-identity` gained a `tints` shot for its new colour section, with its
 contrast findings unchanged at 16 — all of them the deliberate brass-plate mock, where the defect is
@@ -466,6 +482,9 @@ node design/10-redesign/measure.mjs         # the drawings against the text: eve
 node design/01-landing/measure.mjs          # the hero's sentences against its drawing: the route
                                             #   path's own length as the ruler, field heights, the
                                             #   byte budget, the fragments' stroke family, 390 px
+node design/04-tui/measure.mjs              # the page against the program's own bytes: palette
+                                            #   parity, the rule colour inside the captures, the
+                                            #   key sets, the bucket seconds — 25 checks
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not
