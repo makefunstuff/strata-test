@@ -30,15 +30,15 @@ because a CORS message quotes the absolute URL and this repository is public.
 ## The eleven
 
 Scores are the model's own, from each `NOTES.md`. Averages over eleven, summed from
-the table below: **visual 4.00, layout 4.05, consistency 4.68, accessibility 4.00,
-originality 4.23** (and fidelity 4.00, scored on task 11 alone). Visual and
+the table below: **visual 4.00, layout 4.14, consistency 4.77, accessibility 4.00,
+originality 4.32** (and fidelity 4.00, scored on task 11 alone). Visual and
 accessibility are tied last; layout is third; consistency is the high axis, and no
 task scores under 4 on it.
 
 | # | Task | Folder | V | L | C | A | O | Shots | One-line verdict |
 |--:|---|---|--:|--:|--:|--:|--:|--:|---|
 | 01 | Landing page — Foldline, offline topo maps | [`01-landing`](01-landing/index.html) | 4 | 4 | 4.5 | 4 | 4.5 | 10 | The hero earns the page: a generated map sheet whose elevation profile matches the drawn route; the sections under it are a familiar marketing structure. |
-| 02 | Dashboard — Gridwatch depot control tower | [`02-dashboard`](02-dashboard/index.html) | 4 | 4 | 4 | 4 | 3 | 14 | Dense, legible, two themes, hand-drawn SVG charts with an annotated peak; the least original thing in the folder, and rated 3 for it. |
+| 02 | Dashboard — Gridwatch depot control tower | [`02-dashboard`](02-dashboard/index.html) | 4 | 5 | 5 | 4 | 4 | 15 | Round 2: the card wall became an instrument panel, and `measure.mjs` says the chart is more readable (band separation 1.07 → 1.16, greyscale rank −0.33 → 1.00) while the liveliness index went *down* (56.4 → 53.0). |
 | 03 | Mobile app — Ternmark birding log | [`03-mobile`](03-mobile/index.html) | 4 | 4 | 5 | 4 | 4 | 19 | Nine screens that agree with each other, with offline as the premise and the states that happen; no device was touched. |
 | 04 | TUI — logtrail, a log tail | [`04-tui`](04-tui/index.html) | 4 | 4 | 5 | 3 | 4 | 11 | Real no-dependency TypeScript, and a capture pipeline that renders the program's own ANSI bytes; accessibility 3 because a terminal makes colour carry the level. |
 | 05 | Design system — Halyard | [`05-system`](05-system/index.html) | 4 | 4 | 5 | 4 | 4 | 18 | One stylesheet, four themes, 24 components, 22 contrast pairs per theme measured in the browser; the themes are derivatives of tasks 01–04. |
@@ -63,7 +63,19 @@ the model goes there (brutalism at 3 px rules with a ticker, pixel at whole-pixe
 SVG and a blinking cursor, cyber with cut corners and a scan sweep) and the
 results keep the discipline.
 
-**It designs well where the brief has a contract that can be measured.** 05's
+**One brief has been rebuilt against this diagnosis, and the result is not what a
+"make it prettier" round produces.** `02-dashboard` was the folder's least original page (3 of 5,
+its own rating) and the plainest example of the template look. It is now an instrument panel: one
+ground, hairline rules, a dominant primary readout, a single sequential ramp instead of six hues.
+Its chart measures **more readable** on every legibility number the task's `measure.mjs` can
+produce (neighbour separation 1.07 → 1.16, 1.4.11 floor 2.94 → 4.60, greyscale rank −0.33 → 1.00,
+KPI hierarchy 1.00 → 1.43) and **less lively** on the folder's index (56.4 → 53.0, hue families
+2.2 → 1.0). Both numbers are true. The taste critique was about sameness, and the fix removed
+colour variety on purpose, so the index that measures colour variety went down — see
+*"The counter-example"* below. That is what an evidence-based design round looks like when the
+instrument and the craft disagree: you keep the craft, publish the fall, and say why.
+
+ 05's
 four themes with 22 contrast pairs per theme, 08's one field pattern across 24
 questions, 09's one duration-and-curve token set, 10's single measure function
 run over both pages, 11's 41 content strings checked against the text a browser
@@ -74,7 +86,7 @@ hurts in: 07 keeps the dishonest fit on the page, 10 keeps the rows that read
 every `NOTES.md` ends with what is still wrong.
 
 **Three named weaknesses.** *Structure*, and the spread says it, not the average:
-layout averages 4.05, third of five, with visual and accessibility tied last at 4.00
+layout averages 4.14, third of five, with visual and accessibility tied last at 4.00
 (accessibility's floor is task 04's 3, in a terminal where colour carries the level)
 — what marks layout is that it is the only axis carrying a 3.5, task 11's, and there
 the weakness is visible: a 40 px numeral over a caps label, a three-column feature
@@ -142,7 +154,7 @@ smaller model loses.
 one manifest, one screenshot command, a per-task report) is exactly the shape of the A/B it
 lacks: a frontier arm scored by the same screenshots is a run of `shoot.mjs` away.
 
-## The harness, and the three things it was blind to
+## The harness, and the four things it was blind to
 
 `tools/shoot.mjs` screenshots every page in a RAM-capped systemd scope (so the
 box keeps ~4 GiB free while Strata runs) and audits console, page and network
@@ -204,6 +216,7 @@ The first run is the finding, and it is not flattering:
 | highest brief (`03-mobile` board) | 16.9 | 2 | 67 |
 | lowest brief (`08-form` step 1) | 6.4 | **0** | 17 |
 | the gallery frame itself, whole page | 6.8 → **9.6** | 0 → 0 | 19 → **26** |
+| the same run, after `02-dashboard` was rebuilt (next section) | **12.5** | **1.09** | **40.5** |
 
 "Eleven tasks spread over one point" on the visual axis is visible in the pixels now: a mean of
 **1.2 hue families out of twelve**, and two of eleven frames — `08-form`, `09-motion` — with *no hue
@@ -244,19 +257,87 @@ URL, counts the tiles and the rail, and fails with the exclusion named. Run agai
 shipped it, that check said `tiles 0 · fallback true` — the first version of this section's own
 headliner was broken in production and only a check that leaves the machine can see that.
 
+### Fourth, and the one pixels cannot see: nothing checked that a page agrees with itself
+
+The redesign round on `02-dashboard` turned up a defect that no screenshot, contrast pass or
+console check can find. The page's headline, its figure caption and the chart's **`aria-label`**
+all said the day's peak was **7.82 MW at 19:10**. The seeded series the chart draws peaks at
+**6.35 MW at 18:00**. Every frame was sharp, every colour passed AA, the console was silent, and a
+screen reader was being told about a peak that is not on the chart. A dashboard whose prose and
+plot disagree is not a styling problem, and "the screenshot looks fine" is not evidence about it.
+
+The fix computes what the page claims from the series it drew: `peakKw`, `peakAt`, the contract
+ceiling (8.03 MW) and the headroom (1.68 MW) are derived, so the caption, the meta line, the alert
+and the picture cannot drift apart again. Two more lies of the same family went with it: the
+`compare:` select redrew the page identically for every option (it is wired to a real comparison
+curve now), and the KPI rail's "3.1 % vs last Sunday" had no comparison anywhere on the screen.
+**A control that changes nothing, and a number with no picture behind it, both read as design and
+function as misinformation.** `measure.mjs` in that task now checks that the comparison curve, the
+delta and the rail agree.
+
+### The counter-example: 02-dashboard rebuilt, and the liveliness index going the other way
+
+The brief on this round was the human one — the demo looked like an AI's SaaS template: five
+identical KPI cards, a rainbow stack, a donut for three categories, shadowed card soup, one
+grotesque doing all the type. It was rebuilt as a depot control tower: one ground, one panel, one
+recessed field, hairline rules, a dominant primary readout, Archivo for the UI and Plex Mono for
+every numeral, and one **sequential** ramp for six depots carrying one quantity (kW) instead of
+six unrelated hues. `02-dashboard/measure.mjs` measures what a stacked chart needs, from the
+rendered page:
+
+| | round 1 | round 2 |
+| --- | --- | ---
+| weakest boundary between neighbouring bands | 1.07 (L) · 1.08 (D) | **1.16 (L) · 1.18 (D)** |
+| palest fill against the panel (WCAG 1.4.11 asks 3:1) | 2.94 (L) · 3.44 (D) | **4.60 (L) · 3.03 (D)** |
+| greyscale rank: biggest depot is the heaviest band | −0.33 | **1.00 (L) · 1.00 (D)** |
+| primary / secondary KPI type size | 1.00 | **1.43** |
+
+The same instrument, the same eleven wide shots, before and after:
+
+| | round 1 | round 2
+| --- | --- | ---
+| lively | 56.4 | **53.0**
+| colourfulness | 22.9 | 21.5
+| hue families (of 12) | 2.2 | **1.0**
+| *empty state* | 16 | **49**
+
+The index went **down**, and it is the most useful number in this section. The page deliberately
+gave up hue variety — a sequential ramp, semantic colour only where a state is meant — and the
+index is built out of colourfulness and hue families, so it ranks the thing that was removed. What
+it did see: the empty state went from 16 to 49 (the old empty page was a strip of dead grey; the
+new one keeps the rail and the panels, so an empty depot selection reads as an instrument at rest),
+and ink and depth held while the table got denser.
+
+So the index's mean over the eleven briefs moved **42.2 → 40.5**, colourfulness **13.3 → 12.5**,
+hue families **1.2 → 1.09**, because one brief is now disciplined about colour. That is the
+instrument's first counter-example, and the response is not to paint the rainbow back: repainting a
+page to please a metric is exactly the failure the folder is accused of. The rules it leaves:
+
+- **Compare a page against itself, round to round, and against pages of the same kind.** A landing
+  page and a control tower are not on the same axis.
+- **A fall is a question, not a verdict.** Read the components: here they say "fewer hues", which
+  has a design reason, and the components that would show legibility (adjacent separability,
+  greyscale order, hierarchy) are not in the index at all. That is why the task now has its own
+  `measure.mjs`.
+- **The frames that moved for the right reason are the ones to quote**: 16 → 49 on an empty state
+  is a page that stopped looking broken.
+
 Reports: `tools/work/shoot/latest.md` is the last run, `<task>.md` the last
 complete run of that task — all eleven tasks have one, and `tools/shotsindex.mjs`
 renders each of them into `<task>/shots/index.html` so the gallery's "N shots"
 link lands on a page of evidence instead of a folder listing GitHub Pages does not
-serve. The last full sweep: **213 shots across the eleven tasks plus 9 in the gallery
-frame — 222 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
+serve. The last full sweep: **214 shots across the eleven tasks plus 9 in the gallery
+frame — 223 audited screenshots, 1 with problems** — that one is `10-redesign/before-full`, where the
 deliberately-bad page loads a `watermark.png` the fictional studio never shipped and
 the browser logs the 404; the two `before-*` shots in `11-styles` report 1 and 12
 contrast findings, which is what they are for. `08-form/shots/stop.jpg` is a real
 screenshot from an earlier round of that task, kept, and its page says it is not in
 the last audit. Per task, the shot counts and the deliberate contrast findings are unchanged from
 the previous run (`04-tui` 75, `10-redesign` 120, `03-mobile` 28, `07-dataviz` 24, `06-identity` 16,
-`11-styles` 13) — this round added a section to the frame page, not a change to any brief. The
+`11-styles` 13). The one brief that changed, `02-dashboard`, is the reason its shot count moved
+14 → 15 (a `compare-off` shot, to prove the header control redraws): **0 console errors, 0
+contrast findings, 0 unlabelled controls, 0 sideways overflow** across 15 shots in both themes and
+on phone, and its `measure.mjs` table above is the evidence for the visual claim. The
 gallery frame reports `contrast 0` on all nine of its shots for the first time: its code chips
 measured 4.47 against the 4.5 they need, and `--ink-3` moved `#6b7280` → `#6a717e`, one unit of
 lightness, found by the harness and not by the eye.
@@ -295,6 +376,11 @@ node design/tools/shoot.mjs 11-styles          # screenshots + audit for one tas
 node design/tools/shoot.mjs 11-styles --only swiss-hero,swiss-full
 node design/tools/rendered.mjs 11-styles       # rendered text, computed styles, fonts
 cd design/11-styles && node measure.mjs        # -> stats.js, the page's own numbers
+cd design/02-dashboard && node measure.mjs      # chart legibility: band separation, 1.4.11 floor,
+                                            #   greyscale rank, KPI hierarchy -> measure.md
+node design/02-dashboard/measure.mjs --url <dir> --out /tmp/before.md
+                                            #   the same measurement against an old commit
+                                            #   (git worktree add /tmp/old HEAD~1)
 node design/tools/thumbs.mjs                   # gallery thumbnails (ImageMagick)
 node design/tools/serve.mjs design 8080        # look at the pages in a browser
 node design/tools/filecheck.mjs               # which pages load over file:// and which do not

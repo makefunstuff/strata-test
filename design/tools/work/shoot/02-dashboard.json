@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 332838,
+  "bytes": 356848,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 314539,
+  "bytes": 332284,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -63,8 +63,8 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/full.jpg",
-  "bytes": 229285,
-  "px": "1440x1771",
+  "bytes": 210106,
+  "px": "1440x1523",
   "actions_failed": []
  },
  {
@@ -87,8 +87,8 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark-full.jpg",
-  "bytes": 238079,
-  "px": "1440x1771",
+  "bytes": 225962,
+  "px": "1440x1523",
   "actions_failed": []
  },
  {
@@ -111,7 +111,31 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/chart-hover.jpg",
-  "bytes": 338515,
+  "bytes": 355869,
+  "px": "2880x1800",
+  "actions_failed": []
+ },
+ {
+  "label": "02-dashboard/compare-off",
+  "ok": true,
+  "errs": [],
+  "actions": [
+   "eval:const s=document.getElementById('compare'); s.value='compare: no comparison'; s.dispatchEvent(new Event('change'));"
+  ],
+  "audit": {
+   "h1": 1,
+   "lang": "en",
+   "title": "Gridwatch — depot load, Sunday 19 October",
+   "stylesheetsMissing": [],
+   "landmarks": "header+main+footer+nav+aside",
+   "labelledControlsMissing": [],
+   "unnamedButtons": [],
+   "imgMissingAlt": [],
+   "lowContrast": [],
+   "focusRing": "outline"
+  },
+  "jpg": "02-dashboard/shots/compare-off.jpg",
+  "bytes": 353807,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -138,7 +162,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/filtered.jpg",
-  "bytes": 327652,
+  "bytes": 344523,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -164,7 +188,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/sorted-buses.jpg",
-  "bytes": 334958,
+  "bytes": 322285,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -190,7 +214,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 352989,
+  "bytes": 329056,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -216,7 +240,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 185559,
+  "bytes": 237224,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -240,7 +264,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/toast.jpg",
-  "bytes": 340286,
+  "bytes": 361797,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -264,8 +288,8 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/phone.jpg",
-  "bytes": 191848,
-  "px": "390x5043",
+  "bytes": 131970,
+  "px": "390x2948",
   "actions_failed": []
  },
  {
@@ -289,7 +313,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/phone-drawer.jpg",
-  "bytes": 73783,
+  "bytes": 73625,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -313,7 +337,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-top.jpg",
-  "bytes": 87571,
+  "bytes": 85739,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -338,7 +362,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-table.jpg",
-  "bytes": 90649,
+  "bytes": 94761,
   "px": "780x1688",
   "actions_failed": []
  }

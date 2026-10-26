@@ -7,6 +7,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const state = {
   day: "today",
   depots: new Set(DEPOTS.map((d) => d.id)),
+  compare: "last Sunday",
   q: "",
   sort: { key: "load", dir: "desc" },
 };
@@ -55,6 +56,29 @@ function series() {
 }
 const visible = () => series().stacks.filter((s) => state.depots.has(s.depot.id));
 
+/* the comparison curve: the same 24 hours of the day named in the header control, drawn over the
+   current one. Its shape comes from a fixed seed and its area is normalised to that day's energy,
+   so the curve and the headline figures cannot disagree. The depot filters apply to it too — a
+   comparison that ignores the filter is a second chart wearing the first one's clothes. */
+function compareTotals(xs, shown, nowTot) {
+  if (!state.compare || !metrics.compare[state.compare]) return null;
+  const c = metrics.compare[state.compare];
+  const base = loadSeries(c.seed);
+  const ids = new Set(shown.map((s) => s.depot.id));
+  const per = xs.map((_, i) => base.filter((b) => ids.has(b.depot.id)).reduce((a, b) => a + b.kw[i % 24], 0));
+  const shapeSum = per.reduce((a, v) => a + v, 0) || 1;
+  const nowSum = nowTot.reduce((a, v) => a + v, 0) || 1;
+  /* Scale the comparison *shape* into the current chart's own units by the day-over-day energy
+     ratio. The absolute energy figures in this app are headline numbers and do not integrate to
+     the hourly curve (412.6 MWh against a curve that sums to ~67 MWh), so normalising the ghost to
+     the headline would draw a curve five times the size of the one it is compared with — which is
+     exactly what the first version did, and the tooltip showed 13,072 kW beside 2,427 kW. Scaling
+     by the ratio keeps the curve, the delta and the KPI rail's "3.1 % vs last Sunday" the same
+     story. The underlying unit inconsistency is logged in NOTES.md as an open defect. */
+  const k = (nowSum / shapeSum) * (c.energyMwh / metrics.energyMwh);
+  return { label: c.label, v: per.map((v) => Math.round(v * k)) };
+}
+
 function matches(r) {
   const q = state.q.trim().toLowerCase();
   if (!state.depots.has(r.depot.id)) return false;
@@ -62,16 +86,15 @@ function matches(r) {
   return (r.depot.name + " " + r.depot.code + " " + r.note).toLowerCase().includes(q);
 }
 
-/* ── area chart ─────────────────────────────────────────────────────── */
-const AH = 300, PAD = { t: 16, r: 18, b: 26, l: 52 };
-
-// the depot colours are chosen for paper; on the dark theme they are lifted towards white
-const mix = (a, b, t) => {
-  const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
-  const [r1, g1, b1] = p(a), [r2, g2, b2] = p(b);
-  return "#" + [r1, g1, b1].map((v, i) => Math.round(v + (p(b)[i] - v) * t).toString(16).padStart(2, "0")).join("");
-};
-const band = (c) => document.documentElement.dataset.theme === "dark" ? mix(c, "#ffffff", 0.26) : c;
+/* ── load chart: stacked hourly columns ────────────────────────────────
+ * Stacked *areas* were the old drawing: six saturated series, alpha-overlapped, so the
+ * bands blended into a sixth colour and the middle of the chart was unreadable. The quantity
+ * is one quantity (kW by depot), so it is drawn as stacked columns in a single-hue sequential
+ * ramp with surface-coloured separators: every band has a hard edge, and the total is a line
+ * the eye can follow. The contract ceiling is drawn because a control room reads a load chart
+ * against the ceiling — that is what the ceiling is for.
+ */
+const AH = 300, PAD = { t: 18, r: 18, b: 26, l: 52 };
 
 function areaChart() {
   // a fresh node each draw: the crosshair listeners must not pile up on a resize redraw
@@ -82,34 +105,71 @@ function areaChart() {
   const { xs, stacks } = series();
   const shown = stacks.filter((s) => state.depots.has(s.depot.id));
   const tot = xs.map((_, i) => shown.reduce((a, s) => a + s.v[i], 0));
-  const max = Math.max(1, ...tot) * 1.08;
-  const x = (i) => PAD.l + (i / (xs.length - 1)) * (AW - PAD.l - PAD.r);
+  // the scale must include the ceiling, or the one reference line that matters sits off-chart
+  const max = Math.max(1, ...tot, metrics.ceilingKw) * 1.07;
+  const x = (i) => PAD.l + ((i + 0.5) / xs.length) * (AW - PAD.l - PAD.r);
   const y = (v) => AH - PAD.b - (v / max) * (AH - PAD.t - PAD.b);
+  const slot = (AW - PAD.l - PAD.r) / xs.length;
+  const bw = Math.max(3, slot * 0.62);
+
   const grid = [];
   const step = max > 6000 ? 2000 : 1000;
-  for (let v = 0; v <= max; v += step) grid.push(`<line x1="${PAD.l}" x2="${AW - PAD.r}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" class="grid"/><text x="${PAD.l - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" class="tick">${v / 1000}k</text>`);
+  for (let v = 0; v <= max; v += step)
+    grid.push(`<line x1="${PAD.l}" x2="${AW - PAD.r}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" class="grid"/>` +
+      `<text x="${PAD.l - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end" class="tick">${v / 1000}k</text>`);
   const xlab = xs.map((lab, i) => (xs.length > 12 ? i % 3 === 0 : true)
     ? `<text x="${x(i).toFixed(1)}" y="${AH - 8}" text-anchor="middle" class="tick">${lab}</text>` : "").join("");
 
-  // stacked bands, bottom depot first
-  let bands = "", acc = xs.map(() => 0);
+  /* stacked segments, bottom depot first. `class="band"` carries a 1px stroke in the panel
+     colour: that separator is what keeps adjacent ramp steps distinguishable without hue play. */
+  let segs = "", acc = xs.map(() => 0);
   for (const s of [...shown].reverse()) {
-    const top = s.v.map((v, i) => acc[i] + v);
-    const up = top.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join("");
-    const down = acc.map((v, i) => `L${x(xs.length - 1 - i).toFixed(1)} ${y(acc[xs.length - 1 - i]).toFixed(1)}`).join("");
-    bands += `<path d="${up}${down}Z" fill="${band(s.depot.color)}" fill-opacity="0.78"/>`;
-    bands += `<path d="${up}" fill="none" stroke="${band(s.depot.color)}" stroke-width="1.4"/>`;
-    acc = top;
+    const idx = DEPOTS.findIndex((d) => d.id === s.depot.id);
+    for (let i = 0; i < xs.length; i++) {
+      const y0 = y(acc[i]), y1 = y(acc[i] + s.v[i]);
+      if (y0 - y1 < 0.4) continue;
+      segs += `<rect class="band" x="${(x(i) - bw / 2).toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${(y0 - y1).toFixed(1)}" style="fill:${s.depot.color}"/>`;
+    }
+    acc = acc.map((v, i) => v + s.v[i]);
   }
+  const totalLine = `<polyline class="total" points="${tot.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
+  const cmp = compareTotals(xs, shown, tot);
+  const ghost = cmp
+    ? `<polyline class="ghost" points="${cmp.v.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>` : "";
+
+  const ceiling = `<line class="ceiling" x1="${PAD.l}" x2="${AW - PAD.r}" y1="${y(metrics.ceilingKw).toFixed(1)}" y2="${y(metrics.ceilingKw).toFixed(1)}"/>
+    <text class="ceiling-label" x="${PAD.l + 4}" y="${(y(metrics.ceilingKw) - 6).toFixed(1)}" text-anchor="start">contract ceiling ${(metrics.ceilingKw / 1000).toFixed(2)} MW</text>`;
+  // a y axis earns its place once there is something to read against
+  const axis = `<line class="axis" x1="${PAD.l}" x2="${PAD.l}" y1="${PAD.t}" y2="${AH - PAD.b}"/>`;
+
   const peakIdx = tot.indexOf(Math.max(...tot));
+  /* Annotations get the panel colour as a halo (paint-order: stroke), because they land on top of
+     the bands: text placed over a chart without a halo is legible by luck. They are also placed
+     with the ceiling label in mind — the top-left is the label's, so the peak sits above its
+     column and the anomaly below its marker, and no two notes share a line. */
+  const halo = 'paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round';
   const anomaly = state.day !== "week" && state.depots.has("wfp")
-    ? `<g><circle cx="${x(19)}" cy="${y(tot[19])}" r="4.5" class="marker"/>
-       <text x="${x(19) - 10}" y="${y(tot[19]) + 18}" text-anchor="end" class="anno">bank 3 offline 19:00</text></g>` : "";
-  const peak = `<g><line x1="${x(peakIdx)}" x2="${x(peakIdx)}" y1="${PAD.t}" y2="${AH - PAD.b}" class="peakline"/>
-     <text x="${x(peakIdx) - 9}" y="${PAD.t + 12}" text-anchor="end" class="anno">peak ${fmt.num(Math.round(tot[peakIdx] / 100) / 10)} MW</text></g>`;
+    ? `<g><circle cx="${x(19)}" cy="${y(tot[19])}" r="4" class="marker"/>
+       <text x="${x(19) + 9}" y="${(y(tot[19]) + 26).toFixed(1)}" text-anchor="start" class="anno" style="${halo}">bank 3 offline 19:00</text></g>` : "";
+  const peak = `<g><line x1="${x(peakIdx)}" x2="${x(peakIdx)}" y1="${(y(tot[peakIdx]) - 26).toFixed(1)}" y2="${(AH - PAD.b).toFixed(1)}" class="peakline"/>
+     <text x="${x(peakIdx).toFixed(1)}" y="${(y(tot[peakIdx]) - 30).toFixed(1)}" text-anchor="middle" class="anno" style="${halo}">peak ${(tot[peakIdx] / 1000).toFixed(2)} MW at ${xs[peakIdx]}:00</text></g>`;
 
   svg.setAttribute("viewBox", `0 0 ${AW} ${AH}`);
-  svg.innerHTML = `<g>${grid.join("")}${xlab}</g>${bands}${peak}${anomaly}
+  // the readouts the operator actually quotes: peak, ceiling, headroom
+  const meta = $("#chartMeta");
+  if (meta) {
+    const bits = [`peak ${(tot[peakIdx] / 1000).toFixed(2)} MW at ${xs[peakIdx]}:00`,
+      `ceiling ${(metrics.ceilingKw / 1000).toFixed(2)} MW`,
+      `headroom ${((metrics.ceilingKw - tot[peakIdx]) / 1000).toFixed(2)} MW`];
+    if (cmp) {
+      const now = tot.reduce((a, v) => a + v, 0), then = cmp.v.reduce((a, v) => a + v, 0);
+      const d = ((now - then) / then) * 100;
+      bits.push(`${cmp.label} dashed, ${d >= 0 ? "+" : ""}${d.toFixed(1)} %`);
+    }
+    meta.textContent = bits.join(" · ");
+  }
+
+  svg.innerHTML = `<g>${grid.join("")}${xlab}${axis}</g>${ceiling}${segs}${ghost}${totalLine}${peak}${anomaly}
     <line id="hair" x1="0" x2="0" y1="${PAD.t}" y2="${AH - PAD.b}" class="hair" hidden/>`;
 
   // hover crosshair + tooltip
@@ -118,12 +178,13 @@ function areaChart() {
     const r = svg.getBoundingClientRect();
     const px = ((ev.clientX ?? ev.touches?.[0]?.clientX ?? 0) - r.left) / r.width * AW;
     if (px < PAD.l - 10 || px > AW - PAD.r + 10) { hide(); return; }
-    const i = Math.max(0, Math.min(xs.length - 1, Math.round((px - PAD.l) / (AW - PAD.l - PAD.r) * (xs.length - 1))));
+    const i = Math.max(0, Math.min(xs.length - 1, Math.round((px - PAD.l) / (AW - PAD.l - PAD.r) * xs.length - 0.5)));
     hair.hidden = false;
     hair.setAttribute("x1", x(i)); hair.setAttribute("x2", x(i));
     tip.hidden = false;
     tip.innerHTML = `<b>${xs.length > 12 ? xs[i] + ":00" : xs[i]}</b>`
       + shown.map((s) => `<span><i style="--c:${s.depot.color}"></i>${s.depot.code}<span>${fmt.num(s.v[i])} kW</span></span>`).join("")
+      + (cmp ? `<span class="tcmp">${cmp.label}<span>${fmt.num(cmp.v[i])} kW</span></span>` : "")
       + `<span class="tsum">total<span>${fmt.num(tot[i])} kW</span></span>`;
     const tw = 170;
     tip.style.left = Math.max(0, Math.min(r.width - tw, (x(i) / AW) * r.width - tw / 2)) + "px";
@@ -134,27 +195,33 @@ function areaChart() {
   svg.addEventListener("pointerleave", hide);
 }
 
-/* ── donut ──────────────────────────────────────────────────────────── */
+/* ── source of the day: a 100% part-whole bar ─────────────────────────
+ * Three categories do not need a ring. A donut asks the eye to compare arc lengths around a
+ * circle to read 71/17/12; a single bar states the same thing in one glance and leaves room for
+ * the figures that matter, which go in the list below it, aligned, tabular.
+ */
 function donut() {
   const parts = [
-    { k: "Grid import", v: metrics.gridImportPct, c: "var(--teal)", m: "293 MWh · band C" },
-    { k: "On-site solar", v: metrics.solarPct, c: "var(--amber)", m: "70 MWh · 6 depots" },
-    { k: "Battery discharge", v: metrics.batteryPct, c: "var(--blue)", m: "50 MWh · 17:00–20:00" },
+    { k: "Grid import", v: metrics.gridImportPct, c: "var(--d2)", m: "293 MWh · band C" },
+    { k: "On-site solar", v: metrics.solarPct, c: "var(--warn)", m: "70 MWh · 6 depots" },
+    { k: "Battery discharge", v: metrics.batteryPct, c: "var(--info)", m: "50 MWh · 17:00\u201320:00" },
   ];
-  const R = 62, C = 2 * Math.PI * R, cx = 80, cy = 80;
-  let off = 0;
-  const arcs = parts.map((p) => {
-    const len = (p.v / 100) * C;
-    const s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${p.c}" stroke-width="22"
-      stroke-dasharray="${len - 3} ${C - len + 3}" stroke-dashoffset="${-off}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="butt"/>`;
-    off += len;
-    return s;
+  const W = 320, H = 34, BH = 20, GAP = 3, r = 3;
+  const total = parts.reduce((a, p) => a + p.v, 0);
+  const usable = W - GAP * (parts.length - 1);
+  let x = 0, i = 0;
+  const segs = parts.map((p) => {
+    const w = (p.v / total) * usable;
+    const rect = `<rect x="${x.toFixed(1)}" y="4" width="${w.toFixed(1)}" height="${BH}" rx="${i === 0 || i === parts.length - 1 ? r : 0}" style="fill:${p.c}"/>`;
+    x += w + GAP; i++;
+    return rect;
   }).join("");
-  $("#donut").innerHTML = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--line)" stroke-width="22"/>${arcs}
-    <text x="${cx}" y="${cy - 4}" text-anchor="middle" class="dnum">412.6</text>
-    <text x="${cx}" y="${cy + 14}" text-anchor="middle" class="dsub">MWh today</text>`;
+  // a 100% bar needs its ends named, or the proportions are free to mean anything
+  const ends = `<text x="0" y="${BH + 13}" class="tick">0 %</text>
+    <text x="${W}" y="${BH + 13}" text-anchor="end" class="tick">100 %</text>`;
+  $("#donut").innerHTML = segs + ends;
   $("#donutKeys").innerHTML = parts.map((p) =>
-    `<li style="--c:${p.c}"><i></i>${p.k}<b>${p.v} %</b></li><li class="small" style="padding-left:18px">${p.m}</li>`).join("");
+    `<li style="--c:${p.c}"><i></i>${p.k}<b>${p.v} %</b></li><li class="small">${p.m}</li>`).join("");
 }
 
 /* ── bars ───────────────────────────────────────────────────────────── */
@@ -170,16 +237,19 @@ function bars() {
   const barsHtml = data.map((d, i) => {
     const bx = P.l + i * bw + bw * 0.24, w = bw * 0.52;
     const over = d.v > metrics.targetKWhPerKm;
-    return `<g><rect class="${over ? "over" : "bar"}" x="${bx.toFixed(1)}" y="${y(d.v).toFixed(1)}" width="${w.toFixed(1)}" height="${(H - P.b - y(d.v)).toFixed(1)}" rx="3"/>
+    // the bar is the depot (neutral ink), the overage is the alarm: a red wall of six bars says
+    // nothing when four of them are over by 0.04
+    return `<g><rect class="bar" x="${bx.toFixed(1)}" y="${y(d.v).toFixed(1)}" width="${w.toFixed(1)}" height="${(H - P.b - y(d.v)).toFixed(1)}" rx="3"/>
+      ${over ? `<rect class="overcap" x="${bx.toFixed(1)}" y="${y(d.v).toFixed(1)}" width="${w.toFixed(1)}" height="3"/>` : ""}
       <line x1="${(bx + w + 4).toFixed(1)}" x2="${(bx + w + 12).toFixed(1)}" y1="${y(d.prev).toFixed(1)}" y2="${y(d.prev).toFixed(1)}" class="prev"/>
-      <text class="val" x="${(bx + w / 2).toFixed(1)}" y="${(y(d.v) - 6).toFixed(1)}" text-anchor="middle">${d.v.toFixed(2)}</text>
+      <text class="val${over ? " over" : ""}" x="${(bx + w / 2).toFixed(1)}" y="${(y(d.v) - 6).toFixed(1)}" text-anchor="middle">${d.v.toFixed(2)}</text>
       <text x="${(bx + w / 2).toFixed(1)}" y="${H - 12}" text-anchor="middle">${d.code}</text></g>`;
   }).join("");
   const gridY = [0.4, 0.8, 1.2, 1.6].map((v) =>
     `<line x1="${P.l}" x2="${W - P.r}" y1="${y(v)}" y2="${y(v)}" class="grid"/><text x="${P.l - 6}" y="${y(v) + 4}" text-anchor="end" class="tick">${v.toFixed(1)}</text>`).join("");
   $("#bars").innerHTML = `${gridY}
+    <line class="axis" x1="${P.l}" x2="${W - P.r}" y1="${H - P.b}" y2="${H - P.b}"/>
     <line class="target" x1="${P.l}" x2="${W - P.r}" y1="${y(metrics.targetKWhPerKm)}" y2="${y(metrics.targetKWhPerKm)}"/>
-    <text x="${W - P.r}" y="${y(metrics.targetKWhPerKm) - 7}" text-anchor="end" class="tlabel">target 1.24</text>
     ${barsHtml}`;
 }
 
@@ -273,6 +343,12 @@ $("#filters").addEventListener("reset", () => {
   $("#q").value = "";
   $$(".btn-seg").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.day === "today")));
   syncChecks(); drawCharts(); renderTable(); toast("Filters reset");
+});
+$("#compare").addEventListener("change", (e) => {
+  const v = e.target.value.replace(/^compare:\s*/, "");
+  state.compare = v.startsWith("no") ? null : v;
+  drawCharts();
+  toast(v.startsWith("no") ? "Comparison off" : "Comparing with " + v);
 });
 $$(".btn-seg").forEach((b) => b.addEventListener("click", () => {
   state.day = b.dataset.day;

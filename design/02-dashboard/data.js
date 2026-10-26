@@ -9,12 +9,12 @@ const mulberry32 = (seed) => () => {
 };
 
 export const DEPOTS = [
-  { id: "awl", name: "Atherden Road, Lewisham", code: "AWL", buses: 148, charger: 36, color: "#1f9c8a" },
-  { id: "kgn", name: "Kilner Lane, Hackney", code: "KGN", buses: 112, charger: 24, color: "#4a7fd6" },
-  { id: "wfp", name: "Well Hall, Greenwich", code: "WFP", buses: 96, charger: 22, color: "#c98a1e" },
-  { id: "brp", name: "Brentford, Hounslow", code: "BRP", buses: 74, charger: 18, color: "#b1553f" },
-  { id: "ngm", name: "New Cross Garage", code: "NGM", buses: 62, charger: 12, color: "#7c6bb0" },
-  { id: "stk", name: "Stoke Newington", code: "STK", buses: 40, charger: 8, color: "#2f8f5f" },
+  { id: "awl", name: "Atherden Road, Lewisham", code: "AWL", buses: 148, charger: 36, color: "var(--d1)" },
+  { id: "kgn", name: "Kilner Lane, Hackney", code: "KGN", buses: 112, charger: 24, color: "var(--d2)" },
+  { id: "wfp", name: "Well Hall, Greenwich", code: "WFP", buses: 96, charger: 22, color: "var(--d3)" },
+  { id: "brp", name: "Brentford, Hounslow", code: "BRP", buses: 74, charger: 18, color: "var(--d4)" },
+  { id: "ngm", name: "New Cross Garage", code: "NGM", buses: 62, charger: 12, color: "var(--d5)" },
+  { id: "stk", name: "Stoke Newington", code: "STK", buses: 40, charger: 8, color: "var(--d6)" },
 ];
 
 /** 24 hourly load samples per depot, in kW, with an evening charge peak and a night trough */
@@ -41,13 +41,23 @@ export const metrics = {
   gridImportPct: 71,
   solarPct: 17,
   batteryPct: 12,
+  // the comparison day: a different seed is a different operating day, and its area is normalised
+  // to the energy the KPI rail quotes. The header control is wired to this — a select that redraws
+  // nothing is a control that lies.
+  compare: {
+    "last Sunday": { label: "Sun 12 Oct", seed: 9, energyMwh: 400.3 },
+    Saturday: { label: "Sat 18 Oct", seed: 7, energyMwh: 398.4 }
+  },
   fleetOnline: 466,
   fleetTotal: 532,
   punctuality: 93.4,
   kWhPerKm: 1.31,
   targetKWhPerKm: 1.24,
-  peakKw: 7820,
-  peakAt: "19:10",
+  ceilingKw: 8030,          // the contract ceiling in the header line — the load chart is read against it
+  // peakKw/peakAt are the loadSeries(5) total, not a remembered figure: the old page said
+  // 7.82 MW at 19:10 while its own chart drew 6.4 MW at 18:00. One story, from the data.
+  peakKw: 6353,
+  peakAt: "18:00",
 };
 
 export const week = [
@@ -71,8 +81,8 @@ export const rows = [
 
 export const alerts = [
   { t: "19:42", kind: "fault", text: "Well Hall: charger bank 3 offline, 12 buses uncharged" },
-  { t: "19:10", kind: "peak", text: "Grid import peaked at 7.82 MW — 212 kW under contract ceiling" },
   { t: "18:05", kind: "warn", text: "New Cross: 21 buses below 40 % state of charge" },
+  { t: "18:00", kind: "peak", text: "Grid import peaked at 6.35 MW — 1.68 MW under contract ceiling" },
   { t: "16:20", kind: "info", text: "Solar arrays closed the day at 70 MWh, 17 % of demand" },
 ];
 
