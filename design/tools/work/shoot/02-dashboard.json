@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/light.jpg",
-  "bytes": 356848,
+  "bytes": 356833,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -41,7 +41,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/dark.jpg",
-  "bytes": 332284,
+  "bytes": 332266,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -111,7 +111,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/chart-hover.jpg",
-  "bytes": 355869,
+  "bytes": 355937,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -188,7 +188,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/sorted-buses.jpg",
-  "bytes": 322285,
+  "bytes": 322299,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -214,7 +214,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/compact.jpg",
-  "bytes": 329056,
+  "bytes": 329186,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -240,7 +240,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/empty.jpg",
-  "bytes": 237224,
+  "bytes": 237213,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -264,7 +264,7 @@
    "focusRing": "none"
   },
   "jpg": "02-dashboard/shots/toast.jpg",
-  "bytes": 361797,
+  "bytes": 361788,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -337,7 +337,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-top.jpg",
-  "bytes": 85739,
+  "bytes": 85698,
   "px": "780x1688",
   "actions_failed": []
  },
@@ -362,7 +362,7 @@
    "focusRing": "outline"
   },
   "jpg": "02-dashboard/shots/phone-table.jpg",
-  "bytes": 94761,
+  "bytes": 94771,
   "px": "780x1688",
   "actions_failed": []
  }

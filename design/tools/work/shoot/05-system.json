@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/full.jpg",
-  "bytes": 1557979,
+  "bytes": 1558086,
   "px": "1440x12175",
   "actions_failed": []
  },
@@ -135,7 +135,7 @@
    "focusRing": "outline"
   },
   "jpg": "05-system/shots/kit-paper.jpg",
-  "bytes": 416876,
+  "bytes": 416858,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -185,7 +185,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/kit-field.jpg",
-  "bytes": 424051,
+  "bytes": 423955,
   "px": "2880x2200",
   "actions_failed": []
  },
@@ -361,7 +361,7 @@
    "focusRing": "none"
   },
   "jpg": "05-system/shots/tokens-deck.jpg",
-  "bytes": 405941,
+  "bytes": 405982,
   "px": "2880x2200",
   "actions_failed": []
  },

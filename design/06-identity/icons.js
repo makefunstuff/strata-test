@@ -1,7 +1,8 @@
 /* Meridian's icon set, as data: 32 glyphs on a 24 box, 2 px gutter, 1.5 stroke,
    round caps and joins, diagonals in 30° steps. Each entry is
    [name, keyboard, parts, drop16] — the fourth list is what disappears at 16 px,
-   where the stroke goes to 1.25. The 16 px set is an edit, not a scale.
+   where the stroke is chosen so the device stroke is a whole pixel. The 16 px set is an
+   edit, not a scale.
 
    The page renders from here; tools/sprite.mjs writes icons.svg from here.
    One source, two outputs. */
@@ -46,7 +47,12 @@ export const ICONS = [
 export function iconSvg(name, size = 24, small = size <= 17) {
   const ic = new Map(ICONS.map(([n, k, parts, drop]) => [n, { key: k, parts, drop }])).get(name);
   if (!ic) return "";
-  const stroke = small ? 1.25 : 1.5;
+  // The 16 px stroke is set so the DEVICE stroke lands on a whole pixel, not on a hairline. The
+  // icon scales by 16/24 = 0.667, and the first version asked for 1.25 user units, which is
+  // 0.83 device px: on a 1x screen every 16 px icon rendered as a grey line, which is the exact
+  // failure this section claims to design against. 1.5 user units is 1.0 device px at 16, and
+  // 1.25 is 0.83 at 20, so the edit is chosen by the rendered pixel, not by the unit.
+  const stroke = 1.5;   // 1.0 device px at 16, 1.25 at 20; the 16 px edit is the dropped detail
   const body = ic.parts.map((p, i) => (small && ic.drop.includes(i) ? "" : p)).join("");
   return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 }

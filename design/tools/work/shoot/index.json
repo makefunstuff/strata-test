@@ -17,7 +17,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/masthead.jpg",
-  "bytes": 379269,
+  "bytes": 379185,
   "px": "2880x1800",
   "actions_failed": []
  },
@@ -161,7 +161,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/limits.jpg",
-  "bytes": 464731,
+  "bytes": 464717,
   "px": "2880x2100",
   "actions_failed": []
  },
@@ -183,7 +183,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/full.jpg",
-  "bytes": 1922010,
+  "bytes": 1922037,
   "px": "1440x10754",
   "actions_failed": []
  },
@@ -205,7 +205,7 @@
    "focusRing": "outline"
   },
   "jpg": "./shots/phone.jpg",
-  "bytes": 1754487,
+  "bytes": 1754493,
   "px": "390x22040",
   "actions_failed": []
  }

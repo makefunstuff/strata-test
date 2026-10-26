@@ -1,10 +1,25 @@
-/* Meridian — identity system. Two type roles, four colours, one red. */
+/* Meridian — identity system.
+   Round 2: the palette is taken from the thing the firm makes. A hydrographic chart has a
+   documented visual language — a graticule, shallow-water tints that deepen with the seabed,
+   magenta for an isolated danger, a red for a buoy, and a fine italic serif for every depth
+   number on the sheet. That language was the obvious source for an identity built on "one
+   circle, one horizon, one rising line", and none of it was on the page: the first round was
+   cream paper, one blue, one red, and it measured 9.1 colourfulness out of a possible
+   hundred with exactly one hue family. The chart tints below are the identity's colour system,
+   documented in the page, not decoration added to it. Text never sits on a tint: the tints are
+   the field, the words sit on paper, which is what keeps every AA pair where it was. */
 :root {
   --ink: #14161a; --ink-2: #3d4550; --ink-3: #626b76; --ink-invert: #f7f6f3;
-  --paper: #f6f5f2; --paper-2: #fffefb; --paper-3: #eeece6;
-  --line: #e2dfd8; --line-strong: #a8a49a;
+  --paper: #f5f7f8; --paper-2: #fdfdfe; --paper-3: #eaeef1;
+  --line: #dfe4e8; --line-strong: #9aa6b0;
   --sea: #1d4b6f; --sea-soft: #dee9f1;
   --signal: #c8402f; --signal-text: #b03626;
+  /* shallow → deep: the Admiralty convention that a seabed reads as a band of tints */
+  --tint-1: #eaf2f7; --tint-2: #cfe2ee; --tint-3: #aecbe0; --tint-4: #7fa9c6; --tint-5: #4d7d9e;
+  --sea-deep: #16334a;
+  --magenta: #a63a86;          /* a chart's colour for an isolated danger, not a brand accent */
+  --grat: rgba(29, 75, 111, .10);
+  --grat-major: rgba(29, 75, 111, .18);
   --f-display: "Instrument Serif", Georgia, serif;
   --f-text: "Inter Variable", "Inter", ui-sans-serif, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -55,15 +70,71 @@ a:focus-visible, button:focus-visible, .focusable:focus-visible { outline: 2px s
 
 .main { min-width: 0; padding: 0 0 90px }
 section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var(--line) }
+
+/* A chart sheet is a graticule with a title block, and a survey reader expects to see the
+   graticule behind the data. 24 px is the mark's own unit, so the grid the identity is drawn on
+   is literally the grid of the page: 24 px minor lines, majors every 96 (four units), and the
+   margin ticks at the sheet edge. Kept under 26% alpha of one blue so a panel of paper on top of
+   it is the only place text sits, and `prefers-contrast: more` removes it: it is texture, not
+   information, and nothing may depend on it. */
+.main { background: var(--paper) }
+/* The sheet's margin: a running tick rule down the inside edge of the page, the way a chart's
+   frame carries its degree ticks. Fixed so it reads as the frame of the sheet while the content
+   scrolls inside it; it is decoration, so forced-colors and prefers-contrast drop it, and it is
+   absent below 980 where there is no sidebar to be an edge against. */
+.main::before {
+  content: ""; position: fixed; top: 0; bottom: 0; left: 226px; width: 13px; z-index: 1;
+  border-right: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(180deg, var(--grat-major) 0 1px, transparent 1px 24px) 12px 0 / 100% 100% no-repeat,
+    var(--tint-1);
+  pointer-events: none;
+}
+@media (max-width: 980px) { .main::before { display: none } }
+@media (prefers-contrast: more), (forced-colors: active) { .main::before { display: none } }
+.mast {
+  background:
+    linear-gradient(var(--grat-major) 0 1px, transparent 1px) 0 0 / 100% 96px,
+    linear-gradient(90deg, var(--grat-major) 0 1px, transparent 1px) 0 0 / 96px 100%,
+    linear-gradient(var(--grat) 0 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, var(--grat) 0 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(180deg, #fff 0 40%, var(--tint-1) 100%);
+}
+@media (prefers-contrast: more) { .mast { background: var(--paper) } }
+@media (prefers-reduced-motion: no-preference) {
+  .mast-plate .rose { transform-origin: 50% 50%; animation: rose-sway 24s ease-in-out infinite }
+}
+@keyframes rose-sway { 0%, 100% { rotate: 0deg } 50% { rotate: 3deg } }
 .sec-head { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; margin-bottom: 16px }
 .sec-head .n { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: .12em }
 .sec-head p { color: var(--ink-3); font-size: 13.5px; margin: 0; flex: 1; min-width: 220px; max-width: 60ch }
 
 /* ── masthead ─────────────────────────────────────────────────────── */
-.mast { padding: 26px clamp(16px, 3vw, 42px) 22px; border-bottom: 1px solid var(--line); background: var(--paper-2) }
+.mast { padding: 26px clamp(16px, 3vw, 42px) 22px; border-bottom: 1px solid var(--line) }
 .mast-top { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(18px, 3vw, 40px); align-items: start }
 @media (max-width: 760px) { .mast-top { grid-template-columns: 1fr } }
-.lockup { display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-4); background: var(--paper); }
+/* the lockup is a chart plate: depth bands under the mark, a compass rose built from the mark's
+   own radii, sounding numerals in the sheet's italic, and a title block in the margin */
+.lockup { display: flex; flex-direction: column; gap: 14px; padding: 0; border: 1px solid var(--sea-deep);
+  border-radius: var(--r-4); background: var(--paper-2); overflow: hidden; box-shadow: var(--sh-2) }
+.mast-plate { display: flex; flex-direction: column; gap: 0; padding: 0 }
+/* the field is the water; the wordmark sits on paper under it, because black type on a tint band
+   is the one thing a chart never does — a chart's type is on the sheet, its colour is the data */
+.plate-field { position: relative; display: flex; align-items: center; gap: 12px; padding: 16px 14px;
+  background:
+    linear-gradient(var(--grat) 0 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, var(--grat) 0 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(180deg, var(--tint-1) 0 42%, var(--tint-2) 42% 70%, var(--tint-3) 70% 100%); }
+.plate-field .lg-mark { width: 88px; height: 88px; color: var(--ink) }
+.plate-field .rose { margin-left: auto; align-self: flex-end; width: 56px; height: 56px; color: var(--sea-deep); opacity: .85 }
+.plate-band { display: flex; align-items: baseline; gap: 10px; padding: 12px 14px 13px; border-bottom: 1px solid var(--line) }
+.plate-band .sounding { margin-left: auto; font-family: var(--f-display); font-style: italic;
+  font-size: 13px; color: var(--sea); letter-spacing: .04em; white-space: nowrap }
+.plate-band .sounding b { font-weight: 400; font-size: 17px }
+.plate-band .sounding i { font-style: italic; color: var(--sea-deep) }
+.plate-tb { display: flex; justify-content: space-between; gap: 10px; padding: 8px 14px; border-top: 1px solid var(--sea-deep);
+  background: var(--paper-2); font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .08em; color: var(--ink-2) }
+.plate-tb b { color: var(--ink); font-weight: 600 }
 .lg-mark { width: 76px; height: 76px; color: var(--ink) }
 .lg-name { font-family: var(--f-display); font-size: 30px; line-height: 1; letter-spacing: -.01em }
 .lg-sub { font-size: 9.5px; color: var(--ink-3); letter-spacing: .16em; margin-top: 5px }
@@ -80,9 +151,18 @@ section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var
 .panel-bd { padding: 14px }
 
 /* ── 01 construction ──────────────────────────────────────────────── */
-.build { display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); gap: 16px; align-items: start }
-.build-grid { width: 100%; color: var(--ink) }
+.build { display: grid; grid-template-columns: minmax(150px, 250px) minmax(0, 1fr); gap: 18px; align-items: start }
+.build-grid { width: 100%; max-width: 250px; color: var(--ink) }
+/* the diagram used to float in a card with 300 px of nothing under it; a chart's diagram carries a
+   scale bar, which is both the honest filler and the thing a reader actually wants */
+.scalebar { display: grid; gap: 4px; margin-top: 12px; max-width: 250px; grid-column: 1 }
+.build-notes { grid-column: 2; grid-row: 1 / span 2 }
+.scalebar .bars { display: flex; height: 7px; border: 1px solid var(--ink) }
+.scalebar .bars i { flex: 1 }
+.scalebar .bars i:nth-child(odd) { background: var(--ink) }
+.scalebar .ticks { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 9.5px; color: var(--ink-3) }
 .g-lines path { stroke: var(--line-strong); stroke-width: .18; fill: none; opacity: .55 }
+.g-water { fill: var(--tint-3); opacity: .85 }
 .g-circles circle { stroke: var(--sea); stroke-width: .2; fill: none; stroke-dasharray: 1.4 1.4; opacity: .8 }
 .g-horizon, .g-meridian { stroke: var(--signal); stroke-width: .22; fill: none; stroke-dasharray: 1.2 1.2 }
 .g-marks circle { fill: var(--signal) }
@@ -99,6 +179,7 @@ section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var
    wins. The same override written above the base rule (as it was first) did nothing at all. */
 @media (max-width: 620px) {
   .build { grid-template-columns: minmax(0, 1fr) }
+  .scalebar, .build-notes { grid-column: 1; grid-row: auto }
   .build-notes > div { grid-template-columns: minmax(0, 1fr); gap: 2px }
   .build-notes > div > span { min-width: 0; white-space: normal; overflow-wrap: anywhere }
   .build-notes > div > b { display: inline-block }
@@ -109,6 +190,24 @@ section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var
 .read-row p { font-size: 12.5px; color: var(--ink-2); margin: 2px 0 0 }
 .reading .rule { margin-top: 4px }
 
+
+/* ── 05 chart colours ─────────────────────────────────────────────── */
+.tints { display: grid; gap: 10px }
+.trow { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 13px; align-items: start;
+  padding: 11px 13px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-3) }
+.trow .sw { width: 30px; height: 30px; border: 1px solid var(--sea-deep); border-radius: var(--r-1) }
+.trow > div { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 12px; align-items: baseline }
+.trow b { font-size: 14px }
+.trow .hex { font-size: 10.5px; color: var(--ink-3) }
+.trow .role { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-2) }
+.tintblock { padding: 13px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-3) }
+.ramp { display: flex; height: 46px; border: 1px solid var(--sea-deep); border-radius: var(--r-1); overflow: hidden }
+.ramp i { flex: 1 }
+.ramp-lab { display: flex; justify-content: space-between; gap: 6px; margin-top: 5px; font-size: 9px;
+  letter-spacing: .04em; color: var(--ink-2) }
+.tintblock .rule { margin-top: 11px }
+@media (max-width: 620px) { .trow > div { grid-template-columns: minmax(0,1fr) } .ramp-lab { flex-wrap: wrap } }
+
 /* ── 02 lockups ───────────────────────────────────────────────────── */
 .lock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px }
 .lk { margin: 0; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-4); overflow: hidden }
@@ -118,6 +217,12 @@ section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var
 .lk-stage.tiny { gap: 18px; align-items: center; flex-wrap: wrap }
 .lk-stage.dark { background: var(--ink); border-bottom-color: #2a2f36 }
 .lm { width: 52px; height: 52px; color: var(--ink); flex: none }
+/* the field lockup: the water band sits at the mark's own horizon, y = 30 of 48 */
+.lk-stage.field { position: relative; justify-content: center; background:
+    linear-gradient(90deg, var(--grat) 0 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(180deg, var(--paper-2) 0 62.5%, var(--tint-2) 62.5% 82%, var(--tint-3) 82% 100%); }
+.lk-stage.field .field-mark { position: relative; z-index: 1 }
+.lk-stage.field .lm { width: 76px; height: 76px }
 .lm.big { width: 84px; height: 84px }
 .lk-stage.dark .lt-n { color: var(--ink-invert) }
 .lk-stage.dark .lt-s { color: #9aa4b0 }
@@ -211,6 +316,12 @@ section { padding: 30px clamp(16px, 3vw, 42px) 8px; border-bottom: 1px solid var
 .tb[aria-current="true"] { box-shadow: inset 0 -2px 0 var(--signal) }
 .tb .lb { font-size: 11.5px }
 .tool-status { font-size: 11.5px; color: var(--ink-3); padding: 8px 2px 0 }
+.chartline { border: 1px solid var(--sea-deep); border-radius: var(--r-1) }
+/* The audit walks HTML text nodes; an SVG <text> is invisible to it, so this label was checked by
+   hand: white on tint 4 is 2.56:1, ink on tint 4 is 8.2:1. It is ink now, and the section's copy
+   says a tint is data, so the label that names a band sits on the band in ink. */
+.chartline .depthlab text { font-family: var(--f-mono); font-size: 6.5px; fill: var(--ink) }
+.chartline .sds text { font-family: var(--f-display); font-style: italic; font-size: 9px; fill: var(--sea-deep) }
 .chartline { margin-top: 8px; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--paper); overflow: hidden }
 .chartline svg { display: block; width: 100%; height: 96px }
 .chartline .sds text { font-family: var(--f-mono); font-size: 7.5px; fill: var(--sea) }

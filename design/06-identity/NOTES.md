@@ -143,3 +143,124 @@ full-bleed border. Fourteen shots re-taken, all `errs 0`.
 | Consistency | 5 | 32 icons on one grid, one stroke, a written drop-16 rule; the page, the sprite and the mark file come from one data source |
 | Accessibility | 4 | Contrast measured clean; real buttons with `aria-pressed`; icon-only controls always labelled in the product mock; the favicon carries a title. No focus-order test, and the wall is a static grid with no keyboard role |
 | Originality | 4 | The construction grid left under the mark, the 16 px column shown shrunk and marked wrong, the embroidery rule, the ladder at 1:1: the page argues instead of decorating |
+
+---
+
+# Round 2 — the chart sheet
+
+## What the page was, and what it should have been
+
+The brief is an identity for a **hydrographic survey** firm, and the page documents a mark built
+from one circle, one horizon and one rising line. It measured 9.1 colourfulness with **one hue
+family**, and it looked like a stationery brochure: cream paper, one blue, one red, panels of
+prose, and a 300 px void under the construction diagram.
+
+The subject was already carrying the answer. A chart has a documented visual language — a
+graticule, **shallow-water tints that deepen with the seabed**, magenta for an isolated danger,
+a red for a buoy, and a fine italic serif for every depth number on the sheet — and none of it
+was on the page. The mark's own copy says *"below the line is water (the field), above is sky
+(the reading)"*. The page had no water in it. So the colour system was taken from the chart, and
+every place a tint appears is a place the chart puts water: the mark's plate, the construction
+field under its horizon, the in-use chart excerpt, and one lockup.
+
+## What is built now
+
+- **The masthead is a chart plate.** The mark sits on the depth bands, over the mark's own 24-unit
+  graticule; a compass rose built on the mark's radii (12 and 18) and its 15° meridian; depth
+  numerals set the way a chart sets them (fine italic serif, tens digit raised); a title block in
+  the margin — `SHEET 01 · IDENTITY · SCALE 1:1 · DATUM OSGB36`.
+- **The sheet's margin** is a running tick rule down the inside edge, fixed while the content
+  scrolls: the frame of the sheet. It is decoration, so `prefers-contrast` and `forced-colors`
+  remove it, and it is absent below 980 px where there is no edge to be an edge against.
+- **A documented colour section** (`05 Chart colours`): ink, signal red, danger magenta, sea, and
+  the five tints with the depth bands they mean — with the rules measured, not asserted.
+- **The construction diagram shows its own claim**: a tint band below `y = 30`, under the grid.
+- **The in-use chart excerpt** is a chart excerpt now: four depth bands, the seabed track over
+  them, sounding numerals, one **magenta diamond** for an isolated danger, and a band label.
+- **The void is a scale bar.** The construction card had three hundred pixels of nothing under the
+  diagram; a chart's diagram carries a scale bar, which is the honest filler and the thing a reader
+  wants.
+
+Two things were tried and undone: the graticule first covered the whole page, which put body prose
+on a texture and made the page hum (text sits on paper; the graticule is the masthead and the
+margin), and the plate's first tint ran under the wordmark, so the type was on a band (a chart's
+type is on the sheet; its colour is the data).
+
+## The measurement caught a lie, and it was the page's own headline claim
+
+`node 06-identity/measure.mjs` checks the promises the page makes, in the browser, from the geometry
+the browser was given:
+
+| claim | measured | verdict |
+| --- | --- | ---
+| every construction point sits on r ∈ {6, 12, 18, 24} | 4/4 circles, radii 6, 12, 18, 24 | true |
+| the mark's stroke is 3, the icons' is 1.5 | mark 3, icons 1.5 | true |
+| every icon lives in 24 × 24 | 32 icons, one viewBox | true |
+| a 2 px gutter, a 20 px live area | 100 boxes, 0 outside | true |
+| **16 px is a second drawing, stroke 1.25** | **0.83 device px** at the 16 px scale | **false, and fixed** |
+| a tint is data: no word sits on a tint | 0 HTML text nodes on a tint | true |
+
+The fifth row is the finding. The icons scale by 16/24 = 0.667, so the shipped 1.25-unit stroke
+rendered as a **0.83 px grey hairline** on a 1× screen — the exact failure the section claims to
+design against, in the section that says "16 px is a second drawing, not a scale". The stroke is now
+chosen in device pixels: 1.5 units is 1.00 px at 16, 1.25 at 20. The page states the arithmetic.
+
+## Contrast, where the audit cannot see
+
+`tools/shoot.mjs` walks **HTML text nodes**. This page draws charts in SVG, and an SVG `<text>` is
+invisible to it. Hand-checking those pairs found the chart excerpt's band label set **white on tint
+4 at 2.32:1**. It is ink now, at 7.24:1.
+
+The whole tint table is in `measure.md`, in both directions, and it produced a rule the page states
+with its number:
+
+| tint | ink | white | sea-deep |
+| --- | --- | --- | ---
+| tint 1 `#eaf2f7` | 15.99 | 1.05 | 11.54 |
+| tint 2 `#cfe2ee` | 13.60 | 1.23 | 9.81 |
+| tint 3 `#aecbe0` | 10.71 | 1.56 | 7.73 |
+| tint 4 `#7fa9c6` | 7.24 | 2.32 | 5.22 |
+| **tint 5 `#4d7d9e`** | **4.09** | **4.10** | 2.95 |
+
+Tint 5 is the **dead zone**: 4.09:1 for ink and 4.10:1 for white, both under AA. So the rule is
+*tint 5 carries no words in either direction* — a rule that only exists because the ramp was
+measured rather than picked by eye.
+
+## The liveliness index barely moved, and that is the honest result
+
+Same instrument, the same 14 shots, before and after:
+
+| | round 1 | round 2
+| --- | --- | ---
+| lively | 28.6 | **29.9**
+| colourfulness | 9.6 | 9.9
+| hue families (of 12) | 0.9 | **1.2**
+
+A chart's colour is pale by nature — the tints are shallow-water blues at low chroma, and they
+occupy plates and excerpts, not the frame — so a page that is 80% prose about a mark moves a
+fraction. `02-dashboard` went *down* on this index by removing a rainbow; this page went up by a
+point and a half while gaining a documented colour system, a third hue family and a measured
+contrast rule. **The index is not the score for this kind of page**; the geometry and contrast
+numbers above are.
+
+Audit: 15 shots (a `tints` shot added for the new section), 0 console errors, 0 overflow, 0
+unlabelled controls, **16 contrast findings — unchanged from round 1**, all of them the deliberate
+brass-plate mock in the one-colour section, where the "defect" is the point.
+
+## Open defects
+
+- The graticule and the margin ticks are CSS backgrounds; a printed sheet loses them.
+- The rose sways 3° on a 24 s loop; it is `prefers-reduced-motion`-gated, and it is the page's only
+  motion, which is thin for a brand page.
+- The plate's subtitle wraps to two lines at 260 px; a single line needs a shorter coordinate.
+- The identity has no dark theme, and a survey tablet at night is a real context.
+
+## Ratings, round 2
+
+| | | why
+| --- | --- | ---
+| Visual quality | **4.5** | the page now looks like the thing it documents: a sheet, with a plate, tints, soundings and a title block. Not 5: the icon wall and the misuse grid are still grey-on-paper grids.
+| Layout / hierarchy | **4** | the plate anchors the masthead and the void is gone; the icon wall is a wall, and the phone frame is 13 885 px of one column.
+| Consistency | **5** | every colour is a token, the tints ship as data with a rule, the rose is built on the mark's radii, and the files list agrees with the tokens (it used to say "ink, paper, sea, signal").
+| Accessibility | **4.5** | 0 audit findings beyond the intended brass mock; the tint ramp measured in both directions; the 16 px row reaches a device pixel. Loses half a point because the audit cannot see SVG text, and that half is paid by hand.
+| Originality | **4.5** | an identity page that is a chart of the identity, with the mark's construction as the graticule of the page it is documented on.
