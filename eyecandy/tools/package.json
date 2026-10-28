@@ -1,0 +1,9 @@
+{
+  "name": "eyecandy-tools",
+  "private": true,
+  "type": "module",
+  "description": "Headless checks and hero shots for the eye-candy shelf.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}
