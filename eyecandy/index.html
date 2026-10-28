@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><path d=%27M1 11q2.5-3 4.5 0t4.5 0 5-1%27 fill=%27none%27 stroke=%27%238ee8ff%27 stroke-width=%271.6%27/><circle cx=%2711.5%27 cy=%274.5%27 r=%272.2%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.4%27/></svg>">
+<title>strata-test — eye candy: five pages that exist to be looked at</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
+<style>
+:root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--pink:#ff7ad0;--bg:#04060a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:
+  radial-gradient(120% 80% at 50% 0%, #14122a 0%, #080a14 45%, #04060a 100%) #04060a;
+  color:var(--ink);font-family:"Press Start 2P",monospace;font-size:10px;line-height:1.9;
+  -webkit-font-smoothing:antialiased}
+main{max-width:1180px;margin:0 auto;padding:34px 22px 60px}
+h1{font-size:19px;margin:0 0 8px;letter-spacing:2px;color:#fff;
+  text-shadow:0 0 10px rgba(142,232,255,.5),0 0 34px rgba(255,122,208,.28)}
+p.lead{color:var(--dim);margin:0 0 22px;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+a.card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(142,232,255,.18);
+  background:linear-gradient(180deg,rgba(20,18,42,.92),rgba(6,10,16,.94));padding:10px;
+  transition:transform .12s, box-shadow .12s, border-color .12s}
+a.card:hover{transform:translateY(-3px);border-color:rgba(255,122,208,.55);
+  box-shadow:0 10px 30px rgba(0,0,0,.55),0 0 26px rgba(255,122,208,.22)}
+a.card img.hero{display:block;width:100%;height:186px;object-fit:cover;
+  border:1px solid rgba(142,232,255,.14);filter:saturate(1.08)}
+.thumbs{display:flex;gap:6px;margin-top:6px}
+.thumbs img{width:33%;height:58px;object-fit:cover;border:1px solid rgba(142,232,255,.1);opacity:.85}
+h2{font-size:11px;margin:10px 0 4px;color:var(--cyan);letter-spacing:1px}
+p.why{color:var(--dim);font-size:8px;margin:0 0 8px}
+kbd{display:inline-block;border:1px solid rgba(142,232,255,.45);border-bottom-width:2px;border-radius:3px;
+  padding:2px 5px;font-size:7px;color:var(--cyan);background:rgba(53,208,255,.08)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:7px;color:var(--dim)}
+.tag{font-size:7px;color:var(--amber);border:1px solid rgba(255,180,92,.35);padding:2px 5px;
+  background:rgba(255,180,92,.07)}
+footer{margin-top:30px;border-top:1px solid rgba(142,232,255,.14);padding-top:14px;font-size:8px;
+  color:var(--dim)}
+footer a{color:var(--cyan)}
+code{color:var(--amber)}
+.scan{pointer-events:none;position:fixed;inset:0;z-index:60;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 3px)}
+</style>
+</head>
+<body>
+<div class="scan"></div>
+<main>
+  <h1>EYE CANDY</h1>
+  <p class="lead">Five pages whose only brief is: be beautiful. No simulation to solve, no mechanic to
+  win, no layout to audit — a shader, a subject and a grade each. Plain static files, three.js 0.170.0
+  from a pinned CDN importmap, no build step, no npm, no server. Every one carries a control panel, a
+  quality preset, interaction hints and a headless-Chromium check.
+  <a href="../index.html" style="color:var(--cyan)">← the lab hub</a> ·
+  <a href="../experiments/index.html" style="color:var(--cyan)">the experiments →</a></p>
+
+  <div class="grid">
+    <a class="card" href="1-aurora/index.html">
+      <img class="hero" src="1-aurora/shots/hero.jpg" alt="Green aurora curtains above a pine shore, mirrored in a frozen lake under the Milky Way" loading="lazy">
+      <div class="thumbs">
+        <img src="1-aurora/shots/alt1.jpg" alt="Crimson solar flare state" loading="lazy">
+        <img src="1-aurora/shots/alt2.jpg" alt="Close view of the frosted ice and its reflection" loading="lazy">
+        <img src="1-aurora/shots/play-after.jpg" alt="The check's after-shot" loading="lazy">
+      </div>
+      <h2>1 · Aurora</h2>
+      <p class="why">Eleven additive light curtains, each a domain-warped fBm body cut by ridged rays,
+      over a procedural night sky with three star layers and a dust-noised Milky Way. The lake is a real
+      planar mirror — the world is rendered a second time from below and sampled into the ice with
+      ripples, frost, pressure cracks and a specular path from the moon.</p>
+      <div class="row"><span class="tag">planar mirror</span><span class="tag">fBm curtains</span>
+      <kbd>drag</kbd> look <kbd>click</kbd> flare <kbd>C</kbd> palette <kbd>Space</kbd> calm</div>
+    </a>
+
+    <a class="card" href="2-iridescence/index.html">
+      <img class="hero" src="2-iridescence/shots/hero.jpg" alt="Soap bubbles marbled with thin-film interference colour, lit by coloured lamps" loading="lazy">
+      <div class="thumbs">
+        <img src="2-iridescence/shots/alt1.jpg" alt="Bubbles at a thicker film setting" loading="lazy">
+        <img src="2-iridescence/shots/alt2.jpg" alt="A bubble mid-pop with droplets" loading="lazy">
+        <img src="2-iridescence/shots/play-after.jpg" alt="The check's after-shot" loading="lazy">
+      </div>
+      <h2>2 · Iridescence</h2>
+      <p class="why">The colour is physics, not a texture: optical path length through a film of
+      refractive index 1.333 divided by the wavelength of each channel drives a cosine. The film drains
+      downward and swirls, Fresnel makes the rim a mirror and the face almost invisible, and a click
+      burns a hole through it and leaves droplets.</p>
+      <div class="row"><span class="tag">thin-film</span><span class="tag">Fresnel</span>
+      <kbd>drag</kbd> orbit <kbd>click</kbd> pop <kbd>P</kbd> pop one <kbd>N</kbd> new field</div>
+    </a>
+
+    <a class="card" href="3-nebula/index.html">
+      <img class="hero" src="3-nebula/shots/hero.jpg" alt="A teal nebula of two hundred thousand glowing points with a bright core star" loading="lazy">
+      <div class="thumbs">
+        <img src="3-nebula/shots/alt1.jpg" alt="The nebula in the rose palette" loading="lazy">
+        <img src="3-nebula/shots/alt2.jpg" alt="A shockwave expanding through the dust" loading="lazy">
+        <img src="3-nebula/shots/play-after.jpg" alt="The check's after-shot" loading="lazy">
+      </div>
+      <h2>3 · Nebula</h2>
+      <p class="why">200 000 points (up to 300 000) placed and pushed entirely in the vertex shader from
+      a per-particle seed: shell distribution, three arms, differential spin that shears them, three
+      value-noise taps that pull the dust into filaments, a cosine palette by radius and density. The CPU
+      updates nothing but time.</p>
+      <div class="row"><span class="tag">GPU particles</span><span class="tag">curl flow</span>
+      <kbd>drag</kbd> orbit <kbd>click</kbd> shockwave <kbd>T</kbd> theme <kbd>R</kbd> reset</div>
+    </a>
+
+    <a class="card" href="4-bioluminescence/index.html">
+      <img class="hero" src="4-bioluminescence/shots/hero.jpg" alt="Bioluminescent jellyfish drifting under shafts of light from the surface" loading="lazy">
+      <div class="thumbs">
+        <img src="4-bioluminescence/shots/alt1.jpg" alt="The swarm startled, pulsing fast" loading="lazy">
+        <img src="4-bioluminescence/shots/alt2.jpg" alt="Close on one bell and its trailing arms" loading="lazy">
+        <img src="4-bioluminescence/shots/play-after.jpg" alt="The check's after-shot" loading="lazy">
+      </div>
+      <h2>4 · Bioluminescence</h2>
+      <p class="why">Jellyfish lit by themselves. A lathe-built bell clamps shut on a wave travelling from
+      apex to margin; five frilled arms and twenty tentacles are ribbons placed in the vertex shader where
+      each segment lags the one above, so the trail follows the pulse. Shafts fall from a surface far
+      above and marine snow drifts through them.</p>
+      <div class="row"><span class="tag">vertex rigging</span><span class="tag">light shafts</span>
+      <kbd>drag</kbd> orbit <kbd>click</kbd> startle <kbd>G</kbd> glow <kbd>S</kbd> surface</div>
+    </a>
+
+    <a class="card" href="5-kaleido/index.html">
+      <img class="hero" src="5-kaleido/shots/hero.jpg" alt="A fourteen-fold kaleidoscope of faceted colour built from a feedback loop" loading="lazy">
+      <div class="thumbs">
+        <img src="5-kaleido/shots/alt1.jpg" alt="The same loop in the oil palette" loading="lazy">
+        <img src="5-kaleido/shots/alt2.jpg" alt="A ring of light injected into the buffer" loading="lazy">
+        <img src="5-kaleido/shots/play-after.jpg" alt="The check's after-shot" loading="lazy">
+      </div>
+      <h2>5 · Kaleidoscope</h2>
+      <p class="why">A generator feeding a feedback loop, stored in wedge space so that rotating and
+      zooming the afterimage are just a texture lookup: shift the angle, scale the radius, multiply by a
+      fade, add this frame's domain-warped plasma and voronoi facets. One wedge is computed; the display
+      pass mirrors it n times.</p>
+      <div class="row"><span class="tag">feedback</span><span class="tag">n-fold</span>
+      <kbd>drag</kbd> folds &amp; zoom <kbd>wheel</kbd> folds <kbd>click</kbd> inject <kbd>C</kbd> palette</div>
+    </a>
+  </div>
+
+  <footer>
+    Every page is checked in headless Chromium on the software renderer (the model server holds both
+    GPUs on this box), so the FPS in each README is a <em>floor</em>: console, page and network errors,
+    a driven interaction, and a state snapshot from the page's own <code>window.experiment</code> hook
+    before and after it. The checker is <code>eyecandy/tools/check.mjs</code>; the gallery shots are
+    made by <code>eyecandy/tools/hero.mjs</code>. Numbers and self-assessed scores:
+    <code>eyecandy/README.md</code>.
+    <br><br>Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>.
+    Built by Strata, running pi headless.
+  </footer>
+</main>
+</body>
+</html>

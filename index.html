@@ -40,8 +40,8 @@ code{color:var(--amber)}
 <div class="scan"></div>
 <main>
   <h1>STRATA TEST — BROWSER LAB</h1>
-  <p class="lead">Ten three.js things and eleven design briefs in plain static files: no
-  build step, no npm, no server. Pinned CDN
+  <p class="lead">Fifteen three.js things, eleven design briefs and five pieces of eye candy in plain
+  static files: no build step, no npm, no server. Pinned CDN
   importmap (three 0.170.0, lil-gui 0.19.2, Rapier 0.14.0), ES modules, one folder per thing. Built by
   Strata running pi headless, one task per build, each verified in headless Chromium.</p>
 
@@ -84,12 +84,28 @@ code{color:var(--amber)}
     <div class="row"><kbd>design/</kbd> published at <code>/design/</code> · scores, verdict and the two audit blind spots in <code>design/README.md</code></div>
   </a>
 
+  <a class="shelf" href="eyecandy/index.html">
+    <h2>EYE CANDY — FIVE PAGES THAT EXIST TO BE LOOKED AT →</h2>
+    <p>Aurora over a mirrored frozen lake, soap bubbles coloured by thin-film interference, two hundred
+    thousand points of GPU dust, jellyfish lighting themselves up in the deep, and a kaleidoscope fed by
+    its own afterimage. No simulation to solve and nothing to win: a shader, a subject and a grade each,
+    with a control panel, a quality preset and a headless check on every one.</p>
+    <div class="thumbs">
+      <img src="eyecandy/1-aurora/shots/hero.jpg" alt="Aurora curtains above a pine shore, mirrored in a frozen lake" loading="lazy">
+      <img src="eyecandy/2-iridescence/shots/hero.jpg" alt="Soap bubbles marbled with interference colour" loading="lazy">
+      <img src="eyecandy/3-nebula/shots/hero.jpg" alt="A nebula of glowing points with a core star" loading="lazy">
+      <img src="eyecandy/4-bioluminescence/shots/hero.jpg" alt="Jellyfish under shafts of light" loading="lazy">
+      <img src="eyecandy/5-kaleido/shots/hero.jpg" alt="A fourteen-fold kaleidoscope" loading="lazy">
+    </div>
+    <div class="row"><kbd>eyecandy/</kbd> published at <code>/eyecandy/</code> · measured table in <code>eyecandy/README.md</code></div>
+  </a>
+
   <footer>
     Each page is checked in headless Chromium (software renderer on this box, so the FPS numbers are a
     floor): console, page and network errors, an interaction driven from the harness into the page's own
     <code>window.experiment</code> hook, and FPS sampled before and after it.
-    The checkers are <code>games/tools/verify.mjs</code>, <code>experiments/tools/check.mjs</code>
-    and <code>design/tools/shoot.mjs</code> (screenshots plus a console, contrast, landmark,
+    The checkers are <code>games/tools/verify.mjs</code>, <code>experiments/tools/check.mjs</code>,
+    <code>design/tools/shoot.mjs</code> and <code>eyecandy/tools/check.mjs</code> (screenshots plus a console, contrast, landmark,
     control-name and overflow audit; the two things it used to be blind to are written down in
     <code>design/README.md</code>).
     <br><br>Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>.

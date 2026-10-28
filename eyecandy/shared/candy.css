@@ -1,0 +1,54 @@
+/* The eye-candy shelf's own look: the picture is the point, so the chrome is quieter than the
+   experiments' — a thinner HUD, a smaller title, a gui panel that gets out of the frame. Same ids
+   as shared/lab.js expects (#stage-canvas, #fps, #hint, #hud, a.back, .lab-gui). */
+:root {
+  --ink: #eef6ff;
+  --dim: #8ea6bd;
+  --accent: #8ee8ff;
+  --bg: #03050a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); }
+body { font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace; color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+.hud, .fps, .hint, h1.title, a.back { position: fixed; z-index: 10; }
+h1.title { top: 13px; left: 16px; right: 120px; font-size: 12px; letter-spacing: 0.07em; color: #fff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.9), 0 0 14px rgba(142, 232, 255, 0.35); margin: 0; font-weight: 600;
+  pointer-events: none; }
+h1.title small { display: block; font-size: 10px; line-height: 1.5; color: var(--dim); letter-spacing: 0.01em;
+  font-weight: 400; margin-top: 5px; max-width: 46ch; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); }
+
+.hud { bottom: 44px; left: 16px; display: flex; flex-wrap: wrap; gap: 3px 13px; font-size: 10px; max-width: 62vw; pointer-events: none; }
+.hud .k { color: var(--dim); margin-right: 5px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em; }
+.hud b { color: var(--accent); font-weight: 600; }
+
+.fps { bottom: 16px; right: 16px; font-size: 10px; color: var(--dim); pointer-events: none;
+  background: rgba(4, 7, 12, 0.5); border: 1px solid rgba(142, 232, 255, 0.14); padding: 3px 7px; border-radius: 4px; }
+
+.hint { left: 50%; bottom: 16px; transform: translateX(-50%); display: flex; flex-wrap: wrap; gap: 5px 10px;
+  justify-content: center; font-size: 10px; color: var(--ink); pointer-events: none;
+  background: rgba(4, 7, 12, 0.58); border: 1px solid rgba(142, 232, 255, 0.16); padding: 7px 13px;
+  border-radius: 6px; max-width: 92vw; transition: opacity 1.4s; }
+.hint span { white-space: nowrap; }
+.hint span + span::before { content: "·"; color: var(--dim); margin-right: 9px; }
+.hint.fade { opacity: 0; }
+
+a.back { left: 16px; bottom: 14px; color: var(--dim); font-size: 10px; text-decoration: none; z-index: 11;
+  border-bottom: 1px dotted rgba(142, 164, 187, 0.4); background: rgba(4, 7, 12, 0.45); padding: 2px 4px; }
+a.back:hover { color: var(--accent); border-color: var(--accent); }
+
+.lab-gui.lil-gui { --background-color: rgba(6, 10, 17, 0.78); --title-background-color: rgba(12, 21, 33, 0.88);
+  --widget-color: rgba(19, 32, 48, 0.9); --hover-color: rgba(36, 62, 92, 0.9); --focus-color: rgba(50, 88, 126, 0.9);
+  --number-color: #7fe3b0; --string-color: #ffcf7a; --font-size: 10px; --widget-height: 19px;
+  --name-width: 54%; border: 1px solid rgba(142, 232, 255, 0.14); border-radius: 5px; overflow: hidden;
+  backdrop-filter: blur(7px); }
+.lab-gui.lil-gui .title { letter-spacing: 0.05em; }
+
+@media (max-width: 700px) {
+  h1.title { right: 16px; font-size: 11px; }
+  h1.title small { max-width: 100%; }
+  .hud { max-width: 78vw; font-size: 9px; bottom: 40px; }
+  .hint { font-size: 9px; bottom: 10px; }
+  .lab-gui.lil-gui { --width: 190px; }
+}
