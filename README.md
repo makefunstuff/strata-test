@@ -33,6 +33,7 @@ Benchmarks of Strata itself, one folder each with its README (what, how to run, 
 
 - [`whole-repo-qa/`](whole-repo-qa/): whole-repo Q&A with citations at ~100K tokens (TST-1).
 - [`parallel-agents/`](parallel-agents/): can one Strata box serve two pi agents at once with `"parallel": 2`? Not in this RAM (TST-3).
+- [`context-ladder/`](context-ladder/): prefill and decode speed at 8K–120K tokens, Strata against the 27B; Strata pays off from ~32K (ST-1).
 
 ## Setup on this machine
 

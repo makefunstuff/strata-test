@@ -1,0 +1,8 @@
+{
+  "about": "Padding corpus: real source files from two MIT repos. The needle files (the ones the questions are about) come from router; everything else is filler.",
+  "repos": [
+    { "name": "router", "url": "https://github.com/pillarjs/router", "commit": "4064f28a6cfa7ccb311c5c59b4bcb0fea4a18398" },
+    { "name": "koa", "url": "https://github.com/koajs/koa", "commit": "b786e7b456782c2cff1d6549cd4c8dba3feeb262" }
+  ],
+  "exclude": ["package-lock.json", "*.png", "*.gif", "*.jpg", "*.ico", "*.svg", "*.lock"]
+}

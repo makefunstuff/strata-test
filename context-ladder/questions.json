@@ -1,0 +1,20 @@
+{
+  "about": "One question per run, each about one line of a router file (the needle file), taken from whole-repo-qa/questions.json with the path made explicit (two repos are in the prompt). Right = every regex in `answer` matches the ANSWER text, case-insensitive.",
+  "questions": [
+    {
+      "id": "layer-tracing-channel", "needle": "router/lib/layer.js",
+      "q": "What is the name of the diagnostics_channel TracingChannel that router/lib/layer.js creates for request tracing?",
+      "answer": ["express\\.router\\.request"]
+    },
+    {
+      "id": "route-head-fallback", "needle": "router/lib/route.js",
+      "q": "In router/lib/route.js, when a route has no HEAD handler, which method name is a HEAD request treated as?",
+      "answer": ["\\bget\\b"]
+    },
+    {
+      "id": "package-mocha", "needle": "router/package.json",
+      "q": "Which exact version of mocha does router/package.json list in devDependencies?",
+      "answer": ["10\\.8\\.2"]
+    }
+  ]
+}
