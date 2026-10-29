@@ -14,7 +14,7 @@
     {
       "id": "package-mocha", "needle": "router/package.json",
       "q": "Which exact version of mocha does router/package.json list in devDependencies?",
-      "answer": ["10\\.8\\.2"]
+      "answer": ["\\b10\\.8\\.2\\b"]
     }
   ]
 }

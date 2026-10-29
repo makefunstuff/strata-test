@@ -33,11 +33,11 @@ Benchmarks of Strata itself, one folder each with its README (what, how to run, 
 
 - [`whole-repo-qa/`](whole-repo-qa/): whole-repo Q&A with citations at ~100K tokens (TST-1).
 - [`parallel-agents/`](parallel-agents/): can one Strata box serve two pi agents at once with `"parallel": 2`? Not in this RAM (TST-3).
-- [`context-ladder/`](context-ladder/): prefill and decode speed at 8K–120K tokens, Strata against the 27B; Strata pays off from ~32K (ST-1).
+- [`context-ladder/`](context-ladder/): prefill and decode speed at 8K–120K tokens, Strata (NVFP4-QAD pack) against the 27B; Strata pays off from ~32K (ST-1).
 
 ## Setup on this machine
 
-- Strata runs as `strata.service` (IQ2_XS, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).
+- Strata runs as `strata.service` (IQ2_XS for the October benchmarks; now the `qwen3.8-flash-next-fp4-local` NVFP4-QAD pack, as of 2026-10-29, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).
   It holds both GPUs, so it can't run beside the llama.cpp router: switch with `local-ai-mode strata|router|status`.
 - Background and benchmarks: `homelab/evals/strata-2026-10-19/` (Coder IQ1_M) and
   `homelab/evals/strata-2026-10-19-full-experts/` (IQ2_XS and Q2_0).

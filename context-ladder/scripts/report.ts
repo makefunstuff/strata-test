@@ -10,7 +10,11 @@ const ARMS = [
 ];
 const rows = (arm: string) => {
   const f = join(HERE, "results", `${arm}.jsonl`);
-  return existsSync(f) ? readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l)) : [];
+  if (!existsSync(f)) return [];
+  // The newest row of each rung/question/run wins, so a --force rerun replaces rather than adds.
+  const byKey = new Map<string, any>();
+  for (const r of readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l))) byKey.set(`${r.rung}/${r.id}/${r.run ?? 1}`, r);
+  return [...byKey.values()];
 };
 const median = (xs: number[]) => {
   const s = xs.filter((x) => typeof x === "number").sort((a, b) => a - b);
@@ -19,14 +23,14 @@ const median = (xs: number[]) => {
 };
 const range = (xs: number[]) => { const s = xs.filter((x) => typeof x === "number"); return s.length ? `${Math.min(...s)}–${Math.max(...s)}` : "–"; };
 
-interface Cell { arm: string; rung: string; n: number; right: number; prompt: number | null; ttft: number | null;
+interface Cell { arm: string; rung: string; n: number; failed: number; right: number; prompt: number | null; ttft: number | null;
   ttftRange: string; prefill: number | null; decode: number | null; decodeRange: string; total: number | null; out: number | null }
 const cells: Cell[] = [];
 for (const a of ARMS) for (const r of RUNGS.map(rungName)) {
-  const rs = rows(a.arm).filter((x) => x.rung === r && !x.error);
-  if (!rs.length) continue;
+  const all = rows(a.arm).filter((x) => x.rung === r), rs = all.filter((x) => !x.error);
+  if (!all.length) continue;
   cells.push({
-    arm: a.arm, rung: r, n: rs.length, right: rs.filter((x) => x.right).length,
+    arm: a.arm, rung: r, n: rs.length, failed: all.length - rs.length, right: rs.filter((x) => x.right).length,
     prompt: median(rs.map((x) => x.prompt_tokens)), ttft: median(rs.map((x) => x.ttft_s)), ttftRange: range(rs.map((x) => x.ttft_s)),
     prefill: median(rs.map((x) => x.prefill_tps)), decode: median(rs.map((x) => x.decode_tps)), decodeRange: range(rs.map((x) => x.decode_tps)),
     total: median(rs.map((x) => x.total_s)), out: median(rs.map((x) => x.completion_tokens)),
@@ -39,12 +43,21 @@ md += "|---|---|---|---|---|---|---|---|---|\n";
 for (const r of RUNGS.map(rungName)) for (const a of ARMS) {
   const c = cell(a.arm, r);
   if (!c) { md += `| ${r} | ${a.name} | not run | | | | | | |\n`; continue; }
-  md += `| ${r} | ${a.name} | ${c.right}/${c.n} | ${c.prompt} | ${c.ttft} (${c.ttftRange}) | **${c.prefill}** | **${c.decode}** (${c.decodeRange}) | ${c.out} | ${c.total} |\n`;
+  md += `| ${r} | ${a.name} | ${c.right}/${c.n}${c.failed ? ` (+${c.failed} failed)` : ""} | ${c.prompt} | ${c.ttft} (${c.ttftRange}) | **${c.prefill}** | **${c.decode}** (${c.decodeRange}) | ${c.out} | ${c.total} |\n`;
 }
 md += "\n| rung | TTFT speed-up (27B ÷ Strata) | total speed-up |\n|---|---|---|\n";
 for (const r of RUNGS.map(rungName)) {
   const s = cell("strata", r), b = cell("27b", r);
   if (s?.ttft && b?.ttft) md += `| ${r} | ${(b.ttft / s.ttft).toFixed(2)}x | ${(b.total! / s.total!).toFixed(2)}x |\n`;
+}
+// Run to run: the same question (the one asked more than once) at each rung.
+const repeated = [...new Set(ARMS.flatMap((a) => rows(a.arm).filter((x) => (x.run ?? 1) > 1).map((x) => x.id)))];
+for (const id of repeated) {
+  md += `\nSame question, run to run (\`${id}\`):\n\n| rung | arm | runs | right | TTFT s (range) | prefill tok/s (range) | decode tok/s (range) |\n|---|---|---|---|---|---|---|\n`;
+  for (const r of RUNGS.map(rungName)) for (const a of ARMS) {
+    const rs = rows(a.arm).filter((x) => x.rung === r && x.id === id && !x.error);
+    if (rs.length) md += `| ${r} | ${a.name} | ${rs.length} | ${rs.filter((x) => x.right).length}/${rs.length} | ${range(rs.map((x) => x.ttft_s))} | ${range(rs.map((x) => x.prefill_tps))} | ${range(rs.map((x) => x.decode_tps))} |\n`;
+  }
 }
 writeFileSync(join(HERE, "results/summary.md"), md);
 console.log(md);

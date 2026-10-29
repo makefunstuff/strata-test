@@ -1,6 +1,8 @@
 // Climb the ladder on one arm: every rung's prompts (work/prompts, from build.ts), one question per run, cold.
-//   node scripts/run.ts --arm strata|27b [--rungs 8K,32K] [--max-tokens N] [--force]
-// Appends one row per request to results/<arm>.jsonl and skips rows already there, so a stopped run resumes.
+//   node scripts/run.ts --arm strata|27b [--rungs 8K,32K] [--only id,id] [--run N] [--max-tokens N] [--force]
+// Appends one row per request (rung, question, run number; --run picks the number, default 1) to
+// results/<arm>.jsonl and skips rows already there without an error, so a stopped run resumes. --force asks again;
+// report.ts keeps only the newest row of each rung/question/run.
 // Times come from the SSE stream as the client sees it: TTFT = request sent to the first delta (thinking or
 // answer), decode = (completion tokens - 1) / (last delta - first delta). llama.cpp's own `timings` are kept
 // beside them (the 27B), which also shows whether a request waited behind someone else's in the router's one slot.
@@ -20,12 +22,14 @@ const env = (name: string) => {
 const argv = process.argv.slice(2);
 const opt = (name: string) => { const i = argv.indexOf(`--${name}`); return i >= 0 ? argv[i + 1] : undefined; };
 const armName = opt("arm");
-if (armName !== "strata" && armName !== "27b") { console.error("usage: run.ts --arm strata|27b [--rungs 8K,32K] [--max-tokens N] [--force]"); process.exit(2); }
+if (armName !== "strata" && armName !== "27b") { console.error("usage: run.ts --arm strata|27b [--rungs 8K,32K] [--only id,id] [--run N] [--max-tokens N] [--force]"); process.exit(2); }
 const base = env(armName === "strata" ? "STRATA_BASE_URL" : "ROUTER_BASE_URL");
 const headers: Record<string, string> = { "Content-Type": "application/json" };
 if (armName === "strata") headers.Authorization = `Bearer ${env("STRATA_API_KEY")}`;
 const maxTokens = Number(opt("max-tokens") ?? 4096);
 const rungs = opt("rungs")?.split(",") ?? RUNGS.map(rungName);
+const only = opt("only")?.split(",");
+const runNo = Number(opt("run") ?? 1);
 const TIMEOUT_MS = 15 * 60 * 1000;
 const MEM_FLOOR_GIB = 8;
 
@@ -64,16 +68,17 @@ async function routerIdle() {
 const RES = join(HERE, "results");
 mkdirSync(RES, { recursive: true });
 const out = join(RES, `${armName}.jsonl`);
-const key = (rung: string, id: string) => `${rung}/${id}`;
+const key = (rung: string, id: string, run: number) => `${rung}/${id}/${run}`;
 const done = new Set(existsSync(out) && !argv.includes("--force")
-  ? readFileSync(out, "utf8").split("\n").filter(Boolean).map((l) => { const r = JSON.parse(l); return key(r.rung, r.id); }) : []);
-const questions = loadQuestions();
+  ? readFileSync(out, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l)).filter((r) => !r.error)
+    .map((r) => key(r.rung, r.id, r.run ?? 1)) : []);
+const questions = loadQuestions().filter((q) => !only || only.includes(q.id));
 
 for (const rung of rungs) {
   const dir = join(HERE, "work/prompts", rung);
   if (!existsSync(dir) || readdirSync(dir).length === 0) { console.error(`no prompts for ${rung}: run build.ts`); process.exit(2); }
   for (const q of questions) {
-    if (done.has(key(rung, q.id))) continue;
+    if (done.has(key(rung, q.id, runNo))) continue;
     if (memGiB() < MEM_FLOOR_GIB + 0.5) { console.error(`MemAvailable ${memGiB().toFixed(1)} GiB: stopping`); process.exit(4); }
     const p = JSON.parse(readFileSync(join(dir, `${q.id}.json`), "utf8"));
     const body = {
@@ -128,7 +133,7 @@ for (const rung of rungs) {
     const ttft = s(first);
     const promptTokens = usage?.prompt_tokens ?? null;
     const row = {
-      arm: armName, model, rung, id: q.id, time: new Date().toISOString(), built_tokens: p.tokens,
+      arm: armName, model, rung, id: q.id, run: runNo, time: new Date().toISOString(), built_tokens: p.tokens,
       prompt_tokens: promptTokens, completion_tokens: usage?.completion_tokens ?? null,
       ttft_s: ttft, total_s: s(t1),
       prefill_tps: promptTokens && ttft ? Math.round(promptTokens / ttft) : null,

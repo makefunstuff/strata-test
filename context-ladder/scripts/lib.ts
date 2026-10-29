@@ -48,6 +48,7 @@ export function grade(q: Question, reply: string) {
   const text = reply.replace(/<think>[\s\S]*?<\/think>/g, "").replace(/\*\*/g, "");
   const m = text.match(/ANSWER:\s*([\s\S]*)$/i);
   const answer = m ? m[1].trim() : null;
-  const right = q.answer.every((re) => new RegExp(re, "i").test(answer ?? text));
+  // No ANSWER: line is wrong: a reply that only mentions the answer somewhere does not count.
+  const right = answer !== null && q.answer.every((re) => new RegExp(re, "i").test(answer));
   return { answer, right };
 }
