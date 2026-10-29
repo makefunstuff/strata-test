@@ -37,7 +37,7 @@ Benchmarks of Strata itself, one folder each with its README (what, how to run, 
 
 ## Setup on this machine
 
-- Strata runs as `strata.service` (IQ2_XS for the October benchmarks; now the `qwen3.8-flash-next-fp4-local` NVFP4-QAD pack, as of 2026-10-29, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).
+- Strata runs as `strata.service` (IQ2_XS for the 2026-10-19 benchmarks; now the `qwen3.8-flash-next-fp4-local` NVFP4-QAD pack, as of 2026-10-29, OpenAI-compatible API on port 18097 under `/v1`; the host is set with `STRATA_BASE_URL`).
   It holds both GPUs, so it can't run beside the llama.cpp router: switch with `local-ai-mode strata|router|status`.
 - Background and benchmarks: `homelab/evals/strata-2026-10-19/` (Coder IQ1_M) and
   `homelab/evals/strata-2026-10-19-full-experts/` (IQ2_XS and Q2_0).

@@ -11,10 +11,10 @@ all. Each answer is graded, so a fast wrong answer would not count.
 **Strata pays off from about 32K tokens of prompt, and the gap grows with length: its prefill rises to ~1,840
 tok/s and stays flat from 64K to 120K, while the 27B's falls from ~1,160 to ~800. Time to first token is 1.15x
 faster at 8K, 1.6x at 32K, 1.9x at 64K and 2.3x at 120K (67 s against 154 s). The 27B decodes faster, though
-(~110–120 tok/s up to 32K, ~67 at 120K, against Strata's flat ~50–55), so at 8K Strata is 5% slower in total, and
+(~110–120 tok/s up to 32K, ~67 at 120K, against Strata's flat ~49–55), so at 8K Strata is 5% slower in total, and
 every long answer eats into its lead: Strata stays ahead while the reply is under ~1.25K tokens at 32K, ~5K at 64K
-and ~23K at 120K.** All 40 answers were right on both arms (20 each), so neither traded accuracy for speed at any
-length. Use Strata for long-prompt, short-answer work (whole-repo questions, reading big logs or documents); keep
+and ~23K at 120K.** All 40 answers were right on both arms (20 each); the two questions whose answer is only in the needle file
+were right at every length on both, so neither traded accuracy for speed (see "Accuracy" below). Use Strata for long-prompt, short-answer work (whole-repo questions, reading big logs or documents); keep
 the 27B for short prompts and long generations.
 
 **Note on the Strata arm:** the brief names Strata IQ2_XS, but `strata.service` on this box now serves the
@@ -63,13 +63,18 @@ Same question, run to run (`layer-tracing-channel`):
 
 ![Prefill and decode tok/s against prompt length](results/ladder.svg)
 
+- **Accuracy:** `route-head-fallback` and `package-mocha` are clean needles: their answer occurs only in the
+  needle file at every rung. `layer-tracing-channel` is not, from 32K up: its answer, `express.router.request`,
+  is also quoted in router/README.md (in the 32K–120K filler) and router/test/tracing.js (120K), so its 32K–120K
+  rows show the model found the string, not that it found it in the needle. Its timings are as good as any.
+  `build.ts` leaves out only the needle files; leaving out every file that holds an answer is the fix for a rerun.
 - **Where the 27B stops:** it doesn't, within this ladder. Its preset has `ctx-size = 131072`, so 120K
   (122,880) plus the 4,096 `max_tokens` fits; the next power-of-two rung (128K + output) would not. Strata's
   `--max-context` is 262,144.
 - **Run to run** the prefill is steady from 32K up: TTFT varies by under 1% on Strata and under 2% on the 27B,
   except one 27B 120K run at 161.5 s (5% slow by the client clock, see below). At 8K, where a request takes 6–7 s,
   it varies 9.5% on Strata and 5% on the 27B. Decode swings far more (Strata 43–60, the 27B 58–123).
-- **Break-even reply length** (where the 27B's faster decode wins back Strata's prefill lead): TTFT saved ÷
+- **Break-even reply length** (an extrapolation: decode measured on ~100-token replies, assumed flat for longer ones) (where the 27B's faster decode wins back Strata's prefill lead): TTFT saved ÷
   (1/Strata decode − 1/27B decode), medians from the table: 32K 11.8 s ÷ 0.0094 s ≈ 1.25K tokens, 64K 32.6 s ÷
   0.0060 s ≈ 5.4K, 120K 86.9 s ÷ 0.0038 s ≈ 22.7K. At 8K Strata falls behind after ~75 output tokens. Since
   decode is the noisy number, these are rough: read them as "about 1K, 5K, 20K".
@@ -98,8 +103,8 @@ Same question, run to run (`layer-tracing-channel`):
   on the `ANSWER:` line; a reply without one is wrong.
 - **Prompts** (`scripts/build.ts`): for each rung and question, filler lines up to the rung (the last filler
   file cut at a line), the question's file put in at the file boundary nearest the middle (48–61% of the prompt),
-  sized by the 27B's `/tokenize` to land ~60 tokens under the rung by that count (the served prompts, with the nonce and
-  chat template, come out within ~25 tokens of the rung: the 27B's a little under, Strata's a little over). Built once and sent unchanged to both arms;
+  sized by the 27B's `/tokenize` to land 65–76 tokens under the rung by that count (the served prompts, with the nonce and
+  chat template, come out within ~30 tokens of the rung: the 27B's a little under, Strata's a little over). Built once and sent unchanged to both arms;
   each arm's tokenizer counts them within 50 tokens of each other.
 - **Requests** (`scripts/run.ts`): `/v1/chat/completions`, streamed, `chat_template_kwargs.enable_thinking:
   true` on **both arms**, server-default sampling, `max_tokens` 4096. A tiny warm-up request first. TTFT =
@@ -109,7 +114,7 @@ Same question, run to run (`layer-tracing-channel`):
 ## How to run
 
 ```sh
-scripts/fetch.sh                                   # clone the padding repos into work/
+scripts/fetch.sh                                   # clone the padding repos into work/ (needs jq)
 export ROUTER_BASE_URL=http://<host>:18080/v1
 local-ai-mode status && local-ai-mode router
 node scripts/build.ts                              # work/prompts/<rung>/<question>.json
@@ -122,4 +127,5 @@ node scripts/report.ts                             # results/summary.md and resu
 ```
 
 `run.ts` resumes: rows already in `results/<arm>.jsonl` are skipped (`--force` reruns them, `--rungs 8K,32K`
-picks rungs). Never switch modes from inside an agent that Strata or the router is serving.
+picks rungs). Never switch modes from inside an agent that Strata or the router is serving, and check that no other task is
+using the router first (`local-ai-mode status`, its `/slots`): a Strata window stops the router for everyone.

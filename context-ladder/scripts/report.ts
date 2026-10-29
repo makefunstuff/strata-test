@@ -2,7 +2,7 @@
 //   node scripts/report.ts
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { HERE, RUNGS, rungName } from "./lib.ts";
+import { grade, HERE, loadQuestions, RUNGS, rungName } from "./lib.ts";
 
 const ARMS = [
   { arm: "strata", name: "Strata (NVFP4-QAD)", color: "#d9480f" },
@@ -14,7 +14,9 @@ const rows = (arm: string) => {
   // The newest row of each rung/question/run wins, so a --force rerun replaces rather than adds.
   const byKey = new Map<string, any>();
   for (const r of readFileSync(f, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l))) byKey.set(`${r.rung}/${r.id}/${r.run ?? 1}`, r);
-  return [...byKey.values()];
+  // Graded again here, so every row meets the current grader whatever run.ts graded it with.
+  const qs = loadQuestions();
+  return [...byKey.values()].map((x) => ({ ...x, right: grade(qs.find((q) => q.id === x.id)!, x.reply ?? "").right }));
 };
 const median = (xs: number[]) => {
   const s = xs.filter((x) => typeof x === "number").sort((a, b) => a - b);
@@ -86,7 +88,7 @@ function panel(title: string, field: "prefill" | "decode", dx: number) {
   }
   return g + "</g>";
 }
-let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W * 2} ${H + 20}" width="${W * 2}" height="${H + 20}" font-family="system-ui, sans-serif" color="#444">`;
+let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W * 2} ${H + 20}" width="${W * 2}" height="${H + 20}" font-family="system-ui, sans-serif" color="#888">`;
 svg += panel("Prefill tok/s (higher is better)", "prefill", 0) + panel("Decode tok/s", "decode", W);
 ARMS.forEach((a, i) => {
   svg += `<rect x="${M.l + i * 190}" y="${H + 6}" width="10" height="10" fill="${a.color}"/><text x="${M.l + 14 + i * 190}" y="${H + 15}" font-size="11" fill="currentColor">${a.name}</text>`;
