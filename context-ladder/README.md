@@ -65,7 +65,7 @@ Same question, run to run (`layer-tracing-channel`):
 
 - **Accuracy:** `route-head-fallback` and `package-mocha` are clean needles: their answer occurs only in the
   needle file at every rung. `layer-tracing-channel` is not, from 32K up: its answer, `express.router.request`,
-  is also quoted in router/README.md (in the 32K–120K filler) and router/test/tracing.js (120K), so its 32K–120K
+  is also quoted in router/README.md (in the 32K–120K filler) and router/test/tracing.js (64K and 120K), so its 32K–120K
   rows show the model found the string, not that it found it in the needle. Its timings are as good as any.
   `build.ts` leaves out only the needle files; leaving out every file that holds an answer is the fix for a rerun.
 - **Where the 27B stops:** it doesn't, within this ladder. Its preset has `ctx-size = 131072`, so 120K
