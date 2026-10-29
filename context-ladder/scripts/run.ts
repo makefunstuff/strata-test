@@ -4,8 +4,8 @@
 // results/<arm>.jsonl and skips rows already there without an error, so a stopped run resumes. --force asks again;
 // report.ts keeps only the newest row of each rung/question/run.
 // Times come from the SSE stream as the client sees it: TTFT = request sent to the first delta (thinking or
-// answer), decode = (completion tokens - 1) / (last delta - first delta). llama.cpp's own `timings` are kept
-// beside them (the 27B), which also shows whether a request waited behind someone else's in the router's one slot.
+// answer), decode = (completion tokens - 1) / (last delta - first delta). the servers' own `timings` are kept
+// beside them (both arms report them), which also shows whether a request waited behind someone else's in the router's one slot.
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
@@ -54,6 +54,7 @@ async function routerIdle() {
     if (i === 0) console.log("router slot busy (someone else's request); waiting");
     await new Promise((res) => setTimeout(res, 2000));
   }
+  console.log("router slot still busy after 20 min; sending anyway (compare server_prefill_tps)");
 }
 
 // A tiny request first, so a model the server still has to load does not count against the first rung.

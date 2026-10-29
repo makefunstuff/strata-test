@@ -12,22 +12,24 @@ all. Each answer is graded, so a fast wrong answer would not count.
 tok/s and stays flat from 64K to 120K, while the 27B's falls from ~1,160 to ~800. Time to first token is 1.15x
 faster at 8K, 1.6x at 32K, 1.9x at 64K and 2.3x at 120K (67 s against 154 s). The 27B decodes faster, though
 (~110–120 tok/s up to 32K, ~67 at 120K, against Strata's flat ~49–55), so at 8K Strata is 5% slower in total, and
-every long answer eats into its lead: Strata stays ahead while the reply is under ~1.25K tokens at 32K, ~5K at 64K
-and ~23K at 120K.** All 40 answers were right on both arms (20 each); the two questions whose answer is only in the needle file
-were right at every length on both, so neither traded accuracy for speed (see "Accuracy" below). Use Strata for long-prompt, short-answer work (whole-repo questions, reading big logs or documents); keep
-the 27B for short prompts and long generations.
+every long answer eats into its lead: Strata stays ahead while the reply is under ~1.25K tokens at 32K and ~5K at
+64K, and at 120K for any reply the 27B has room to write.** All 40 answers were right on both arms (20 each);
+`package-mocha`, the one question whose answer is only in the needle file at every length, was right at every
+length on both, so neither traded accuracy for speed (see "Accuracy" below). Use Strata for long-prompt,
+short-answer work (whole-repo questions, reading big logs or documents); keep the 27B for short prompts and long
+generations.
 
 **Note on the Strata arm:** the brief names Strata IQ2_XS, but `strata.service` on this box now serves the
 `qwen3.8-flash-next-fp4-local` NVFP4-QAD pack (Strata 0.2.7, MTP speculation, `--kv int8`), and no IQ2_XS pack
 is left under `/models/strata-packs/`. That is what was measured. Its decode (~50 tok/s) is well below the
-IQ2_XS reference (~90 tok/s), and its prefill at 64K (1.85K) below IQ2_XS's ~2.4K at 37K; the 27B lines up with
-its references (~1K prefill, ~89 decode).
+IQ2_XS reference (~90 tok/s), and its prefill at 64K (1.85K) below IQ2_XS's ~2.4K at 37K; the 27B's prefill lines up with
+its reference (~1K at 37K), and its decode (~110 at 32K) is above the ~89 reference.
 
 ## Results
 
 Run 2026-10-29: the three questions 16:36–16:57 EET (27B, then Strata in one ~7-minute window), the two repeat
-runs 17:11–17:44 (27B, waiting for the shared router at times, then Strata in one ~5-minute window), back to the router after each Strata window. The
-switches were made by this task's agent, which runs on Claude Code (not served by this box), as the brief asks.
+runs 17:11–17:44 (27B, waiting for the shared router at times, then Strata in one ~5-minute window), back to the router after each Strata window. Before the second Strata window the agent waited until the router's `/slots` showed no request
+in progress (84 s). The switches were made by this task's agent, which runs on Claude Code (not served by this box), as the brief asks.
 The big table is the median of all five requests per rung; the last table is the same question run to run.
 
 | rung | arm | right | prompt tokens | TTFT s, median (range) | prefill tok/s | decode tok/s, median (range) | output tokens | total s |
@@ -63,11 +65,12 @@ Same question, run to run (`layer-tracing-channel`):
 
 ![Prefill and decode tok/s against prompt length](results/ladder.svg)
 
-- **Accuracy:** `route-head-fallback` and `package-mocha` are clean needles: their answer occurs only in the
-  needle file at every rung. `layer-tracing-channel` is not, from 32K up: its answer, `express.router.request`,
-  is also quoted in router/README.md (in the 32K–120K filler) and router/test/tracing.js (64K and 120K), so its 32K–120K
-  rows show the model found the string, not that it found it in the needle. Its timings are as good as any.
-  `build.ts` leaves out only the needle files; leaving out every file that holds an answer is the fix for a rerun.
+- **Accuracy:** only `package-mocha` is a clean needle at every rung: `10.8.2` occurs only in router/package.json.
+  The other two are clean at 8K only. From 32K up, `layer-tracing-channel`'s answer, `express.router.request`, is
+  also quoted in router/README.md (and router/test/tracing.js from 64K), and `route-head-fallback`'s is shown by
+  router/test/auto-head.js ("should invoke get without head") and auto-options.js. Those rows show the model gave
+  the right answer, not that it found it in the needle file. Their timings are as good as any. `build.ts` leaves
+  out only the needle files; leaving out every file that holds an answer is the fix for a rerun.
 - **Where the 27B stops:** it doesn't, within this ladder. Its preset has `ctx-size = 131072`, so 120K
   (122,880) plus the 4,096 `max_tokens` fits; the next power-of-two rung (128K + output) would not. Strata's
   `--max-context` is 262,144.
@@ -76,7 +79,8 @@ Same question, run to run (`layer-tracing-channel`):
   it varies 9.5% on Strata and 5% on the 27B. Decode swings far more (Strata 43–60, the 27B 58–123).
 - **Break-even reply length** (an extrapolation: decode measured on ~100-token replies, assumed flat for longer ones) (where the 27B's faster decode wins back Strata's prefill lead): TTFT saved ÷
   (1/Strata decode − 1/27B decode), medians from the table: 32K 11.8 s ÷ 0.0094 s ≈ 1.25K tokens, 64K 32.6 s ÷
-  0.0060 s ≈ 5.4K, 120K 86.9 s ÷ 0.0038 s ≈ 22.7K. At 8K Strata falls behind after ~75 output tokens. Since
+  0.0060 s ≈ 5.4K, 120K 86.9 s ÷ 0.0038 s ≈ 22.7K, more than the 27B can write there (131,072 − ~122.9K ≈ 8.2K), so at
+  120K Strata is ahead for any reply the 27B can give. At 8K Strata falls behind after ~75 output tokens. Since
   decode is the noisy number, these are rough: read them as "about 1K, 5K, 20K".
 - **Decode numbers are from short replies** (51–243 tokens, thinking included), so they carry more noise than
   the prefill numbers; the 27B's also swing with its DFlash2 + n-gram speculation, which drafts well on code-like
@@ -84,8 +88,8 @@ Same question, run to run (`layer-tracing-channel`):
 - **Sharing the router:** another task (NH-2) used the router during the repeat runs. `run.ts` waits until
   `/slots` shows the 27B's single slot idle before each request, and keeps llama.cpp's own `timings`. On the first
   round the client's prefill rate matched the server's within 1.4% on every request. In the repeats, three of eight
-  27B requests were 3.7–4.5% slower by the client clock than by the server's (8K runs 2 and 3, 120K run 3): the
-  other task's request got in between the check and the send. The server's own prefill rate for those (1158–1171
+  27B requests were 3.7–4.5% slower by the client clock than by the server's (8K runs 2 and 3, 120K run 3): most likely the
+  other task's request got in between the check and the send (the rows don't record it). The server's own prefill rate for those (1158–1171
   and 797 tok/s) matches the rest. Strata, with nobody else on it, matched within 0.8%.
 - **Cold every time:** a fresh `[request <uuid>]` opens every user message, so no prefix cache helps
   (llama.cpp `cache_n` is 0 or 51 on the 27B rows: at most the system prompt came from cache).
@@ -103,7 +107,7 @@ Same question, run to run (`layer-tracing-channel`):
   on the `ANSWER:` line; a reply without one is wrong.
 - **Prompts** (`scripts/build.ts`): for each rung and question, filler lines up to the rung (the last filler
   file cut at a line), the question's file put in at the file boundary nearest the middle (48–61% of the prompt),
-  sized by the 27B's `/tokenize` to land 65–76 tokens under the rung by that count (the served prompts, with the nonce and
+  sized by the 27B's `/tokenize` to land 64–76 tokens under the rung by that count (the served prompts, with the nonce and
   chat template, come out within ~30 tokens of the rung: the 27B's a little under, Strata's a little over). Built once and sent unchanged to both arms;
   each arm's tokenizer counts them within 50 tokens of each other.
 - **Requests** (`scripts/run.ts`): `/v1/chat/completions`, streamed, `chat_template_kwargs.enable_thinking:
@@ -119,9 +123,11 @@ export ROUTER_BASE_URL=http://<host>:18080/v1
 local-ai-mode status && local-ai-mode router
 node scripts/build.ts                              # work/prompts/<rung>/<question>.json
 node scripts/run.ts --arm 27b                      # results/27b.jsonl
+for n in 2 3; do node scripts/run.ts --arm 27b --only layer-tracing-channel --run $n; done
 local-ai-mode strata
 export STRATA_BASE_URL=http://<host>:18097/v1 STRATA_API_KEY=<key>
 node scripts/run.ts --arm strata                   # results/strata.jsonl
+for n in 2 3; do node scripts/run.ts --arm strata --only layer-tracing-channel --run $n; done
 local-ai-mode router                               # always end on the router
 node scripts/report.ts                             # results/summary.md and results/ladder.svg
 ```
