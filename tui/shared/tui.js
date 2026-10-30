@@ -532,14 +532,16 @@ export function createTUI(app) {
       if (d.wide) b.className = "wide";
       b.innerHTML = `<span class="k">${esc(d.k === "Space" ? "␣" : d.k)}</span><span class="l">${esc(d.l ?? "")}</span>`;
       b.setAttribute("aria-label", `${d.k}: ${d.l ?? ""}`);
-      b.dataset.k = d.k;              // so a check can find the chip for a key and click it
+      b.dataset.k = d.k === "Space" ? " " : d.k;   // the key the chip actually sends, so a check
+                                                   // can find the chip for a key and click it
       b.addEventListener("click", () => { state.chipFired++; press(d.k); });
       el.keybar.appendChild(b);
     }
     const help = document.createElement("button");
     help.type = "button";
     help.innerHTML = `<span class="k">?</span><span class="l">help</span>`;
-    help.addEventListener("click", () => press("?"));
+    help.dataset.k = "?";            // the check clicks it like any other chip
+    help.addEventListener("click", () => { state.chipFired++; press("?"); });
     el.keybar.appendChild(help);
   }
   function buildHelp() {
