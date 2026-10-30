@@ -250,9 +250,16 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
   }
   const poseLog = [];
   for (const js of rest.poses ?? []) {
-    const r = await p.evaluate(`(async () => { const f = eval(${JSON.stringify(js)}); return typeof f === "function" ? f() : f; })()`)
-      .catch((e) => `pose error: ${e.message}`);
+    // a pose that throws has to fail the page on its own: reading it back out of the JSON is not
+    // a check, and the first version of this only noticed because a field expectation got lucky
+    let r, threw = null;
+    try {
+      r = await p.evaluate(`(async () => { const f = eval(${JSON.stringify(js)}); return typeof f === "function" ? f() : f; })()`);
+    } catch (e) {
+      threw = e.message; r = `pose error: ${e.message}`;
+    }
     poseLog.push(`${js} -> ${JSON.stringify(r)}`);
+    if (threw) errors.push(`pose ${js} threw: ${threw.split("\n")[0]}`);
   }
   await p.waitForTimeout(500);
   const s1 = await p.evaluate(() => window.tui?.state?.() ?? null).catch(() => null);

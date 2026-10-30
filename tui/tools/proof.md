@@ -1,6 +1,14 @@
-# Proof: the TUI shelf check actually checks
+# Proof: the TUI check can fail
 
-Run from the repo root. `summarize.sh` is a table over the same JSON.
+Two things are recorded here: the run, and what happens when each guarantee is broken on purpose.
+The controls were made by editing one line out of an app (never the checker), running
+`node tui/tools/check.mjs <page> --skip-phone`, and reverting. Everything between the fences is
+captured output, not written.
+
+## The run
+
+Six pages x 1280x800, 390x844 and 320x568. `expect` is what the driven keys and taps must have
+changed; `pose` is the return value of the harness call.
 
 ```console
 $ timeout 1500 tui/tools/summarize.sh
@@ -13,7 +21,7 @@ PASS  tui/2-mail   narrow  cols=37 rows=25 ink=580 glyphs=64 changed=true expect
 PASS  tui/3-files  desktop cols=161 rows=42 ink=2049 glyphs=75 changed=true expect={"stagedN":0,"commits":9,"top":"staged test","branch":"main"} pose=["window.tui.api.checkout('main') -> \"main\""]
 PASS  tui/3-files  phone   cols=47 rows=43 ink=797 glyphs=55 changed=true expect={"tab":2} pose=[]
 PASS  tui/3-files  narrow  cols=38 rows=25 ink=411 glyphs=53 changed=true expect={"tab":2} pose=[]
-PASS  tui/4-player desktop cols=137 rows=39 ink=2248 glyphs=76 changed=true expect={"viz":"matrix","shuffle":true,"index":3,"playing":true,"played":1} pose=["window.tui.api.select(3) -> \"Copper Wire\"","window.tui.api.play(true) -> true"]
+PASS  tui/4-player desktop cols=137 rows=39 ink=2243 glyphs=76 changed=true expect={"viz":"matrix","shuffle":true,"index":3,"playing":true,"played":1} pose=["window.tui.api.select(3) -> \"Copper Wire\"","window.tui.api.play(true) -> true"]
 PASS  tui/4-player phone   cols=40 rows=40 ink=592 glyphs=62 changed=true expect={"tab":2} pose=[]
 PASS  tui/4-player narrow  cols=35 rows=26 ink=470 glyphs=59 changed=true expect={"tab":2} pose=[]
 PASS  tui/5-ops    desktop cols=167 rows=44 ink=3165 glyphs=68 changed=true expect={"level":"info","acks":1,"restarts":1,"paused":true,"filter":"GET","shownLines":"@changed"} pose=["window.tui.api.pause(true) -> true"]
@@ -21,35 +29,59 @@ PASS  tui/5-ops    phone   cols=49 rows=46 ink=1321 glyphs=57 changed=true expec
 PASS  tui/5-ops    narrow  cols=39 rows=28 ink=567 glyphs=49 changed=true expect={"tab":2} pose=[]
 PASS  tui/6-editor desktop cols=159 rows=39 ink=1348 glyphs=70 changed=true expect={"buf":"notes.md","saves":1,"hits":8,"edits":1} pose=["window.tui.api.find('ring') -> 8","window.tui.api.ex('e notes.md') -> \"opened notes.md\""]
 PASS  tui/6-editor phone   cols=46 rows=40 ink=791 glyphs=63 changed=true expect={"line":"@changed","buf":"@changed"} pose=[]
-PASS  tui/6-editor narrow  cols=37 rows=24 ink=60 glyphs=60 changed=true expect={"line":"@changed","buf":"@changed"} pose=[]
+PASS  tui/6-editor narrow  cols=37 rows=24 ink=424 glyphs=60 changed=true expect={"line":"@changed","buf":"@changed"} pose=[]
 overall: ok
 ```
 
-## The negative controls (a check that cannot fail is not a check)
-
-Each was run against the real pages, expecting a failure, and each produced one.
+## The negative controls
 
 ```console
-# a blank grid is caught
-$ node tui/tools/check.mjs 1-monitor --blank
-FAIL ... ink 0.0% < 6%   (or: screen is blank)
-
-# a key that is not wired is caught: the scenario asked for sort="mem" and the page reported "pid"
-# (before the space-key fix this is what proved the chip was dead)
-FAIL  tui/1-monitor desktop ... the driven input did not land where the scenario says: sort="pid" want "mem"
-
-# a tap that lands on dead cells is caught
-FAIL  tui/5-ops desktop ... no hit region tagged "log" to tap
-FAIL  tui/5-ops desktop ... 3 tap(s) sent, none fired a hit region
-
-# a font that falls back off the grid is caught
-FAIL  tui/4-player desktop ... font fallback breaks the grid: "1"=7.5px vs 9px, ...
-FAIL  tui/6-editor desktop ... 72 glyph(s) off the character grid: ...
-
-# a pose that throws is caught
-FAIL  tui/6-editor desktop ... pose window.tui.api.find('ring') threw: TypeError ...
+$ node tui/tools/check.mjs 3-files --skip-phone   # the space key stops staging in the file manager
+ok: false   grid: 161x42, ink 2049, 75 distinct glyphs
+   ! the driven input did not land where the scenario says: commits=8 want 9, top="grid: sort directories before files, always" want "staged test"
 ```
 
-The first version of the input assertion was `state()` differs before and after driving; the kit's
-own frame counter made that always true, so every page passed with dead input. It now strips the
-volatile fields and names, per scenario, the fields the input must land in.
+```console
+$ node tui/tools/check.mjs 5-ops --skip-phone   # the log rows stop declaring a hit region
+ok: false   grid: 167x44, ink 3165, 68 distinct glyphs
+   ! no hit region tagged "log" to tap
+   ! 3 tap(s) sent, none fired a hit region
+```
+
+```console
+$ node tui/tools/check.mjs 6-editor --skip-phone   # the page loads a face whose arrows and bullets fall off the grid
+ok: false   grid: 173x39, ink 1348, 70 distinct glyphs
+   ! font fallback breaks the grid: "●"=8.7px vs 7.25px, "▲"=8.7px vs 7.25px
+```
+
+```console
+$ node tui/tools/check.mjs 6-editor --skip-phone   # the harness pose call throws
+ok: false   grid: 159x39, ink 1348, 70 distinct glyphs
+   ! pose window.tui.api.find('ring') threw: page.evaluate: Error: boom
+   ! the driven input did not land where the scenario says: hits=0 want 8
+```
+
+```console
+$ node tui/tools/check.mjs 1-monitor --skip-phone   # draw() returns without drawing
+ok: false   grid: 161x43, ink 0, 0 distinct glyphs
+   ! blank grid: 0/6923 cells drawn
+   ! only 0 distinct glyphs on screen
+   ! no hit region tagged "proc" to tap
+   ! 2 tap(s) sent, none fired a hit region
+   ! the driven input did not land where the scenario says: sort="mem" want "pid"
+```
+
+
+## What each control is the evidence for
+
+- **dead-key** is why the scenarios name their fields. The first version asserted only that
+  `state()` differed before and after driving, and the kit's own frame counter made that true no
+  matter what the page did with the key — every page passed while the space key was dead.
+- **dead-tap** is why taps are aimed at a declared region by tag and the page has to report one
+  firing. Before that, a desktop scenario passed with its only tap landing on empty cells.
+- **bad-font** is the failure a screenshot does not catch and an "is it monospaced" test does not
+  either: the substituted face is monospaced, its arrows are just not the width of the cell the
+  grid was measured in.
+- **throwing-pose** is the reason the pose result is asserted rather than printed: as first
+  written, a pose that threw only failed the page because a field expectation happened to notice.
+- **blank-grid** covers an empty shell, which would otherwise report a clean layout.
