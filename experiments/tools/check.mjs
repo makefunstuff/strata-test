@@ -18,9 +18,11 @@ const argv = process.argv.slice(2);
 const opt = (n, d) => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1] : d; };
 const all = (n) => argv.reduce((a, v, i) => (v === `--${n}` ? [...a, argv[i + 1]] : a), []);
 const target = argv.find((a, i) => !a.startsWith("--") && (i === 0 || !argv[i - 1].startsWith("--")));
-if (!target) { console.error("usage: node check.mjs <experiment-dir> [--drag fx,fy:dx,dy:ms] [--click fx,fy] [--eval js]"); process.exit(2); }
+if (!target) { console.error("usage: node check.mjs <experiment-dir> [--drag fx,fy:dx,dy:ms[:shift]] [--click fx,fy] [--eval js]\n       [--label name] [--wait s] [--width px] [--height px] [--shot-dir dir]"); process.exit(2); }
 
 const waitS = +opt("wait", 5);
+const vpWidth = +opt("width", 1000);
+const vpHeight = +opt("height", 600);
 const root = resolve(dirname(target));
 const outDir = opt("shot-dir", join(target, "shots"));
 const label = opt("label", "check");
@@ -60,7 +62,7 @@ async function stop(code, why) {
 const deadline = setTimeout(() => void stop(3, `timed out after ${MAX_MS}ms`), MAX_MS);
 for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => void stop(4, sig));
 
-const page = await browser.newPage({ viewport: { width: 1000, height: 600 } });
+const page = await browser.newPage({ viewport: { width: vpWidth, height: vpHeight } });
 const errors = [];
 page.on("console", (m) => {
   if (/favicon\.ico$/.test(m.location().url)) return;
