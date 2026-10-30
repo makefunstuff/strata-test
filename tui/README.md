@@ -175,10 +175,23 @@ only worth having if "I ran it" beats "I read it", in both directions.
 staging and committing both dead. The assertion now strips the kit's counters and compares the
 fields each scenario names, which is the difference between a check and a screenshot.
 
+Then two of its own guarantees turned out not to be guarantees. A tap was a coordinate, and a
+coordinate landing on empty cells looked identical to one that fired a region — three of the six
+pages had a tap hitting nothing. Taps are now aimed at a *declared* hit region by tag and the page
+has to report one firing. And nothing had ever clicked a keymap chip, which is the phone's whole
+keyboard: chips carry their key in `data-k`, a click increments `chip_fired`, and a chip that looks
+like a button and reaches nothing fails the page. A harness pose that threw was recorded and
+asserted on by neither.
+
 **How much fixing it took.** All of it was me, the harness and a reviewer, not the model's second
 opinion: asked to review its own pages it found nothing, and the sweep was green while four of the
-six keyboards were partly dead. The number to quote is the checker's — 18 passes, 0 console errors,
-all six glyph audits clean — and every one of those 18 runs got there only after a structural change.
+six keyboards were partly dead. The number to quote is the checker's — 18 passes (six pages at 1280×800, 390×844 and 320×568), no
+console errors, all six glyph audits clean, and every scenario's named fields actually moved under
+the keys, taps and chips it says it drove — and every one of those 18 runs got there only after a
+structural change. `tui/tools/proof.md` keeps the run plus six negative controls (a dead key, a dead
+tap, a dead chip, a font off the grid, a throwing pose, a blank grid), each made by editing one line
+out of an app and reverting, with the checker's real output under it. A check nobody has seen fail is
+a screenshot with a pass count.
 
 **What I would not trust it to do without a human.** Anything where the spec is "looks right":
 spacing, density, whether a panel should be there at all, whether a bar is convincing. It is
