@@ -29,10 +29,10 @@ parts.push(`<polygon points="${px(-900)},${pz(-1200)} ${coast} ${px(1000)},${pz(
 parts.push(`<polygon points="${city.terr.TOOMP.map(([x, z]) => `${px(x)},${pz(z)}`).join(" ")}" fill="#1e3a24" stroke="#4c8a55" stroke-width="1.5"/>`);
 // wall
 parts.push(`<polyline points="${terr.WALL_PATH.map(([x, z]) => `${px(x)},${pz(z)}`).join(" ")}" fill="none" stroke="#d9c48a" stroke-width="3.5"/>`);
-// streets
+// streets (osm.js stores each polyline as [x, z] *pairs*, not a flat array — walking it as numbers
+// silently produced a polyline of "NaN,NaN" and a plan with no streets in it at all)
 for (const s of STREETS) {
-  const pts = [];
-  for (let i = 0; i < s.p.length; i += 2) pts.push(`${px(s.p[i])},${pz(s.p[i + 1])}`);
+  const pts = s.p.map(([x, z]) => `${px(x)},${pz(z)}`);
   parts.push(`<polyline points="${pts.join(" ")}" fill="none" stroke="${s.m ? "#e8dcc0" : "#6b7a86"}" stroke-opacity="${s.m ? 0.9 : 0.5}" stroke-width="${(s.w * S).toFixed(1)}" stroke-linecap="round"/>`);
 }
 // squares

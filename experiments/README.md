@@ -15,36 +15,49 @@ FPS is headless Chromium on SwiftShader (software — the model server on this m
 GPU), so every number below is a **floor**, not what a real GPU does; the pages are written to
 hold 60 fps on a desktop GPU, and each has a low/medium/high preset for the rest. "Works" is
 what the headless check measured after driving the page — scripted drags, clicks and calls into
-the page's own `window.experiment` hook — not what it should do. One command per experiment:
+the page's own `window.experiment` hook — not what it should do. One command per experiment, written
+to run from the **repo root** (the checker serves the folder above whatever path you hand it, so the
+experiment directory is spelled in full):
 
 ```
-node experiments/tools/check.mjs 1-water --label water --wait 8 \
+node experiments/tools/check.mjs experiments/1-water --label water --wait 8 \
   --drag 0.5,0.6:0.62,0.5 --click 0.4,0.55 --eval "…"
 
 # the cloth: a real mouse drag on the sheet, a shift-drag slice, a scripted sustained pull
-node experiments/tools/check.mjs 3-cloth-tearing --label cloth --wait 8 \
+node experiments/tools/check.mjs experiments/3-cloth-tearing --label cloth --wait 8 \
   --drag 0.47,0.53:0.36,-0.06:900 --drag 0.4,0.42:0.16,0.22:600:shift \
   --eval "…api.pullScreen(mid, …)…"
 
 # the town: hide the chrome for a clean frame, orbit it, put the lights on; setSeed (not newCity) so the
 # run can be repeated, and --width/--height exist so the phone layout is a checked thing (390×780 on low)
-node experiments/tools/check.mjs 6-medieval-diorama --label hero --wait 9 \
+node experiments/tools/check.mjs experiments/6-medieval-diorama --label hero --wait 9 \
   --eval "window.experiment.setAutoRotate(false)" --eval "window.experiment.setChrome(false)" \
   --eval "window.experiment.setView('hero')" --eval "window.experiment.setSeed('Thornburgh')"
-node experiments/tools/check.mjs 6-medieval-diorama --label phone --wait 9 --width 390 --height 780 \
+node experiments/tools/check.mjs experiments/6-medieval-diorama --label phone --wait 9 --width 390 --height 780 \
   --eval "window.experiment.setQuality('low')" --eval "window.experiment.setChrome(false)"
 
-# the real city: the same, plus the hour, the season and the landmark overlay, and the phone width at
-# the height a phone actually has (390×844). The tour is driven, not assumed: startTour() and landmark()
-# are asserted so a card that never opens fails the check rather than looking fine in a still.
-node experiments/tools/check.mjs 7-tallinn-diorama --label hero --wait 6 \
+# the real city: the hour and the season, and the phone width at the height a phone actually has
+# (390×844). Every one of these returns state() so the run is evidence and not just an exit code.
+node experiments/tools/check.mjs experiments/7-tallinn-diorama --label hero --wait 6 \
   --eval "window.experiment.state()"
-node experiments/tools/check.mjs 7-tallinn-diorama --label night --wait 6 \
+node experiments/tools/check.mjs experiments/7-tallinn-diorama --label night --wait 6 \
   --eval "(()=>{const e=window.experiment;e.setTime(1.28);e.setView('market');return e.state();})()"
-node experiments/tools/check.mjs 7-tallinn-diorama --label winter --wait 6 \
+node experiments/tools/check.mjs experiments/7-tallinn-diorama --label winter --wait 6 \
   --eval "(()=>{const e=window.experiment;e.setSeason('winter');e.setView('market');return e.state();})()"
-node experiments/tools/check.mjs 7-tallinn-diorama --label phone --wait 6 --width 390 --height 844 \
+node experiments/tools/check.mjs experiments/7-tallinn-diorama --label phone --wait 6 --width 390 --height 844 \
   --eval "(()=>{const e=window.experiment;e.setQuality('low');return e.state();})()"
+
+# the overlay, driven rather than assumed: the rail opens a card and flies there, the tour starts, and
+# six seconds later it has moved on its own to a second landmark with the camera following it — a card
+# that never opens, or a tour that never advances, fails this run instead of looking fine in a still
+node experiments/tools/check.mjs experiments/7-tallinn-diorama --label tour --wait 6 \
+  --eval "(()=>{const e=window.experiment;e.setChrome(true);e.openLandmark('oleviste');return e.landmark();})()" \
+  --eval "window.experiment.startTour()" \
+  --eval "(()=>{const e=window.experiment;return new Promise(r=>setTimeout(()=>r({touring:e.touring(),card:e.landmark(),view:e.state().view}),6000));})()"
+
+# and the same eighteen frames the card set is made of, in one page load, with the exposure of each
+# printed (mean, spread, blown pixels) so a flat grey frame fails a review rather than passing for art
+node experiments/tools/shotpack.mjs experiments/7-tallinn-diorama --spec frames.json --out shots-review
 ```
 
 `bash experiments/tools/sweep.sh` runs all seven and prints one line each
@@ -61,7 +74,7 @@ kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones th
 | 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.25, trails on; 16 384 boids measured at 8.8 fps | 18.0 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
 | 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.93, light 250, gust 0.64, 60 march steps at 42% resolution | 6.4 / 6.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 | 6 | [Medieval city diorama](6-medieval-diorama/index.html) | 0 errors; seed `BRAMWELL` grows 37 houses, 15 streets, 235 trees, 22 smoking chimneys, 596 lit windows — 3 265 pieces / 60 042 tris in **21 draw calls**; `newCity()` `BRAMWELL`→`Thornburgh` (43 houses, 431 trees, 3 582 pieces, still 21 calls); sixteen named seeds span 32–51 houses, 14–17 streets and 213–649 trees, and the same seed twice is identical; night, six views, tilt-shift and all three quality presets driven; 390×780 clean on `low`, panel shuts itself below 640 px | 9.2 / 8.0 (12.8 / 20.4 at phone width on `low`) | A whole town from one seed — ring streets, frontage houses, a wall with gatehouses, a keep, a cathedral, a river with bridges and fields beyond — cut away to show strata and put under a tilt-shift lens, in 21 draw calls with every texture painted at load | `N` night · `C` new town · `V` view · `G` panel · drag = orbit |
-| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors at both widths; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 890 trees, 190 folk** at the default seed `TALLINN` — 11 573 pieces / 215 282 tris in **43 draw calls** (`setSeed('tallinn')` in the sweep: 860 trees, 11 482 pieces, still 43 calls); `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, day hours, winter, tilt-shift, all three quality presets and the tour driven; 390×844 clean on `low` with the panel shut (60 folk, 8 405 pieces) | 3.6 / 4.0 (5.6 / 8.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit · tap a landmark, or ▶ for the tour |
+| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors at both widths; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 890 trees, 190 folk** at the default seed `TALLINN` — 11 573 pieces / 215 282 tris in **43 draw calls** (`setSeed('tallinn')` in the sweep: 860 trees, 11 482 pieces, still 43 calls); `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, day hours, winter, tilt-shift, all three quality presets and the tour driven; 390×844 clean on `low` with the panel shut (60 folk, 8 405 pieces); one close-up per landmark under `shots/landmarks/` (16 frames, one page load, each with its exposure printed) | 3.6 / 4.0 (5.6 / 8.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit · tap a landmark, or ▶ for the tour |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
@@ -284,7 +297,7 @@ experiments/
   6-medieval-diorama/ index.html main.js rng.js textures.js geo.js layout.js build.js life.js
                       tiltshift.js shots/
   7-tallinn-diorama/  index.html main.js osm.js terrain.js layout.js textures.js build.js life.js
-                      ui.js ui.css shots/
+                      ui.js ui.css shots/ shots/landmarks/ (one close-up per landmark)
                       (imports rng.js, geo.js and tiltshift.js from 6-, and shared/lab.js)
   tools/              check.mjs (one page), sweep.sh (all seven), summarize.mjs, syntax.mjs,
                       links.mjs (every local href/src resolves), clothtest.mjs (grab-and-tear),
