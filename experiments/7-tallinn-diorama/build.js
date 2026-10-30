@@ -956,11 +956,11 @@ function paintLand(terr, g, size) {
   for (let i = 0; i < pos.count; i++) {
     const x = pos.getX(i), z = pos.getZ(i);
     const sl = terr.slope(x, z), h = terr.ground(x, z);
-    let hex = 0x8b9a5e;                                       // grass, the texture doing the work
-    if (terr.isSea(x, z) || h < 1.4) hex = 0xa9a08a;          // shore
-    else if (sl > 0.62) hex = 0xc0b8a6;                       // the escarpment's limestone scree
-    else if (sl > 0.34) hex = 0x9c9d76;                       // scrub on the hillside
-    else if (h > 34) hex = 0x7a8c52;                          // the plateau's lawns
+    let hex = 0xa9b878;                                       // grass, the texture doing the work
+    if (terr.isSea(x, z) || h < 1.4) hex = 0xc3b79b;          // shore
+    else if (sl > 0.62) hex = 0xd3ccba;                       // the escarpment's limestone scree
+    else if (sl > 0.34) hex = 0xbcc196;                       // scrub on the hillside
+    else if (h > 34) hex = 0x9aac6e;                          // the plateau's lawns
     c.setHex(hex).convertSRGBToLinear();
     const n = 0.9 + 0.24 * terr.noise.fbm(x * 0.013, z * 0.013, 3);
     cols[i * 3] = c.r * n; cols[i * 3 + 1] = c.g * n * (h > 30 ? 1 : 1.02); cols[i * 3 + 2] = c.b * n;
@@ -969,15 +969,25 @@ function paintLand(terr, g, size) {
   g.setAttribute("color", new THREE.BufferAttribute(cols, 3));
 }
 
-export function buildBase(terr, { radius = 860, depth = 122 } = {}) {
+export function buildBase(terr, { radius = 860, depth = 240 } = {}) {
   const outline = (a) => radius * (1 + 0.14 * Math.cos(a) * Math.cos(a) - 0.05 * Math.sin(a))
     * (0.94 + 0.05 * Math.sin(a * 3 + 0.7) + 0.03 * Math.sin(a * 5 + 2.1));
   const topFn = (x, z) => terr.ground(x, z);
   const top = polarGrid({ rings: 46, sectors: 104, radiusFn: outline, heightFn: topFn, size: radius * 2.3 });
   paintLand(terr, top, radius * 2.3);
+  // The cut-away face must hang from the rim, not from whatever the terrain does at its own radius:
+  // the rings step inward as they descend, and where the rim is a cliff (Toompea's west side, 45 m)
+  // an inner ring sampled its own ground and rose above the town behind it — a pale wall in the sky.
+  const rimTop = (x, z) => {
+    const a = Math.atan2(z, x);
+    const r = outline(a);
+    return terr.ground(Math.cos(a) * r, Math.sin(a) * r);
+  };
   const side = earthSide({
-    rings: 7, sectors: 104, radiusFn: outline, topFn, depth, baseScale: 0.7,
-    wobble: (a, t) => 0.02 * Math.sin(a * 4 + t * 3) + 0.014 * Math.sin(a * 9 - t * 5),
+    rings: 7, sectors: 104, radiusFn: outline, topFn: rimTop, depth, baseScale: 0.93,
+    // scaled by t so the top ring sits exactly on the ground disc's edge: an untapered wobble left
+    // a gap of up to 18 m of sky between the two, which read as a white line around the diorama
+    wobble: (a, t) => t * (0.02 * Math.sin(a * 4 + t * 3) + 0.014 * Math.sin(a * 9 - t * 5)),
   });
   return { top, side, outline };
 }
@@ -1065,7 +1075,9 @@ function addFringe(B, city) {
     const gy = city.terr.ground(b.x, b.z);
     if (gy < 0.8) continue;
     const c = new THREE.Color(b.col);
-    B.addAt("block", box(b.w, b.h, b.d, 0.12), b.x, gy + b.h / 2, b.z, b.rot, { color: [c.r * 1.7, c.g * 1.7, c.b * 1.7] });
+    // a hint of a city, not a second town: the fringe sits back on the plain and keeps its colours
+    // close to the haze, so the eye reads it as distance rather than as more diorama
+    B.addAt("block", box(b.w, b.h, b.d, 0.12), b.x, gy + b.h / 2, b.z, b.rot, { color: [c.r * 1.24, c.g * 1.24, c.b * 1.26] });
     B.addAt("roofDark", box(b.w * 0.98, 0.6, b.d * 0.98, 0.1), b.x, gy + b.h + 0.2, b.z, b.rot);
     const floors = Math.min(DETAIL > 0.6 ? 7 : 3, b.storeys);
     for (let f = 0; f < floors; f++) {
@@ -1143,7 +1155,13 @@ export function buildStatic(city, tex, { quality = "high" } = {}) {
   groundMesh.receiveShadow = true;
   groundMesh.name = "ground";
   group.add(groundMesh);
-  const strataMat = new THREE.MeshStandardMaterial({ map: tex.strata, roughness: 0.96, metalness: 0, vertexColors: true });
+  const strataMat = new THREE.MeshStandardMaterial({
+    map: tex.strata, roughness: 0.96, metalness: 0, vertexColors: true,
+    // a cut-away face that tapers leans its normals below the horizon, and a hemisphere light then
+    // hands it only the dark ground colour: the strata — the very thing the chunk exists to show —
+    // went black. A floor of emissive keeps the beds readable whatever the sun is doing.
+    emissive: 0x2b2018, emissiveIntensity: 1,
+  });
   const strataMesh = new THREE.Mesh(base.side, strataMat);
   strataMesh.receiveShadow = true;
   strataMesh.name = "strata";

@@ -76,6 +76,10 @@ function buildSea(terr, { R = 820 } = {}) {
     uSunDir: { value: new THREE.Vector3(0.4, 0.8, 0.3) },
     uSunCol: { value: new THREE.Color(0xfff2d6) },
     uWake: { value: new THREE.Vector3(130, 0, -700) },
+    // the bay has to fog out like the land does: an unfogged sea keeps its own colour to the horizon
+    // and reads as a white dome floating behind the town
+    uFog: { value: new THREE.Color(0xcfdde4) },
+    uFogRange: { value: new THREE.Vector2(950, 2700) },
   };
   const material = new THREE.ShaderMaterial({
     uniforms, transparent: true, depthWrite: false, side: THREE.DoubleSide,
@@ -91,7 +95,8 @@ function buildSea(terr, { R = 820 } = {}) {
     fragmentShader: /* glsl */`
       varying vec2 vUv; varying float vDepth; varying vec3 vWorld;
       uniform float uTime, uNight;
-      uniform vec3 uShallow, uDeep, uSky, uSunDir, uSunCol, uWake;
+      uniform vec3 uShallow, uDeep, uSky, uSunDir, uSunCol, uWake, uFog;
+      uniform vec2 uFogRange;
 
       void waves(vec2 p, float t, out float h, out vec2 grad) {
         float a1 = dot(p, vec2(1.9, 0.6)) + t * 1.15;
@@ -109,7 +114,9 @@ function buildSea(terr, { R = 820 } = {}) {
         vec3 n = normalize(vec3(0.0, 1.0, 0.0) - vec3(gr.x * 0.05, 0.0, gr.y * 0.05));
         float fres = pow(1.0 - clamp(dot(n, v), 0.0, 1.0), 3.2);
         vec3 body = mix(uShallow, uDeep, clamp(vDepth / 6.0, 0.0, 1.0));
-        vec3 col = mix(body, uSky, clamp(fres * 0.62, 0.0, 0.55));
+        // a grazing view of a bay is mostly sky — but a Baltic sky reflected at 0.55 is a concrete
+        // slab, which is what the harbour shots kept showing; the reflection is held down and cooled
+        vec3 col = mix(body, uSky, clamp(fres * 0.55, 0.0, 0.4));
         col += uSunCol * max(dot(n, uSunDir), 0.0) * 0.06;
         vec3 hv = normalize(uSunDir + v);
         col += uSunCol * pow(max(dot(n, hv), 0.0), 120.0) * (0.9 - uNight * 0.6);
@@ -119,6 +126,9 @@ function buildSea(terr, { R = 820 } = {}) {
         col += uSky * smoothstep(0.72, 1.0, h) * 0.06;
         col *= mix(1.0, 0.26, uNight);
         col = mix(col, uSky * 0.16, uNight * 0.4);
+        float fd = length(vWorld - cameraPosition);
+        float fz = clamp((fd - uFogRange.x) / max(1.0, uFogRange.y - uFogRange.x), 0.0, 1.0);
+        col = mix(col, uFog, fz * fz);
         gl_FragColor = vec4(col, 0.94);
       }`,
   });
@@ -132,8 +142,7 @@ function buildSea(terr, { R = 820 } = {}) {
 
 // ===================================================================== hearth smoke ============
 /** every chimney breathes on the GPU: one draw call for the whole town's hearths */
-function buildSmoke(emitters, tex, seed) {
-  const per = 16;
+function buildSmoke(emitters, tex, seed, per = 16) {
   const n = Math.max(1, emitters.length * per);
   const origin = new Float32Array(n * 3);
   const sd = new Float32Array(n);
@@ -739,7 +748,15 @@ function buildFlags(city) {
 export function buildLife(city, tex, mats, { emitters = [], quality = "high", winter = false } = {}) {
   const _wc = new THREE.Color();
   const sea = buildSea(city.terr, { R: city.bounds.R });
-  const smoke = buildSmoke(emitters.length ? emitters : [[0, 40, 0]], tex, "tallinn");
+  // every chimney in the town breathes, so the plumes have to be thinned rather than multiplied:
+  // every nth chimney keeps the smoke spread over the whole town instead of clustering on whatever
+  // was built first, and the phone preset pays for a wisp, not for eleven thousand points
+  const plumes = quality === "low" ? 70 : quality === "medium" ? 180 : 400;
+  const perPlume = quality === "low" ? 6 : quality === "medium" ? 10 : 14;
+  const chosen = emitters.length <= plumes
+    ? emitters
+    : Array.from({ length: plumes }, (_, i) => emitters[Math.floor((i * emitters.length) / plumes)]);
+  const smoke = buildSmoke(chosen.length ? chosen : [[0, 40, 0]], tex, "tallinn", perPlume);
   const lanterns = buildLanterns(city, tex);
   const folk = buildFolk(city, quality);
   const market = buildMarket(city, tex, winter);
@@ -760,7 +777,7 @@ export function buildLife(city, tex, mats, { emitters = [], quality = "high", wi
       night = v;
       sea.uniforms.uNight.value = v;
       smoke.uniforms.uNight.value = v;
-      lanterns.haloMat.opacity = Math.min(0.52, v * 0.7);
+      lanterns.haloMat.opacity = Math.min(0.4, v * 0.6);
       lanterns.group.visible = v > 0.02 || true;
       if (market) {
         market.candleMat.opacity = Math.min(1, v * 1.3);
@@ -780,7 +797,14 @@ export function buildLife(city, tex, mats, { emitters = [], quality = "high", wi
       sea.uniforms.uSunDir.value.copy(dir).normalize();
       sea.uniforms.uSunCol.value.copy(colour).multiplyScalar(Math.min(1, intensity / 2.4));
     },
-    setSky(colour) { sea.uniforms.uSky.value.copy(colour).lerp(_wc.setHex(0xffffff), 0.18); },
+    setSky(colour) {
+      // the sea's "sky" is a cooled, darkened version of the horizon, not the horizon itself
+      sea.uniforms.uSky.value.copy(colour).lerp(_wc.setHex(0x8fb6d6), 0.3).multiplyScalar(0.8);
+    },
+    setFog(colour, near, far) {
+      sea.uniforms.uFog.value.copy(colour);
+      sea.uniforms.uFogRange.value.set(near, far);
+    },
     update(dt, t) {
       sea.uniforms.uTime.value = t;
       smoke.uniforms.uTime.value = t;

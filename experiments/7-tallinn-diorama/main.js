@@ -97,7 +97,12 @@ function applyQuality(name) {
 const root = new THREE.Group();
 scene.add(root);
 
-const sky = skyDome(scene, { radius: 2400, top: 0x5a92c8, horizon: 0xdde7ec, ground: 0x5b5a48, sunColor: 0xfff1d4, sunSize: 0.028, glow: 0.5 });
+const sky = skyDome(scene, { radius: 2400, top: 0x2a67b6, horizon: 0xd3e3ef, ground: 0x5b5a48, sunColor: 0xfff1d4, sunSize: 0.028, glow: 0.18 });
+// the dome's gradient is a function of world direction, so it has to hang on the camera: pinned to
+// the origin it drew its pale horizon band through the middle of the diorama once the orbit pulled
+// back, and a balloon of summer sky sat on the town from the chunk view
+sky.mesh.renderOrder = -1;
+sky.material.depthTest = false;
 
 const sun = new THREE.DirectionalLight(0xfff2d6, 2.6);
 sun.castShadow = true;
@@ -120,8 +125,8 @@ scene.add(ambient);
 /** the light and sky at six points of the day, lerped between: a Baltic day, low and silver */
 const DAY = [
   { t: 0.00, top: 0x3f5f8a, hor: 0xf0b884, gnd: 0x493f33, sunCol: 0xffb066, sunI: 1.5, hemiI: 0.45, amb: 0.2, fog: 0xd9b992, elev: 0.07, expo: 1.1, night: 0 },
-  { t: 0.26, top: 0x4a83c4, hor: 0xdae6ea, gnd: 0x5f5b47, sunCol: 0xfff2d6, sunI: 2.7, hemiI: 0.95, amb: 0.16, fog: 0xc4d5de, elev: 0.6, expo: 1.05, night: 0 },
-  { t: 0.58, top: 0x4478b8, hor: 0xe4dfd2, gnd: 0x5d5944, sunCol: 0xfff4dc, sunI: 2.6, hemiI: 0.9, amb: 0.16, fog: 0xcfd6da, elev: 0.82, expo: 1.05, night: 0 },
+  { t: 0.26, top: 0x2a67b6, hor: 0xd3e3ef, gnd: 0x6a6650, sunCol: 0xfff2d6, sunI: 2.8, hemiI: 1.0, amb: 0.16, fog: 0xa9c4d8, elev: 0.62, expo: 1.05, night: 0 },
+  { t: 0.58, top: 0x2a62ae, hor: 0xd8e6f2, gnd: 0x68644e, sunCol: 0xfff4dc, sunI: 2.7, hemiI: 0.96, amb: 0.17, fog: 0xa8c2d6, elev: 0.84, expo: 1.05, night: 0 },
   { t: 0.86, top: 0x3d5f92, hor: 0xe89a5c, gnd: 0x40342a, sunCol: 0xff9b4a, sunI: 1.8, hemiI: 0.52, amb: 0.2, fog: 0xcf9a72, elev: 0.11, expo: 1.12, night: 0 },
   { t: 1.02, top: 0x1a2b4e, hor: 0x6d5a72, gnd: 0x211d24, sunCol: 0xc98a7a, sunI: 0.46, hemiI: 0.19, amb: 0.17, fog: 0x2c2838, elev: 0.02, expo: 1.16, night: 0.6 },
   { t: 1.30, top: 0x070f24, hor: 0x182742, gnd: 0x0b0e16, sunCol: 0x9db4e6, sunI: 0.5, hemiI: 0.17, amb: 0.15, fog: 0x0e1526, elev: 0.4, expo: 1.24, night: 1 },
@@ -165,9 +170,11 @@ function applyLight() {
   sky.uniforms.uGround.value.copy(d.gnd);
   sky.uniforms.uSunColor.value.copy(d.sunCol);
   sky.uniforms.uSun.value.copy(sun.position).normalize();
-  sky.uniforms.uGlow.value = lerp(0.55, 0.12, d.night);
+  sky.uniforms.uGlow.value = lerp(0.2, 0.05, d.night);
   sky.uniforms.uSunSize.value = lerp(0.03, 0.012, d.night);
-  scene.fog.color.copy(d.fog).lerp(_c1.setHex(0xdfe7ef), P.winter ? 0.3 : 0);
+  scene.fog.color.copy(d.fog).lerp(_c1.setHex(0xdfe7ef), P.winter ? 0.18 : 0);
+  // a December sky over snow is a hard blue, not the pale wash the snow's own light invites
+  if (P.winter && d.night < 0.4) sky.uniforms.uTop.value.lerp(_c1.setHex(0x3f78bd), 0.5);
   scene.background.copy(scene.fog.color).multiplyScalar(0.92);
   renderer.toneMappingExposure = P.exposure * d.expo;
   if (lab.bloomPass) {
@@ -179,6 +186,7 @@ function applyLight() {
     life.setNight(d.night);
     life.setSun(sun.position, d.sunCol, d.sunI);
     life.setSky(d.hor);
+    life.setFog(scene.fog.color, scene.fog.near, scene.fog.far);
   }
   return d;
 }
@@ -212,7 +220,7 @@ function build(seedText) {
   root.add(stat.group);
   current = { group: stat.group, mats: stat.mats, tex, stats: stat.stats };
   // the shadow box should hug the diorama, not the world
-  const span = city.bounds.R * 0.95;
+  const span = city.bounds.R * 1.15;
   const cam = sun.shadow.camera;
   cam.left = -span; cam.right = span; cam.top = span; cam.bottom = -span;
   cam.near = 40; cam.far = 2200;
@@ -242,7 +250,40 @@ function applyShadows(v, quiet = false) {
 function applySeason() {
   if (current) current.mats.setSeason(P.winter);
   if (life) life.setWinter(P.winter);
+  snowGround(P.winter);
   return P.winter;
+}
+
+/**
+ * December has to be white everywhere, not only on the roofs: the land's colour is a vertex
+ * attribute painted at build time, so winter swaps the array for a snow one and swaps it back.
+ * Snow lies thin on steep ground, so the limestone scarp still reads as rock.
+ */
+function snowGround(on) {
+  const g = current?.group.getObjectByName("ground");
+  if (!g) return;
+  const col = g.geometry.attributes.color;
+  if (!col) return;
+  if (!g.userData.summer) g.userData.summer = Float32Array.from(col.array);
+  if (on) {
+    if (!g.userData.winter) {
+      const pos = g.geometry.attributes.position;
+      const w = new Float32Array(col.count * 3);
+      for (let i = 0; i < col.count; i++) {
+        const x = pos.getX(i), z = pos.getZ(i);
+        const rock = clamp(city.terr.slope(x, z) / 0.7, 0, 1);
+        const drift = 0.9 + 0.1 * city.terr.noise.fbm(x * 0.02, z * 0.02, 2);
+        w[i * 3] = (0.86 * (1 - rock) + 0.76 * rock) * drift;
+        w[i * 3 + 1] = (0.9 * (1 - rock) + 0.76 * rock) * drift;
+        w[i * 3 + 2] = (0.99 * (1 - rock) + 0.79 * rock) * drift;
+      }
+      g.userData.winter = w;
+    }
+    col.array.set(g.userData.winter);
+  } else {
+    col.array.set(g.userData.summer);
+  }
+  col.needsUpdate = true;
 }
 
 function applyVisibility() {
@@ -298,13 +339,34 @@ fLook.add(P, "tilt", 0, 2, 0.01).name("tilt-shift").onChange(syncLook);
 fLook.add(P, "focus", 0.2, 0.85, 0.01).name("focus height").onChange(syncLook);
 fLook.add(P, "saturation", 0.7, 1.7, 0.01).name("saturation").onChange(syncLook);
 fLook.add(P, "vignette", 0, 0.8, 0.1).name("vignette").onChange(syncLook);
+/**
+ * The miniature only reads at diorama distance. On the cobbles the same blur strength is a fog of
+ * bokeh that hides the masonry, so the amount scales with how far the camera is from what it looks
+ * at: far out it is the full toy-town blur, in the streets it is a tenth of it.
+ */
+function tiltScale() {
+  const d = camera.position.distanceTo(orbit.target);
+  // a straight-down view is already a map: there is no miniature left to fake, and the screen-space
+  // blur only smeared the whole town. Damp it by how steeply the camera looks down, quadratically so
+  // the ordinary three-quarter views are untouched.
+  const pitch = Math.asin(clamp((camera.position.y - orbit.target.y) / Math.max(d, 1), 0, 1));
+  return clamp((d / 560) * clamp(1.25 - (pitch * pitch) / 1.2, 0.3, 1), 0.12, 1.25);
+}
+const FOG_BASE = { near: 950, far: 2700 };
 function syncLook() {
   const u = tiltPass.uniforms;
-  u.uAmount.value = 0.011 * P.tilt;
+  u.uAmount.value = 0.011 * P.tilt * tiltScale();
   u.uFocus.value = P.focus;
   u.uSaturation.value = P.saturation;
   u.uVignette.value = P.vignette;
   u.uPower.value = 0.9 + P.tilt * 0.4;
+  // haze is a distance effect, not a property of the day: at birdseye the whole town sits inside a
+  // 950 m fog band and came out as a pale smear, so the band travels with the camera
+  const d = camera.position.distanceTo(orbit.target);
+  const k = clamp(d / 620, 1, 3.4);
+  scene.fog.near = FOG_BASE.near * k;
+  scene.fog.far = FOG_BASE.far * (0.7 + 0.62 * k);
+  if (life) life.setFog(scene.fog.color, scene.fog.near, scene.fog.far);
 }
 syncLook();
 
@@ -319,16 +381,18 @@ fShow.add(P, "showSea").name("the bay").onChange(applyVisibility);
 const fView = gui.addFolder("view");
 const VIEWS = {
   hero: { pos: [430, 285, 620], target: [-30, 18, -40] },
-  square: { pos: [-96, 40, -96], target: [8, 9, 16] },
+  square: { pos: [-104, 46, -104], target: [8, 9, 16] },
   townhall: { pos: [6, 14, -32], target: [1, 13, 24] },
-  market: { pos: [-14, 7.5, -34], target: [2, 9, 26] },
+  market: { pos: [-6, 26, -46], target: [2, 13, 30] },
   toompea: { pos: [14, 74, 262], target: [-392, 52, 168] },
   hermann: { pos: [-186, 66, 322], target: [-474, 46, 236] },
   harbour: { pos: [250, 96, -306], target: [220, 10, -620] },
   oleviste: { pos: [268, 82, -286], target: [147, 44, -457] },
   viru: { pos: [392, 44, 190], target: [282, 14, 71] },
   birdseye: { pos: [60, 900, 120], target: [0, 0, -60] },
-  chunk: { pos: [760, 330, 840], target: [0, -24, 0] },
+  // low enough above the rim to see down the cut-away face: a diorama photographed from too high
+  // is a map, and the strata — the whole point of the base — disappears
+  chunk: { pos: [980, 260, 1060], target: [0, -40, 0] },
   low: { pos: [96, 12, 128], target: [-6, 10, -18] },
 };
 for (const name of Object.keys(VIEWS)) fView.add({ v: () => setView(name) }, "v").name(name);
@@ -342,9 +406,33 @@ function setView(name) {
   camera.position.set(px, Math.max(py, floorY), pz);
   orbit.target.set(...v.target);
   orbit.update();
+  liftOutOfGeometry();
   if (ui) { ui.stop(); ui.close(); ui.sync(P); }
   gui.controllersRecursive().forEach((c) => c.updateDisplay());
   return name;
+}
+
+const _ray = new THREE.Raycaster();
+const _dir = new THREE.Vector3();
+/**
+ * Two of the hand-written views put the camera inside a gable: the frame went flat grey and the
+ * town was a triangle in the corner. A view is a promise about what is on screen, so the camera is
+ * lifted until the line of sight to the target is clear — a view that is buried is not a view.
+ */
+function liftOutOfGeometry() {
+  if (!current) return;
+  _dir.copy(orbit.target).sub(camera.position);
+  const span = _dir.length();
+  _dir.normalize();
+  _ray.set(camera.position, _dir);
+  _ray.far = span * 0.6;
+  for (let i = 0; i < 6; i++) {
+    const hit = _ray.intersectObject(current.group, true).find((h) => h.object.visible && h.distance > 0.8
+      && !/smoke|glow|birds|folk/.test(h.object.name || ""));
+    if (!hit || hit.distance > 7) return;
+    camera.position.y += 5;
+    _ray.set(camera.position, _dir);
+  }
 }
 
 function syncPanel() {
@@ -441,8 +529,10 @@ function frame() {
   requestAnimationFrame(frame);
   const dt = lab.step();
   elapsed += dt;
+  sky.mesh.position.copy(camera.position);
   if (life) life.update(dt, elapsed);
   orbit.update();
+  syncLook();                       // the miniature blur follows the camera distance
   if (ui) ui.tick(dt);            // after the orbit, so a flight in progress keeps the last word
   lab.tickFps(dt);
   lab.render();
@@ -504,5 +594,8 @@ lab.expose({
   setQuality: (n) => { lab.setQuality(QUALITY[n] ? n : "high"); return P.quality; },
   setShow: (k, v) => { if (k in P) { P[k] = !!v; applyVisibility(); } return P[k]; },
   getCity: () => city,
+  // the passes are exposed so a check can prove a look comes from where it is claimed, and so a
+  // suspect halo can be ruled out by switching the post chain off rather than by guessing
+  setPost: (v) => { postEnabled = !!v; return postEnabled; },
   lab,
 });

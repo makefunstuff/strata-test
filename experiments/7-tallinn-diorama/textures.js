@@ -344,49 +344,51 @@ function plasterPlainCanvas(rng, { col = 0xe8e2d4 } = {}) {
 
 function cobbleCanvas(rng, { col = 0x776f66, fan = false, snow = false } = {}) {
   const { c, g } = canvas(S, S);
-  g.fillStyle = shade(col, snow ? 0.94 : 0.42); g.fillRect(0, 0, S, S);
+  // the joints read dark from a distance, but the setts themselves must not: a high-contrast grid
+  // is what made the square look like a waffle in the close-ups
+  g.fillStyle = shade(col, snow ? 0.94 : 0.56); g.fillRect(0, 0, S, S);
   // setts in fan-shaped arcs, the way Tallinn's streets are actually laid
   const cell = 8.5;
   for (let y = -cell; y < S + cell; y += cell) {
     for (let x = -cell; x < S + cell; x += cell) {
       const bow = fan ? Math.sin((x / S) * Math.PI * 2) * 3.2 : Math.sin((y / S) * Math.PI) * 1.6;
-      const w = cell * (0.72 + R() * 0.24), h = cell * (0.68 + R() * 0.26);
-      g.fillStyle = shade(snow ? 0xdfe6ee : col, (snow ? 0.82 : 0.66) + R() * (snow ? 0.3 : 0.7));
+      const w = cell * (0.78 + R() * 0.18), h = cell * (0.74 + R() * 0.2);
+      g.fillStyle = shade(snow ? 0xdfe6ee : col, (snow ? 0.86 : 0.82) + R() * (snow ? 0.22 : 0.36));
       g.beginPath();
       g.roundRect(x + 1, y + 1 + bow, w, h, 1.8);
       g.fill();
-      g.fillStyle = "rgba(255,255,255,0.07)"; g.fillRect(x + 1.4, y + 1.4 + bow, w - 1, 1.1);
+      g.fillStyle = "rgba(255,255,255,0.05)"; g.fillRect(x + 1.4, y + 1.4 + bow, w - 1, 1.1);
     }
   }
-  speckle(g, S, S, 700, snow ? ["#ffffff", "#b9c6d2"] : ["#ffffff", "#2b2620", "#9b9184"], [1, 3]);
+  speckle(g, S, S, 260, snow ? ["#ffffff", "#b9c6d2"] : ["#cfc7ba", "#4a4239"], [1, 2.2]);
   return c;
 }
 
 function pavingCanvas(rng, { col = 0x9b9287, snow = false } = {}) {
   const { c, g } = canvas(S, S);
-  g.fillStyle = shade(col, snow ? 0.94 : 0.4); g.fillRect(0, 0, S, S);
+  g.fillStyle = shade(col, snow ? 0.94 : 0.6); g.fillRect(0, 0, S, S);
   for (let y = 0; y < S; y += 21) {
     for (let x = (y / 21) % 2 ? -10 : 0; x < S; x += 21) {
-      g.fillStyle = shade(snow ? 0xe4ebf2 : col, (snow ? 0.86 : 0.7) + R() * (snow ? 0.26 : 0.6));
+      g.fillStyle = shade(snow ? 0xe4ebf2 : col, (snow ? 0.88 : 0.84) + R() * (snow ? 0.2 : 0.3));
       g.fillRect(x + 1, y + 1, 19, 19);
-      g.fillStyle = "rgba(255,255,255,0.06)"; g.fillRect(x + 1, y + 1, 19, 1.5);
+      g.fillStyle = "rgba(255,255,255,0.05)"; g.fillRect(x + 1, y + 1, 19, 1.5);
     }
   }
-  speckle(g, S, S, 500, snow ? ["#ffffff"] : ["#ffffff", "#292420"], [1, 3]);
+  speckle(g, S, S, 220, snow ? ["#ffffff"] : ["#c9c1b4", "#3d372f"], [1, 2.2]);
   return c;
 }
 
-function grassCanvas(rng, { col = 0x63803f, snow = false } = {}) {
+function grassCanvas(rng, { col = 0x6d8a45, snow = false } = {}) {
   const { c, g } = canvas(S, S);
-  g.fillStyle = shade(snow ? 0xe9eff6 : col, snow ? 0.95 : 0.82); g.fillRect(0, 0, S, S);
+  g.fillStyle = shade(snow ? 0xe9eff6 : col, snow ? 0.95 : 0.96); g.fillRect(0, 0, S, S);
   for (let i = 0; i < 2600; i++) {
     const x = R() * S, y = R() * S;
-    g.strokeStyle = shade(snow ? 0xdfe8f2 : col, (snow ? 0.86 : 0.5) + R() * (snow ? 0.3 : 0.9));
+    g.strokeStyle = shade(snow ? 0xdfe8f2 : col, (snow ? 0.86 : 0.68) + R() * (snow ? 0.3 : 0.66));
     g.globalAlpha = 0.4 + R() * 0.5; g.lineWidth = 0.8 + R() * 1.1;
     g.beginPath(); g.moveTo(x, y); g.lineTo(x + (R() - 0.5) * 3, y - 3 - R() * 5); g.stroke();
   }
   g.globalAlpha = 1;
-  if (!snow) speckle(g, S, S, 300, ["#7f8f3f", "#2f3f1c", "#a8a44c"], [1, 4]);
+  if (!snow) speckle(g, S, S, 240, ["#8fa04a", "#3d4d24", "#b8b25a"], [1, 3]);
   return c;
 }
 

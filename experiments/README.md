@@ -33,6 +33,18 @@ node experiments/tools/check.mjs 6-medieval-diorama --label hero --wait 9 \
   --eval "window.experiment.setView('hero')" --eval "window.experiment.setSeed('Thornburgh')"
 node experiments/tools/check.mjs 6-medieval-diorama --label phone --wait 9 --width 390 --height 780 \
   --eval "window.experiment.setQuality('low')" --eval "window.experiment.setChrome(false)"
+
+# the real city: the same, plus the hour, the season and the landmark overlay, and the phone width at
+# the height a phone actually has (390×844). The tour is driven, not assumed: startTour() and landmark()
+# are asserted so a card that never opens fails the check rather than looking fine in a still.
+node experiments/tools/check.mjs 7-tallinn-diorama --label hero --wait 6 \
+  --eval "window.experiment.state()"
+node experiments/tools/check.mjs 7-tallinn-diorama --label night --wait 6 \
+  --eval "(()=>{const e=window.experiment;e.setTime(1.28);e.setView('market');return e.state();})()"
+node experiments/tools/check.mjs 7-tallinn-diorama --label winter --wait 6 \
+  --eval "(()=>{const e=window.experiment;e.setSeason('winter');e.setView('market');return e.state();})()"
+node experiments/tools/check.mjs 7-tallinn-diorama --label phone --wait 6 --width 390 --height 844 \
+  --eval "(()=>{const e=window.experiment;e.setQuality('low');return e.state();})()"
 ```
 
 `bash experiments/tools/sweep.sh` runs all seven and prints one line each
@@ -49,7 +61,7 @@ kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones th
 | 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.25, trails on; 16 384 boids measured at 8.8 fps | 18.0 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
 | 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.93, light 250, gust 0.64, 60 march steps at 42% resolution | 6.4 / 6.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 | 6 | [Medieval city diorama](6-medieval-diorama/index.html) | 0 errors; seed `BRAMWELL` grows 37 houses, 15 streets, 235 trees, 22 smoking chimneys, 596 lit windows — 3 265 pieces / 60 042 tris in **21 draw calls**; `newCity()` `BRAMWELL`→`Thornburgh` (43 houses, 431 trees, 3 582 pieces, still 21 calls); sixteen named seeds span 32–51 houses, 14–17 streets and 213–649 trees, and the same seed twice is identical; night, six views, tilt-shift and all three quality presets driven; 390×780 clean on `low`, panel shuts itself below 640 px | 9.2 / 8.0 (12.8 / 20.4 at phone width on `low`) | A whole town from one seed — ring streets, frontage houses, a wall with gatehouses, a keep, a cathedral, a river with bridges and fields beyond — cut away to show strata and put under a tilt-shift lens, in 21 draw calls with every texture painted at load | `N` night · `C` new town · `V` view · `G` panel · drag = orbit |
-| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 859 trees, 190 folk** — 13 674 pieces / 238 820 tris in **43 draw calls**; `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, night, winter, tilt-shift and all three quality presets driven; 390×780 clean on `low` with the panel shut (60 folk, 9 818 pieces) | 20.0 / 20.0 (24.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit · tap a landmark, or ▶ for the tour |
+| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors at both widths; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 890 trees, 190 folk** at the default seed `TALLINN` — 11 573 pieces / 215 282 tris in **43 draw calls** (`setSeed('tallinn')` in the sweep: 860 trees, 11 482 pieces, still 43 calls); `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, day hours, winter, tilt-shift, all three quality presets and the tour driven; 390×844 clean on `low` with the panel shut (60 folk, 8 405 pieces) | 3.6 / 4.0 (5.6 / 8.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit · tap a landmark, or ▶ for the tour |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
@@ -67,7 +79,7 @@ medium preset. 3 = does the job, 4 = would show someone, 5 = the reason to open 
 | 4 | GPU flocking | **4** | **4** | 4096 darts with heading colour, fog and an afterimage trail. the flock turns as a body, splits around the spheres and reforms behind the hawk — but the neighbourhood is sampled, so the flocking is approximate |
 | 5 | volumetric fire | **5** | **3** | the flame lights itself, the plume takes the glow, bloom at dusk carries it — the best-looking page here. it flickers, rises, shears and curls in the wind, yet the flame body is a shaped teardrop: it looks alive rather than being alive |
 | 6 | medieval city diorama | **4** | **3** | the cut-away strata, the tilt-shift rim and 40-odd houses with real window plans do the work; the folk are small and the fields are painted, not grown. lanterns come on at night, smoke leans off the wind, banners flap and the folk walk the lanes — but the town itself is static, which is what a model of a town is |
-| 7 | Tallinn Old Town diorama | **4** | **3** | it is *Tallinn*: the plan, the footprints and the wall are the city's own, and the sixteen landmarks stand where they do, which no generated town can claim; the roofscape is busy and the Soviet fringe is drab slabs on the horizon. the bay heaves, the hearths smoke, the folk and the carts use the streets, the flags take the wind and the December market lights up at night — and, like any model of a town, the town itself stands still |
+| 7 | Tallinn Old Town diorama | **4** | **3** | it is *Tallinn*: the plan, the footprints and the wall are the city's own, and the sixteen landmarks stand where they do, which no generated town can claim; the roofscape is busy, and the modern city beyond the wall is still a few grey blocks on a green field. the bay heaves, the hearths smoke, the folk and the carts use the streets, the flags take the wind and the December market lights up at night — and, like any model of a town, the town itself stands still |
 
 ## The shared kit — `shared/`
 
@@ -229,6 +241,15 @@ reading the plan is invisible in the code and obvious in the frame.
 | the **Town Hall was salmon** | it was built with the `pink` house material | lime-washed ashlar with red tile, as it stands |
 | the night market was **one orange wash** | the square's lamp glow was a single additive plane 0.7 of the square's width lying on the cobbles; from lamp-post height it filled the frame | capped at 18 m and at 0.52 opacity, and the lantern halos came down a third |
 | a named view **put the camera under the cobbles** | the Lower Town falls 22 m from the wall to the quay, so a view written with one height is above ground on one street and under it on the next | `setView` lifts any view below `ground(x, z) + 2.6` — no view can bury itself |
+| a second named view **buried itself in a gable**: the December market came out flat grey with the square in one corner | the market view stood where a large merchant house is; being above the ground is not the same as being able to see the target | `setView` now raycasts camera→target and lifts the camera until the line of sight is clear, ignoring folk, birds, smoke and glow (those would lift the camera for no reason) |
+| the sky grew a **pale dome on top of the town**, from the two distant views only | `skyDome`'s gradient is a function of *world* direction: pinned to the origin, its horizon band cut through the middle of the diorama once the camera pulled 1.5 km out | the dome hangs on the camera (`sky.mesh.position.copy(camera.position)` each frame) and draws as a backdrop with `renderOrder = -1` and `depthTest = false` |
+| the **cut-away strata was black** — the one thing an earth chunk exists to show | the tapered side leans its normals 48° below the horizon: the sun at 45° gave it nothing and the hemisphere handed it only the dark ground colour | the taper came in (`baseScale` 0.7 → 0.93, so the face is near-vertical) and the strata material carries a dim emissive floor, so the beds read whatever the sun is doing |
+| the bay was a **white shell behind the town** | the sea is a `ShaderMaterial`, so it never got the scene fog: it kept its own colour to the horizon while the land hazed out, and read as a dome of concrete | the sea mixes to the fog colour over the camera's own fog range (`setFog`), and its reflected "sky" is a cooled, darkened horizon rather than the horizon |
+| **11 000 smoke points** for 660 houses | `chimneys × 16` with no budget, and the quality presets never touched it | the presets budget the plumes (70 × 6 / 180 × 10 / 400 × 14) and take every *n*th chimney, so the smoke stays spread over the whole town instead of clustering on what was built first |
+| the modern city was a **business park** — grey slabs on grass, all the way round | the bake keeps every large non-medieval footprint, and 64 were placed wherever they fell, including the foreground of the hero shot | the fringe is a hint: past 620 m, in the east/south sector where the real city actually is, at most 48 blocks, seven storeys, hazed down |
+| the birdseye was a **smear** | two causes: the fog band was a property of the day (950–2700 m) while the camera was 900 m up, and a screen-space tilt-shift blurs a top-down view everywhere, because a map has no depth left to fake | the fog band travels with the camera distance, and the miniature blur is damped by how steeply the camera looks down |
+| December had **green fields** round a snow-covered town | only the roofs had a winter snapshot; the land's colour is a vertex attribute painted at build time, and a material `color` cannot unsaturate green away | `snowGround` swaps the ground's colour array for a snow one (thin on the scarps, so the limestone still reads as rock) and swaps it back in summer |
+| every daytime frame was **white at the horizon** | dome glow, fog and bloom were all pale at once, and the default hour put the sun at 41° | the day keys rise to 55°, the sky top deepens, the dome glow drops to 0.18 and the haze goes blue |
 
 ### How Strata FP4 did on it, in short
 
@@ -263,11 +284,14 @@ experiments/
   6-medieval-diorama/ index.html main.js rng.js textures.js geo.js layout.js build.js life.js
                       tiltshift.js shots/
   7-tallinn-diorama/  index.html main.js osm.js terrain.js layout.js textures.js build.js life.js
-                      shots/          (imports rng.js, geo.js and tiltshift.js from 6-, and shared/lab.js)
+                      ui.js ui.css shots/
+                      (imports rng.js, geo.js and tiltshift.js from 6-, and shared/lab.js)
   tools/              check.mjs (one page), sweep.sh (all seven), summarize.mjs, syntax.mjs,
                       links.mjs (every local href/src resolves), clothtest.mjs (grab-and-tear),
                       qualitytest.mjs (the shared panel), bake-tallinn.mjs (Overpass JSON → osm.js),
-                      planview.mjs (the plan as an SVG top-down, to check a bake by eye)
+                      planview.mjs (the plan as an SVG top-down, to check a bake by eye),
+                      shotpack.mjs (one page load, many framed shots from a spec, with per-frame
+                      exposure statistics — the visual-review loop for a big scene)
 ```
 
 `tools/` is not published (the Pages workflow ships `experiments/` minus `tools/`).

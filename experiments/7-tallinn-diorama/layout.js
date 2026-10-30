@@ -244,15 +244,24 @@ export function generateTallinn(seed = GROUND_SEED) {
   }
 
   // ------------------------------------------------------------------ modern fringe ----
+  // A hint of the modern city, not a second diorama. The real one stands east and south of the
+  // walls (Viru väljak, Estonia puiestee, Sadam), so that is where the skyline is allowed to
+  // stand; scattered all round, the blocks read as a business park on grass rather than a city.
+  const fringeKeep = FRINGE.map((f, i) => ({ f, i, r: Math.hypot(f[0], f[1]), size: f[2] * f[3] * (f[5] || 3) }))
+    .filter(({ f, r }) => r > 620 && (f[0] > 130 || f[1] > 250))
+    .sort((a, b) => b.size - a.size)
+    .slice(0, 48);
   const blocks = [];
-  for (const f of FRINGE) {
+  for (const { f } of fringeKeep) {
     const [x, z, w, d, rot, lv] = f;
-    if (Math.abs(x) < 210 && z < 350 && z > -660) continue;  // inside the wall: no modern blocks
+    // no modern block in or beside the walls: the bake classifies by footprint, and a 1930s office
+    // just inside the ring used to stand in the foreground of the hero shot as a pale slab
+    if (polyDist(OLD_TOWN_RING, x, z) > -58) continue;
     if (isSea(x, z)) continue;
     if (!clearOfLandmark(x, z, -8)) continue;
     const y = ground(x, z);
     if (y < 1.2) continue;
-    const storeys = clamp(lv || rng.i(3, 5), 2, 9);
+    const storeys = clamp(lv || rng.i(3, 5), 2, 7);
     blocks.push({
       x, z, y, w: Math.max(6, w), d: Math.max(6, d), rot, storeys,
       h: storeys * 2.95 + 1.2,
