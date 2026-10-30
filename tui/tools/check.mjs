@@ -62,18 +62,20 @@ export async function launch() {
 // The kit's own counters (frame, keys, taps) and a live app's clock (a monitor's load, a log's tail,
 // a player's position) move by themselves, so "state() differs" on its own proves nothing: each
 // scenario says which of its own fields the input must have moved, and those are compared apart.
-const VOLATILE = /^(frame|keys|taps|lastKey|help|quit|pos|bins|bins_nonzero|lines|linesIn|shownLines|selId|synthT)$/;
+const VOLATILE = /^(frame|keys|taps|lastKey|help|quit|pos|bins|bins_nonzero|lines|linesIn|shownLines|selId|synthT|hit_fired|chip_fired)$/;
 
 export const SCENARIOS = {
   "1-monitor": {
     keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["proc#3", "sort"],
+    // the chip row is the phone's keyboard, so a chip has to reach the app and not just look like one
+    chips: ["P", "P"],
     poses: ["window.tui.api.pause(true)"],
     expect: { panel: "net", paused: true, sort: "pid", theme: "phosphor", procs: 13 },
     // the phone has no side-by-side panels to tap: the tabs are the navigation
     phone: { taps: ["tab#3", "proc#2", "tab#1"], expect: { panel: "mem" } },
   },
   "2-mail": {
-    keys: ["j", "j", "Enter", "r", "h", "e", "l", "l", "o", "Esc", "d"], taps: [],
+    keys: ["j", "j", "Enter", "r", "h", "e", "l", "l", "o", "Esc", "d"], taps: [], chips: ["?", "?"],
     poses: ["window.tui.api.sync()"],
     expect: { folder: "inbox", sel: 2, focus: "reader", syncs: 1 },
     phone: { taps: ["tab#2"], expect: { folder: "@changed" } },
@@ -88,7 +90,7 @@ export const SCENARIOS = {
     phone: { taps: ["node#3", "tab#2"], expect: { tab: 2 } },
   },
   "4-player": {
-    keys: [" ", "l", "l", "j", "Enter", "v", "s"], taps: [],
+    keys: [" ", "l", "l", "j", "Enter", "v", "s"], taps: [], chips: [" "],   // the play chip; the pose after it settles "playing"
     poses: ["window.tui.api.select(3)", "window.tui.api.play(true)"],
     expect: { viz: "matrix", shuffle: true, index: 3, playing: true, played: 1 },
     phone: { taps: ["row#4", "tab#2"], expect: { tab: 2 } },
@@ -141,11 +143,12 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const keys = all("key").length ? all("key") : (sc.keys ?? []);
     const taps = all("tap").length ? all("tap") : (sc.taps ?? []);
     const poses = all("pose").length ? all("pose") : (sc.poses ?? []);
+    const chips = all("chip").length ? all("chip") : (sc.chips ?? []);
     const expect = sc.expect ?? {};
     const phone = sc.phone ?? {};
     const label = opt("label", dir.split("/").pop());
     const shotDir = opt("shot-dir", join(ROOT, norm(dir), "shots"));
-    const base = { dir, wait: +opt("wait", 3), keys, taps, poses, expect, label, out: opt("out", null), clip: opt("clip", null), shotDir: opt("no-shots", null) ? null : resolve(shotDir) };
+    const base = { dir, wait: +opt("wait", 3), keys, taps, poses, chips, expect, label, out: opt("out", null), clip: opt("clip", null), shotDir: opt("no-shots", null) ? null : resolve(shotDir) };
     // one browser per pass: this Chromium runs --single-process, so closing a page can take the
     // browser with it — a fresh launch per pass costs a second and never dies mid-sweep
     const run = async (opts) => {
@@ -219,6 +222,20 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
     else await p.keyboard.press(k);
     await p.waitForTimeout(110);
   }
+  // the chip row is the phone's keyboard: a chip that looks like a button and reaches nothing is
+  // exactly the kind of thing a screenshot cannot tell, so click one and insist it fired
+  const chipLog = [];
+  for (const k of rest.chips ?? []) {
+    const sel = `.keybar button[data-k=${JSON.stringify(k)}]`;
+    const found = await p.$(sel);
+    if (!found) { errors.push(`no chip for key ${JSON.stringify(k)} to click`); continue; }
+    const before = await p.evaluate(() => window.tui?.state?.().chip_fired ?? 0);
+    await found.click();
+    await p.waitForTimeout(120);
+    const after = await p.evaluate(() => window.tui?.state?.().chip_fired ?? 0);
+    chipLog.push(`${k}${after > before ? "" : " (did not fire)"}`);
+    if (after <= before) errors.push(`clicking the ${JSON.stringify(k)} chip did not reach the app`);
+  }
   const firedBefore = await p.evaluate(() => window.tui?.state?.().hit_fired ?? 0);
   const tapLog = [];
   for (const spec of rest.taps ?? []) {
@@ -288,7 +305,7 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
     await p.screenshot(opts);
     shots.push(file);
   }
-  const drove = (rest.keys ?? []).length + (rest.taps ?? []).length + (rest.poses ?? []).length;
+  const drove = (rest.keys ?? []).length + (rest.taps ?? []).length + (rest.poses ?? []).length + (rest.chips ?? []).length;
   // compare the app's own fields, not the kit's counters: a monitor moves frame numbers by itself,
   // and a check that passes on those is not a check
   const quiet = (o) => Object.fromEntries(Object.entries(o ?? {}).filter(([k]) => !VOLATILE.test(k)));
@@ -310,7 +327,7 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
   if (close) await p.close();
   return {
     page: dir, view: rest.view, tag: rest.tag, hook, grid, glyphs_bad: glyphs,
-    keys: rest.keys ?? [], taps: rest.taps ?? [], tap_log: tapLog, pose: poseLog,
+    keys: rest.keys ?? [], taps: rest.taps ?? [], tap_log: tapLog, chips: chipLog, pose: poseLog,
     state_start: s0, state_after: s1, changed, expect: rest.expect ?? {}, expect_wrong: wrong, overflow, shots, errors,
   };
 }

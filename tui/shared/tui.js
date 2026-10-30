@@ -359,7 +359,7 @@ export function createTUI(app) {
     if (!s) { styleEl.textContent = "@keyframes tk-blink{0%,49%{opacity:1}50%,100%{opacity:0}}"; return; }
     styleEl.append(cssRule(s));
   };
-  const state = { size: app.size ?? 13, cellW: 8, cellH: 16, frame: 0, keys: 0, taps: 0, hitFired: 0, help: false, quit: null, lastKey: "" };
+  const state = { size: app.size ?? 13, cellW: 8, cellH: 16, frame: 0, keys: 0, taps: 0, hitFired: 0, chipFired: 0, help: false, quit: null, lastKey: "" };
   let activePrompt = null;   // a field the app opened with prompt(); it owns the keyboard while open
   let measureCanvas = null;
 
@@ -532,7 +532,8 @@ export function createTUI(app) {
       if (d.wide) b.className = "wide";
       b.innerHTML = `<span class="k">${esc(d.k === "Space" ? "␣" : d.k)}</span><span class="l">${esc(d.l ?? "")}</span>`;
       b.setAttribute("aria-label", `${d.k}: ${d.l ?? ""}`);
-      b.addEventListener("click", () => press(d.k));
+      b.dataset.k = d.k;              // so a check can find the chip for a key and click it
+      b.addEventListener("click", () => { state.chipFired++; press(d.k); });
       el.keybar.appendChild(b);
     }
     const help = document.createElement("button");
@@ -675,7 +676,7 @@ export function createTUI(app) {
     auditGlyphs,
     fit,
     state() {
-      const base = { cols: term.cols, rows: term.rows, frame: state.frame, keys: state.keys, taps: state.taps, hit_fired: state.hitFired, help: state.help, quit: !!state.quit, lastKey: state.lastKey };
+      const base = { cols: term.cols, rows: term.rows, frame: state.frame, keys: state.keys, taps: state.taps, hit_fired: state.hitFired, chip_fired: state.chipFired, help: state.help, quit: !!state.quit, lastKey: state.lastKey };
       try { return Object.assign(base, app.state ? app.state(tui) : {}); }
       catch (e) { base.stateError = String((e && e.message) ?? e); return base; }
     },
