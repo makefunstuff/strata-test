@@ -166,10 +166,12 @@ export function buildMaterials(tex) {
   };
   const bayOpts = { roughness: 0.95, side: THREE.FrontSide };
   for (let i = 0; i < 4; i++) {
-    reg(`wall${i}`, mat(tex.upper[i * 2], { ...bayOpts, emissive: 0xffc274, emissiveIntensity: 0 }),
-      { map: tex.upper[i * 2], emissiveMap: tex.upperGlow[i * 2], color: new THREE.Color(0xeef3fb), emissive: new THREE.Color(0xffc274), emissiveIntensity: 1.6 });
-    reg(`base${i}`, mat(tex.ground[i * 2], { ...bayOpts, emissive: 0xffb469, emissiveIntensity: 0 }),
-      { map: tex.ground[i * 2], emissiveMap: tex.groundGlow[i * 2], color: new THREE.Color(0xeaf0f9), emissive: new THREE.Color(0xffb469), emissiveIntensity: 1.1 });
+    // the bays carry no painted windows, so night light comes from the sashes themselves, not a
+    // glow map that would light rectangles the glass does not sit in
+    reg(`wall${i}`, mat(tex.upper[i * 2], { ...bayOpts }),
+      { color: new THREE.Color(0xeef3fb) });
+    reg(`base${i}`, mat(tex.ground[i * 2], { ...bayOpts }),
+      { color: new THREE.Color(0xeaf0f9) });
     reg(`gable${i}`, mat(tex.gables[i * 2], { color: 0xffffff, roughness: 0.94, side: THREE.DoubleSide }),
       { color: new THREE.Color(0xf6f8fc) });
   }
@@ -184,17 +186,19 @@ export function buildMaterials(tex) {
   reg("grass", mat(tex.grass, { roughness: 0.98 }), { map: tex.grassSnow });
   reg("wood", mat(tex.wood, { roughness: 0.9 }));
   reg("woodDark", mat(tex.woodDark, { roughness: 0.9 }));
-  reg("stall", mat(tex.stall, { roughness: 0.88 }));
+  reg("stall", mat(tex.stall, { roughness: 0.88, emissive: 0xff9d4a, emissiveIntensity: 0 }),
+    { emissive: new THREE.Color(0xff9d4a), emissiveIntensity: 0.5 });
   reg("onion", mat(tex.onion, { roughness: 0.4, metalness: 0.3 }));
   reg("gold", mat(null, { color: 0xffd257, roughness: 0.28, metalness: 0.72 }));
   reg("trim", mat(null, { color: 0xf3eee1, roughness: 0.9 }), { color: new THREE.Color(0xffffff) });
   reg("white", mat(tex.plasterPlain, { color: 0xf7f4ec, roughness: 0.94 }), { color: new THREE.Color(0xffffff) });
-  reg("ochre", mat(tex.plasterPlain, { color: 0xe3bd66, roughness: 0.92 }), { color: new THREE.Color(0xe9ebf2) });
+  reg("ochre", mat(tex.plasterPlain, { color: 0xd9bd82, roughness: 0.92 }), { color: new THREE.Color(0xe9ebf2) });
   reg("pink", mat(tex.plasterPlain, { color: 0xd79f8c, roughness: 0.92 }), { color: new THREE.Color(0xe6e8f0) });
   reg("green", mat(tex.roofSlate, { color: 0x40604f, roughness: 0.55, metalness: 0.2 }), { color: new THREE.Color(0x9db0ac) });
   reg("dark", mat(null, { color: 0x24282d, roughness: 0.66 }), { color: new THREE.Color(0x2b3037) });
-  reg("window", mat(null, { color: 0x2a3038, roughness: 0.28, metalness: 0.35, side: THREE.DoubleSide, emissive: 0xffcb87, emissiveIntensity: 0 }),
-    { color: new THREE.Color(0x30373f), emissive: new THREE.Color(0xffcb87), emissiveIntensity: 0.8 });
+  reg("window", mat(null, { color: 0x2a3038, roughness: 0.28, metalness: 0.35, side: THREE.DoubleSide, emissive: 0xffb469, emissiveIntensity: 0 }),
+    // candles, not floods: a lit town at night is a hundred small warm squares, not one white glare
+    { color: new THREE.Color(0x30373f), emissive: new THREE.Color(0xffb469), emissiveIntensity: 0.62 });
   reg("concrete", mat(null, { color: 0x9d9b95, roughness: 0.94 }), { color: new THREE.Color(0xb4bac2) });
   reg("block", mat(null, { color: 0xb9b1a3, roughness: 0.94 }), { color: new THREE.Color(0xc9cdd5) });
   reg("iron", mat(null, { color: 0x2c2f34, roughness: 0.55, metalness: 0.55 }));
@@ -251,11 +255,11 @@ function addHouse(B, h) {
   // the roof, ridge along the long axis, painted gable ends on the short ones
   const ridgeX = w >= d;
   const span = ridgeX ? d : w, length = ridgeX ? w : d;
-  const rise = Math.max(1.7, span * (h.roofStyle === "hip" ? 0.36 : 0.54));
+  const rise = Math.max(2.0, span * (h.roofStyle === "hip" ? 0.4 : 0.58));
   const rrot = rot + (ridgeX ? Math.PI / 2 : 0);
   B.addAt("roof", h.roofStyle === "hip"
-    ? hipRoof(span, length, rise, { overhang: 0.42, tile: 0.15 })
-    : gableRoof(span, length, rise, { overhang: 0.42, tile: 0.15 }), x, y + hWall, z, rrot);
+    ? hipRoof(span, length, rise, { overhang: 0.26, tile: 0.15 })
+    : gableRoof(span, length, rise, { overhang: 0.26, tile: 0.15 }), x, y + hWall, z, rrot);
 
   const gGeo = polygonFan(gableShape(span, rise * 1.03, h.gable));
   for (const s of [-1, 1]) {
@@ -282,9 +286,11 @@ function addHouse(B, h) {
     }
   }
   if (h.dormer && DETAIL > 0.6) {
-    const n = Math.max(1, Math.round(length / 5.4));
+    // one dormer per nine metres, and half of those are left out: a roof full of them reads as a
+    // hedgehog, and the street only ever sees two or three
+    const n = Math.max(1, Math.round(length / 9));
     for (let i = 0; i < n; i++) {
-      if (rng.chance(0.4)) continue;
+      if (rng.chance(0.55)) continue;
       const t = (i + 0.5) / n - 0.5;
       const along = t * length;
       const side = rng.sign();
@@ -292,8 +298,8 @@ function addHouse(B, h) {
       const oz = ridgeX ? side * (span / 2 - 0.35) : along;
       const dx = x + Math.cos(rot) * ox - Math.sin(rot) * oz;
       const dz = z + Math.sin(rot) * ox + Math.cos(rot) * oz;
-      B.addAt(`wall${vi}`, trimBox(1.8, 1.6, 1.5), dx, y + hWall + rise * 0.34, dz, rot + (ridgeX ? 0 : Math.PI / 2));
-      B.addAt("roof", gableRoof(2.0, 1.9, 0.8, { overhang: 0.18, tile: 0.2 }), dx, y + hWall + rise * 0.34 + 0.8, dz, rot + (ridgeX ? Math.PI / 2 : 0));
+      B.addAt(`wall${vi}`, trimBox(1.45, 1.15, 1.1), dx, y + hWall + rise * 0.34, dz, rot + (ridgeX ? 0 : Math.PI / 2));
+      B.addAt("roof", gableRoof(1.6, 1.5, 0.6, { overhang: 0.14, tile: 0.2 }), dx, y + hWall + rise * 0.34 + 0.6, dz, rot + (ridgeX ? Math.PI / 2 : 0));
       const nx = ridgeX ? 0 : side * Math.cos(rot) * 0;
       void nx;
     }
@@ -417,14 +423,15 @@ function addLandmarks(B, city) {
       // ------------------------------------------------------------------ the Town Hall ----
       case "townhall": {
         const w = 38, d = 15, h = 12.5;
-        B.addAt("pink", box(w, h, d, 0.22), l.x, g + h / 2, l.z, l.rot);
+        // lime-washed ashlar, red tile: the Town Hall is pale against the square, not salmon
+        B.addAt("white", box(w, h, d, 0.22), l.x, g + h / 2, l.z, l.rot);
         B.addAt("stone", trimBox(w + 0.5, 2.2, d + 0.5), l.x, g + 1.1, l.z, l.rot);
         B.addAt("trim", trimBox(w + 0.3, 0.4, d + 0.3), l.x, g + 4.1, l.z, l.rot);
-        B.addAt("roofDark", gableRoof(d, w, 6.6, { overhang: 0.6, tile: 0.13 }), l.x, g + h, l.z, l.rot + Math.PI / 2);
+        B.addAt("roof", gableRoof(d, w, 6.6, { overhang: 0.6, tile: 0.13 }), l.x, g + h, l.z, l.rot + Math.PI / 2);
         const gg = polygonFan(gableShape(d, 6.7, "stepped"));
         for (const s of [-1, 1]) {
           const ox = s * (w / 2 - 0.04);
-          B.addAt("pink", gg, l.x + Math.cos(l.rot) * ox, g + h, l.z + Math.sin(l.rot) * ox, l.rot + Math.PI / 2);
+          B.addAt("white", gg, l.x + Math.cos(l.rot) * ox, g + h, l.z + Math.sin(l.rot) * ox, l.rot + Math.PI / 2);
         }
         for (const side of [-1, 1]) {
           for (let i = 0; i < 9; i++) {
@@ -450,7 +457,7 @@ function addLandmarks(B, city) {
         // the tower in the middle of the ridge, and Old Thomas above everything
         const tx = l.x, tz = l.z;
         G = g + h;
-        tower(B, tx, tz, { r: 3.5, h: 25, stages: 4, cap: "spire", capMat: "green", wall: "pink", gallery: true, roofH: 16 });
+        tower(B, tx, tz, { r: 3.5, h: 25, stages: 4, cap: "spire", capMat: "green", wall: "white", gallery: true, roofH: 16 });
         G = g;
         const ty = g + h + 25 + 16 + 2;
         B.addAt("gold", trimBox(0.55, 0.5, 0.55), tx, ty + 0.4, tz, 0);
@@ -848,8 +855,52 @@ function addWall(B, city) {
 }
 
 // ============================================================================ ground ==========
+
+/**
+ * The ground inside the wall is paved, not grass: yards, back lanes and the strips between houses
+ * are one continuous cobble floor that follows the terrain, so the Old Town reads as a town from
+ * above instead of a village in a field. A coarse grid (one quad per ~13 m, tilted to the ground's
+ * own corners) keeps it to a few thousand triangles under 660 houses.
+ */
+function townFloor(B, city) {
+  const ring = city.wallPath;
+  if (!ring || ring.length < 3) return;
+  const inside = (x, z) => {
+    let inp = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, zi] = ring[i], [xj, zj] = ring[j];
+      if ((zi > z) !== (zj > z) && x < ((xj - xi) * (z - zi)) / (zj - zi) + xi) inp = !inp;
+    }
+    return inp;
+  };
+  const step = 13, k = 1 / 11;
+  const pos = [], uvs = [], idx = [];
+  for (let gx = -560, ix = 0; gx < 470; gx += step, ix++) {
+    for (let gz = -660, iz = 0; gz < 420; gz += step, iz++) {
+      const cx = gx + step / 2, cz = gz + step / 2;
+      if (!inside(cx, cz) || city.terr.isSea(cx, cz)) continue;
+      const base = pos.length / 3;
+      for (let c = 0; c < 4; c++) {
+        const lx = cx + (c === 1 || c === 2 ? step / 2 : -step / 2);
+        const lz = cz + (c >= 2 ? step / 2 : -step / 2);
+        pos.push(lx, city.terr.ground(lx, lz) + 0.02, lz);
+        uvs.push(lx * k, lz * k);
+      }
+      idx.push(base, base + 1, base + 2, base + 2, base + 1, base + 3);
+    }
+  }
+  if (!idx.length) return;
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  B.add("paving", g);
+}
+
 function addGround(B, city) {
   const { terr } = city;
+  townFloor(B, city);
   for (const r of city.roads) {
     for (let i = 0; i < r.pts.length - 1; i++) {
       const a = r.pts[i], b = r.pts[i + 1];
@@ -891,11 +942,39 @@ function addGround(B, city) {
 }
 
 /** the diorama: the ground disc and the cut-away strata beneath it */
+
+/**
+ * The land painted per vertex, so one grass material still shows meadow, limestone scree, shore
+ * sand and the dark earth under the town. polarGrid gives UVs across the whole disc, which would
+ * stretch one grass tile over two kilometres, so they are rescaled to a tile every ~13 m here.
+ */
+function paintLand(terr, g, size) {
+  const pos = g.attributes.position, uv = g.attributes.uv;
+  const cols = new Float32Array(pos.count * 3);
+  const k = size / 13;
+  const c = new THREE.Color();
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), z = pos.getZ(i);
+    const sl = terr.slope(x, z), h = terr.ground(x, z);
+    let hex = 0x8b9a5e;                                       // grass, the texture doing the work
+    if (terr.isSea(x, z) || h < 1.4) hex = 0xa9a08a;          // shore
+    else if (sl > 0.62) hex = 0xc0b8a6;                       // the escarpment's limestone scree
+    else if (sl > 0.34) hex = 0x9c9d76;                       // scrub on the hillside
+    else if (h > 34) hex = 0x7a8c52;                          // the plateau's lawns
+    c.setHex(hex).convertSRGBToLinear();
+    const n = 0.9 + 0.24 * terr.noise.fbm(x * 0.013, z * 0.013, 3);
+    cols[i * 3] = c.r * n; cols[i * 3 + 1] = c.g * n * (h > 30 ? 1 : 1.02); cols[i * 3 + 2] = c.b * n;
+    uv.setXY(i, uv.getX(i) * k, uv.getY(i) * k);
+  }
+  g.setAttribute("color", new THREE.BufferAttribute(cols, 3));
+}
+
 export function buildBase(terr, { radius = 860, depth = 122 } = {}) {
   const outline = (a) => radius * (1 + 0.14 * Math.cos(a) * Math.cos(a) - 0.05 * Math.sin(a))
     * (0.94 + 0.05 * Math.sin(a * 3 + 0.7) + 0.03 * Math.sin(a * 5 + 2.1));
   const topFn = (x, z) => terr.ground(x, z);
   const top = polarGrid({ rings: 46, sectors: 104, radiusFn: outline, heightFn: topFn, size: radius * 2.3 });
+  paintLand(terr, top, radius * 2.3);
   const side = earthSide({
     rings: 7, sectors: 104, radiusFn: outline, topFn, depth, baseScale: 0.7,
     wobble: (a, t) => 0.02 * Math.sin(a * 4 + t * 3) + 0.014 * Math.sin(a * 9 - t * 5),
@@ -921,15 +1000,16 @@ function treeParts(kind) {
   return [["trunk", trunk(0.3, 2.2)], ["leaf", blob(0, 4.9, 0, 2.15, 1.45)], ["leaf", blob(0, 6.7, 0, 1.45, 1.25)]];
 }
 
+const LEAF = { linden: 0x6d8a3a, oak: 0x607d3a, pine: 0x365438, elm: 0x66853f };
+
 function buildTrees(city, quality, M) {
   const group = new THREE.Group();
   group.name = "trees";
   const kinds = ["linden", "oak", "pine", "elm"];
   const byKind = new Map(kinds.map((k) => [k, []]));
   for (const t of city.trees) (byKind.get(t.kind) || byKind.get("linden")).push(t);
-  const leafMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, flatShading: true });
-  const trunkMat = new THREE.MeshStandardMaterial({ color: 0x7b6244, roughness: 0.95, flatShading: true });
-  leafMat.userData.season = true;
+  const leafMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, flatShading: true, vertexColors: true });
+  const trunkMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95, flatShading: true, vertexColors: true });
   for (const k of kinds) {
     const list = byKind.get(k);
     if (!list.length) continue;
@@ -947,8 +1027,10 @@ function buildTrees(city, quality, M) {
         const t = list[i];
         _m.compose(new THREE.Vector3(t.x, t.y - 0.25, t.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, (i * 2.399) % 6.283, 0)), new THREE.Vector3(t.s, t.s * rng.f(0.85, 1.2), t.s));
         inst.setMatrixAt(i, _m);
-        const g = rng.f(0.6, 1.0);
-        c.setRGB(g * rng.f(0.68, 0.9), g, g * rng.f(0.45, 0.68));
+        const hex = key === "trunk" ? 0x53412c : LEAF[k];
+        const tint = rng.f(0.8, 1.06);
+        c.setHex(hex).convertSRGBToLinear().multiplyScalar(tint);
+        if (key === "leaf" && (k === "pine" || k === "elm")) c.multiplyScalar(0.82);
         inst.setColorAt(i, c);
       }
       inst.instanceMatrix.needsUpdate = true;

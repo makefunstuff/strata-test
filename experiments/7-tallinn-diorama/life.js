@@ -171,7 +171,7 @@ function buildSmoke(emitters, tex, seed) {
         vFade = smoothstep(0.0, 0.1, life) * (1.0 - smoothstep(0.3, 1.0, life));
         vSeed = aSeed;
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        gl_PointSize = (1.3 + life * 6.5) * uScale / max(-mv.z, 1.0);
+        gl_PointSize = (1.7 + life * 8.2) * uScale / max(-mv.z, 1.0);
         gl_Position = projectionMatrix * mv;
       }`,
     fragmentShader: /* glsl */`
@@ -180,7 +180,7 @@ function buildSmoke(emitters, tex, seed) {
       void main() {
         vec4 t = texture2D(uMap, gl_PointCoord);
         vec3 tint = mix(vec3(0.87, 0.86, 0.84), vec3(0.3, 0.32, 0.4), uNight);
-        gl_FragColor = vec4(tint, t.a * vFade * 0.5 * uDensity);
+        gl_FragColor = vec4(tint, t.a * vFade * 0.44 * uDensity);
         if (gl_FragColor.a < 0.01) discard;
       }`,
   });
@@ -212,9 +212,11 @@ function buildLanterns(city, tex) {
       const x = q.x + Math.cos(q.rot) * ox - Math.sin(q.rot) * oz;
       const z = q.z + Math.sin(q.rot) * ox + Math.cos(q.rot) * oz;
       posts.push({ x, y: city.terr.ground(x, z), z, h: 4.6 });
-      halos.push({ x, y: city.terr.ground(x, z) + 4.5, z, s: 5.5 });
+      halos.push({ x, y: city.terr.ground(x, z) + 4.5, z, s: 4.2 });
     }
-    halos.push({ x: q.x, y: gy + 1.4, z: q.z, s: Math.min(q.w, q.d) * 0.7 });
+    // the pool of light under a square's lamps: wide, but nothing like the square, or
+    // the whole place reads as one orange wash from a lamp-post's height
+    halos.push({ x: q.x, y: gy + 0.6, z: q.z, s: Math.min(18, Math.min(q.w, q.d) * 0.34) });
   }
   // the main streets get a lamp every ~34 m
   for (const r of city.roads) {
@@ -230,7 +232,7 @@ function buildLanterns(city, tex) {
       const y = city.terr.ground(x, z);
       if (y < 1) continue;
       posts.push({ x, y, z, h: 4.2 });
-      halos.push({ x, y: y + 4.1, z, s: 4.4 });
+      halos.push({ x, y: y + 4.1, z, s: 3.3 });
     }
   }
   for (const g of city.gates) {
@@ -239,7 +241,7 @@ function buildLanterns(city, tex) {
       const x = g.x - Math.sin(g.rot) * side * (g.w / 2 + 3.6);
       const z = g.z + Math.cos(g.rot) * side * (g.w / 2 + 3.6);
       posts.push({ x, y: city.terr.ground(x, z), z, h: 5.0 });
-      halos.push({ x, y: city.terr.ground(x, z) + 4.9, z, s: 6 });
+      halos.push({ x, y: city.terr.ground(x, z) + 4.9, z, s: 4.6 });
     }
   }
 
@@ -758,7 +760,7 @@ export function buildLife(city, tex, mats, { emitters = [], quality = "high", wi
       night = v;
       sea.uniforms.uNight.value = v;
       smoke.uniforms.uNight.value = v;
-      lanterns.haloMat.opacity = Math.min(1, v * 1.25);
+      lanterns.haloMat.opacity = Math.min(0.52, v * 0.7);
       lanterns.group.visible = v > 0.02 || true;
       if (market) {
         market.candleMat.opacity = Math.min(1, v * 1.3);

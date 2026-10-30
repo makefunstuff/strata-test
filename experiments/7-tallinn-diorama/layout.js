@@ -205,7 +205,9 @@ export function generateTallinn(seed = GROUND_SEED) {
     seen.add(key);
 
     const onHill = terr.onHill(x, z);
-    const storeys = clamp(lvBaked || rng.i(2, 4), 1, onHill ? 4 : 5);
+    // OSM's :levels is a wish as often as a measurement, and a five-storey house among the
+    // cottages is the one thing that makes the Old Town skyline unreadable: 2-3, rarely 4
+    const storeys = clamp(Math.min(lvBaked || rng.i(2, 3), onHill ? 3 : 4), 2, 4);
     const hWall = storeys * 3.05 + 0.7;
     // the street it faces: the nearest centre-line, and whether that street is a famous one
     let nearest = null, nearestD = Infinity;

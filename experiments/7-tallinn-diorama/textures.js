@@ -85,10 +85,10 @@ function windowPane(g, x, y, w, h, { glass = 0x2b3038, frame = 0xf2ead8, shutter
 }
 
 /** one bay of pastel plaster: a tall window, a lintel course, lime-wash mottling */
-function plasterBay(rng, { col = 0xd9b48a, trim = 0xf1e6cf, style = 0 } = {}) {
+function plasterBay(rng, { col = 0xd9b48a, trim = 0xf1e6cf, style = 0, windows = true } = {}) {
   const { c, g } = canvas(S, S);
   g.fillStyle = hex(col); g.fillRect(0, 0, S, S);
-  speckle(g, S, S, 1300, ["#ffffff", "#7a6647", "#efe0c2", "#4a3d2c"], [1, 5]);
+  speckle(g, S, S, 700, ["#ffffff", "#7a6647", "#efe0c2", "#4a3d2c"], [1, 4]);
   for (let i = 0; i < 16; i++) {                                    // lime-wash blotches
     g.globalAlpha = 0.05 + R() * 0.08;
     g.fillStyle = R() < 0.5 ? "#fff8ea" : shade(col, 0.72);
@@ -101,7 +101,14 @@ function plasterBay(rng, { col = 0xd9b48a, trim = 0xf1e6cf, style = 0 } = {}) {
       g.fillStyle = "rgba(40,26,12,0.14)"; g.fillRect(0, y + 3.4, S, 1.4);
     }
   }
-  windowPane(g, 34, 22, S - 68, 62, { frame: trim, arch: style === 2 });
+  if (windows) {
+    windowPane(g, 34, 22, S - 68, 62, { frame: trim, arch: style === 2 });
+  } else {
+    // no painted windows on the bays: the 3D sashes laid over them are the windows, and two
+    // grids that do not agree is the difference between a facade and a wall of dark tiles
+    g.fillStyle = "rgba(255,250,236,0.10)"; g.fillRect(30, 18, S - 60, 70);
+    g.fillStyle = "rgba(40,26,12,0.10)"; g.fillRect(30, 86, S - 60, 3.5);
+  }
   if (style === 3) {                                                 // a niche with a saint
     g.fillStyle = "rgba(30,24,16,0.35)";
     g.beginPath(); g.arc(S / 2, S - 22, 12, Math.PI, 0); g.fill();
@@ -206,7 +213,7 @@ export function gableFaceCanvas(rng, { col = 0xc97d5f, trim = 0xf3e9d4, kind = "
   return c;
 }
 
-function roofTileCanvas(rng, { col = 0xa4562e, snow = false } = {}) {
+function roofTileCanvas(rng, { col = 0xb26036, snow = false } = {}) {
   const { c, g } = canvas(S, S);
   g.fillStyle = shade(snow ? 0xeef3f8 : col, 0.62); g.fillRect(0, 0, S, S);
   const r = 11;
@@ -369,9 +376,9 @@ function pavingCanvas(rng, { col = 0x9b9287, snow = false } = {}) {
   return c;
 }
 
-function grassCanvas(rng, { col = 0x4d6b34, snow = false } = {}) {
+function grassCanvas(rng, { col = 0x63803f, snow = false } = {}) {
   const { c, g } = canvas(S, S);
-  g.fillStyle = shade(snow ? 0xe9eff6 : col, snow ? 0.95 : 0.7); g.fillRect(0, 0, S, S);
+  g.fillStyle = shade(snow ? 0xe9eff6 : col, snow ? 0.95 : 0.82); g.fillRect(0, 0, S, S);
   for (let i = 0; i < 2600; i++) {
     const x = R() * S, y = R() * S;
     g.strokeStyle = shade(snow ? 0xdfe8f2 : col, (snow ? 0.86 : 0.5) + R() * (snow ? 0.3 : 0.9));
@@ -481,6 +488,18 @@ function strataCanvas(rng) {
   return c;
 }
 
+/** a puff with no core: a soot cloud, not a soap bubble */
+function smokeCanvas(size = 64) {
+  const { c, g } = canvas(size, size);
+  const gr = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gr.addColorStop(0, "rgba(232,230,225,0.5)");
+  gr.addColorStop(0.34, "rgba(232,230,225,0.3)");
+  gr.addColorStop(0.68, "rgba(226,224,220,0.12)");
+  gr.addColorStop(1, "rgba(226,224,220,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, size, size);
+  return c;
+}
+
 function radialCanvas(inner, outer, size = 64) {
   const { c, g } = canvas(size, size);
   const gr = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
@@ -523,21 +542,28 @@ function stallCanvas(rng) {
 
 export function buildTextures(seedRng) {
   R = seedRng.next;
-  const plasterCols = [0xd9b48a, 0xc8a074, 0xe0c79a, 0xc97d5f, 0xd8a2a2, 0xa9b79c, 0xc2b091, 0xb5836a];
+  // a gable reads as one flat colour from the square, so it is chalked up toward white; the
+  // facade bays keep the full strength because their shading is painted into the canvas
+  const paler = (h, t) => {
+    const c = new THREE.Color(h), w = new THREE.Color(0xffffff);
+    return c.lerp(w, t).getHex();
+  };
+    // the Old Town's actual palette: chalky pastels, not a bucket of browns
+  const plasterCols = [0xe9dcc2, 0xdcb86b, 0xd9a08d, 0xbccaa6, 0xc0cad4, 0xdcc48f, 0xca8b72, 0xa9bda6];
   const upper = [], upperGlow = [], groundRows = [], groundGlow = [], gables = [];
   for (let i = 0; i < 8; i++) {
     const col = plasterCols[i % plasterCols.length];
     const style = i % 4;
-    upper.push(tex(plasterBay(Rng(), { col, style })));
+    upper.push(tex(plasterBay(Rng(), { col, style, windows: false })));
     upperGlow.push(tex(bayGlowCanvas(Rng(), { lit: 0.5 + (i % 3) * 0.12 })));
     groundRows.push(tex(groundBay(Rng(), { col, door: i % 2 === 0 })));
     groundGlow.push(tex(bayGlowCanvas(Rng(), { lit: 0.35 })));
     gables.push(tex(gableFaceCanvas(Rng(), {
-      col, trim: i % 3 === 0 ? 0xf3e9d4 : 0xe8dcc0,
+      col: paler(col, 0.34), trim: i % 3 === 0 ? 0xf3e9d4 : 0xe8dcc0,
       kind: ["stepped", "pointed", "pediment", "plain"][i % 4],
     })));
     gables.push(tex(gableFaceCanvas(Rng(), {
-      col: plasterCols[(i + 3) % plasterCols.length], trim: 0xf6efdd,
+      col: paler(plasterCols[(i + 3) % plasterCols.length], 0.4), trim: 0xf6efdd,
       kind: ["plain", "stepped", "pointed", "pediment"][(i + 1) % 4],
     })));
   }
@@ -566,7 +592,7 @@ export function buildTextures(seedRng) {
     onion: tex(onionDomeCanvas(Rng())),
     strata: tex(strataCanvas(Rng()), { repeat: 1, repeatY: 1 }),
     stall: tex(stallCanvas(Rng())),
-    smoke: new THREE.CanvasTexture(radialCanvas("rgba(228,226,220,0.9)", "rgba(228,226,220,0)")),
+    smoke: new THREE.CanvasTexture(smokeCanvas()),
     glow: new THREE.CanvasTexture(radialCanvas("rgba(255,206,132,1)", "rgba(255,150,40,0)")),
     soft: new THREE.CanvasTexture(radialCanvas("rgba(255,255,255,1)", "rgba(255,255,255,0)")),
   };

@@ -61,7 +61,22 @@ export function createLab({
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const bloomOpts = bloom && bloom.strength > 0 ? bloom : null;
-  const makeBloom = () => new UnrealBloomPass(new THREE.Vector2(256, 256), bloomOpts.strength, bloomOpts.radius, bloomOpts.threshold);
+  // One bad fragment (an Inf/NaN from a grazing-angle specular on a big flat roof) is enough to
+  // black out the whole frame, because the bloom mip chain smears it over every pixel it blurs
+  // into — and NaN survives a strength of 0, since 0 × NaN is NaN. The bright pass therefore
+  // clamps what it reads: 6.0 sits far above anything the sun puts on a lit surface, so nothing
+  // that should glow is clipped, and a firefly becomes a bright pixel instead of a black screen.
+  const clampBrightPass = (pass) => {
+    const m = pass.materialHighPassFilter;
+    if (!m) return pass;
+    const src = m.fragmentShader;
+    const patched = src.replace(/vec4\s+(\w+)\s*=\s*texture2D\(\s*tDiffuse,\s*vUv\s*\);/,
+      (whole, name) => `vec4 ${name} = min( texture2D( tDiffuse, vUv ), vec4( 6.0 ) );`);
+    if (patched !== src) { m.fragmentShader = patched; m.needsUpdate = true; }
+    else console.warn("lab: bloom clamp did not apply (shader changed?)");
+    return pass;
+  };
+  const makeBloom = () => clampBrightPass(new UnrealBloomPass(new THREE.Vector2(256, 256), bloomOpts.strength, bloomOpts.radius, bloomOpts.threshold));
   let bloomPass = bloomOpts ? makeBloom() : null;
   if (bloomPass) composer.addPass(bloomPass);
   composer.addPass(new OutputPass());

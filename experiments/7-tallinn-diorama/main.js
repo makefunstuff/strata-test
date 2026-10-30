@@ -65,7 +65,7 @@ const lab = createLab({
   bloom: { strength: 0.34, radius: 0.55, threshold: 0.9, scale: 0.5 },
   exposure: P.exposure,
   background: 0x0b1220,
-  fog: { color: 0xcfdde4, near: 620, far: 2100 },
+  fog: { color: 0xcfdde4, near: 950, far: 2700 },
   preset: P.quality,
   shadow: true,
   hints: [
@@ -121,8 +121,8 @@ const DAY = [
   { t: 0.26, top: 0x4a83c4, hor: 0xdae6ea, gnd: 0x5f5b47, sunCol: 0xfff2d6, sunI: 2.7, hemiI: 0.95, amb: 0.16, fog: 0xc4d5de, elev: 0.6, expo: 1.05, night: 0 },
   { t: 0.58, top: 0x4478b8, hor: 0xe4dfd2, gnd: 0x5d5944, sunCol: 0xfff4dc, sunI: 2.6, hemiI: 0.9, amb: 0.16, fog: 0xcfd6da, elev: 0.82, expo: 1.05, night: 0 },
   { t: 0.86, top: 0x3d5f92, hor: 0xe89a5c, gnd: 0x40342a, sunCol: 0xff9b4a, sunI: 1.8, hemiI: 0.52, amb: 0.2, fog: 0xcf9a72, elev: 0.11, expo: 1.12, night: 0 },
-  { t: 1.02, top: 0x1a2b4e, hor: 0x6d5a72, gnd: 0x211d24, sunCol: 0xc98a7a, sunI: 0.55, hemiI: 0.26, amb: 0.22, fog: 0x3a3448, elev: 0.02, expo: 1.2, night: 0.6 },
-  { t: 1.30, top: 0x070f24, hor: 0x182742, gnd: 0x0b0e16, sunCol: 0x9db4e6, sunI: 0.62, hemiI: 0.26, amb: 0.24, fog: 0x111a2c, elev: 0.4, expo: 1.32, night: 1 },
+  { t: 1.02, top: 0x1a2b4e, hor: 0x6d5a72, gnd: 0x211d24, sunCol: 0xc98a7a, sunI: 0.46, hemiI: 0.19, amb: 0.17, fog: 0x2c2838, elev: 0.02, expo: 1.16, night: 0.6 },
+  { t: 1.30, top: 0x070f24, hor: 0x182742, gnd: 0x0b0e16, sunCol: 0x9db4e6, sunI: 0.5, hemiI: 0.17, amb: 0.15, fog: 0x0e1526, elev: 0.4, expo: 1.24, night: 1 },
 ];
 
 const _c1 = new THREE.Color(), _c2 = new THREE.Color();
@@ -317,9 +317,11 @@ fShow.add(P, "showSea").name("the bay").onChange(applyVisibility);
 const fView = gui.addFolder("view");
 const VIEWS = {
   hero: { pos: [430, 285, 620], target: [-30, 18, -40] },
-  square: { pos: [66, 34, 132], target: [-2, 14, 6] },
-  toompea: { pos: [-96, 132, 476], target: [-420, 46, 190] },
-  hermann: { pos: [-330, 88, 430], target: [-474, 42, 228] },
+  square: { pos: [-96, 40, -96], target: [8, 9, 16] },
+  townhall: { pos: [6, 14, -32], target: [1, 13, 24] },
+  market: { pos: [-14, 7.5, -34], target: [2, 9, 26] },
+  toompea: { pos: [14, 74, 262], target: [-392, 52, 168] },
+  hermann: { pos: [-186, 66, 322], target: [-474, 46, 236] },
   harbour: { pos: [250, 96, -306], target: [220, 10, -620] },
   oleviste: { pos: [268, 82, -286], target: [147, 44, -457] },
   viru: { pos: [392, 44, 190], target: [282, 14, 71] },
@@ -331,7 +333,11 @@ for (const name of Object.keys(VIEWS)) fView.add({ v: () => setView(name) }, "v"
 function setView(name) {
   const v = VIEWS[name] || VIEWS.hero;
   P.view = name;
-  camera.position.set(...v.pos);
+  // the lower town falls 22 m from the wall to the quay, so a named view that is written for one
+  // height can end up under the cobbles at another: no view is allowed below the ground it frames
+  const [px, py, pz] = v.pos;
+  const floorY = city ? city.terr.ground(px, pz) + 2.6 : py;
+  camera.position.set(px, Math.max(py, floorY), pz);
   orbit.target.set(...v.target);
   orbit.update();
   gui.controllersRecursive().forEach((c) => c.updateDisplay());
