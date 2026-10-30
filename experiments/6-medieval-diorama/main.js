@@ -237,6 +237,7 @@ function applyShadows(v) {
   renderer.shadowMap.enabled = P.shadows;
   sun.castShadow = P.shadows;
   if (current) current.group.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+  gui.controllersRecursive().forEach((c) => c.updateDisplay());   // the panel's tick must follow a scripted call
   return P.shadows;
 }
 

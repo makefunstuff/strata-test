@@ -54,5 +54,5 @@ a.back:hover { color: var(--accent); border-color: var(--accent); }
   h1.title small { display: none; }
   .hud { top: 76px; left: 18px; max-width: 60vw; font-size: 10px; }
   .hint { font-size: 10px; bottom: 42px; }
-  .lab-gui.lil-gui { --width: 200px; top: 44px; }
+  .lab-gui.lil-gui { --width: 200px; top: 44px; max-height: calc(100% - 44px); }
 }
