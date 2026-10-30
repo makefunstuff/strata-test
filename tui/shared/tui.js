@@ -359,7 +359,7 @@ export function createTUI(app) {
     if (!s) { styleEl.textContent = "@keyframes tk-blink{0%,49%{opacity:1}50%,100%{opacity:0}}"; return; }
     styleEl.append(cssRule(s));
   };
-  const state = { size: app.size ?? 13, cellW: 8, cellH: 16, frame: 0, keys: 0, taps: 0, help: false, quit: null, lastKey: "" };
+  const state = { size: app.size ?? 13, cellW: 8, cellH: 16, frame: 0, keys: 0, taps: 0, hitFired: 0, help: false, quit: null, lastKey: "" };
   let activePrompt = null;   // a field the app opened with prompt(); it owns the keyboard while open
   let measureCanvas = null;
 
@@ -459,11 +459,12 @@ export function createTUI(app) {
 
   function tap(x, y) {
     state.taps++;
-    if (state.quit) { press("r"); return; }
+    if (state.quit) { state.hitFired++; press("r"); return true; }
     for (let i = term.hits.length - 1; i >= 0; i--) {
       const h = term.hits[i];
       if (x >= h.x && x < h.x + h.w && y >= h.y && y < h.y + h.h) {
         try { h.fn(x - h.x, y - h.y, tui); } catch (err) { console.error("hit() threw:", err); }
+        state.hitFired++;
         draw();
         return true;
       }
@@ -643,6 +644,13 @@ export function createTUI(app) {
     get tapsMade() { return state.taps; },
     cellW: () => state.cellW,
     cellH: () => state.cellH,
+    hits: () => term.hits.map((h, i) => ({ i, x: h.x, y: h.y, w: h.w, h: h.h, tag: h.tag })),
+    tapTag: (tag, n = 0) => {
+      const all = term.hits.map((h, i) => ({ ...h, i })).filter((h) => !tag || h.tag === tag);
+      const h = all[n];
+      if (!h) return false;
+      return tap(h.x + Math.floor(h.w / 2), h.y + Math.floor(h.h / 2));
+    },
     press, tap, draw, toast,
     quit: (info = {}) => { state.quit = typeof info === "string" ? { line: info } : info; draw(); },
     resume: () => { state.quit = null; draw(); },
@@ -667,7 +675,7 @@ export function createTUI(app) {
     auditGlyphs,
     fit,
     state() {
-      const base = { cols: term.cols, rows: term.rows, frame: state.frame, keys: state.keys, taps: state.taps, help: state.help, quit: !!state.quit, lastKey: state.lastKey };
+      const base = { cols: term.cols, rows: term.rows, frame: state.frame, keys: state.keys, taps: state.taps, hit_fired: state.hitFired, help: state.help, quit: !!state.quit, lastKey: state.lastKey };
       try { return Object.assign(base, app.state ? app.state(tui) : {}); }
       catch (e) { base.stateError = String((e && e.message) ?? e); return base; }
     },

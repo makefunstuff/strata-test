@@ -66,16 +66,17 @@ const VOLATILE = /^(frame|keys|taps|lastKey|help|quit|pos|bins|bins_nonzero|line
 
 export const SCENARIOS = {
   "1-monitor": {
-    keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["40,20"],
+    keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["proc#3", "sort"],
     poses: ["window.tui.api.pause(true)"],
-    expect: { panel: "net", paused: true, sort: "mem", theme: "phosphor", procs: 13 },
-    phone: { taps: ["20,20", "10,0"], expect: { panel: "mem" } },
+    expect: { panel: "net", paused: true, sort: "pid", theme: "phosphor", procs: 13 },
+    // the phone has no side-by-side panels to tap: the tabs are the navigation
+    phone: { taps: ["tab#3", "proc#2", "tab#1"], expect: { panel: "mem" } },
   },
   "2-mail": {
     keys: ["j", "j", "Enter", "r", "h", "e", "l", "l", "o", "Esc", "d"], taps: [],
     poses: ["window.tui.api.sync()"],
     expect: { folder: "inbox", sel: 2, focus: "reader", syncs: 1 },
-    phone: { taps: ["20,0"], expect: { folder: "@changed" } },
+    phone: { taps: ["tab#2"], expect: { folder: "@changed" } },
   },
   "3-files": {
     // stage the file under the cursor, then write the subject out — including a real space, which is
@@ -84,26 +85,26 @@ export const SCENARIOS = {
     taps: [],
     poses: ["window.tui.api.checkout('main')"],
     expect: { stagedN: 0, commits: 9, top: "staged test", branch: "main" },
-    phone: { taps: ["20,0", "20,4"], expect: { tab: 2 } },
+    phone: { taps: ["node#3", "tab#2"], expect: { tab: 2 } },
   },
   "4-player": {
     keys: [" ", "l", "l", "j", "Enter", "v", "s"], taps: [],
     poses: ["window.tui.api.select(3)", "window.tui.api.play(true)"],
     expect: { viz: "matrix", shuffle: true, index: 3, playing: true, played: 1 },
-    // x=21 is inside the "3:viz" tab's hit region (18..25): the strip is the phone's only nav
-    phone: { taps: ["21,0", "20,6"], expect: { tab: 2 } },
+    phone: { taps: ["row#4", "tab#2"], expect: { tab: 2 } },
   },
   "5-ops": {
-    keys: ["j", "j", "Enter", "2", "A", "r", "/"], taps: [],
-    poses: ["window.tui.api.search('timeout')", "window.tui.api.pause(true)"],
-    expect: { level: "info", acks: 1, restarts: 1, paused: true, filter: "timeout" },
-    phone: { taps: ["20,0", "20,8"], expect: { tab: 2 } },
+    // type the search out and expect the log to have actually filtered: setting the box is not filtering
+    keys: ["j", "j", "Enter", "2", "A", "r", "/", "G", "E", "T"], taps: ["log#2", "alert#0", "tile#1"],
+    poses: ["window.tui.api.pause(true)"],
+    expect: { level: "info", acks: 1, restarts: 1, paused: true, filter: "GET", shownLines: "@changed" },
+    phone: { taps: ["tab#2", "alert#0"], expect: { tab: 2 } },
   },
   "6-editor": {
     keys: ["j", "j", "w", "i", "x", "Esc", "u", ":", "w", "Enter", "/"], taps: [],
     poses: ["window.tui.api.find('ring')", "window.tui.api.ex('e notes.md')"],
     expect: { buf: "notes.md", saves: 1, hits: 8, edits: 1 },
-    phone: { taps: ["20,6", "20,0"], expect: { line: "@changed", buf: "@changed" } },
+    phone: { taps: ["tab#1", "line#6"], expect: { line: "@changed", buf: "@changed" } },
   },
 };
 
@@ -216,14 +217,34 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
     else await p.keyboard.press(k);
     await p.waitForTimeout(110);
   }
+  const firedBefore = await p.evaluate(() => window.tui?.state?.().hit_fired ?? 0);
+  const tapLog = [];
   for (const spec of rest.taps ?? []) {
+    if (!/^[0-9]+,[0-9]+$/.test(spec)) {
+      // aim at a declared hit region rather than a remembered coordinate: a coordinate drifts when
+      // the grid reflows and silently turns into a tap on dead cells, which used to pass
+      const [tag, n = "0"] = spec.split("#");
+      const hits = await p.evaluate(`window.tui?.hits?.().filter((h) => h.tag === ${JSON.stringify(tag)}) ?? []`);
+      if (!hits.length) { errors.push(`no hit region tagged "${tag}" to tap`); break; }
+      const k = Math.min(+n, hits.length - 1);
+      const ok = await p.evaluate(`window.tui.tapTag(${JSON.stringify(tag)}, ${k})`);
+      tapLog.push(`${tag}#${k}@${hits[k]?.x},${hits[k]?.y} -> ${ok}`);
+      if (!ok) errors.push(`tap on "${tag}"#${k} hit no region`);
+      await p.waitForTimeout(160);
+      continue;
+    }
     const [gx, gy] = spec.split(",").map(Number);
     const box = await p.locator("pre.screen").boundingBox().catch(() => null);
     if (!box) { errors.push("no <pre.screen> to tap"); break; }
     const cw = await p.evaluate(() => window.tui.cellW());
     const chh = await p.evaluate(() => window.tui.cellH());
     await p.mouse.click(box.x + (gx + 0.5) * cw, box.y + (gy + 0.5) * chh);
+    tapLog.push(`${gx},${gy}`);
     await p.waitForTimeout(160);
+  }
+  if ((rest.taps ?? []).length) {
+    const firedAfter = await p.evaluate(() => window.tui?.state?.().hit_fired ?? 0);
+    if (firedAfter <= firedBefore) errors.push(`${(rest.taps ?? []).length} tap(s) sent, none fired a hit region`);
   }
   const poseLog = [];
   for (const js of rest.poses ?? []) {
@@ -280,7 +301,7 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
   if (close) await p.close();
   return {
     page: dir, view: rest.view, tag: rest.tag, hook, grid, glyphs_bad: glyphs,
-    keys: rest.keys ?? [], taps: rest.taps ?? [], pose: poseLog,
+    keys: rest.keys ?? [], taps: rest.taps ?? [], tap_log: tapLog, pose: poseLog,
     state_start: s0, state_after: s1, changed, expect: rest.expect ?? {}, expect_wrong: wrong, overflow, shots, errors,
   };
 }

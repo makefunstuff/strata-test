@@ -35,7 +35,7 @@ const MSGS = {
   info: [
     "GET /v1/{ep} {code} in {ms}ms ({n} rows)",
     "job {job} finished: {n} docs in {ms}ms",
-    "accepted connection from 10.0.{n}.{m} (tls1.3)",
+    "accepted connection from 203.0.113.{n} (tls1.3)",
     "published {n} events to {job}",
   ],
   warn: [
@@ -47,7 +47,7 @@ const MSGS = {
   error: [
     "upstream {ep} returned 503 after {n} retries",
     "deadlock detected on table {job}, transaction rolled back",
-    "connection reset by peer 10.0.{n}.{m} during handshake",
+    "connection reset by peer 203.0.113.{n} during handshake",
     "panic recovered in handler {ep}: index out of range",
   ],
 };

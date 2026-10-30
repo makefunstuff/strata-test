@@ -292,7 +292,7 @@ function draw(t, dt) {
       t.text(x, 0, `${f.name}${unreadCount(f.name) ? "!" : ""}`.slice(0, w), t.attr({ fg: on ? "bg" : "dim", bg: on ? "accent" : null, b: on }));
       t.hit(x, 0, w, 1, () => { state.folder = i; state.sel = 0; state.open = null; }, "tab");
       x += w + 1;
-    });
+    }, "reader");
     if (shownTabs < FOLDERS.length) {
       // the strip cannot hold six folders at 45 columns; say what is off-screen and let a tap cycle
       const more = ` +${FOLDERS.length - shownTabs} `;

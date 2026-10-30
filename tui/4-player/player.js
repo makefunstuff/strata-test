@@ -292,7 +292,14 @@ function draw(t, dt) {
       const left = `${mark}${pad0(k + 1, 2)} ${pad(item.title, Math.max(6, inner.w - 20))}`;
       t.text(inner.x, y, left, t.attr({ fg: on ? "bg" : cur ? "accent" : "fg", bg: on ? "accent" : null, b: cur }));
       t.text(inner.x + inner.w - 6, y, pad(clock(item.len), 5, true), t.attr({ fg: on ? "bg" : "dim" }));
-      t.hit(inner.x, y, inner.w, 1, () => { state.sel = k; state.i = item.i; state.pos = 0; state.step = 0; if (state.playing) { state.nextBeat = ctx ? ctx.currentTime + 0.05 : 0; } }, "row");
+      t.hit(inner.x, y, inner.w, 1, () => {
+        // the first tap cues the row, a second tap on the one already cued plays it — which is what
+        // the key map promises, so it had better be what happens
+        const again = state.i === item.i && state.sel === k;
+        state.sel = k; state.i = item.i; state.pos = 0; state.step = 0;
+        if (again && !state.playing) play(true);
+        else if (state.playing) { state.nextBeat = ctx ? ctx.currentTime + 0.05 : 0; }
+      }, "row");
     });
     state.sel = clamp(state.sel, 0, Math.max(0, items.length - 1));
     if (boxH < r.h) {

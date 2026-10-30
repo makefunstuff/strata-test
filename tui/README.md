@@ -36,9 +36,10 @@ Nothing here is a mock-up with dead keys. Every page changes state through its r
   clock. The spectrum is that graph's own `AnalyserNode`. Where the output is blocked — headless
   Chromium is — the same pattern drives a synthetic spectrum and the page says `synthetic` in the
   status line rather than pretending.
-- **grid** — service tiles with p95 sparklines, a log stream that follows the tail *until you scroll
-  up*, severity filters, a search, alerts you ack (`A`), and a service you can restart (`r`) that
-  comes back through `starting` and writes its own startup line.
+- **grid** — service tiles with p95 sparklines (tappable on the phone's tile list), a log stream that
+  follows the tail *until you scroll up*, severity filters, a search that filters what is shown,
+  alerts you ack (`A`), and a service you can restart (`r`) that comes back through `starting` and
+  writes its own startup line.
 - **quill** — modes (normal, insert, visual-line, search, ex), motions (`hjkl w b 0 ^ $ gg G`),
   operators (`dd dw x D yy p P > <`), `u`/`Ctrl-R` against whole-line snapshots, `/` with every hit
   underlined, and an ex line where `:w`, `:q`, `:wq`, `:e <name>` and `:<number>` do what they say.
@@ -57,11 +58,14 @@ node design/tools/serve.mjs                   # serve the repo root, then open /
 Keyboard: press `?` on any page for the key map, `q` to quit (each page prints what it did — lines
 acked, tracks played, saves — then offers `r` to restart).
 
-**Phone**: one column at a time. The wide layouts collapse to tabs (`1`–`3` on the keyboard, a tap
-on the tab), the key map becomes a row of buttons under the grid, hit regions turn rows, tabs, seek
-bars and tiles into taps — a tap calls the same handler as the key, so it cannot drift. Tested at
-390×844, and at 320×568 the kit clamps to a minimum column count rather than letting a panel
-vanish.
+**Phone**: one column at a time. The wide layouts collapse to tabs (`1`–`3` on the keyboard, a tap on
+the tab), the chip row under the grid repeats the app's main keys (it is the app's own key list, so
+it cannot drift from it), and hit regions make rows, tabs, tiles, log lines, alerts, the seek bar and
+the editor's lines tappable — a tap calls the same handler the key calls. Text does not go through
+either: a grid of cells is not an editable element, so search, filter, ex and compose fields open a
+real `<input>`/`<textarea>` over the grid and the soft keyboard appears. Checked at 390×844 and at
+320×568, where the kit shrinks the type to a floor and then clamps the column count rather than
+letting a panel vanish.
 
 ## The check
 
@@ -76,10 +80,14 @@ node tui/tools/font-probe.mjs        # which faces can actually draw the box set
 
 Per page it requires: the `window.tui` hook; a non-blank grid (≥ 6 % of cells with ink and ≥ 18
 distinct glyphs, so an empty shell fails); **no console, page or network errors — a `draw()` that
-throws once fails the page**; no sideways overflow and no grid below the fold.
+throws once fails the page** (favicon requests aside, since Pages has none and every page would
+report a 404 that means nothing); no sideways overflow and no grid below the fold.
 
 Then the input, at 1280×800, 390×844 and 320×568: real keys, real taps and real poses
-(`window.tui.api.…`), after which `state()` is read back twice. The kit's own counters
+(`window.tui.api.…`), after which `state()` is read back twice. Taps are aimed at a *declared hit
+region* by its tag (`proc#3`, `alert#0`, `line#6`) and the page must report that one fired — a tap
+that lands on dead cells used to count as a tap sent, which is how a desktop scenario passed while
+its only tap hit nothing. The kit's own counters
 (`frame`, `keys`, `taps`) and a live app's clock are stripped before comparing, because a monitor
 moves those by itself and a check that passes on them is not a check — and each scenario then names
 the fields its input must have landed in (`commits: 9`, `top: "staged test"`, `acks: 1`,

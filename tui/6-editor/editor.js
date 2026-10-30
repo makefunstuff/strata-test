@@ -341,6 +341,11 @@ function draw(t, dt) {
     t.text(0, y, pad(li + 1, numW), t.attr({ fg: isCur ? "accent" : "faint", b: isCur }));
     t.cell(numW, y, b.signs[li] === "~" ? "~" : b.signs[li] === "+" ? "+" : " ", t.attr({ fg: b.signs[li] === "~" ? "yellow" : "green" }));
     const line = lineAt(li);
+    // a tap puts the cursor on that line: the only way to move it on a phone, where there is no
+    // arrow-key row and no way to type 42 and press Enter
+    t.hit(0, y, t.cols - 1, 1, () => {
+      state.line = li; state.col = 0; state.pending = null; state.mode = "normal";
+    }, "line");
     const hitOnLine = state.hits.find((h) => h.line === li);
     highlight(t, numW + 1, y, line.slice(0, view.w), b.kind);
     if (hitOnLine && state.search) {
@@ -695,7 +700,11 @@ function onKey(k) {
         state.mode = "ex"; state.cmd = v; onKey("Enter");
       });
       return true;
-    case "S": case ";": return true;
+    case "S": return true;
+    case ";":          // the help offers `:` or `;` for the ex line, so ; has to be the ex line
+      state.mode = "ex"; state.cmd = "";
+      typeLine("ex command", "", (v) => { state.mode = "ex"; state.cmd = v; onKey("Enter"); });
+      return true;
     case "q":
       window.tui.quit({ command: "quill", line: `${state.saves} save${state.saves === 1 ? "" : "s"} · ${state.edits} edit${state.edits === 1 ? "" : "s"} · ${state.undo.length} undo steps · ${state.jumps} jumps` });
       return true;

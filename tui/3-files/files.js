@@ -261,7 +261,7 @@ function drawTree(t, r, focused) {
       if (fy + 1 + i >= r.y + r.h) return;
       t.text(r.x, fy + 1 + i, pad(k, 6), t.attr({ fg: "faint" }));
       t.text(r.x + 7, fy + 1 + i, pad(v, r.w - 7), t.attr({ fg: "dim" }));
-    });
+    }, "tree");
     // and the history for the path you are on, which is the other thing you wanted to know here
     const hy = fy + 1 + rows.length + 1;
     if (hy + 2 < r.y + r.h) {
