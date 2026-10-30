@@ -68,7 +68,7 @@ export const SCENARIOS = {
   "1-monitor": {
     keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["proc#3", "sort"],
     // the chip row is the phone's keyboard, so a chip has to reach the app and not just look like one
-    chips: ["P", "P"],
+    chips: ["p", "p"],
     poses: ["window.tui.api.pause(true)"],
     expect: { panel: "net", paused: true, sort: "pid", theme: "phosphor", procs: 13 },
     // the phone has no side-by-side panels to tap: the tabs are the navigation
