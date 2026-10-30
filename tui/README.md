@@ -45,12 +45,13 @@ Nothing here is a mock-up with dead keys. Every page changes state through its r
 
 ## Seeing them
 
-Plain static files. No build, no npm, no server, relative paths throughout.
+Plain static files, no build step, no npm, relative paths throughout — but each page is an ES
+module importing `shared/tui.js`, and a browser refuses to import a module over `file://`. So open
+them over http, which is how Pages serves them anyway:
 
 ```bash
-# any of these
-xdg-open tui/index.html                       # the shelf page
-node design/tools/serve.mjs                   # or serve the repo root and open /tui/
+node design/tools/serve.mjs                   # serve the repo root, then open /tui/
+# or: python3 -m http.server            — any static server will do
 ```
 
 Keyboard: press `?` on any page for the key map, `q` to quit (each page prints what it did — lines
@@ -66,18 +67,26 @@ vanish.
 
 ```bash
 cd tui/tools && npm install          # playwright-core only, pinned
-node tui/tools/check.mjs --all       # six pages × desktop 1280×800 and phone 390×844
-node tui/tools/check.mjs 5-ops       # one page
+tui/tools/summarize.sh               # every page × 3 widths, one line per pass
+node tui/tools/check.mjs 5-ops       # one page, full JSON
 node tui/tools/check.mjs --all --skip-phone
-KEYS=Space,l,j VIEW=390x844 node tui/tools/probe.mjs 4-player   # print the grid as text
+KEYS=j,j,l VIEW=390x844 node tui/tools/probe.mjs 4-player   # print the grid as text
 node tui/tools/font-probe.mjs        # which faces can actually draw the box set
 ```
 
-Per page it requires: the `window.tui` hook; a non-blank grid (≥ 25 % of cells with ink, ≥ 18
+Per page it requires: the `window.tui` hook; a non-blank grid (≥ 6 % of cells with ink and ≥ 18
 distinct glyphs, so an empty shell fails); **no console, page or network errors — a `draw()` that
-throws once fails the page**; no sideways overflow and no grid below the fold; and it presses real
-keys, sends real taps and runs real poses (`window.tui.api.…`), then asserts `state()` changed.
-Screenshots land in each design's `shots/`. Latest run: **12/12 passes** (6 pages × 2 widths).
+throws once fails the page**; no sideways overflow and no grid below the fold.
+
+Then the input, at 1280×800, 390×844 and 320×568: real keys, real taps and real poses
+(`window.tui.api.…`), after which `state()` is read back twice. The kit's own counters
+(`frame`, `keys`, `taps`) and a live app's clock are stripped before comparing, because a monitor
+moves those by itself and a check that passes on them is not a check — and each scenario then names
+the fields its input must have landed in (`commits: 9`, `top: "staged test"`, `acks: 1`,
+`theme: "phosphor"`, `tab: 2`), so a key that does nothing fails the page instead of passing it.
+One of those expectations is a literal space: the files scenario types a commit subject with a word
+boundary in it, because the key layer used to eat the space and nothing else noticed.
+Screenshots land in each design's `shots/`. Latest run: **18/18 passes** (6 pages × 3 widths).
 
 The glyph audit is the one that earns its keep. A webfont that does not carry `┌` or `█` does not
 fail: the browser takes that glyph from a fallback face, the advance width changes, and the grid
@@ -121,15 +130,45 @@ preview as art from a name rather than a thumbnail.
    children array — which the pre-fix checker would have waved through because the page still
    painted.
 
-**How much fixing it took.** All of it was me and the harness, not the model's second opinion: it
-did not notice any of these when asked to review its own pages, and the `state()`-changed assertion
-passed on pages that were half empty. The number to quote is the checker's: 12 passes, 0 console
-errors, all six glyph audits clean — and four of the six pages needed at least one structural
-change to get there.
+**What the review round found, after the sweep was already green.** A fresh reader with the brief and
+the diff found seven more bugs, all of them the same shape as the first batch — plausible code that
+had never been driven:
+
+- `Ctrl-R` in the editor was not in the kit's blocked-key list, so the browser reloaded the page and
+  the unsaved buffer went with it. Every `C-<letter>` is blocked now.
+- The key layer renamed `" "` to `"Space"`, and the pages matched on `" "` — so the space bar did
+  nothing anywhere: staging in the file manager was dead, and no space could be typed in any field,
+  commit subject, search or buffer. The chip that said `␣ stage` never worked either.
+- Two `case "g"` labels in the mail reader: the first one (`jump to top`) shadowed the second, so
+  sync — and the `g sync` chip — could never run.
+- Theme switching wrote each theme into the *same* object, so after one full cycle "midnight" came
+  back tinted with graphite. A palette is now replaced, never merged.
+- On a phone, composing a reply drew the message list instead of the draft: you typed into a pane
+  that was not on screen. And no page could have taken text from a soft keyboard at all, because a
+  grid of cells is not an editable element — text fields now open a real `<input>`/`<textarea>` over
+  the grid on a phone, while the keyboard path stays key-by-key.
+- `?` was taken by the kit before the page saw it, so it could not be typed into anything, and
+  Shift — which you must press to produce it — arrived as its own key and was fed to the editor as
+  if it were a motion.
+- The shelf page's README link pointed at the *root* README, which Pages never deploys: a 404 on the
+  one page that tells you where the verdict is.
+
+**And one in the check itself.** `state()` always contains the kit's `frame` counter, which ticks at
+8–12 fps, so "the state changed after input" could not fail. That is why the file manager passed with
+staging and committing both dead. The assertion now strips the kit's counters and compares the
+fields each scenario names, which is the difference between a check and a screenshot.
+
+**How much fixing it took.** All of it was me, the harness and a reviewer, not the model's second
+opinion: asked to review its own pages it found nothing, and the sweep was green while four of the
+six keyboards were partly dead. The number to quote is the checker's — 18 passes, 0 console errors,
+all six glyph audits clean — and every one of those 18 runs got there only after a structural change.
 
 **What I would not trust it to do without a human.** Anything where the spec is "looks right":
 spacing, density, whether a panel should be there at all, whether a bar is convincing. It is
-reliable for the machine-checkable half of a TUI — state, keys, buffers, undo, hit regions — and
-unreliable for the half you judge by eye, which is the half anyone notices first. The lever is the
-check: the moment the harness read the grid back as text and audited the glyphs, the class of bug
-that survived "it renders" stopped surviving.
+reliable for the machine-checkable half of a TUI — state, keys, buffers, undo, hit regions — only
+when something drives those keys from outside and reads the result back. It wrote a keymap it had
+never pressed and an assertion that could not fail, and both looked exactly right. The lever is the
+check, but the check has to be adversarial: read the grid back as text, audit the glyphs against the
+face, strip the counters that move by themselves, and name the field each keystroke is supposed to
+land in. What survived "it renders" stopped surviving the first two; what survived "the state
+changed" stopped surviving the third.

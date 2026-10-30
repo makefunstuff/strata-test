@@ -365,7 +365,13 @@ function onKey(k) {
       state.tab = (state.tab + 1) % 3;
       return true;
     }
-    case "/": state.searching = true; state.filter = ""; return true;
+    case "/":
+      state.searching = true; state.filter = "";
+      if (window.tui.compact) window.tui.prompt("search the log", state.filter, (v) => {
+        state.searching = false;
+        if (v !== null) { state.filter = v; state.follow = false; }
+      });
+      return true;
     case "q":
       window.tui.quit({ command: "grid", line: `${state.linesIn} log lines · ${state.acks} alert${state.acks === 1 ? "" : "s"} acked · ${state.restarts} restart${state.restarts === 1 ? "" : "s"}` });
       return true;
@@ -383,6 +389,7 @@ createTUI({
   font: '"Roboto Mono", ui-monospace, "DejaVu Sans Mono", monospace',
   size: 12.5, lh: 1.24, fps: 10, minCols: 34, compactAt: 96, scan: 0.14,
   palette: PAL,
+  isTyping: () => !!state.searching,
   keys: [
     { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "Enter", l: "json" }, "sep",
     { k: "f", l: "follow" }, { k: "p", l: "pause" }, { k: "2", l: "info" }, { k: "4", l: "err" }, { k: "0", l: "all" }, "sep",

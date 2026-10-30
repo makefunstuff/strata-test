@@ -407,6 +407,8 @@ function draw(t, dt) {
 
 /* ------------------------------------------------------------------ input */
 
+function isTyping() { return !!state.filtering; }
+
 function onKey(k) {
   if (state.filtering) {
     if (k === "Esc") { state.filtering = false; state.filter = ""; return true; }
@@ -417,7 +419,7 @@ function onKey(k) {
   }
   const items = list();
   switch (k) {
-    case "Space": case "p": play(); return true;
+    case " ": case "p": play(); return true;   // the kit gives a space as " ", the chip spells it Space
     case "j": case "ArrowDown": state.sel = clamp(state.sel + 1, 0, items.length - 1); return true;
     case "k": case "ArrowUp": state.sel = clamp(state.sel - 1, 0, items.length - 1); return true;
     case "Enter": {
@@ -437,7 +439,13 @@ function onKey(k) {
     case "s": state.shuffle = !state.shuffle; window.tui.toast(`shuffle ${state.shuffle ? "on" : "off"}`); return true;
     case "r": state.repeat = state.repeat === "off" ? "all" : state.repeat === "all" ? "one" : "off"; window.tui.toast(`repeat ${state.repeat}`); return true;
     case "v": state.viz = state.viz === "bars" ? "matrix" : state.viz === "matrix" ? "wave" : "bars"; return true;
-    case "f": state.filtering = true; state.filter = ""; return true;
+    case "f":
+      state.filtering = true; state.filter = "";
+      if (window.tui.compact) window.tui.prompt("filter the playlist", state.filter, (v) => {
+        state.filtering = false;
+        if (v !== null) state.filter = v;
+      });
+      return true;
     case "1": case "2": if (window.tui?.compact) { state.tab = +k - 1; return true; } break;
     case "q":
       window.tui.quit({ command: "wave", line: `${state.played} track${state.played === 1 ? "" : "s"} played · ${state.seeks} seeks · spectrum was ${state.audio}` });
@@ -482,6 +490,7 @@ createTUI({
     pos: +state.pos.toFixed(2), len: TRACKS[state.i].len,
     volume: +state.volume.toFixed(2), muted: state.muted,
     shuffle: state.shuffle, repeat: state.repeat, viz: state.viz,
+    tab: state.tab ?? 0,            // reported so a phone tab tap is something the check can see
     filter: state.filter, spectrum: state.audio, played: state.played, seeks: state.seeks,
     bins_nonzero: Array.from(state.bins).filter((v) => v > 8).length,
     audio_ready: !!ctx, audio_error: audioError ? String(audioError.message) : null,

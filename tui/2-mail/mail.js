@@ -302,11 +302,10 @@ function draw(t, dt) {
       }, "more");
     }
     t.text(0, 1, "─".repeat(t.cols), t.attr({ fg: "line" }));
-    if (state.open && !state.composing) {
-      drawReader(t, { x: 0, y: body.y + 1, w: t.cols - 2, h: body.h - 1 }, true);
-    } else {
-      drawList(t, { x: 0, y: body.y + 1, w: t.cols - 2, h: body.h - 1 }, true);
-    }
+    const r = { x: 0, y: body.y + 1, w: t.cols - 2, h: body.h - 1 };
+    if (state.composing) drawCompose(t, r);          // was: the list, so a reply typed blind
+    else if (state.open) drawReader(t, r, true);
+    else drawList(t, r, true);
   }
 
   // status line
@@ -322,6 +321,8 @@ function draw(t, dt) {
 }
 
 /* ------------------------------------------------------------------ input */
+
+function isTyping() { return !!(state.composing || state.searching); }
 
 function onKey(k) {
   if (state.composing) return composeKey(k);
@@ -339,7 +340,7 @@ function onKey(k) {
     case "k": case "ArrowUp": state.sel = clamp(state.sel - 1, 0, list.length - 1); state.focus = "list"; return true;
     case "J": state.folder = clamp(state.folder + 1, 0, FOLDERS.length - 1); state.sel = 0; state.open = null; return true;
     case "K": state.folder = clamp(state.folder - 1, 0, FOLDERS.length - 1); state.sel = 0; state.open = null; return true;
-    case "Home": case "g": state.sel = 0; return true;
+    case "Home": case "gg": state.sel = 0; return true;   // "g" alone is sync, below
     case "G": state.sel = Math.max(0, list.length - 1); return true;
     case "n": {
       const i = list.findIndex((x, ix) => ix > state.sel && x.unread);
@@ -353,13 +354,7 @@ function onKey(k) {
       if (state.open) { state.open = null; state.focus = "list"; return true; }
       if (state.query) { state.query = ""; return true; }
       return true;
-    case "r": case "R":
-      state.composing = {
-        to: k === "R" ? m?.addr ?? "list@local" : m?.addr ?? "someone@local",
-        subject: m ? (m.subject.startsWith("Re:") ? m.subject : "Re: " + m.subject) : "(no subject)",
-        lines: m ? ["", `On ${m.date}, ${m.from} wrote:`, ...m.body.split("\n").map((l) => "> " + l)] : [""],
-      };
-      return true;
+    case "r": case "R": startCompose(m, k === "R"); return true;
     case "y":
       if (!state.open) { window.tui.toast("nothing to save"); return true; }
       {
@@ -389,7 +384,13 @@ function onKey(k) {
     case "*": case "!":
       if (m) { m.starred = !m.starred; window.tui.toast(m.starred ? "starred" : "unstarred"); }
       return true;
-    case "/": state.searching = true; state.query = ""; return true;
+    case "/":
+      state.searching = true; state.query = "";
+      if (window.tui.compact) window.tui.prompt("search this folder", state.query, (v) => {
+        state.searching = false;
+        if (v !== null) { state.query = v; state.sel = 0; }
+      });
+      return true;
     case "g": {
       state.syncs++;
       state.lastSync = new Date().toLocaleTimeString("en-GB", { hour12: false });
@@ -414,12 +415,41 @@ function onKey(k) {
   }
 }
 
+const KEYS = [
+  { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "Enter", l: "open" }, { k: "Esc", l: "back" }, "sep",
+  { k: "r", l: "reply" }, { k: "y", l: "draft" }, { k: "d", l: "delete" }, { k: "u", l: "undo" }, "sep",
+  { k: "*", l: "star" }, { k: "/", l: "search" }, { k: "g", l: "sync" }, { k: "Tab", l: "focus" }, { k: "q", l: "quit" },
+];
+const COMPOSE_KEYS = [
+  { k: "Enter", l: "newline" }, { k: "Tab", l: "tab" }, { k: "C-x", l: "send" }, { k: "Esc", l: "discard" },
+];
+
+function startCompose(m, all) {
+  state.composing = {
+    // reply-all is not reply-to-the-sender: the list the message came from is copied in as well
+    to: all ? [m?.addr ?? "someone@example.dev", m?.folder?.startsWith("list") ? "dev@example.dev" : "list@example.dev"].join(", ")
+      : m?.addr ?? "someone@example.dev",
+    subject: m ? (m.subject.startsWith("Re:") ? m.subject : "Re: " + m.subject) : "(no subject)",
+    lines: m ? ["", `On ${m.date}, ${m.from} wrote:`, ...m.body.split("\n").map((l) => "> " + l)] : [""],
+  };
+  window.tui.setKeys(COMPOSE_KEYS);
+  // a phone's keymap has no letters in it, so the draft is written in a real field: the soft
+  // keyboard only appears for an editable element, and the grid is not one
+  if (window.tui.compact) {
+    const c = state.composing;
+    window.tui.prompt("reply to " + c.to, c.lines.join("\n"), (v) => {
+      if (v !== null) c.lines = v.split("\n");
+    }, { multiline: true, hint: "ok keeps the draft · C-x sends" });
+  }
+  return true;
+}
+
 function composeKey(k) {
   const c = state.composing;
-  if (k === "Esc") { state.composing = null; window.tui.toast("draft discarded"); return true; }
+  if (k === "Esc") { state.composing = null; window.tui.setKeys(KEYS); window.tui.toast("draft discarded"); return true; }
   if (k === "C-x" || k === "C-s") {
     MSGS.unshift(M("sent", "me", "dev@example.com", c.subject, "now", c.lines.join("\n"), { unread: false }));
-    state.composing = null; state.sentCount++;
+    state.composing = null; state.sentCount++; window.tui.setKeys(KEYS);
     window.tui.toast(`sent “${c.subject.slice(0, 30)}”`);
     return true;
   }
@@ -449,11 +479,8 @@ createTUI({
   font: '"IBM Plex Mono", ui-monospace, "DejaVu Sans Mono", monospace',
   size: 13.5, lh: 1.3, fps: 9, minCols: 34, compactAt: 96,
   palette: PAL,
-  keys: [
-    { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "Enter", l: "open" }, { k: "Esc", l: "back" }, "sep",
-    { k: "r", l: "reply" }, { k: "y", l: "draft" }, { k: "d", l: "delete" }, { k: "u", l: "undo" }, "sep",
-    { k: "*", l: "star" }, { k: "/", l: "search" }, { k: "g", l: "sync" }, { k: "Tab", l: "focus" }, { k: "q", l: "quit" },
-  ],
+  isTyping,
+  keys: KEYS,
   help: [
     ["j / k, ↑ ↓", "walk the message list (tap a row on a phone)"],
     ["J / K", "next / previous folder"],

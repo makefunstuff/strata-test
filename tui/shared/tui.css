@@ -88,3 +88,17 @@ pre.screen .cur{animation:blink 1.05s steps(1,end) infinite}
 @media (prefers-reduced-motion:reduce){
   pre.screen .cur{animation:none}
 }
+/* ---- text entry: a grid of cells cannot summon a soft keyboard, so a field opens a real one ---- */
+.prompt{position:absolute;inset:0;z-index:9;display:none;align-items:center;justify-content:center;padding:14px;
+  background:color-mix(in srgb,var(--screen-bg,#0b0d12) 86%,transparent)}
+.prompt.on{display:flex}
+.prompt .box{border:1px solid var(--accent,#88c0d0);background:var(--well,#151823);padding:12px;width:min(560px,100%)}
+.prompt h3{margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#88c0d0)}
+.prompt input,.prompt textarea{width:100%;box-sizing:border-box;display:block;background:var(--page-bg,#08090c);
+  border:1px solid var(--line,#232838);color:var(--fg,#d8dee9);font:inherit;font-size:14px;padding:8px;resize:vertical;min-height:38px}
+.prompt textarea{min-height:140px}
+.prompt .row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.prompt .row .hint{flex:1;font-size:11px;color:var(--faint,#5c6a7d);text-align:left}
+.prompt button{font:inherit;font-size:12px;padding:6px 14px;background:transparent;color:var(--accent,#88c0d0);
+  border:1px solid var(--line,#232838);cursor:pointer}
+.prompt button:last-child{color:var(--dim,#8b98ab)}

@@ -59,13 +59,52 @@ export async function launch() {
 
 /* ------------------------------------------------------------------ the six scenarios */
 
+// The kit's own counters (frame, keys, taps) and a live app's clock (a monitor's load, a log's tail,
+// a player's position) move by themselves, so "state() differs" on its own proves nothing: each
+// scenario says which of its own fields the input must have moved, and those are compared apart.
+const VOLATILE = /^(frame|keys|taps|lastKey|help|quit|pos|bins|bins_nonzero|lines|linesIn|shownLines|selId|synthT)$/;
+
 export const SCENARIOS = {
-  "1-monitor": { keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["40,20"], poses: ["window.tui.api.pause(true)"] },
-  "2-mail": { keys: ["j", "j", "Enter", "r", "h", "e", "l", "l", "o", "Esc", "d"], taps: [], poses: ["window.tui.api.sync()"] },
-  "3-files": { keys: ["j", "j", "l", "Space", "c", "f", "i", "x", ".", "m", "i", "t", "Enter"], taps: [], poses: ["window.tui.api.checkout('main')"] },
-  "4-player": { keys: ["Space", "l", "l", "j", "Enter", "v", "s"], taps: [], poses: ["window.tui.api.select(3)", "window.tui.api.play(true)"] },
-  "5-ops": { keys: ["j", "j", "Enter", "2", "A", "r", "/"], taps: [], poses: ["window.tui.api.search('timeout')", "window.tui.api.pause(true)"] },
-  "6-editor": { keys: ["j", "j", "w", "i", "x", "Esc", "u", ":", "w", "Enter", "/"], taps: [], poses: ["window.tui.api.find('ring')", "window.tui.api.ex('e notes.md')"] },
+  "1-monitor": {
+    keys: ["j", "j", "j", "s", "Enter", "K", "3", "t"], taps: ["40,20"],
+    poses: ["window.tui.api.pause(true)"],
+    expect: { panel: "net", paused: true, sort: "mem", theme: "phosphor", procs: 13 },
+    phone: { taps: ["20,20", "10,0"], expect: { panel: "mem" } },
+  },
+  "2-mail": {
+    keys: ["j", "j", "Enter", "r", "h", "e", "l", "l", "o", "Esc", "d"], taps: [],
+    poses: ["window.tui.api.sync()"],
+    expect: { folder: "inbox", sel: 2, focus: "reader", syncs: 1 },
+    phone: { taps: ["20,0"], expect: { folder: "@changed" } },
+  },
+  "3-files": {
+    // stage the file under the cursor, then write the subject out — including a real space, which is
+    // the thing that used to be swallowed by the key naming
+    keys: [" ", "c", ...Array(20).fill("Backspace"), "s", "t", "a", "g", "e", "d", " ", "t", "e", "s", "t", "Enter"],
+    taps: [],
+    poses: ["window.tui.api.checkout('main')"],
+    expect: { stagedN: 0, commits: 9, top: "staged test", branch: "main" },
+    phone: { taps: ["20,0", "20,4"], expect: { tab: 2 } },
+  },
+  "4-player": {
+    keys: [" ", "l", "l", "j", "Enter", "v", "s"], taps: [],
+    poses: ["window.tui.api.select(3)", "window.tui.api.play(true)"],
+    expect: { viz: "matrix", shuffle: true, index: 3, playing: true, played: 1 },
+    // x=21 is inside the "3:viz" tab's hit region (18..25): the strip is the phone's only nav
+    phone: { taps: ["21,0", "20,6"], expect: { tab: 2 } },
+  },
+  "5-ops": {
+    keys: ["j", "j", "Enter", "2", "A", "r", "/"], taps: [],
+    poses: ["window.tui.api.search('timeout')", "window.tui.api.pause(true)"],
+    expect: { level: "info", acks: 1, restarts: 1, paused: true, filter: "timeout" },
+    phone: { taps: ["20,0", "20,8"], expect: { tab: 2 } },
+  },
+  "6-editor": {
+    keys: ["j", "j", "w", "i", "x", "Esc", "u", ":", "w", "Enter", "/"], taps: [],
+    poses: ["window.tui.api.find('ring')", "window.tui.api.ex('e notes.md')"],
+    expect: { buf: "notes.md", saves: 1, hits: 8, edits: 1 },
+    phone: { taps: ["20,6", "20,0"], expect: { line: "@changed", buf: "@changed" } },
+  },
 };
 
 const ALL = Object.keys(SCENARIOS);
@@ -101,9 +140,11 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const keys = all("key").length ? all("key") : (sc.keys ?? []);
     const taps = all("tap").length ? all("tap") : (sc.taps ?? []);
     const poses = all("pose").length ? all("pose") : (sc.poses ?? []);
+    const expect = sc.expect ?? {};
+    const phone = sc.phone ?? {};
     const label = opt("label", dir.split("/").pop());
     const shotDir = opt("shot-dir", join(ROOT, norm(dir), "shots"));
-    const base = { dir, wait: +opt("wait", 3), keys, taps, poses, label, out: opt("out", null), clip: opt("clip", null), shotDir: opt("no-shots", null) ? null : resolve(shotDir) };
+    const base = { dir, wait: +opt("wait", 3), keys, taps, poses, expect, label, out: opt("out", null), clip: opt("clip", null), shotDir: opt("no-shots", null) ? null : resolve(shotDir) };
     // one browser per pass: this Chromium runs --single-process, so closing a page can take the
     // browser with it — a fresh launch per pass costs a second and never dies mid-sweep
     const run = async (opts) => {
@@ -114,7 +155,16 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     };
     results.push(await run({ ...base, view: opt("view", "1280x800"), tag: "desktop" }));
     if (!argv.includes("--skip-phone")) {
-      results.push(await run({ ...base, view: opt("phone", "390x844"), tag: "phone", out: opt("out", `${label}-phone.jpg`), keys: [], taps: [], poses: [] }));
+      // a phone is checked at two widths: the common one, and the one narrow enough to expose a
+      // layout that only pretends to reflow
+      results.push(await run({
+        ...base, view: opt("phone", "390x844"), tag: "phone", out: opt("out", `${label}-phone.jpg`),
+        keys: phone.keys ?? [], taps: phone.taps ?? [], poses: phone.poses ?? [], expect: phone.expect ?? {},
+      }));
+      results.push(await run({
+        ...base, view: opt("narrow", "320x568"), tag: "narrow", out: null,
+        keys: [], taps: phone.taps ?? [], poses: [], expect: {},
+      }));
     }
   }
   const failed = results.filter((r) => r.errors.length);
@@ -209,8 +259,21 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
     shots.push(file);
   }
   const drove = (rest.keys ?? []).length + (rest.taps ?? []).length + (rest.poses ?? []).length;
-  const changed = JSON.stringify(s0) !== JSON.stringify(s1);
-  if (drove && !changed) errors.push(`driving ${drove} input(s) changed nothing in state()`);
+  // compare the app's own fields, not the kit's counters: a monitor moves frame numbers by itself,
+  // and a check that passes on those is not a check
+  const quiet = (o) => Object.fromEntries(Object.entries(o ?? {}).filter(([k]) => !VOLATILE.test(k)));
+  const changed = JSON.stringify(quiet(s0)) !== JSON.stringify(quiet(s1));
+  if (drove && !changed) errors.push(`driving ${drove} input(s) changed nothing in state() beyond its own counters`);
+  const wrong = [];
+  for (const [k, want] of Object.entries(rest.expect ?? {})) {
+    const got = s1?.[k], was = s0?.[k];
+    // "@changed" is for a field whose value depends on the layout (a tab strip's width, a random
+    // demo id) but which must still have moved when the input was real
+    const ok = want === "@changed" ? JSON.stringify(got) !== JSON.stringify(was)
+      : JSON.stringify(got) === JSON.stringify(want);
+    if (!ok) wrong.push(`${k}=${JSON.stringify(got)}${want === "@changed" ? "" : ` want ${JSON.stringify(want)}`}`);
+  }
+  if (wrong.length) errors.push(`the driven input did not land where the scenario says: ${wrong.join(", ")}`);
 
   // a --single-process Chromium dies when its last page closes, so pages are left open and the
   // caller shuts the browser down at the end
@@ -218,6 +281,6 @@ async function checkPage(browser, port, { dir, close = false, ...rest }) {
   return {
     page: dir, view: rest.view, tag: rest.tag, hook, grid, glyphs_bad: glyphs,
     keys: rest.keys ?? [], taps: rest.taps ?? [], pose: poseLog,
-    state_start: s0, state_after: s1, changed, overflow, shots, errors,
+    state_start: s0, state_after: s1, changed, expect: rest.expect ?? {}, expect_wrong: wrong, overflow, shots, errors,
   };
 }

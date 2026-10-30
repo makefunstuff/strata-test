@@ -436,7 +436,13 @@ function onKey(k) {
       window.tui?.toast(`SIGTERM → ${p.name} (${p.pid})`);
       return true;
     }
-    case "f": state.filtering = true; state.filter = ""; state.sel = 0; return true;
+    case "f":
+      state.filtering = true; state.filter = ""; state.sel = 0;
+      if (window.tui.compact) window.tui.prompt("filter the process table", state.filter, (v) => {
+        state.filtering = false;
+        if (v !== null) { state.filter = v; state.sel = 0; }
+      });
+      return true;
     case "p":
       state.paused = !state.paused;
       window.tui?.toast(state.paused ? "probes paused" : "probes running");
@@ -487,6 +493,7 @@ createTUI({
   font: '"JetBrains Mono Variable", ui-monospace, "DejaVu Sans Mono", monospace',
   size: 13, lh: 1.22, fps: 8, glow: 6, scan: 0.28, vignette: 0.35, minCols: 40, compactAt: 84,
   palette: THEMES.midnight,
+  isTyping: () => !!state.filtering,
   keys: KEYS,
   help: [
     ["j / k, ↑ ↓", "move the process selection (tap a row on a phone)"],

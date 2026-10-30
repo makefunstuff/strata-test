@@ -125,10 +125,12 @@ code{color:var(--amber)}
     <code>window.experiment</code> hook, and FPS sampled before and after it.
     The checkers are <code>games/tools/verify.mjs</code>, <code>experiments/tools/check.mjs</code>,
     <code>design/tools/shoot.mjs</code>, <code>eyecandy/tools/check.mjs</code> and
-    <code>tui/tools/check.mjs</code> (screenshots plus a console, contrast, landmark, control-name and
-    overflow audit; the TUI one also measures every glyph it draws against the loaded face, because a
-    fallback font silently breaks a character grid; the two things the audit used to be blind to are
-    written down in <code>design/README.md</code>).
+    and <code>tui/tools/check.mjs</code> (screenshots plus a console, contrast, landmark, control-name and
+    overflow audit; the two things it used to be blind to are written down in
+    <code>design/README.md</code>). The TUI checker is a different shape of check: keys, taps and poses
+    driven into the page, its own <code>state()</code> read back to prove they landed, and every glyph it
+    draws measured against the loaded face, because a font that falls back silently breaks a character
+    grid.
     <br><br>Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>.
     Built by Strata, running pi headless.
   </footer>

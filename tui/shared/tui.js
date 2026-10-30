@@ -346,6 +346,10 @@ export function createTUI(app) {
   el.sub.textContent = app.sub ?? "";
 
   const term = new Term({ palette: pal });
+  // the app's THEMES object must survive theme switching untouched: Object.assign into a shared
+  // object leaves the last theme's keys behind, so "midnight" came back tinted with phosphor
+  term.pal = { ...pal };
+  const livePal = term.pal;
   // one generated stylesheet: attr() adds a .tkN rule once, so the grid's HTML stays short and the
   // per-frame innerHTML does not carry the whole colour table inline
   const styleEl = document.createElement("style");
@@ -356,6 +360,7 @@ export function createTUI(app) {
     styleEl.append(cssRule(s));
   };
   const state = { size: app.size ?? 13, cellW: 8, cellH: 16, frame: 0, keys: 0, taps: 0, help: false, quit: null, lastKey: "" };
+  let activePrompt = null;   // a field the app opened with prompt(); it owns the keyboard while open
   let measureCanvas = null;
 
   function measureCell() {
@@ -397,38 +402,51 @@ export function createTUI(app) {
   }
 
   /* ---- input ---- */
+  const MODIFIERS = new Set(["Shift", "Control", "Alt", "AltGraph", "Meta", "CapsLock", "Process", "Dead"]);
+
   function keyName(e) {
+    // a space is " ", not "Space": the pages match the character they mean to type, and a real
+    // terminal gives its app the character too. The chip and the checker may spell it either way,
+    // so press() folds the alias, keyName does not invent one.
     let k = e.key;
-    if (k === " ") k = "Space";
     if (k === "Escape" || k === "Esc") k = "Esc";
-    if (e.ctrlKey && k.length > 1) return "C-" + k.toLowerCase();
     if (e.ctrlKey) return "C-" + k.toLowerCase();
     if (e.altKey) return "M-" + k.toLowerCase();
     return k;
   }
-  const BLOCK_DEFAULT = new Set(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Tab", "Home", "End", "PageUp", "PageDown", "/", "F1"]);
+  const BLOCK_DEFAULT = new Set([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Tab", "Home", "End", "PageUp", "PageDown", "/", "F1"]);
+  // keys the browser wants for itself and that a terminal app must take back, or the page goes away
+  // under the user: Ctrl-R reloads, Ctrl-S saves the page, Ctrl-P/Q walk the tab strip
+  const STEAL = /^C-[rswpoqijt]$/i;
 
   function press(key) {
-    state.keys++; state.lastKey = key;
+    const k = key === "Space" ? " " : key;
+    state.keys++; state.lastKey = k;
     if (state.quit) {
-      if (key === "r" || key === "R" || key === "Enter" || key === "?" || key === "F1") { state.quit = null; draw(); }
+      if (k === "r" || k === "R" || k === "Enter" || k === "?" || k === "F1") { state.quit = null; draw(); }
       return;
     }
-    if (state.help && key !== "?" && key !== "F1") { setHelp(false); }
-    if (key === "?" || key === "F1") { setHelp(!state.help); return; }
+    if (state.help && k !== "?" && k !== "F1") { setHelp(false); }
+    // "?" is a character a reply, a buffer or a search can contain: while the app is taking text it
+    // belongs to the app, and the help screen is what the chip and the F1 key are for
+    const typing = !!(app.isTyping && app.isTyping(tui));
+    if (!typing && (k === "?" || k === "F1")) { setHelp(!state.help); return; }
     let handled = true;
-    try { handled = app.onKey ? app.onKey(key, tui) !== false : true; }
-    catch (err) { console.error(`onKey(${key}) threw:`, err); }
+    try { handled = app.onKey ? app.onKey(k, tui) !== false : true; }
+    catch (err) { console.error(`onKey(${k}) threw:`, err); }
     draw();
     return handled;
   }
 
   window.addEventListener("keydown", (e) => {
     if (e.metaKey) return;
+    if (MODIFIERS.has(e.key)) return;            // Shift alone is not a key the app asked for
+    if (activePrompt) return;                     // the prompt owns its field, including the soft keyboard
     const k = keyName(e);
-    const declared = (app.keys ?? []).some((d) => d && d.k === k);
-    // stop the browser scrolling or completing the tab order under a terminal that owns the keys
-    if (BLOCK_DEFAULT.has(k) || declared || state.quit || state.help) e.preventDefault();
+    const declared = (app.keys ?? []).some((d) => d && (d.k === k || (d.k === "Space" && k === " ")));
+    // stop the browser scrolling, completing the tab order, reloading or saving the page under a
+    // terminal that owns the keys
+    if (BLOCK_DEFAULT.has(k) || declared || STEAL.test(k) || e.ctrlKey || state.quit || state.help) e.preventDefault();
     press(k);
   });
 
@@ -457,6 +475,53 @@ export function createTUI(app) {
   }
 
   /* ---- chrome: key chips, toast, help, quit ---- */
+  /**
+   * A real text field, for the one thing a grid of cells cannot do: take text from a phone's soft
+   * keyboard. The grid draws a terminal; this opens over it with a genuine <input>/<textarea>, so
+   * Android shows a keyboard and the character actually arrives. onDone(null) means cancelled.
+   */
+  function prompt(label, initial, onDone, { multiline = false, hint = "" } = {}) {
+    closePrompt();
+    const veil = document.createElement("div");
+    veil.className = "prompt on";
+    const box = document.createElement("div"); box.className = "box";
+    const h = document.createElement("h3"); h.textContent = label;
+    const field = document.createElement(multiline ? "textarea" : "input");
+    field.value = initial ?? "";
+    field.setAttribute("aria-label", label);
+    field.spellcheck = false;
+    if (!multiline) field.setAttribute("enterkeyhint", "done");
+    const row = document.createElement("div"); row.className = "row";
+    const ok = document.createElement("button"); ok.type = "button"; ok.textContent = "ok";
+    const no = document.createElement("button"); no.type = "button"; no.textContent = "esc";
+    if (hint) { const s = document.createElement("span"); s.className = "hint"; s.textContent = hint; row.appendChild(s); }
+    row.append(ok, no);
+    const finish = (v) => { closePrompt(); onDone(v); draw(); };
+    ok.addEventListener("click", () => finish(field.value));
+    no.addEventListener("click", () => finish(null));
+    // the grid's own key handler sits on window: stop the event here so the field is the only thing
+    // that sees the keystroke, and Enter/Esc mean submit/cancel rather than the app's own keys
+    field.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+      if (e.key === "Enter" && (!multiline || e.ctrlKey)) { e.preventDefault(); finish(field.value); }
+      else if (e.key === "Escape") { e.preventDefault(); finish(null); }
+    });
+    field.addEventListener("keyup", (e) => e.stopPropagation());
+    box.append(h, field, row);
+    veil.appendChild(box);
+    el.wrap.appendChild(veil);
+    activePrompt = { veil, field };
+    field.focus();
+    if (field.select) field.select();
+    return field;
+  }
+
+  function closePrompt() {
+    if (!activePrompt) return;
+    activePrompt.veil.remove();
+    activePrompt = null;
+  }
+
   function buildKeybar() {
     el.keybar.textContent = "";
     for (const d of app.keys ?? []) {
@@ -585,16 +650,20 @@ export function createTUI(app) {
     setHelp,
     setKeys(list) { app.keys = list; buildKeybar(); },
     setPalette(p) {
-      Object.assign(pal, p);
-      term.setPalette(pal);
+      // replace, never merge: a theme is a whole palette, and a merged one keeps the old colours for
+      // whatever keys the new theme does not name
+      for (const k of Object.keys(livePal)) delete livePal[k];
+      Object.assign(livePal, p);
+      term.setPalette(livePal);
       for (const k of ["pageBg", "screenBg", "panel", "well", "line", "fg", "dim", "faint", "accent"]) {
-        if (pal[k]) mount.style.setProperty(`--${k === "pageBg" ? "page-bg" : k === "screenBg" ? "screen-bg" : k}`, pal[k]);
+        if (livePal[k]) mount.style.setProperty(`--${k === "pageBg" ? "page-bg" : k === "screenBg" ? "screen-bg" : k}`, livePal[k]);
       }
       for (const k of ["red", "green", "yellow", "blue", "magenta", "cyan", "orange"]) {
-        if (pal[k]) mount.style.setProperty(`--${k}`, pal[k]);
+        if (livePal[k]) mount.style.setProperty(`--${k}`, livePal[k]);
       }
       draw();
     },
+    prompt,
     auditGlyphs,
     fit,
     state() {

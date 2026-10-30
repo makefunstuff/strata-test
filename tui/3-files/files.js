@@ -488,19 +488,22 @@ const churnPick = () => {
   return files.length ? files[Math.floor(rand() * files.length)] : null;
 };
 
+function commitNow() {
+  const subject = (state.committing ?? "").trim() || "wip";
+  const { staged } = indexLists();
+  for (const it of staged) { it.node.status = null; it.node.staged = false; }
+  state.commits.unshift({ hash: Math.floor(rand() * 0xfffffff).toString(16).padStart(7, "0"), who: "dev", subject });
+  state.ahead++;
+  state.committing = null;
+  window.tui.toast(`committed ${staged.length} file${staged.length === 1 ? "" : "s"}: ${subject.slice(0, 30)}`);
+}
+
+function isTyping() { return state.committing != null || !!state.filtering; }
+
 function onKey(k) {
   if (state.committing != null) {
     if (k === "Esc") { state.committing = null; return true; }
-    if (k === "Enter") {
-      const subject = state.committing.trim() || "wip";
-      const { staged } = indexLists();
-      for (const it of staged) { it.node.status = null; it.node.staged = false; }
-      state.commits.unshift({ hash: Math.floor(rand() * 0xfffffff).toString(16).padStart(7, "0"), who: "dev", subject });
-      state.ahead++;
-      state.committing = null;
-      window.tui.toast(`committed ${staged.length} file${staged.length === 1 ? "" : "s"}: ${subject.slice(0, 30)}`);
-      return true;
-    }
+    if (k === "Enter") { commitNow(); return true; }
     if (k === "Backspace") { state.committing = state.committing.slice(0, -1); return true; }
     if (k.length === 1) { state.committing += k; return true; }
     return true;
@@ -552,9 +555,18 @@ function onKey(k) {
       return true;
     }
     case "c": {
+      // on a phone there are no letter chips to type a subject with, so the message is written in a
+      // real field; the keyboard path below is unchanged
       const { staged } = indexLists();
       if (!staged.length) { window.tui.toast("nothing staged — space stages the file under the cursor"); return true; }
       state.committing = staged.length === 1 ? `edit ${staged[0].node.name}` : `edit ${staged.length} files`;
+      if (window.tui.compact) {
+        window.tui.prompt("commit message", state.committing, (v) => {
+          if (v === null) { state.committing = null; return; }
+          state.committing = v;
+          commitNow();
+        }, { hint: "Enter or ok commits" });
+      }
       return true;
     }
     case "d": {
@@ -578,7 +590,13 @@ function onKey(k) {
       window.tui.toast(`the sweep edited ${pick.node.name}`);
       return true;
     }
-    case "/": state.filtering = true; state.filter = ""; return true;
+    case "/":
+      state.filtering = true; state.filter = "";
+      if (window.tui.compact) window.tui.prompt("filter the tree", state.filter, (v) => {
+        state.filtering = false;
+        if (v !== null) { state.filter = v; state.sel = 0; }
+      });
+      return true;
     case "i": state.hidden = !state.hidden; state.sel = 0; return true;
     case "Tab": state.pane = state.pane === "tree" ? "git" : "tree"; return true;
     case "q":
@@ -600,8 +618,9 @@ createTUI({
   font: '"Fira Code Variable", ui-monospace, "DejaVu Sans Mono", monospace',
   size: 13, lh: 1.26, fps: 8, minCols: 34, compactAt: 92, vignette: 0.2,
   palette: PAL,
+  isTyping,
   keys: [
-    { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "l", l: "open" }, { k: "h", l: "back" }, "sep",
+    { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "l", l: "open" }, { k: "Enter", l: "open/ok" }, { k: "h", l: "back" }, "sep",
     { k: "Space", l: "stage" }, { k: "c", l: "commit" }, { k: "d", l: "discard" }, "sep",
     { k: "R", l: "churn" }, { k: "/", l: "filter" }, { k: "i", l: "hidden" }, { k: "Tab", l: "pane" }, { k: "q", l: "quit" },
   ],

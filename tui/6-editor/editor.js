@@ -467,6 +467,17 @@ const moveTo = (pos) => {
   if (state.line >= state.top + (window.tui.rows - 4)) state.top = Math.max(0, state.line - (window.tui.rows - 5));
 };
 
+// the kit asks this before it steals "?" for the help screen: in insert, search and ex a "?" is a
+// character the user means to put in the file
+function isTyping() { return state.mode === "insert" || state.mode === "search" || state.mode === "ex"; }
+
+/** A phone has no letters on its keymap, so text goes into a real field over the grid. */
+function typeLine(label, initial, done) {
+  if (!window.tui.compact) return false;
+  window.tui.prompt(label, initial, (v) => { if (v !== null) done(v); }, { hint: "ok applies" });
+  return true;
+}
+
 function onKey(k) {
   if (state.mode === "search") {
     if (k === "Esc") { state.mode = "normal"; state.search = ""; state.hits = []; return true; }
@@ -644,7 +655,10 @@ function onKey(k) {
       say(`put ${state.yank.length} line(s) above`);
       return true;
     }
-    case "i": state.mode = "insert"; state._typing = false; return true;
+    case "i":
+      state.mode = "insert"; state._typing = false;
+      typeLine(`line ${state.line + 1}`, lineAt(state.line), (v) => { snapshot(); setLine(state.line, v); state.mode = "normal"; state.col = v.length; });
+      return true;
     case "a": state.mode = "insert"; state.col = Math.min(lineAt(state.line).length, state.col + 1); state._typing = false; return true;
     case "I": state.mode = "insert"; state.col = (lineAt(state.line).match(/^\s*/) ?? [""])[0].length; state._typing = false; return true;
     case "A": state.mode = "insert"; state.col = lineAt(state.line).length; state._typing = false; return true;
@@ -663,7 +677,10 @@ function onKey(k) {
     case "V": case "v": state.mode = state.mode === "visual" ? "normal" : "visual"; state.anchor = state.line; return true;
     case "u": undo(); return true;
     case "C-r": redo(); return true;
-    case "/": state.mode = "search"; state.search = ""; return true;
+    case "/":
+      state.mode = "search"; state.search = "";
+      typeLine("find", "", (v) => { state.mode = "normal"; state.search = v; search(v); });
+      return true;
     case "n": walkHits(1); return true;
     case "N": walkHits(-1); return true;
     case "*": {
@@ -671,7 +688,13 @@ function onKey(k) {
       if (word) search(word);
       return true;
     }
-    case ":": state.mode = "ex"; state.cmd = ""; return true;
+    case ":":
+      state.mode = "ex"; state.cmd = "";
+      typeLine("ex command", "", (v) => {
+        // drive the same path a keyboard Enter takes, so there is one ex parser and not two
+        state.mode = "ex"; state.cmd = v; onKey("Enter");
+      });
+      return true;
     case "S": case ";": return true;
     case "q":
       window.tui.quit({ command: "quill", line: `${state.saves} save${state.saves === 1 ? "" : "s"} · ${state.edits} edit${state.edits === 1 ? "" : "s"} · ${state.undo.length} undo steps · ${state.jumps} jumps` });
@@ -698,11 +721,12 @@ createTUI({
   font: '"Anonymous Pro", ui-monospace, "DejaVu Sans Mono", monospace',
   size: 14.5, lh: 1.22, fps: 12, minCols: 34, compactAt: 84,
   palette: PAL,
+  isTyping,
   keys: [
     { k: "j", l: "down" }, { k: "k", l: "up" }, { k: "w", l: "word" }, { k: "b", l: "word-" }, "sep",
     { k: "i", l: "insert" }, { k: "a", l: "append" }, { k: "o", l: "open↓" }, { k: "Esc", l: "normal" }, "sep",
     { k: "x", l: "del" }, { k: "d", l: "d…" }, { k: "y", l: "y…" }, { k: "p", l: "put" }, { k: "u", l: "undo" }, "sep",
-    { k: "/", l: "find" }, { k: "n", l: "next" }, { k: ":", l: "cmd" }, { k: "q", l: "quit" },
+    { k: "/", l: "find" }, { k: "n", l: "next" }, { k: ":", l: "cmd" }, { k: "Enter", l: "line↓" }, { k: "q", l: "quit" },
   ],
   help: [
     ["h j k l, ←↓→↑", "move; 0 ^ $ w b jump within and across lines"],
