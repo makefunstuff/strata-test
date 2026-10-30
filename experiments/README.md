@@ -49,7 +49,7 @@ kept, the before-shot is not. `hero.jpg`, `alt1.jpg`, `alt2.jpg` are the ones th
 | 4 | [GPU flocking](4-gpu-flocking/index.html) | 0 errors; 4096 boids, hawk on chase, mean speed 9.25, trails on; 16 384 boids measured at 8.8 fps | 18.0 / 17.6 | Boids live in position/velocity float textures; a pseudo-random tap set is the neighbourhood, one instanced draw reads the textures in the vertex shader | pointer = hawk · click = scatter · `H` hawk mode · `T` trails |
 | 5 | [Volumetric fire](5-volumetric-fire/index.html) | 0 errors; click-stoke lifts effective intensity 1→1.93, light 250, gust 0.64, 60 march steps at 42% resolution | 6.4 / 6.8 | A raymarched fBm teardrop flame and a smoke plume lit by the fire itself, in a custom reduced-resolution composer pass, with embers, wind shear and a flickering point light | click = stoke · `Space` gust · `D` douse |
 | 6 | [Medieval city diorama](6-medieval-diorama/index.html) | 0 errors; seed `BRAMWELL` grows 37 houses, 15 streets, 235 trees, 22 smoking chimneys, 596 lit windows — 3 265 pieces / 60 042 tris in **21 draw calls**; `newCity()` `BRAMWELL`→`Thornburgh` (43 houses, 431 trees, 3 582 pieces, still 21 calls); sixteen named seeds span 32–51 houses, 14–17 streets and 213–649 trees, and the same seed twice is identical; night, six views, tilt-shift and all three quality presets driven; 390×780 clean on `low`, panel shuts itself below 640 px | 9.2 / 8.0 (12.8 / 20.4 at phone width on `low`) | A whole town from one seed — ring streets, frontage houses, a wall with gatehouses, a keep, a cathedral, a river with bridges and fields beyond — cut away to show strata and put under a tilt-shift lens, in 21 draw calls with every texture painted at load | `N` night · `C` new town · `V` view · `G` panel · drag = orbit |
-| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 859 trees, 190 folk** — 13 674 pieces / 238 820 tris in **43 draw calls**; `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, night, winter, tilt-shift and all three quality presets driven; 390×780 clean on `low` with the panel shut (60 folk, 9 818 pieces) | 20.0 / 20.0 (24.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit |
+| 7 | [Tallinn Old Town diorama](7-tallinn-diorama/index.html) | 0 errors; the OpenStreetMap plan bakes to **660 houses, 16 landmarks, 35 wall towers, 859 trees, 190 folk** — 13 674 pieces / 238 820 tris in **43 draw calls**; `setSeed('tallinn')` twice is the same town, and re-seeding only re-furnishes it (the streets and footprints stay the real ones); eleven views, night, winter, tilt-shift and all three quality presets driven; 390×780 clean on `low` with the panel shut (60 folk, 9 818 pieces) | 20.0 / 20.0 (24.0 at phone width on `low`) | One real city rather than a generated one: the street plan, the building footprints and the town wall come from OpenStreetMap, the sixteen landmarks are modelled by hand where they actually stand, and the December market, the hearth smoke and the bay are the moving layer | `N` night · `C` snow · `V` view · `G` panel · drag = orbit · tap a landmark, or ▶ for the tour |
 
 Software FPS is the whole-page rate the harness measures, so it also carries the cost of the
 screenshot machinery. The in-page readout (bottom right) is what the page itself counts.
@@ -229,6 +229,24 @@ reading the plan is invisible in the code and obvious in the frame.
 | the **Town Hall was salmon** | it was built with the `pink` house material | lime-washed ashlar with red tile, as it stands |
 | the night market was **one orange wash** | the square's lamp glow was a single additive plane 0.7 of the square's width lying on the cobbles; from lamp-post height it filled the frame | capped at 18 m and at 0.52 opacity, and the lantern halos came down a third |
 | a named view **put the camera under the cobbles** | the Lower Town falls 22 m from the wall to the quay, so a view written with one height is above ground on one street and under it on the next | `setView` lifts any view below `ground(x, z) + 2.6` — no view can bury itself |
+
+### How Strata FP4 did on it, in short
+
+The parts with a right answer went well: the Overpass bake, the coordinate convention, the reuse of
+ST-3's `Batch`/`Rng`/`geo` kit, and the fix list — 660 houses on their real footprints, 43 draw calls,
+0 console errors at both widths, first time the page was asked to run. The hard parts were the ones with
+no assertion to lean on. Roughly two thirds of the hour-by-hour work was looking at a rendered frame and
+recognising that a roofscape looks like a hedgehog, that a square is a green field, or that the Town Hall
+is salmon: nothing in the page complains about any of those, and each took a round of shots to find and
+another to confirm. The single best hour was the black-frame hunt, where the method (hide one thing, then
+one pass at a time) is what a model can do steadily and a human usually stops doing; the two worst were
+both the same mistake — a hand-kept camera framing that stood inside a neighbouring gable.
+
+What it cost: the CDN was unreachable from this machine for the last part of the task, so visual
+iteration ran on a local three build (0.186) while the page ships pinned 0.170. Everything here was
+measured that way, and the shared bloom fix is the kind of thing that only shows up against a specific
+version. The honest summary is that the model finishes work like this and finds real defects, but its
+first answer for "what does this look like" is usually wrong until it is made to look.
 
 ## Layout
 

@@ -8,6 +8,7 @@ import { generateTallinn } from "./layout.js";
 import { buildTextures } from "./textures.js";
 import { buildStatic } from "./build.js";
 import { buildLife } from "./life.js";
+import { createUI } from "./ui.js";
 import { addTiltShift } from "../6-medieval-diorama/tiltshift.js";
 
 // ----------------------------------------------------------------------------------------------
@@ -70,7 +71,8 @@ const lab = createLab({
   shadow: true,
   hints: [
     "drag to walk the wall · pinch or scroll to come closer",
-    "N night · C snow · V view · G panel — the hour slider runs dawn to night",
+    "tap a landmark on the rail, or ▶ for the tour",
+    "N night · C snow · V view · G panel — the hour runs dawn to night",
   ],
   guiTitle: "the diorama",
 });
@@ -185,7 +187,7 @@ function applyLight() {
 // building the town
 // ----------------------------------------------------------------------------------------------
 
-let city = null, current = null, life = null;
+let city = null, current = null, life = null, ui = null;   // ui is built after the first town
 
 function disposeCity() {
   if (!current) return;
@@ -282,7 +284,7 @@ fTown.add(P, "autoRotate").name("orbit").onChange((v) => { orbit.autoRotate = v;
 fTown.add(P, "rotateSpeed", 0.05, 2, 0.05).name("orbit speed").onChange((v) => { orbit.autoRotateSpeed = v; });
 
 const fLight = gui.addFolder("light & season");
-fLight.add(P, "time", 0, 1.3, 0.005).name("hour of the day").onChange((v) => { P.night = v > 1.05; applyLight(); });
+fLight.add(P, "time", 0, 1.3, 0.005).name("hour of the day").onChange((v) => { P.night = v > 1.05; applyLight(); syncPanel(); });
 fLight.add({ d: () => { P.time = 0.45; P.night = false; syncPanel(); applyLight(); } }, "d").name("☀ day");
 fLight.add({ n: () => { P.time = 1.22; P.night = true; syncPanel(); applyLight(); } }, "n").name("☾ night");
 fLight.add(P, "winter").name("❄ winter").onChange((v) => { P.winter = !!v; applySeason(); applyVisibility(); syncPanel(); updateHud(); });
@@ -340,11 +342,15 @@ function setView(name) {
   camera.position.set(px, Math.max(py, floorY), pz);
   orbit.target.set(...v.target);
   orbit.update();
+  if (ui) { ui.stop(); ui.close(); ui.sync(P); }
   gui.controllersRecursive().forEach((c) => c.updateDisplay());
   return name;
 }
 
-function syncPanel() { gui.controllersRecursive().forEach((c) => c.updateDisplay()); }
+function syncPanel() {
+  gui.controllersRecursive().forEach((c) => c.updateDisplay());
+  if (ui) ui.sync(P);
+}
 
 // the quality folder came with the lab; hook its presets up to the things that cost money
 lab.onQuality((name) => { applyQuality(name); build(P.seed); });
@@ -387,6 +393,49 @@ window.addEventListener("keydown", (e) => {
 build(P.seed);
 setView(qParams.get("view") || "hero");
 
+// ----------------------------------------------------------------------------------------------
+// the overlay: the landmark rail, the info card, the hour and the tour
+// ----------------------------------------------------------------------------------------------
+
+/** the framings worth keeping by hand; everything else is framed from its size and where it stands */
+const LM_FRAMES = {
+  raekoda: { pos: [40, 78, -78], target: [0, 22, 22] }, "raekoja-plats": VIEWS.square, oleviste: VIEWS.oleviste,
+  hermann: VIEWS.hermann, toompea: VIEWS.toompea, viru: VIEWS.viru,
+  margareeta: VIEWS.harbour, linnahall: { pos: [268, 104, -452], target: [392, 22, -680] },
+  nevski: { pos: [-224, 68, 264], target: [-339, 46, 163] },
+  toomkirik: { pos: [-228, 62, 118], target: [-348, 40, 16] },
+  kiek: { pos: [-120, 46, 356], target: [-228, 22, 278] },
+  niguliste: { pos: [-42, 44, 214], target: [-142, 26, 144] },
+  puhavaimu: { pos: [88, 62, -176], target: [24, 18, -100] },
+  katariina: { pos: [252, 58, -128], target: [181, 16, -58] },
+  suurgild: { pos: [168, 48, -322], target: [104, 12, -262] },
+  jaani: { pos: [92, 34, 462], target: [7, 14, 387] },
+};
+
+ui = createUI({
+  landmarks: city.landmarks,
+  terr: city.terr,
+  frames: LM_FRAMES,
+  host: {
+    camera, orbit,
+    setHour: (t) => { P.time = clamp(t, 0, 1.3); P.night = P.time > 1.05; applyLight(); syncPanel(); },
+    setDay: () => { P.time = 0.45; P.night = false; applyLight(); syncPanel(); },
+    setNight: () => { P.time = 1.22; P.night = true; applyLight(); syncPanel(); },
+    toggleWinter: () => { P.winter = !P.winter; applySeason(); applyVisibility(); syncPanel(); updateHud(); },
+    togglePanel: () => {
+      const tl = gui.domElement.querySelector(":scope > .title");
+      const openNow = !tl || tl.getAttribute("aria-expanded") !== "false";
+      if (openNow) gui.close(); else gui.open();
+    },
+    view: (id) => { P.view = id; gui.controllersRecursive().forEach((c) => c.updateDisplay()); },
+    // a close-up under a strong tilt-shift is a blur field: when the rail frames something, the
+    // miniature softens itself so the landmark is the sharp thing in the picture
+    arrive: () => { P.tilt = Math.min(P.tilt, 0.42); P.focus = 0.5; syncLook(); syncPanel(); },
+  },
+});
+document.body.append(ui.el.rail, ui.el.card, ui.el.dock);
+ui.sync(P);
+
 let elapsed = 0;
 function frame() {
   requestAnimationFrame(frame);
@@ -394,6 +443,7 @@ function frame() {
   elapsed += dt;
   if (life) life.update(dt, elapsed);
   orbit.update();
+  if (ui) ui.tick(dt);            // after the orbit, so a flight in progress keeps the last word
   lab.tickFps(dt);
   lab.render();
 }
@@ -434,6 +484,11 @@ lab.expose({
   setTilt: (v) => { P.tilt = v; syncLook(); return P.tilt; },
   setFocus: (v) => { P.focus = clamp(v, 0.05, 0.95); syncLook(); return P.focus; },
   setView: (n) => setView(n),
+  openLandmark: (id) => ui.open(String(id)),
+  startTour: () => { ui.startTour(); return ui.touring(); },
+  stopTour: () => { ui.stopTour(); return ui.touring(); },
+  touring: () => ui.touring(),
+  landmark: () => ui.current(),
   /** hide the panel and the text for a clean frame (the shelf card wants the diorama, not the UI) */
   setChrome: (v = true) => {
     const on = !!v;
@@ -441,6 +496,7 @@ lab.expose({
     for (const id of ["hud", "fps", "hint"]) { const el = document.getElementById(id); if (el) el.style.opacity = on ? "" : "0"; }
     const t = document.querySelector(".title"); if (t) t.style.opacity = on ? "" : "0";
     const back = document.querySelector("a.back"); if (back) back.style.opacity = on ? "" : "0";
+    if (ui) ui.show(on);
     return on;
   },
   setAutoRotate: (v) => { P.autoRotate = !!v; orbit.autoRotate = P.autoRotate; return P.autoRotate; },
