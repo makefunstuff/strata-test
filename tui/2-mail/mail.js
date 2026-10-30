@@ -438,7 +438,13 @@ function startCompose(m, all) {
   if (window.tui.compact) {
     const c = state.composing;
     window.tui.prompt("reply to " + c.to, c.lines.join("\n"), (v) => {
-      if (v !== null) c.lines = v.split("\n");
+      if (v === null) {                       // cancel means discard, exactly as esc does at a keyboard:
+        state.composing = null;               // leaving composing set would strand a draft nobody can
+        window.tui.setKeys(KEYS);             // reach, with no field to type into and no way to send it
+        window.tui.toast("draft discarded");
+        return;
+      }
+      c.lines = v.split("\n");
     }, { multiline: true, hint: "ok keeps the draft · C-x sends" });
   }
   return true;

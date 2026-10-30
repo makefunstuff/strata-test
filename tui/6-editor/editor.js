@@ -476,10 +476,12 @@ const moveTo = (pos) => {
 // character the user means to put in the file
 function isTyping() { return state.mode === "insert" || state.mode === "search" || state.mode === "ex"; }
 
-/** A phone has no letters on its keymap, so text goes into a real field over the grid. */
-function typeLine(label, initial, done) {
+/** A phone has no letters on its keymap, so text goes into a real field over the grid. Cancelling
+ * leaves the mode the field opened: an app stuck in insert mode with no way to type is worse than
+ * one that never entered it. */
+function typeLine(label, initial, done, cancel = () => {}) {
   if (!window.tui.compact) return false;
-  window.tui.prompt(label, initial, (v) => { if (v !== null) done(v); }, { hint: "ok applies" });
+  window.tui.prompt(label, initial, (v) => { if (v === null) cancel(); else done(v); }, { hint: "ok applies" });
   return true;
 }
 
@@ -662,7 +664,9 @@ function onKey(k) {
     }
     case "i":
       state.mode = "insert"; state._typing = false;
-      typeLine(`line ${state.line + 1}`, lineAt(state.line), (v) => { snapshot(); setLine(state.line, v); state.mode = "normal"; state.col = v.length; });
+      typeLine(`line ${state.line + 1}`, lineAt(state.line),
+        (v) => { snapshot(); setLine(state.line, v); state.mode = "normal"; state.col = v.length; },
+        () => { state.mode = "normal"; });
       return true;
     case "a": state.mode = "insert"; state.col = Math.min(lineAt(state.line).length, state.col + 1); state._typing = false; return true;
     case "I": state.mode = "insert"; state.col = (lineAt(state.line).match(/^\s*/) ?? [""])[0].length; state._typing = false; return true;
@@ -684,7 +688,8 @@ function onKey(k) {
     case "C-r": redo(); return true;
     case "/":
       state.mode = "search"; state.search = "";
-      typeLine("find", "", (v) => { state.mode = "normal"; state.search = v; search(v); });
+      typeLine("find", "", (v) => { state.mode = "normal"; state.search = v; search(v); },
+        () => { state.mode = "normal"; state.search = ""; state.hits = []; });
       return true;
     case "n": walkHits(1); return true;
     case "N": walkHits(-1); return true;
@@ -695,10 +700,8 @@ function onKey(k) {
     }
     case ":":
       state.mode = "ex"; state.cmd = "";
-      typeLine("ex command", "", (v) => {
-        // drive the same path a keyboard Enter takes, so there is one ex parser and not two
-        state.mode = "ex"; state.cmd = v; onKey("Enter");
-      });
+      const runEx = (v) => { state.mode = "ex"; state.cmd = v; onKey("Enter"); };   // one ex parser, not two
+      typeLine("ex command", "", runEx, () => { state.mode = "normal"; state.cmd = ""; });
       return true;
     case "S": return true;
     case ";":          // the help offers `:` or `;` for the ex line, so ; has to be the ex line

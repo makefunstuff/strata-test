@@ -164,7 +164,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       }));
       results.push(await run({
         ...base, view: opt("narrow", "320x568"), tag: "narrow", out: null,
-        keys: [], taps: phone.taps ?? [], poses: [], expect: {},
+        // the same assertions as the phone pass: a layout that only reflows enough to avoid an
+        // overflow, and quietly stops answering its tabs, has to fail here too
+        keys: [], taps: phone.taps ?? [], poses: [], expect: phone.expect ?? {},
       }));
     }
   }

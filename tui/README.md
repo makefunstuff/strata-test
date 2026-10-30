@@ -161,6 +161,15 @@ had never been driven:
 - The shelf page's README link pointed at the *root* README, which Pages never deploys: a 404 on the
   one page that tells you where the verdict is.
 
+**Round three, and the two findings that were wrong.** The next pass found that the 320×568 run
+asserted nothing — it reflowed and screenshot, and a layout that stopped answering its tabs there
+would have passed — so it now runs the phone pass's assertions at that width too; and that a phone
+field's Escape left the app mid-edit (a compose pane with no field and no way to send it, an editor
+stuck in insert mode), which it now treats as a discard. Two of its findings did not survive being
+run: the quit screen's `r`/Enter restart works, and the service tiles are tappable on the desktop
+(`hits()` reports six tile regions, `tapTag("tile", 1)` fires and selects a service). A review is
+only worth having if "I ran it" beats "I read it", in both directions.
+
 **And one in the check itself.** `state()` always contains the kit's `frame` counter, which ticks at
 8–12 fps, so "the state changed after input" could not fail. That is why the file manager passed with
 staging and committing both dead. The assertion now strips the kit's counters and compares the
