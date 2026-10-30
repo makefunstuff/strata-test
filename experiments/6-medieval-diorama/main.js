@@ -3,7 +3,7 @@
 // crooked house come from it, so ?seed=... is the whole save file.
 import * as THREE from "three";
 import { createLab, skyDome } from "../shared/lab.js";
-import { Rng, clamp, lerp, smoothstep } from "./rng.js";
+import { Rng, clamp, lerp, randomSeed } from "./rng.js";
 import { generateCity } from "./layout.js";
 import { buildTextures } from "./textures.js";
 import { buildStatic } from "./build.js";
@@ -35,6 +35,8 @@ const P = {
   showSmoke: true,
   showBanners: true,
   groundSize: 2048,
+  birds: true,
+  view: "hero",
   quality: q0,
 };
 
@@ -43,6 +45,18 @@ const QUALITY = {
   medium: { pixelRatio: 1, shadowMap: 1024, groundSize: 1536, birds: true },
   high: { pixelRatio: Math.min(window.devicePixelRatio || 1, 1.75), shadowMap: 2048, groundSize: 2048, birds: true },
 };
+
+/** one place that decides what a preset costs, so the first load and later changes agree */
+function applyQuality(name) {
+  const q = QUALITY[name] || QUALITY.high;
+  P.quality = QUALITY[name] ? name : "high";
+  P.groundSize = q.groundSize;
+  P.birds = q.birds;
+  lab.setPixelRatio(q.pixelRatio);
+  sun.shadow.mapSize.set(q.shadowMap, q.shadowMap);
+  if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
+  return q;
+}
 
 // ----------------------------------------------------------------------------------------------
 // the lab: renderer, camera, composer, panel
@@ -209,6 +223,7 @@ function grow(seedText) {
   cam.updateProjectionMatrix();
   applyLight();
   applyVisibility();
+  gui.controllersRecursive().forEach((c) => c.updateDisplay());   // the seed box must show the town on screen
   try { history.replaceState(null, "", `?seed=${encodeURIComponent(seedText)}&quality=${P.quality}`); } catch { /* file:// */ }
   updateHud();
   lab.stats = stat.stats;
@@ -222,7 +237,8 @@ function applyVisibility() {
     if (o.name.startsWith("trees")) o.visible = P.showTrees;
     else if (o.name === "smoke") o.visible = P.showSmoke;
     else if (o.name === "banners") o.visible = P.showBanners;
-    else if (o.name === "folk" || o.name === "carts" || o.name === "birds") o.visible = P.showFolk;
+    else if (o.name === "folk" || o.name === "carts") o.visible = P.showFolk;
+    else if (o.name === "birds") o.visible = P.showFolk && P.birds;   // the low preset drops the sky
   });
 }
 
@@ -237,12 +253,6 @@ function updateHud() {
   ]);
 }
 
-const SYL_A = ["Bram", "Thorn", "Mouth", "Kings", "Elm", "Fen", "Dun", "Low", "Ash", "Marsh", "Stan", "Wold", "Ald", "Craw", "Bar", "Mel", "Whit", "Har", "Lin", "Crom"];
-const SYL_B = ["well", "field", "ford", "mere", "holt", "bury", "caster", "wick", "stead", "gham", "ridge", "moor", "ton", "burgh", "dale", "haven", "port", "fell", "bridge", "stead"];
-function randomSeed() {
-  const r = new Rng(String(Date.now()) + Math.random());
-  return `${r.pick(SYL_A)}${r.pick(SYL_B)}${r.chance(0.3) ? r.i(2, 99) : ""}`;
-}
 
 // ----------------------------------------------------------------------------------------------
 // the panel
@@ -303,6 +313,7 @@ for (const [name, v] of Object.entries(VIEWS)) {
 }
 function setView(name) {
   const v = VIEWS[name] || VIEWS.hero;
+  P.view = name;
   camera.position.set(...v.pos);
   orbit.target.set(...v.target);
   orbit.update();
@@ -310,22 +321,37 @@ function setView(name) {
 }
 
 // the quality folder came with the lab; hook its presets up to the things that cost money
-lab.onQuality((name) => {
-  const q = QUALITY[name] || QUALITY.high;
-  P.quality = name;
-  P.groundSize = q.groundSize;
-  lab.setPixelRatio(q.pixelRatio);
-  sun.shadow.mapSize.set(q.shadowMap, q.shadowMap);
-  if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
-  grow(P.seed);
-});
-{
-  const q = QUALITY[P.quality] || QUALITY.high;
-  lab.setPixelRatio(q.pixelRatio);
-  sun.shadow.mapSize.set(q.shadowMap, q.shadowMap);
-}
+lab.onQuality((name) => { applyQuality(name); grow(P.seed); });
+applyQuality(P.quality);
 orbit.autoRotate = P.autoRotate;
 orbit.autoRotateSpeed = P.rotateSpeed;
+
+// on a phone the panel would cover most of the town, so it starts shut (G opens it)
+let panelOpen = window.innerWidth >= 640;
+if (!panelOpen) gui.close();
+
+// ----------------------------------------------------------------------------------------------
+// keys, as the shelf card promises: N night, C new town, V view, G panel
+// ----------------------------------------------------------------------------------------------
+
+const VIEW_NAMES = Object.keys(VIEWS);
+window.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const t = e.target;
+  if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;   // typing a seed
+  if (e.code === "KeyN") {
+    P.time = P.night ? 0.45 : 1.22; P.night = !P.night; applyLight();
+    gui.controllersRecursive().forEach((c) => c.updateDisplay());
+  } else if (e.code === "KeyC") {
+    grow(randomSeed());
+  } else if (e.code === "KeyV") {
+    setView(VIEW_NAMES[(VIEW_NAMES.indexOf(P.view) + 1) % VIEW_NAMES.length]);
+  } else if (e.code === "KeyG") {
+    panelOpen = !panelOpen;
+    if (panelOpen) gui.open(); else gui.close();
+  } else return;
+  e.preventDefault();
+});
 
 // ----------------------------------------------------------------------------------------------
 // the loop
@@ -362,6 +388,7 @@ lab.expose({
     drawCalls: current?.stats?.drawCalls ?? 0,
     time: +P.time.toFixed(3),
     night: P.night,
+    view: P.view,
     tilt: P.tilt,
     quality: P.quality,
     shadows: renderer.shadowMap.enabled,
@@ -381,6 +408,7 @@ lab.expose({
     gui.domElement.style.display = on ? "" : "none";
     for (const id of ["hud", "fps", "hint"]) { const el = document.getElementById(id); if (el) el.style.opacity = on ? "" : "0"; }
     const t = document.querySelector(".title"); if (t) t.style.opacity = on ? "" : "0";
+    const back = document.querySelector("a.back"); if (back) back.style.opacity = on ? "" : "0";
     return on;
   },
   setAutoRotate: (v) => { P.autoRotate = !!v; orbit.autoRotate = P.autoRotate; return P.autoRotate; },

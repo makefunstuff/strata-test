@@ -21,13 +21,12 @@ function mulberry32(a) {
   };
 }
 
-/** A short pronounceable seed, for the "new city" button. */
-const ONSET = ["br", "st", "th", "gr", "fl", "dr", "sn", "kr", "bl", "sp", "thr", "sch", "m", "k", "r", "n", "t", "b", "g", "d", "h", "l", "s", "f", "w"];
-const VOWEL = ["a", "e", "i", "y", "ae", "ou", "u", "e"];
-const CODA = ["den", "wick", "ford", "mouth", "burg", "stead", "ham", "crag", "well", "gate", "march", "reach", "holt", "bury", "ston", "fell"];
+/** A short pronounceable place-name, for the "new city" button and the ?seed= link. */
+const SYL_A = ["Bram", "Thorn", "Mouth", "Kings", "Elm", "Fen", "Dun", "Low", "Ash", "Marsh", "Stan", "Wold", "Ald", "Craw", "Bar", "Mel", "Whit", "Har", "Lin", "Crom"];
+const SYL_B = ["well", "field", "ford", "mere", "holt", "bury", "caster", "wick", "stead", "gham", "ridge", "moor", "ton", "burgh", "dale", "haven", "port", "fell", "bridge"];
 export function randomSeed(rnd = Math.random) {
-  const p = (arr) => arr[Math.floor(rnd() * arr.length)];
-  return (p(ONSET) + p(VOWEL) + p(CODA) + (rnd() < 0.4 ? Math.floor(rnd() * 90 + 10) : "")).toUpperCase();
+  const r = new Rng(`${Date.now()}:${rnd()}`);
+  return `${r.pick(SYL_A)}${r.pick(SYL_B)}${r.chance(0.3) ? r.i(2, 99) : ""}`;
 }
 
 export class Rng {
@@ -59,8 +58,6 @@ export class Rng {
     }
     return a;
   }
-  /** fork a derived stream that still depends on the parent's draws */
-  fork(tag) { return new Rng(this.seed + "/" + tag); }
 }
 
 /** Smooth 2D value noise (period 256) plus fBm, seeded. */

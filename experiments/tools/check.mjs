@@ -18,7 +18,7 @@ const argv = process.argv.slice(2);
 const opt = (n, d) => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1] : d; };
 const all = (n) => argv.reduce((a, v, i) => (v === `--${n}` ? [...a, argv[i + 1]] : a), []);
 const target = argv.find((a, i) => !a.startsWith("--") && (i === 0 || !argv[i - 1].startsWith("--")));
-if (!target) { console.error("usage: node check.mjs <experiment-dir> [--drag fx,fy:dx,dy:ms] [--click fx,fy] [--eval js]"); process.exit(2); }
+if (!target) { console.error("usage: node check.mjs <experiment-dir> [--drag fx,fy:dx,dy:ms[:shift]] [--click fx,fy] [--eval js]\n       [--label name] [--wait s] [--width px] [--height px] [--shot-dir dir]"); process.exit(2); }
 
 const waitS = +opt("wait", 5);
 const vpWidth = +opt("width", 1000);
