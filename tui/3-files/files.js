@@ -151,11 +151,11 @@ const state = {
     { hash: "9f2c1ab", who: "nadia", subject: "grid: sort directories before files, always" },
     { hash: "4d17e08", who: "juri", subject: "keys: claim space for staging, not for scrolling" },
     { hash: "b3aa5c1", who: "nadia", subject: "preview: three-token highlighter beats none" },
-    { hash: "77e9f02", who: "jpl", subject: "0.4.0 — drop the canvas renderer" },
-    { hash: "0c1b8d4", who: "jpl", subject: "0.3.9 — the tree stops eating dotfiles" },
+    { hash: "77e9f02", who: "dev", subject: "0.4.0 — drop the canvas renderer" },
+    { hash: "0c1b8d4", who: "dev", subject: "0.3.9 — the tree stops eating dotfiles" },
     { hash: "a1e7c02", who: "nadia", subject: "git: never reorder the index when staging" },
     { hash: "5b93f10", who: "juri", subject: "docs: the README is the only manual" },
-    { hash: "d4c0e88", who: "jpl", subject: "tools: the checker learns --phone" },
+    { hash: "d4c0e88", who: "dev", subject: "tools: the checker learns --phone" },
   ],
   committing: null,                   // the message being typed
   churn: 0, refreshed: 0,
@@ -252,7 +252,7 @@ function drawTree(t, r, focused) {
       ["path", path],
       ["size", `${fmtSize(n.size)}${n.type === "dir" ? ` · ${(n.children ?? []).filter(Boolean).length} entries` : ` · ${kindOf(n.name)}`}`],
       ["git", n.status ? `${n.status} · ${n.staged ? "staged" : "not staged"}` : "clean"],
-      ["touch", "Sun 16:58 · jpl"],
+      ["touch", "Sun 16:58 · dev"],
       ["branch", `${state.branch}${state.ahead ? ` ↑${state.ahead}` : ""}${state.behind ? ` ↓${state.behind}` : ""}`],
       ["index", `${indexLists().staged.length} staged · ${indexLists().unstaged.length} unstaged`],
       ["head", state.commits[0].hash + " " + state.commits[0].subject.slice(0, Math.max(6, r.w - 18))],
@@ -371,7 +371,7 @@ function drawPreview(t, r, focused) {
     t.text(r.x + 1, fy + 1, "info", t.attr({ fg: "faint", b: true }));
     t.text(r.x + 8, fy + 1, `${lines.length} lines · ${words} words · ${bytes} bytes · ${kind}`, t.attr({ fg: "dim" }));
     t.text(r.x + 1, fy + 2, "mode", t.attr({ fg: "faint", b: true }));
-    t.text(r.x + 8, fy + 2, `0644 · jpl:users · ${n.status ? `git ${n.status}` : "clean"}`, t.attr({ fg: n.status ? "yellow" : "dim" }));
+    t.text(r.x + 8, fy + 2, `0644 · dev:users · ${n.status ? `git ${n.status}` : "clean"}`, t.attr({ fg: n.status ? "yellow" : "dim" }));
     t.text(r.x + 1, fy + 3, "blob", t.attr({ fg: "faint", b: true }));
     t.text(r.x + 8, fy + 3, `${sha} · mtime Sun 16:58 · ${n.staged ? "in the index" : "working tree"}`, t.attr({ fg: "dim" }));
     // how big the file is against the biggest one on the shelf — a bar is quicker to read than a number
@@ -495,7 +495,7 @@ function onKey(k) {
       const subject = state.committing.trim() || "wip";
       const { staged } = indexLists();
       for (const it of staged) { it.node.status = null; it.node.staged = false; }
-      state.commits.unshift({ hash: Math.floor(rand() * 0xfffffff).toString(16).padStart(7, "0"), who: "jpl", subject });
+      state.commits.unshift({ hash: Math.floor(rand() * 0xfffffff).toString(16).padStart(7, "0"), who: "dev", subject });
       state.ahead++;
       state.committing = null;
       window.tui.toast(`committed ${staged.length} file${staged.length === 1 ? "" : "s"}: ${subject.slice(0, 30)}`);

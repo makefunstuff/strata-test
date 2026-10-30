@@ -34,51 +34,51 @@ const M = (folder, from, addr, subject, date, body, opts = {}) => ({
 });
 
 let MSGS = [
-  M("inbox", "Nadia Kerr", "nadia@mqube.dev", "Re: the shelf pages 404 on Pages", "Mon 09:14",
-    "The manifest lived under tools/ and the workflow rsyncs with --exclude tools/, so the fetch 404s\nin production while every local check stays green.\n\nTwo fixes: copy the one file the page actually loads, and make the checker serve the repo root\nthe way Pages does. Otherwise we keep measuring a site that does not exist.\n\n> On Sun, Juri wrote:\n> I ran the sweep three times and it was green all three. I do not think the checker is wrong,\n> I think it is checking somewhere else.\n\n-- \nNadia Kerr · infrastructure · mqube\n\u201cthe check that never fails has never run\u201d",
+  M("inbox", "Nadia Kerr", "nadia@example.dev", "Re: the shelf pages 404 on Pages", "Mon 09:14",
+    "The manifest lived under tools/ and the workflow rsyncs with --exclude tools/, so the fetch 404s\nin production while every local check stays green.\n\nTwo fixes: copy the one file the page actually loads, and make the checker serve the repo root\nthe way Pages does. Otherwise we keep measuring a site that does not exist.\n\n> On Sun, Kim wrote:\n> I ran the sweep three times and it was green all three. I do not think the checker is wrong,\n> I think it is checking somewhere else.\n\n-- \nNadia Kerr · infrastructure · example\n\u201cthe check that never fails has never run\u201d",
     { attach: ["pages.yml.diff"], labels: ["pages"], starred: true }),
-  M("inbox", "CI bot", "ci@strata.local", "build #212 passed — tui/1-monitor", "Mon 08:52",
+  M("inbox", "CI bot", "ci@strata.example", "build #212 passed — tui/1-monitor", "Mon 08:52",
     "42 checks, 0 errors, 0 failures.\n  desktop 1280x800  ok\n  phone    390x844  ok\n  glyphs            ok (74 distinct, no fallback)\n\nTotal 21.4s. Artifacts kept under shots/.",
     { unread: false }),
-  M("inbox", "Juri", "juri@mqube.dev", "the monitor looks wrong on the phone", "Sun 22:41",
+  M("inbox", "Kim", "juri@example.dev", "the monitor looks wrong on the phone", "Sun 22:41",
     "Not the layout — the numbers. The per-core bars never leave the bottom third while the headline\nsays 58%. Either the headline is the sum of the cores or it is the average, and right now I think\nit is neither.",
     { labels: ["bug"] }),
-  M("inbox", "Nadia Kerr", "nadia@mqube.dev", "fonts: audit or it did not happen", "Sun 20:03",
+  M("inbox", "Nadia Kerr", "nadia@example.dev", "fonts: audit or it did not happen", "Sun 20:03",
     "A webfont that a face does not carry falls back silently and your columns are gone. Measure the\nadvance width of every glyph you draw and fail the build on the odd one out. It costs 20 lines.",
     { starred: true }),
-  M("inbox", "RSS: lwn.net", "rss@feeds.local", "The state of terminal UIs in 2026", "Sun 18:20",
+  M("inbox", "RSS: lwn.net", "rss@feeds.example", "The state of terminal UIs in 2026", "Sun 18:20",
     "Character-cell rendering is having a moment: ratatui, bubbletea and a dozen browser kits. The\ninteresting part is not the widgets, it is how little you need when you have a grid and a font.",
     { unread: false }),
-  M("inbox", "Patch Series", "b4@lists.local", "[tui 1/6] pulse: per-core load", "Sun 16:58",
-    "Signed-off-by: Nadia Kerr <nadia@mqube.dev>\n---\n tui/1-monitor/monitor.js | 42 ++++++++++++++++++++++\n 1 file changed, 42 insertions(+)",
+  M("inbox", "Patch Series", "b4@lists.example", "[tui 1/6] pulse: per-core load", "Sun 16:58",
+    "Signed-off-by: Nadia Kerr <nadia@example.dev>\n---\n tui/1-monitor/monitor.js | 42 ++++++++++++++++++++++\n 1 file changed, 42 insertions(+)",
     { attach: ["0001-pulse-per-core.patch"] }),
-  M("inbox", "Hosting", "noreply@pages.local", "Deployment 1183 succeeded", "Sun 15:11",
+  M("inbox", "Hosting", "noreply@pages.example", "Deployment 1183 succeeded", "Sun 15:11",
     "Your site was deployed. 6 files changed, 41.2 KiB.\nhttps://example.invalid/strata-test/tui/", { unread: false }),
-  M("inbox", "Juri", "juri@mqube.dev", "what did Strata actually get right?", "Sun 11:02",
+  M("inbox", "Kim", "juri@example.dev", "what did Strata actually get right?", "Sun 11:02",
     "For the README verdict: I want one paragraph on what the small model did well and one on what it\ngot wrong, with the file names in it. Not a score.",
     { labels: ["readme"] }),
-  M("sent", "me", "jpl@localhost", "Re: the shelf pages 404 on Pages", "Mon 09:31",
+  M("sent", "me", "dev@example.com", "Re: the shelf pages 404 on Pages", "Mon 09:31",
     "Agreed. Fixing the workflow to copy the manifest explicitly, and the checker to mirror the URL.\nI will run the sweep again after both.", {}),
-  M("sent", "me", "jpl@localhost", "tui shelf: six designs", "Sat 19:02",
+  M("sent", "me", "dev@example.com", "tui shelf: six designs", "Sat 19:02",
     "Six terminal apps, six different jobs, one kit. Each page gets a keyboard map, a phone tap map\nand a headless check that drives the keys and reads the state back.", { unread: false }),
-  M("drafts", "me", "jpl@localhost", "draft: verdict on the model", "Sat 18:40",
+  M("drafts", "me", "dev@example.com", "draft: verdict on the model", "Sat 18:40",
     "It got the boring things right and the visible things wrong: the buffer, the key map and the\nchecks were solid, the bars needed three passes because the numbers had no shape.", {}),
-  M("list/dev", "Blender list", "users@blender.local", "EEVEE next notes", "Sun 12:00",
+  M("list/dev", "Blender list", "users@blender.example", "EEVEE next notes", "Sun 12:00",
     "The volumetric pipeline now renders at half res with a temporal filter; the artefacts moved from\nthe edges into the interior, which is a trade I can live with.", { unread: false }),
-  M("list/dev", "Hyprland list", "github@hypr.local", "Re: fractional scaling and gaps", "Sat 21:14",
+  M("list/dev", "Hyprland list", "github@hypr.example", "Re: fractional scaling and gaps", "Sat 21:14",
     "Gaps are computed in logical pixels after the scale, so at 1.25 you get the gap you asked for\nmultiplied by the rounding of the layout, not the one you typed.", {}),
-  M("archive", "CI bot", "ci@strata.local", "build #211 failed — design/04-tui", "Fri 23:55",
+  M("archive", "CI bot", "ci@strata.example", "build #211 failed — design/04-tui", "Fri 23:55",
     "1 check failed: contrast 3.1:1 on .dim text (needs 4.5:1).", { unread: false }),
-  M("archive", "Nadia Kerr", "nadia@mqube.dev", "the check harness needs a watchdog", "Fri 22:10",
+  M("archive", "Nadia Kerr", "nadia@example.dev", "the check harness needs a watchdog", "Fri 22:10",
     "Every path out of the harness must close Chromium, including the timeout. Otherwise the sweep\nleaves a browser per failed page and the box swaps.", { unread: false }),
 ];
 
 const NEW_MAIL = [
-  M("inbox", "CI bot", "ci@strata.local", "build #213 passed — tui/5-ops", "now",
+  M("inbox", "CI bot", "ci@strata.example", "build #213 passed — tui/5-ops", "now",
     "44 checks, 0 errors. The log stream advanced 61 lines while the harness pressed keys.", {}),
-  M("inbox", "Nadia Kerr", "nadia@mqube.dev", "review: the seek bar must be tappable", "now",
+  M("inbox", "Nadia Kerr", "nadia@example.dev", "review: the seek bar must be tappable", "now",
     "On a phone there is no arrow key. The seek bar is a hit region, not decoration.", {}),
-  M("inbox", "Juri", "juri@mqube.dev", "one more design, please", "now",
+  M("inbox", "Kim", "juri@example.dev", "one more design, please", "now",
     "Six is a good number for a shelf. Make the seventh the one you were afraid to attempt.", {}),
 ];
 
@@ -204,7 +204,7 @@ function drawReader(t, r, focused) {
     y++;
   };
   head("From", `${m.from} <${m.addr}>`);
-  head("To", "me <jpl@localhost>", "dim");
+  head("To", "me <dev@example.com>", "dim");
   head("Date", m.date + " 2026", "dim");
   if (m.labels.length) head("Labels", m.labels.join(", "), "cyan");
   head("Subject", m.subject, "accent");
@@ -228,7 +228,7 @@ function drawReader(t, r, focused) {
   if (ey + 5 < r.y + r.h) {
     t.hline(r.x + 1, ey, r.w - 3, "─", t.attr({ fg: "line" }));
     const bytes = 412 + m.body.length * 3 + m.subject.length * 7;
-    const mid = `<${m.id}.${Date.parse("2026-10-28T09:14:00Z") + m.id.length}@strata.local>`;
+    const mid = `<${m.id}.${Date.parse("2026-10-28T09:14:00Z") + m.id.length}@strata.example>`;
     const row = (k, v, col = "dim") => {
       t.text(r.x + 2, ey + 1 + row.n, pad(k, 12), t.attr({ fg: "faint" }));
       t.text(r.x + 15, ey + 1 + row.n, String(v).slice(0, Math.max(4, r.w - 17)), t.attr({ fg: col }));
@@ -238,8 +238,8 @@ function drawReader(t, r, focused) {
     row("Message-Id", mid, "dim");
     row("X-Maildir", `${FOLDERS[state.folder].path.toLowerCase()}/cur/${m.id}:2,${m.unread ? "F" : ""}`);
     row("Size", `${bytes} bytes · ${m.body.split("\n").length} lines of body`);
-    row("Received", `from smtp.strata.local (10.0.4.12) by localhost; ${m.date}, 28 Oct 2026`, "dim");
-    row("List-Id", m.addr.endsWith(".local") ? "dev <dev.strata.local>" : "—", "faint");
+    row("Received", `from smtp.strata.example (203.0.113.7) by mail.strata.example; ${m.date}, 28 Oct 2026`, "dim");
+    row("List-Id", m.addr.endsWith(".example") ? "dev <dev.strata.example>" : "—", "faint");
   }
   state.readerTop = clamp(state.readerTop, 0, Math.max(0, lines.length - 4));
   t.hit(r.x, r.y, r.w, r.h, () => {
@@ -364,7 +364,7 @@ function onKey(k) {
       if (!state.open) { window.tui.toast("nothing to save"); return true; }
       {
         const src = MSGS.find((x) => x.id === state.open);
-        MSGS.push(M("drafts", "me", "jpl@localhost", "Re: " + src.subject, "now", "> " + src.body.split("\n").join("\n> "), { unread: false }));
+        MSGS.push(M("drafts", "me", "dev@example.com", "Re: " + src.subject, "now", "> " + src.body.split("\n").join("\n> "), { unread: false }));
         window.tui.toast("saved to drafts");
       }
       return true;
@@ -418,7 +418,7 @@ function composeKey(k) {
   const c = state.composing;
   if (k === "Esc") { state.composing = null; window.tui.toast("draft discarded"); return true; }
   if (k === "C-x" || k === "C-s") {
-    MSGS.unshift(M("sent", "me", "jpl@localhost", c.subject, "now", c.lines.join("\n"), { unread: false }));
+    MSGS.unshift(M("sent", "me", "dev@example.com", c.subject, "now", c.lines.join("\n"), { unread: false }));
     state.composing = null; state.sentCount++;
     window.tui.toast(`sent “${c.subject.slice(0, 30)}”`);
     return true;

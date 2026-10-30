@@ -35,20 +35,20 @@ const THEMES = {
 const KINDS = [
   // [name, user, base cpu %, base RSS, threads, command line] — the shares sum to ~50 %, so the
   // machine idles around half loaded and the total bar has somewhere to go
-  ["strata-server", "jpl", 21, 4.1e9, 24, "strata serve --model qwen3.8-flash-next --port 18097"],
-  ["pi", "jpl", 6, 3.2e8, 9, "pi -p --mode json --model strata/qwen3.8-flash-next"],
-  ["node", "jpl", 4, 2.4e8, 11, "node tui/tools/check.mjs 1-monitor"],
-  ["hyprland", "jpl", 3.5, 5.1e8, 14, "/usr/bin/hyprland"],
-  ["firefox", "jpl", 5, 1.9e9, 62, "firefox --profile release"],
-  ["chromium", "jpl", 3, 1.1e9, 41, "chromium --headless --use-angle=swiftshader"],
+  ["strata-server", "dev", 21, 4.1e9, 24, "strata serve --model qwen3.8-flash-next --port 18097"],
+  ["pi", "dev", 6, 3.2e8, 9, "pi -p --mode json --model strata/qwen3.8-flash-next"],
+  ["node", "dev", 4, 2.4e8, 11, "node tui/tools/check.mjs 1-monitor"],
+  ["hyprland", "dev", 3.5, 5.1e8, 14, "/usr/bin/hyprland"],
+  ["firefox", "dev", 5, 1.9e9, 62, "firefox --profile release"],
+  ["chromium", "dev", 3, 1.1e9, 41, "chromium --headless --use-angle=swiftshader"],
   ["postgres", "postgres", 2.5, 6.4e8, 18, "postgres -D /var/lib/postgres/data"],
-  ["pipewire", "jpl", 0.6, 4.1e7, 7, "/usr/bin/pipewire"],
-  ["herdr", "jpl", 1.2, 8.8e7, 12, "herdr workspace open --space strata-test"],
-  ["blender", "jpl", 2, 1.4e9, 16, "blender --background shot.blend"],
+  ["pipewire", "dev", 0.6, 4.1e7, 7, "/usr/bin/pipewire"],
+  ["herdr", "dev", 1.2, 8.8e7, 12, "herdr workspace open --space strata-test"],
+  ["blender", "dev", 2, 1.4e9, 16, "blender --background shot.blend"],
   ["systemd", "root", 0.3, 2.2e7, 3, "/usr/lib/systemd/systemd --system"],
   ["rss-guard", "root", 0.15, 9.4e6, 2, "/usr/local/bin/rss-guard --interval 30s"],
   ["ttfd", "root", 0.1, 6.1e6, 1, "/usr/lib/ttfd"],
-  ["shepherdr", "jpl", 0.9, 1.2e8, 8, "shepherdr serve --port 7787"],
+  ["shepherdr", "dev", 0.9, 1.2e8, 8, "shepherdr serve --port 7787"],
 ];
 
 const state = {
