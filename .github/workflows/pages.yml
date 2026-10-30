@@ -1,4 +1,4 @@
-# Publish the site: the root hub, games/, experiments/, design/ and eyecandy/, each without its headless harness.
+# Publish the site: the root hub, games/, experiments/, design/, eyecandy/ and tui/, each without its headless harness.
 name: Deploy the browser lab to GitHub Pages
 
 on:
@@ -32,6 +32,9 @@ jobs:
           rsync -a --exclude tools/ experiments/ _site/experiments/
           rsync -a --exclude tools/ design/ _site/design/
           rsync -a --exclude tools/ eyecandy/ _site/eyecandy/
+          # the tui shelf ships its pages, its shared kit and the checker's own screenshots, which
+          # are what the hub thumbnails point at; tools/ is the headless harness and stays out
+          rsync -a --exclude tools/ tui/ _site/tui/
           # One file under tools/ is part of the site: the gallery page fetches the harness
           # manifest at runtime, so its shot counts are the harness's own numbers and not a
           # transcription. With tools/ excluded, that fetch 404'd on Pages and the page silently

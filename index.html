@@ -100,14 +100,38 @@ code{color:var(--amber)}
     <div class="row"><kbd>eyecandy/</kbd> published at <code>/eyecandy/</code> · measured table in <code>eyecandy/README.md</code></div>
   </a>
 
+  <a class="shelf" href="tui/index.html">
+    <h2>TUI — SIX TERMINAL APPS ON ONE CHARACTER GRID →</h2>
+    <p>A system monitor with per-core bars and a killable process table, a three-column mail reader that
+    replies and deletes, a file manager with a git index next to it, a music player whose spectrum reads
+    its own WebAudio graph, a services-and-logs board that is genuinely live, and a modal editor with
+    modes, operators, undo and an ex line. Six jobs, six layouts, six palettes and six box-drawing
+    dialects on one static kit: keys do the work, a chip row under the grid repeats the main ones for
+    a phone, rows and tabs are tappable and text fields are real inputs, and a
+    headless pass drives the keyboard and reads the state back at desktop and phone widths.</p>
+    <div class="thumbs">
+      <img src="tui/1-monitor/shots/1-monitor-desktop.jpg" alt="System monitor: per-core load bars, memory, network sparklines and a process table" loading="lazy">
+      <img src="tui/2-mail/shots/2-mail-desktop.jpg" alt="Mail reader: folders, a thread list and a reader pane with headers" loading="lazy">
+      <img src="tui/3-files/shots/3-files-desktop.jpg" alt="File manager: a tree with git status glyphs, a preview and a staging panel" loading="lazy">
+      <img src="tui/4-player/shots/4-player-desktop.jpg" alt="Music player: playlist, block-art sleeve, up-next queue and a spectrum" loading="lazy">
+      <img src="tui/5-ops/shots/5-ops-desktop.jpg" alt="Ops board: service tiles with sparklines, a log stream and an alert panel" loading="lazy">
+      <img src="tui/6-editor/shots/6-editor-desktop.jpg" alt="Modal editor: tabs, a gutter, a highlighted buffer, diagnostics and a status line" loading="lazy">
+    </div>
+    <div class="row"><kbd>tui/</kbd> published at <code>/tui/</code> · the six designs and what the grid cost in <code>tui/README.md</code></div>
+  </a>
+
   <footer>
     Each page is checked in headless Chromium (software renderer on this box, so the FPS numbers are a
     floor): console, page and network errors, an interaction driven from the harness into the page's own
     <code>window.experiment</code> hook, and FPS sampled before and after it.
     The checkers are <code>games/tools/verify.mjs</code>, <code>experiments/tools/check.mjs</code>,
-    <code>design/tools/shoot.mjs</code> and <code>eyecandy/tools/check.mjs</code> (screenshots plus a console, contrast, landmark,
-    control-name and overflow audit; the two things it used to be blind to are written down in
-    <code>design/README.md</code>).
+    <code>design/tools/shoot.mjs</code>, <code>eyecandy/tools/check.mjs</code> and
+    and <code>tui/tools/check.mjs</code> (screenshots plus a console, contrast, landmark, control-name and
+    overflow audit; the two things it used to be blind to are written down in
+    <code>design/README.md</code>). The TUI checker is a different shape of check: keys, taps and poses
+    driven into the page, its own <code>state()</code> read back to prove they landed, and every glyph it
+    draws measured against the loaded face, because a font that falls back silently breaks a character
+    grid.
     <br><br>Source: <a href="https://github.com/makefunstuff/strata-test">makefunstuff/strata-test</a>.
     Built by Strata, running pi headless.
   </footer>
