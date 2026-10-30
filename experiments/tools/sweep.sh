@@ -17,3 +17,5 @@ run vox     2-voxel-demolition  --eval "async()=>{const e=window.experiment;e.la
 run cloth   3-cloth-tearing     --drag 0.47,0.53:0.36,-0.06:900 --drag 0.4,0.42:0.16,0.22:600:shift --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.gust(1.6);await new Promise(r=>setTimeout(r,600));const m=e.api.mid();return JSON.stringify(await e.api.pullScreen(m[0],m[1],-0.3,0.12,16,12));}"
 run flock   4-gpu-flocking      --click 0.4,0.5 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.setHawkMode('chase');e.api.scatter();return 1;}"
 run fire    5-volumetric-fire   --click 0.5,0.6 --eval "async()=>{const e=window.experiment;e.lab.gui.close();e.api.stoke(0.9);e.api.gust(0.8,0.3);return 1;}"
+# the town: orbit it, grow a new town from a new seed, then put the lights on
+run diorama 6-medieval-diorama  --drag 0.5,0.5:0.62,0.42:700 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setView('hero');const before=e.state().seed;e.newCity();await new Promise(r=>setTimeout(r,1500));e.setNight(1);return JSON.stringify({before,after:e.state()});}"

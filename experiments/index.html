@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><path d=%27M1 11q2.5-3 4.5 0t4.5 0 5-1%27 fill=%27none%27 stroke=%27%238ee8ff%27 stroke-width=%271.6%27/><circle cx=%2711.5%27 cy=%274.5%27 r=%272.2%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.4%27/></svg>">
-<title>strata-test — five graphics experiments</title>
+<title>strata-test — six graphics experiments</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
 <style>
 :root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--bg:#04060a}
@@ -45,8 +45,8 @@ code{color:var(--amber)}
 <body>
 <div class="scan"></div>
 <main>
-  <h1>FIVE GRAPHICS EXPERIMENTS</h1>
-  <p class="lead">Water, demolition, cloth, flocking, fire — five three.js motion pieces, each in one
+  <h1>SIX GRAPHICS EXPERIMENTS</h1>
+  <p class="lead">Water, demolition, cloth, flocking, fire and a whole town — six three.js motion pieces, each in one
   folder of plain static files. Three.js 0.170.0 and lil-gui come from a pinned CDN importmap: no build
   step, no npm, no server. Every page carries a control panel, a quality preset and interaction hints,
   and every one was checked in headless Chromium.
@@ -134,6 +134,23 @@ code{color:var(--amber)}
       over the scene, so it is cheap; embers, a flickering point light and bloom do the rest.</p>
       <div class="row"><span class="tag">raymarching</span><span class="tag">volumetrics</span><span class="tag">custom pass</span>
       <kbd>Click</kbd> stoke <kbd>Space</kbd> gust <kbd>D</kbd> douse</div>
+    </a>
+
+    <a class="card" href="6-medieval-diorama/index.html">
+      <img class="hero" src="6-medieval-diorama/shots/hero.jpg" alt="Medieval town diorama on a cut-away earth chunk: walls, keep, cathedral, tiled roofs, fields" loading="lazy">
+      <div class="thumbs">
+        <img src="6-medieval-diorama/shots/alt1.jpg" alt="The same town at night, windows lit, moonlow" loading="lazy">
+        <img src="6-medieval-diorama/shots/alt2.jpg" alt="Street level: jettied timber houses with windows and shutters" loading="lazy">
+        <img src="6-medieval-diorama/shots/alt3.jpg" alt="A different town from another seed" loading="lazy">
+      </div>
+      <h2>6 · Medieval city diorama</h2>
+      <p class="why">A town grown from a seed: ring streets and lanes carved into blocks, houses lined
+      frontage by frontage with jetties, gables, chimneys and window plans, a keep, a cathedral, a wall
+      punched by gatehouses, a river with bridges, and fields with furrows beyond it. The chunk of earth
+      is cut away to show strata; a tilt-shift pass does the miniature. Every texture is painted on a
+      canvas at load, so the whole town is code.</p>
+      <div class="row"><span class="tag">procedural</span><span class="tag">merged geometry</span><span class="tag">tilt-shift</span>
+      <kbd>N</kbd> night <kbd>C</kbd> new town <kbd>V</kbd> view <kbd>G</kbd> panel <kbd>Drag</kbd> orbit</div>
     </a>
   </div>
 

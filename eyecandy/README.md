@@ -7,7 +7,7 @@ the folder is GitHub-Pages-ready as it stands.
 
 Live: **https://makefunstuff.github.io/strata-test/eyecandy/** · the
 [gallery](index.html) is the thumbnail row, and the [site hub](../index.html) also links the
-[five games](../games/index.html), the [five experiments](../experiments/index.html) and the
+[five games](../games/index.html), the [six experiments](../experiments/index.html) and the
 [design gallery](../design/index.html).
 
 This shelf is the sibling of `experiments/`. The experiments are written to be *right* (a leapfrog wave
