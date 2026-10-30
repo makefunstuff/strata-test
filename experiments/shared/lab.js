@@ -60,9 +60,9 @@ export function createLab({
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloomPass = bloom && bloom.strength > 0
-    ? new UnrealBloomPass(new THREE.Vector2(256, 256), bloom.strength, bloom.radius, bloom.threshold)
-    : null;
+  const bloomOpts = bloom && bloom.strength > 0 ? bloom : null;
+  const makeBloom = () => new UnrealBloomPass(new THREE.Vector2(256, 256), bloomOpts.strength, bloomOpts.radius, bloomOpts.threshold);
+  let bloomPass = bloomOpts ? makeBloom() : null;
   if (bloomPass) composer.addPass(bloomPass);
   composer.addPass(new OutputPass());
 
@@ -71,13 +71,25 @@ export function createLab({
     composer.setPixelRatio(r);
     setSize();
   }
+  let lastW = 0, lastH = 0;
   function setSize() {
     const w = window.innerWidth, h = window.innerHeight;
+    if (w === lastW && h === lastH) return;
+    lastW = w; lastH = h;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
     composer.setSize(w, h);
-    if (bloomPass) bloomPass.setSize(Math.max(64, Math.round(w * bloom.scale)), Math.max(64, Math.round(h * bloom.scale)));
+    if (bloomPass) {
+      // three 0.170's UnrealBloomPass.setSize can leave the frame solid black: it resizes its mip
+      // targets but the high-pass/composite chain keeps stale sizes. Rebuilding the pass costs a
+      // frame and only happens when the window (or the phone's orientation) really changed.
+      const i = composer.passes.indexOf(bloomPass);
+      bloomPass.dispose?.();
+      bloomPass = makeBloom();
+      if (i >= 0) composer.passes[i] = bloomPass; else composer.addPass(bloomPass);
+      bloomPass.setSize(Math.max(64, Math.round(w * bloom.scale)), Math.max(64, Math.round(h * bloom.scale)));
+    }
   }
   setSize();
   window.addEventListener("resize", setSize);
@@ -158,7 +170,7 @@ export function createLab({
 
   const clock = new THREE.Clock();
   const lab = {
-    title, renderer, scene, camera, composer, bloomPass, orbit, clock, gui, q, fpsEl,
+    title, renderer, scene, camera, composer, get bloomPass() { return bloomPass; }, orbit, clock, gui, q, fpsEl,
     pointer, fps, setSize, setPixelRatio, tickFps, setHud, hints,
     /** dt, capped so a slow frame (or a headless tab) never explodes the simulation. */
     step() { return Math.min(clock.getDelta(), 1 / 20); },
