@@ -15,19 +15,22 @@ all published to GitHub Pages, the layout on Pages mirroring this repo:
 | [`games/`](games/) | five three.js arcade games on one shared kit (CRT bezel, particles, bloom, WebAudio) | [/games/](https://makefunstuff.github.io/strata-test/games/) |
 | [`experiments/`](experiments/) | five three.js graphics/motion experiments: GPU water, Rapier voxel demolition, tearing cloth, GPU flocking, volumetric fire | [/experiments/](https://makefunstuff.github.io/strata-test/experiments/) |
 | [`design/`](design/) | eleven design briefs — landing page, dashboard, nine-screen mobile app, TUI, design system, identity, estuary dataviz, grant form, motion system, a flood portal redesign, and one page in nine visual styles — each screenshotted, audited and self-critiqued | [/design/](https://makefunstuff.github.io/strata-test/design/) |
-
-The site root is [`index.html`](index.html), the hub that links all four. Each folder carries its own
-headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`,
-`design/tools/shoot.mjs`, `eyecandy/tools/check.mjs`); the numbers they
-last reported are in the shelf READMEs. [`design/README.md`](design/README.md) is the
 | [`eyecandy/`](eyecandy/) | five pieces of eye candy — aurora over a mirrored lake, thin-film soap bubbles, 200k-point GPU nebula, bioluminescent jellyfish, a feedback kaleidoscope — each with a panel, a preset and a headless check | [/eyecandy/](https://makefunstuff.github.io/strata-test/eyecandy/) |
+| [`tui/`](tui/) | six terminal apps on the Strata FP4 character grid — system monitor, mail reader, file manager + git, generative music player, ops board, modal editor — each with a keyboard map, a phone tap map and a headless check | [/tui/](https://makefunstuff.github.io/strata-test/tui/) |
+
+The site root is [`index.html`](index.html), the hub that links them. Each folder carries its own
+headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`,
+`design/tools/shoot.mjs`, `eyecandy/tools/check.mjs`, `tui/tools/check.mjs`); the numbers they
+last reported are in the shelf READMEs. [`design/README.md`](design/README.md) is the
 design gallery's own summary: the eleven scores, the verdict on range and taste, and the
-two things the audit was blind to. The gallery and the study pages use ES modules, so they
+two things the audit was blind to. [`tui/README.md`](tui/README.md) is the same for the six
+terminal apps: what each one is, what the character grid is good at, and where it hurts.
+The gallery and the study pages use ES modules, so they
 need http:// (or GitHub Pages), not `file://` — measured, not assumed:
 `design/tools/filecheck.mjs` opens every page twice and finds 4 of 27 clean over `file://`
 (`05-system` and the three pages of `10-redesign`) and 23 blocked by CORS, nine of the
 eleven task index pages among them. Serve it and read it the way Pages will:
-`node design/tools/serve.mjs`.
+`node design/tools/serve.mjs`. The TUI shelf is plain scripts and runs over `file://` too.
 
 Benchmarks of Strata itself, one folder each with its README (what, how to run, results, verdict):
 

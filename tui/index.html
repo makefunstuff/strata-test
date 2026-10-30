@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tui — six terminal apps in the browser</title>
+<meta name="description" content="Six terminal user interfaces built as plain static pages on the Strata FP4 character grid: a monitor, a mail reader, a file manager and git client, a music player, an ops board and a modal editor.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/index.css">
+<style>
+  :root {
+    --bg: #07080d; --panel: #0d1220; --ink: #dfe9f5; --dim: #8f9db3; --faint: #5d6a80;
+    --line: #1b2740; --accent: #5fe3c0; --amber: #ffd166; --coral: #ff6b7a; --violet: #b48ead;
+  }
+  * { box-sizing: border-box }
+  html, body { margin: 0; background: var(--bg); color: var(--ink) }
+  body {
+    font: 15px/1.6 "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+    padding: 24px 18px 64px; max-width: 1040px; margin: 0 auto;
+    background-image: radial-gradient(circle at 20% -10%, #12203a 0%, transparent 55%),
+                      radial-gradient(circle at 90% 0%, #10261f 0%, transparent 45%);
+  }
+  header { border: 1px solid var(--line); background: #0b0f1acc; padding: 18px 20px; border-radius: 8px }
+  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: .06em; text-transform: uppercase }
+  h1 span { color: var(--accent) }
+  p.lede { margin: 0; color: var(--dim); max-width: 74ch }
+  .crumbs { margin: 0 0 14px; font-size: 13px; color: var(--faint) }
+  .crumbs a { color: var(--accent); text-decoration: none }
+  .crumbs a:hover { text-decoration: underline }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 18px }
+  .card {
+    display: block; border: 1px solid var(--line); background: #0b0f1acc; border-radius: 8px;
+    padding: 14px 16px 16px; text-decoration: none; color: inherit; position: relative; overflow: hidden;
+  }
+  .card:hover { border-color: var(--accent); background: #0e1524cc }
+  .card:hover .go { color: var(--accent) }
+  .num { position: absolute; right: 12px; top: 6px; font-size: 34px; color: #16203a; line-height: 1 }
+  .name { color: var(--accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase }
+  .kind { color: var(--faint); font-size: 12px; margin-left: 6px }
+  .blurb { color: var(--dim); font-size: 13.5px; margin: 8px 0 10px; min-height: 4.5em }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11.5px; color: var(--faint) }
+  .meta span { border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px }
+  .go { position: absolute; right: 14px; bottom: 12px; color: var(--faint); font-size: 13px }
+  footer { margin-top: 22px; color: var(--faint); font-size: 13px }
+  footer a { color: var(--accent) }
+  code { color: var(--amber) }
+  @media (max-width: 560px) { .blurb { min-height: 0 } }
+</style>
+</head>
+<body>
+<p class="crumbs"><a href="../">strata-test</a> / tui</p>
+<header>
+  <h1>tui<span>·</span>six</h1>
+  <p class="lede">Six terminal apps drawn on the Strata FP4 character grid, each a plain static page —
+    no build, no server, no canvas. Every one answers its keys, and every key is a button you can tap
+    on a phone. Different jobs, different layouts, different palettes and box-drawing dialects: the
+    point is to see how much range one grid has.</p>
+</header>
+
+<div class="grid">
+  <a class="card" href="1-monitor/">
+    <span class="num">1</span>
+    <span class="name">pulse</span><span class="kind">system monitor · btop</span>
+    <p class="blurb">Per-core load in eighth-block bars, memory, a network sparkline and a process table
+      you can sort, filter and kill. Three palettes, live for two seconds a tick.</p>
+    <div class="meta"><span>JetBrains Mono</span><span>rounded light</span><span>midnight / phosphor / graphite</span><span>very dense</span></div>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="2-mail/">
+    <span class="num">2</span>
+    <span class="name">post</span><span class="kind">mail reader · mutt</span>
+    <p class="blurb">Three columns, a folder with unread counts, a thread tree and a reader you scroll
+      by line. Compose with a header block, delete with an undo, search across subjects.</p>
+    <div class="meta"><span>IBM Plex Mono</span><span>flat, rule-only</span><span>solarized dark</span><span>medium</span></div>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="3-files/">
+    <span class="num">3</span>
+    <span class="name">rig</span><span class="kind">files + git · ranger / lazygit</span>
+    <p class="blurb">A file tree with a preview pane that highlights code and blocks out binaries, beside
+      a git panel: stage, unstage, commit, discard, with a churn histogram per file.</p>
+    <div class="meta"><span>Fira Code</span><span>heavy corners</span><span>gruvbox dark</span><span>three panes</span></div>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="4-player/">
+    <span class="num">4</span>
+    <span class="name">wave</span><span class="kind">music player · ncmpcpp</span>
+    <p class="blurb">Playlist, big artwork made of blocks, and a spectrum that reads its own WebAudio
+      graph — the tracks are generated at runtime, so the bars are the music and not a wiggle.</p>
+    <div class="meta"><span>Space Mono</span><span>no frames on the viz</span><span>nord</span><span>airy</span></div>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="5-ops/">
+    <span class="num">5</span>
+    <span class="name">grid</span><span class="kind">ops board · k9s / Grafana</span>
+    <p class="blurb">Service tiles with p95 sparklines, a log stream that follows the tail until you
+      scroll up, alerts to ack and a service you can restart. It is genuinely live.</p>
+    <div class="meta"><span>Roboto Mono</span><span>heavy + tiles</span><span>dracula</span><span>very dense</span></div>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="6-editor/">
+    <span class="num">6</span>
+    <span class="name">quill</span><span class="kind">modal editor · vim</span>
+    <p class="blurb">Modes, motions, operators, undo, search with every hit underlined, an ex command
+      line and a status line. No borders anywhere — an editor does not frame itself.</p>
+    <div class="meta"><span>Anonymous Pro</span><span>borderless</span><span>catppuccin mocha</span><span>buffer</span></div>
+    <span class="go">→</span>
+  </a>
+</div>
+
+<footer>
+  <p>Open one, press <code>?</code> for the keys, <code>q</code> to quit it. On a phone the key map is a
+  row of buttons and the wide layouts collapse to tabs. The shared kit is
+  <code>shared/tui.js</code> + <code>shared/tui.css</code>; <a href="../README.md">the README</a> has the
+  verdict on how the grid coped.</p>
+</footer>
+</body>
+</html>

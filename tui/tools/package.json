@@ -1,0 +1,9 @@
+{
+  "name": "tui-tools",
+  "private": true,
+  "type": "module",
+  "description": "Headless checks and gallery shots for the tui/ shelf.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}

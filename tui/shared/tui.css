@@ -1,0 +1,90 @@
+/* The chrome every page in the tui/ shelf wears: a window frame, the character grid inside it,
+   and a key bar that turns the page's own key map into tappable chips for a phone.
+   Colours are not here — each page passes a palette and the kit writes them as custom properties
+   on .term-mount, so the six pages can be six different terminal themes with one stylesheet. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page-bg,#08090c);
+  color:var(--fg,#d8dee9);
+  font-family:var(--font,ui-monospace,monospace);
+  /* the terminal owns the viewport: a content-driven height here would feed back into the grid
+     sizing (taller grid -> taller wrapper -> even more rows) until the buffer allocation dies */
+  height:100vh;height:100dvh;overflow:hidden;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+}
+a{color:var(--accent,#88c0d0)}
+/* ---- the window ---- */
+.term-mount{display:flex;flex-direction:column;flex:1;min-height:0;width:100%}
+.chrome{display:flex;align-items:center;gap:10px;padding:7px 12px;background:var(--panel,#11131a);
+  border-bottom:1px solid var(--line,#232838);font-size:12px;line-height:1.4;flex:none;flex-wrap:wrap}
+.chrome .dots{display:flex;gap:5px;flex:none}
+.chrome .dots i{width:9px;height:9px;border-radius:50%;background:var(--dim,#4c566a);display:block}
+.chrome .dots i:nth-child(1){background:var(--red,#bf616a)}
+.chrome .dots i:nth-child(2){background:var(--yellow,#ebcb8b)}
+.chrome .dots i:nth-child(3){background:var(--green,#a3be8c)}
+.chrome .name{color:var(--fg,#d8dee9);font-weight:700;letter-spacing:.06em}
+.chrome .sub{color:var(--faint,#5f6b7f)}
+.chrome .grow{flex:1 1 40px;min-width:0}
+.chrome .pill{border:1px solid var(--line,#232838);border-radius:999px;padding:2px 8px;color:var(--dim,#8b98ab);
+  font-size:11px;white-space:nowrap}
+.chrome .pill b{color:var(--accent,#88c0d0);font-weight:700}
+.chrome a{text-decoration:none;border-bottom:1px solid transparent}
+.chrome a:hover{border-bottom-color:var(--accent,#88c0d0)}
+/* ---- the grid ---- */
+.grid-wrap{flex:1 1 0;min-height:0;display:flex;justify-content:center;align-items:flex-start;
+  padding:var(--pad,10px);background:var(--screen-bg,#0b0d12);overflow:hidden;position:relative}
+.grid-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--scan,0);
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 3px)}
+.grid-wrap::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--vignette,0);
+  background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+pre.screen{margin:0;font-family:var(--font,ui-monospace,monospace);font-size:var(--size,13px);
+  line-height:var(--lh,1.25);letter-spacing:var(--ls,0px);color:var(--fg,#d8dee9);white-space:pre;
+  text-shadow:var(--glow,none);tab-size:4;user-select:none}
+pre.screen b{font-weight:700}
+pre.screen i{font-style:italic}
+pre.screen u{text-decoration:underline;text-underline-offset:2px}
+pre.screen .d{opacity:var(--dimness,.62)}
+pre.screen .inv{ /* selected rows: reverse video, the way a real TUI paints them */
+  padding:0 .5px;border-radius:1px}
+pre.screen .cur{animation:blink 1.05s steps(1,end) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+/* ---- the key bar: the same map, tappable ---- */
+.keybar{flex:none;display:flex;gap:6px;align-items:stretch;padding:8px 10px;overflow-x:auto;
+  background:var(--panel,#11131a);border-top:1px solid var(--line,#232838);
+  scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.keybar button{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:38px;
+  padding:5px 8px 4px;background:var(--well,#151823);border:1px solid var(--line,#232838);
+  border-bottom-width:2px;border-radius:5px;color:var(--fg,#d8dee9);
+  font-family:var(--font,ui-monospace,monospace);font-size:12px;line-height:1;cursor:pointer}
+.keybar button:active{transform:translateY(1px);border-color:var(--accent,#88c0d0)}
+.keybar button .k{font-weight:700;color:var(--accent,#88c0d0)}
+.keybar button .l{font-size:9px;color:var(--dim,#8b98ab);white-space:nowrap;max-width:9ch;overflow:hidden;
+  text-overflow:ellipsis}
+.keybar button.wide{min-width:56px}
+.keybar .sep{flex:none;width:1px;background:var(--line,#232838);margin:2px 3px}
+/* ---- the status toast (a real TUI's echo of the last key) ---- */
+.toast{position:absolute;right:16px;bottom:14px;max-width:min(70%,420px);z-index:5;
+  background:var(--well,#151823);border:1px solid var(--accent,#88c0d0);color:var(--fg,#d8dee9);
+  padding:6px 10px;font-size:12px;white-space:pre-wrap;opacity:0;transition:opacity .18s;pointer-events:none}
+.toast.on{opacity:1}
+/* ---- help overlay: the shelf's one shared "I forgot the keys" screen ---- */
+.help{position:absolute;inset:0;z-index:8;background:color-mix(in srgb,var(--screen-bg,#0b0d12) 88%,transparent);
+  display:none;padding:16px;overflow:auto}
+.help.on{display:block}
+.help .box{border:1px solid var(--accent,#88c0d0);padding:14px 16px;max-width:min(760px,100%);margin:0 auto}
+.help h3{margin:0 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#88c0d0)}
+.help dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:5px 14px;margin:0;font-size:12.5px}
+.help dt{color:var(--accent,#88c0d0);font-weight:700;white-space:nowrap}
+.help dd{margin:0;color:var(--dim,#8b98ab);min-width:0;overflow-wrap:anywhere}
+.help .close{float:right;background:none;border:1px solid var(--line,#232838);color:var(--dim,#8b98ab);
+  border-radius:4px;font:inherit;padding:2px 8px;cursor:pointer}
+@media (max-width:700px){
+  .chrome{font-size:11px;padding:6px 9px}
+  .chrome .pill{font-size:10px}
+  .keybar{padding:7px 8px;gap:5px}
+}
+@media (prefers-reduced-motion:reduce){
+  pre.screen .cur{animation:none}
+}
