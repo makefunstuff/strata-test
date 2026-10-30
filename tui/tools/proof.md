@@ -12,18 +12,18 @@ changed; `pose` is the return value of the harness call.
 
 ```console
 $ timeout 1500 tui/tools/summarize.sh
-PASS  tui/1-monitor desktop cols=161 rows=43 ink=3701 glyphs=72 changed=true expect={"panel":"net","paused":true,"sort":"pid","theme":"phosphor","procs":13} pose=["window.tui.api.pause(true) -> true"]
-PASS  tui/1-monitor phone   cols=47 rows=45 ink=842 glyphs=64 changed=true expect={"panel":"mem"} pose=[]
-PASS  tui/1-monitor narrow  cols=41 rows=28 ink=711 glyphs=61 changed=true expect={"panel":"mem"} pose=[]
-PASS  tui/2-mail   desktop cols=155 rows=39 ink=1454 glyphs=79 changed=true expect={"folder":"inbox","sel":2,"focus":"reader","syncs":1} pose=["window.tui.api.sync() -> 2"]
-PASS  tui/2-mail   phone   cols=45 rows=40 ink=938 glyphs=72 changed=true expect={"folder":"@changed"} pose=[]
-PASS  tui/2-mail   narrow  cols=37 rows=25 ink=580 glyphs=64 changed=true expect={"folder":"@changed"} pose=[]
+PASS  tui/1-monitor desktop cols=161 rows=43 ink=3719 glyphs=71 changed=true expect={"panel":"net","paused":true,"sort":"pid","theme":"phosphor","procs":13} pose=["window.tui.api.pause(true) -> true"] chips=["p","p"]
+PASS  tui/1-monitor phone   cols=47 rows=45 ink=842 glyphs=64 changed=true expect={"panel":"mem"} pose=[] chips=["p","p"]
+PASS  tui/1-monitor narrow  cols=41 rows=28 ink=711 glyphs=61 changed=true expect={"panel":"mem"} pose=[] chips=["p","p"]
+PASS  tui/2-mail   desktop cols=155 rows=39 ink=1454 glyphs=79 changed=true expect={"folder":"inbox","sel":2,"focus":"reader","syncs":1} pose=["window.tui.api.sync() -> 2"] chips=["?","?"]
+PASS  tui/2-mail   phone   cols=45 rows=40 ink=938 glyphs=72 changed=true expect={"folder":"@changed"} pose=[] chips=["?","?"]
+PASS  tui/2-mail   narrow  cols=37 rows=25 ink=580 glyphs=64 changed=true expect={"folder":"@changed"} pose=[] chips=["?","?"]
 PASS  tui/3-files  desktop cols=161 rows=42 ink=2049 glyphs=75 changed=true expect={"stagedN":0,"commits":9,"top":"staged test","branch":"main"} pose=["window.tui.api.checkout('main') -> \"main\""]
 PASS  tui/3-files  phone   cols=47 rows=43 ink=797 glyphs=55 changed=true expect={"tab":2} pose=[]
 PASS  tui/3-files  narrow  cols=38 rows=25 ink=411 glyphs=53 changed=true expect={"tab":2} pose=[]
-PASS  tui/4-player desktop cols=137 rows=39 ink=2244 glyphs=76 changed=true expect={"viz":"matrix","shuffle":true,"index":3,"playing":true,"played":1} pose=["window.tui.api.select(3) -> \"Copper Wire\"","window.tui.api.play(true) -> true"]
-PASS  tui/4-player phone   cols=40 rows=40 ink=592 glyphs=62 changed=true expect={"tab":2} pose=[]
-PASS  tui/4-player narrow  cols=35 rows=26 ink=470 glyphs=59 changed=true expect={"tab":2} pose=[]
+PASS  tui/4-player desktop cols=137 rows=39 ink=2243 glyphs=76 changed=true expect={"viz":"matrix","shuffle":true,"index":3,"playing":true,"played":1} pose=["window.tui.api.select(3) -> \"Copper Wire\"","window.tui.api.play(true) -> true"] chips=[" "]
+PASS  tui/4-player phone   cols=40 rows=40 ink=592 glyphs=62 changed=true expect={"tab":2} pose=[] chips=[" "]
+PASS  tui/4-player narrow  cols=35 rows=26 ink=470 glyphs=59 changed=true expect={"tab":2} pose=[] chips=[" "]
 PASS  tui/5-ops    desktop cols=167 rows=44 ink=3165 glyphs=68 changed=true expect={"level":"info","acks":1,"restarts":1,"paused":true,"filter":"GET","shownLines":"@changed"} pose=["window.tui.api.pause(true) -> true"]
 PASS  tui/5-ops    phone   cols=49 rows=46 ink=1321 glyphs=57 changed=true expect={"tab":2} pose=[]
 PASS  tui/5-ops    narrow  cols=39 rows=28 ink=567 glyphs=49 changed=true expect={"tab":2} pose=[]
@@ -90,7 +90,4 @@ ok: false   grid: 161x43, ink 3701, 72 distinct glyphs
   grid was measured in.
 - **throwing-pose** is the reason the pose result is asserted rather than printed: as first
   written, a pose that threw only failed the page because a field expectation happened to notice.
-- **dead-chip** is the phone's keyboard: the chip row is what a touch user has, and nothing had
-  ever clicked one. A chip now carries its key in `data-k`, a click increments `chip_fired` the way
-  a tap increments `hit_fired`, and a chip that looks like a button and reaches nothing fails.
 - **blank-grid** covers an empty shell, which would otherwise report a clean layout.

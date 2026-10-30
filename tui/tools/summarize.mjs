@@ -21,7 +21,7 @@ for (const c of d.results) {
     `${errs.length ? "FAIL" : "PASS"}  ${pad(c.page, 12)} ${pad(c.tag, 7)} ` +
     `cols=${g.cols} rows=${g.rows} ink=${g.ink} glyphs=${g.glyphs} ` +
     `changed=${c.changed} expect=${Object.keys(c.expect ?? {}).length ? JSON.stringify(c.expect) : "-"} ` +
-    `pose=${JSON.stringify(c.pose ?? [])}`,
+    `pose=${JSON.stringify(c.pose ?? [])}` + (c.chips?.length ? ` chips=${JSON.stringify(c.chips)}` : ""),
   );
   const seen = new Set();
   for (const e of errs) {
