@@ -230,6 +230,16 @@ function grow(seedText) {
   return stat.stats;
 }
 
+/** one path for shadows: turning them off means every material's program changes, so both the
+    panel and the scripted API have to mark the materials or the town keeps its old shadows */
+function applyShadows(v) {
+  P.shadows = !!v;
+  renderer.shadowMap.enabled = P.shadows;
+  sun.castShadow = P.shadows;
+  if (current) current.group.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+  return P.shadows;
+}
+
 function applyVisibility() {
   if (!current) return;
   current.group.traverse((o) => {
@@ -272,11 +282,7 @@ fSun.add({ n: () => { P.time = 1.22; P.night = true; gui.controllersRecursive().
 fSun.add(P, "sunAzimuth", 0, 6.28, 0.01).name("sun azimuth").onChange(applyLight);
 fSun.add(P, "exposure", 0.6, 1.8, 0.01).name("exposure").onChange(applyLight);
 fSun.add(P, "bloom", 0, 1.2, 0.01).name("bloom").onChange(applyLight);
-fSun.add(P, "shadows").name("shadows").onChange((v) => {
-  renderer.shadowMap.enabled = v;
-  sun.castShadow = v;
-  root.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
-});
+fSun.add(P, "shadows").name("shadows").onChange(applyShadows);
 
 const fLook = gui.addFolder("miniature");
 fLook.add(P, "tilt", 0, 2, 0.01).name("tilt-shift").onChange(syncLook);
@@ -327,8 +333,7 @@ orbit.autoRotate = P.autoRotate;
 orbit.autoRotateSpeed = P.rotateSpeed;
 
 // on a phone the panel would cover most of the town, so it starts shut (G opens it)
-let panelOpen = window.innerWidth >= 640;
-if (!panelOpen) gui.close();
+if (window.innerWidth < 640) gui.close();
 
 // ----------------------------------------------------------------------------------------------
 // keys, as the shelf card promises: N night, C new town, V view, G panel
@@ -347,8 +352,11 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "KeyV") {
     setView(VIEW_NAMES[(VIEW_NAMES.indexOf(P.view) + 1) % VIEW_NAMES.length]);
   } else if (e.code === "KeyG") {
-    panelOpen = !panelOpen;
-    if (panelOpen) gui.open(); else gui.close();
+    // ask the panel whether it is open rather than tracking it here: clicking its title would
+    // otherwise leave a local flag stale and the next G press looking like it did nothing
+    const t = gui.domElement.querySelector(":scope > .title");
+    const open = !t || t.getAttribute("aria-expanded") !== "false";
+    if (open) gui.close(); else gui.open();
   } else return;
   e.preventDefault();
 });
@@ -412,7 +420,7 @@ lab.expose({
     return on;
   },
   setAutoRotate: (v) => { P.autoRotate = !!v; orbit.autoRotate = P.autoRotate; return P.autoRotate; },
-  setShadows: (v) => { P.shadows = !!v; renderer.shadowMap.enabled = P.shadows; sun.castShadow = P.shadows; return P.shadows; },
+  setShadows: (v) => applyShadows(!!v),
   setQuality: (n) => { lab.setQuality(QUALITY[n] ? n : "high"); return P.quality; },
   getCity: () => city,
   lab,

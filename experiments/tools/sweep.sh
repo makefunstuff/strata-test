@@ -20,4 +20,4 @@ run fire    5-volumetric-fire   --click 0.5,0.6 --eval "async()=>{const e=window
 # the town: orbit it, then a FIXED seed so the sweep is repeatable, then the lights on. The phone
 # width gets its own run: the panel, the preset and the layout are all different there.
 run diorama 6-medieval-diorama  --drag 0.5,0.5:0.62,0.42:700 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setView('hero');e.setSeed('Thornburgh');await new Promise(r=>setTimeout(r,1500));e.setNight(1);return JSON.stringify(e.state());}"
-run diorama 6-medieval-diorama  --width 390 --height 780 --label phone --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setQuality('low');e.setView('hero');return JSON.stringify(e.state());}"
+run phone  6-medieval-diorama  --width 390 --height 780 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setQuality('low');e.setView('hero');return JSON.stringify(e.state());}"

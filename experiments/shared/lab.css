@@ -47,7 +47,12 @@ a.back:hover { color: var(--accent); border-color: var(--accent); }
 .lab-gui.lil-gui .title { letter-spacing: 0.04em; }
 
 @media (max-width: 640px) {
-  .hud { max-width: 70vw; font-size: 10px; }
-  .hint { font-size: 10px; bottom: 12px; }
-  .lab-gui.lil-gui { --width: 200px; }
+  /* A phone has ~390x780 and the top-left corner cannot hold a title, a four-line subtitle
+     and an eight-item readout at once — they used to land on top of each other. So: the
+     subtitle (nice-to-have prose) goes, the readout moves up into its place, the panel sits
+     below the title instead of over it, and the hint lifts clear of the back link. */
+  h1.title small { display: none; }
+  .hud { top: 76px; left: 18px; max-width: 60vw; font-size: 10px; }
+  .hint { font-size: 10px; bottom: 42px; }
+  .lab-gui.lil-gui { --width: 200px; top: 44px; }
 }

@@ -7,6 +7,7 @@ import { Rng } from "./rng.js";
 
 const _v = new THREE.Vector3();
 const _q = new THREE.Quaternion();
+const _e = new THREE.Euler();
 const _s = new THREE.Vector3(1, 1, 1);
 const _m = new THREE.Matrix4();
 const _c = new THREE.Color();
@@ -380,16 +381,19 @@ function buildFolk(city, mats) {
         }
         cartMesh.instanceMatrix.needsUpdate = true;
       }
-      for (let i = 0; i < flock.length; i++) {
-        const b = flock[i];
-        b.a += b.w * dt;
-        const flap = Math.sin(t * 7 + b.ph) * 0.5;
-        _q.setFromEuler(new THREE.Euler(flap * 0.6, b.a + Math.PI / 2, Math.sin(b.a * 2) * 0.25 + flap * 0.4, "YXZ"));
-        _v.set(Math.cos(b.a) * b.r, b.y + Math.sin(t * 0.6 + b.ph) * 2.5, Math.sin(b.a) * b.r);
-        _s.set(b.s, b.s, b.s);
-        birds.setMatrixAt(i, _m.compose(_v, _q, _s));
+      if (birds.visible) {
+        for (let i = 0; i < flock.length; i++) {
+          const b = flock[i];
+          b.a += b.w * dt;
+          const flap = Math.sin(t * 7 + b.ph) * 0.5;
+          _e.set(flap * 0.6, b.a + Math.PI / 2, Math.sin(b.a * 2) * 0.25 + flap * 0.4, "YXZ");
+          _q.setFromEuler(_e);
+          _v.set(Math.cos(b.a) * b.r, b.y + Math.sin(t * 0.6 + b.ph) * 2.5, Math.sin(b.a) * b.r);
+          _s.set(b.s, b.s, b.s);
+          birds.setMatrixAt(i, _m.compose(_v, _q, _s));
+        }
+        birds.instanceMatrix.needsUpdate = true;
       }
-      birds.instanceMatrix.needsUpdate = true;
     },
   };
 }
