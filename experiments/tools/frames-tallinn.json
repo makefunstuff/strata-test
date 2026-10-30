@@ -1,0 +1,46 @@
+[
+ {
+  "name": "hero",
+  "wait": 3600,
+  "eval": "async()=>{const e=window.experiment;e.setQuality('medium');e.setChrome(false);e.setAutoRotate(false);e.setTime(0.45);e.setSeason('summer');e.setView('hero');return e.state().drawCalls;}"
+ },
+ {
+  "name": "alt1",
+  "wait": 3200,
+  "eval": "async()=>{const e=window.experiment;e.setSeason('summer');e.setTime(1.26);e.setView('townhall');return e.state().night;}"
+ },
+ {
+  "name": "alt2",
+  "wait": 3400,
+  "eval": "async()=>{const e=window.experiment;e.setSeason('winter');e.setTime(1.26);e.setView('market');return e.state().winter;}"
+ },
+ {
+  "name": "alt3",
+  "wait": 3000,
+  "eval": "async()=>{const e=window.experiment;e.setSeason('summer');e.setTime(0.45);e.setView('toompea');return 'ok';}"
+ },
+ {
+  "name": "harbour",
+  "wait": 3000,
+  "eval": "async()=>{const e=window.experiment;e.setView('harbour');return 'ok';}"
+ },
+ {
+  "name": "winter-night",
+  "wait": 3200,
+  "eval": "async()=>{const e=window.experiment;e.setSeason('winter');e.setTime(1.3);e.setView('hero');return 'ok';}"
+ },
+ {
+  "name": "phone",
+  "width": 390,
+  "height": 844,
+  "wait": 3000,
+  "eval": "async()=>{const e=window.experiment;e.setQuality('low');e.setChrome(false);e.setTime(0.45);e.setSeason('summer');e.setView('hero');return e.state().quality;}"
+ },
+ {
+  "name": "phone-ui",
+  "width": 390,
+  "height": 844,
+  "wait": 2600,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(true);return 'ok';}"
+ }
+]

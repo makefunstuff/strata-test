@@ -55,9 +55,14 @@ node experiments/tools/check.mjs experiments/7-tallinn-diorama --label tour --wa
   --eval "window.experiment.startTour()" \
   --eval "(()=>{const e=window.experiment;return new Promise(r=>setTimeout(()=>r({touring:e.touring(),card:e.landmark(),view:e.state().view}),6000));})()"
 
-# and the same eighteen frames the card set is made of, in one page load, with the exposure of each
-# printed (mean, spread, blown pixels) so a flat grey frame fails a review rather than passing for art
-node experiments/tools/shotpack.mjs experiments/7-tallinn-diorama --spec frames.json --out shots-review
+# and the frames the committed card set is made of, in one page load, with the exposure of each printed
+# (mean, spread, blown pixels) so a flat grey frame fails a review rather than passing for art. The two
+# specs are tracked, which is what makes shots/ reproducible rather than a pile of lucky screenshots.
+node experiments/tools/shotpack.mjs experiments/7-tallinn-diorama --spec experiments/tools/frames-tallinn.json \
+  --out experiments/7-tallinn-diorama/shots --quality 84
+node experiments/tools/shotpack.mjs experiments/7-tallinn-diorama \
+  --spec experiments/tools/frames-tallinn-landmarks.json \
+  --out experiments/7-tallinn-diorama/shots/landmarks --quality 72
 ```
 
 `bash experiments/tools/sweep.sh` runs all seven and prints one line each
