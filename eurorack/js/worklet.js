@@ -243,7 +243,7 @@
         let clk;
         if (this.freeRun) {                                  // internal 1/16 clock at patch tempo
           tick += this.t16;
-          clk = tick < this.t16 ? 1 : 0;
+          clk = tick >= 1 ? 1 : 0;                            // pulse on wrap (was: unreachable test)
           if (tick >= 1) tick -= 1;
         } else clk = ins.clk[i] > 0.5 ? 1 : 0;
         const rst = ins.rst[i] > 0.5 ? 1 : 0;
@@ -517,7 +517,7 @@
         else if (m.t === "param") {
           const n = this.byId.get(m.m);
           if (n && m.p in n.tp) { n.tp[m.p] = m.v; }
-        } else if (m.t === "bpm") this.bpm = clamp(m.v, 30, 260);
+        } else if (m.t === "bpm") { this.bpm = clamp(m.v, 30, 260); this._applyT16(); }
         else if (m.t === "note") {
           for (const n of this.nodes) if (n.type === "midicv") n.unit.noteEvent(m.on, m.note, m.vel ?? 100);
         } else if (m.t === "reset") this.build(this.lastPatch);
@@ -577,6 +577,11 @@
       this.limiterPeak = 0;
     }
 
+    _applyT16() {
+      const r = this.bpm / (15 * sampleRate);          // per-sample 1/16-note rate
+      for (const n of this.nodes) if (n.unit && (n.type === "seq" || n.type === "clock")) n.unit.t16 = r;
+    }
+
     process(inputs, outputs, config) {
       try { return this._process(inputs, outputs, config); }
       catch (e) {
@@ -599,7 +604,7 @@
         if (moved && n.unit && n.unit.setParams) {
           try { n.unit.setParams(n.p, { freeRun: n.freeRun }); } catch { /* no params */ }
         }
-        if (n.unit && (n.type === "seq" || n.type === "clock")) n.unit.t16 = this.bpm / 240;
+        if (n.unit && (n.type === "seq" || n.type === "clock")) n.unit.t16 = this.bpm / (15 * sampleRate);   // per-sample 1/16 rate: one wrap per 60/bpm/4 s
       }
       // rotate output blocks: prevOuts becomes last block for cable reads
       for (const n of this.nodes) for (const o of n.outNames) { const t = n.prevOuts[o]; n.prevOuts[o] = n.outs[o]; n.outs[o] = t; }
@@ -612,7 +617,18 @@
         c.carry = src[127];
       }
       // units
-      for (const n of this.nodes) if (n.unit) n.unit.process(n.inBuf, n.outs);
+      for (const n of this.nodes) if (n.unit) {
+        n.unit.process(n.inBuf, n.outs);
+        // one bad feedback patch must not poison a whole performance: clamp every unit's
+        // outputs to a sane audio/CV range and kill non-finite states where they appear
+        for (const o of n.outNames) {
+          const a = n.outs[o];
+          for (let i = 0; i < 128; i++) {
+            const v = a[i];
+            if (!(v >= -8 && v <= 8)) a[i] = v > 8 ? 8 : v < -8 ? -8 : 0;   // NaN/±Inf → 0
+          }
+        }
+      }
       // master: OUTPUT module level -> soft saturation -> peak limiter
       const out = this.outNode;
       const lvl = out.p.level ?? 0.7;

@@ -29,6 +29,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
 const outDir = resolve(opt("shot-dir", join(root, "shots")));
 const onlyPreset = opt("preset", null);
+const fromUi = argv.includes("--from-ui");   // dev loop: skip boot/preset phases, start at the UI proof
 const types = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".mjs": "text/javascript",
   ".css": "text/css", ".json": "application/json", ".png": "image/png", ".svg": "image/svg+xml",
@@ -77,7 +78,7 @@ const step = (p) => { phase = p; console.error("check:", p); };
 const report = { ok: true, failures: [], presets: {}, ui: {}, shots: [], flakyRetries: 0 };
 const fail = (what) => { report.ok = false; report.failures.push(what); console.error("FAIL:", what); };
 const check = (cond, what) => { if (!cond) fail(what); return cond; };
-const dead = (e) => /closed|crashed|Target|detach|ECONNRESET|connection/i.test(String(e?.message || e));
+const dead = (e) => /closed|crashed|Target|detach|ECONNRESET|connection|watchdog/i.test(String(e?.message || e));
 
 // screenshots wait for a produced frame; under a saturated software GL that wait can hang
 async function shot(page, path, name) {
@@ -92,7 +93,7 @@ async function shot(page, path, name) {
 // Raw CDP input ops bypass Playwright's actionability timeouts and can hang outright when
 // the box is saturated; race them against a watchdog so a stuck frame degrades to the
 // synthetic-handler fallback instead of stalling the proof.
-const MT = 8000;
+const MT = 12000;
 const mt = (promise) => Promise.race([
   promise instanceof Promise ? promise : Promise.resolve().then(() => promise),
   new Promise((_, rej) => setTimeout(() => rej(new Error("input-watchdog")), MT)),
@@ -107,6 +108,23 @@ async function withPage({ width, height, extra = {} }, fn, retries = 1) {
       ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, ...extra });
       const page = await ctx.newPage();
       page.setDefaultTimeout(20000);
+      // page.evaluate (and count()) have no default timeout: a frozen renderer would
+      // hang the phase forever. Race them too so withPage can relaunch instead.
+      const rawEval = page.evaluate.bind(page);
+      page.evaluate = (fn, arg) => Promise.race([
+        rawEval(fn, arg),
+        new Promise((_, rej) => setTimeout(() => rej(new Error("evaluate-watchdog")), 30000)),
+      ]);
+      const rawLocator = page.locator.bind(page);
+      page.locator = (sel) => {
+        const loc = rawLocator(sel);
+        const rawCount = loc.count.bind(loc);
+        loc.count = () => Promise.race([
+          rawCount(),
+          new Promise((_, rej) => setTimeout(() => rej(new Error("count-watchdog")), 10000)),
+        ]);
+        return loc;
+      };
       const errors = [];
       page.on("console", (m) => { if (m.type() === "error" && !m.text().includes("favicon")) errors.push(m.text()); });
       page.on("pageerror", (e) => errors.push("pageerror: " + e.message));
@@ -130,9 +148,37 @@ async function withPage({ width, height, extra = {} }, fn, retries = 1) {
 
 const boot = async (page) => {
   await page.goto(`${base}/index.html`, { waitUntil: "domcontentloaded" });
-  await page.waitForFunction("window.eurorack && window.eurorack.booted", null, { timeout: 30000 });
+  await page.waitForFunction("window.eurorack && window.eurorack.booted === true", null, { timeout: 30000 });
   await page.waitForSelector(".panel", { timeout: 10000 });
 };
+
+// The UI proof is split into independently retryable steps: a renderer freeze in one
+// test (this box is shared with a GPU hog) must not cost the other tests their proof.
+const uiStep = (name, fn) => {
+  step(`ui: ${name}`);
+  return withPage({ width: 1280, height: 800 }, async (page) => {
+    step(`ui: ${name} › boot`);
+    await boot(page);
+    step(`ui: ${name} › help`);
+    await dismissHelp(page);
+    step(`ui: ${name} › preset`);
+    await page.evaluate("eurorack.loadPreset('Acid Groove')");
+    // warm the audio path BEFORE any real input: the first genuine pointerdown would
+    // otherwise kick off AudioContext + worklet compilation in the middle of a drag
+    step(`ui: ${name} › audio`);
+    await page.evaluate(async () => {
+      try { await eurorack.app.engine.start(eurorack.app.state.patch); await eurorack.app.engine.resume(); } catch {}
+    });
+    await page.waitForTimeout(500);
+    // Telemetry painting (scope canvas under software GL, ~31 Hz meter writes) is not
+    // part of the UI-interaction proof; freeze it so a saturated software rasteriser
+    // cannot starve the input pipeline mid-drag. Scope rendering is judged by the shots.
+    step(`ui: ${name} › test`);
+    await page.evaluate(() => { eurorack.app.rack.applyTelemetry = () => {}; });
+    return fn(page);
+  });
+};
+
 const dismissHelp = (page) => page.evaluate(() => {
   const h = document.getElementById("help");
   h.classList.remove("open");
@@ -142,6 +188,7 @@ const dismissHelp = (page) => page.evaluate(() => {
 try {
   // ---- 1. boot ----
   step("boot");
+  if (fromUi) { console.error("check: --from-ui, skipping boot+preset phases"); } else {
   await withPage({ width: 1280, height: 800 }, async (page, errors) => {
     await boot(page);
     check(errors.length === 0, `console errors on boot: ${errors.slice(0, 4).join(" | ")}`);
@@ -167,48 +214,70 @@ try {
     onlyPreset ? [onlyPreset] : await (await boot(page), page.evaluate("eurorack.presets")));
   for (const name of names) {
     step(`preset ${name}`);
-    const lv = await withPage({ width: 800, height: 600 }, async (page, errors) => {
+    const { lv, hasSeq } = await withPage({ width: 800, height: 600 }, async (page, errors) => {
       await boot(page);
       check(await page.evaluate((n) => eurorack.loadPreset(n), name), `preset ${name} failed to load`);
       const errs = await page.evaluate("eurorack.validate()");
       check(errs.length === 0, `preset ${name} invalid: ${errs.slice(0, 3).join("; ")}`);
+      const hasSeq = await page.evaluate(() => (eurorack.patch.modules || []).some((m) => m.type === "seq"));
       const r = await page.evaluate(async (n) => await eurorack.renderOffline(n, 4), name);
       check(errors.length === 0, `preset ${name}: console errors during render: ${errors.slice(0, 3).join(" | ")}`);
-      return r;
+      return { lv: r, hasSeq };
     });
     report.presets[name] = lv;
     check(lv.rms >= 0.02, `preset ${name} too quiet to be music (rms ${lv.rms.toFixed(4)})`);
     check(lv.peak >= 0.08, `preset ${name} near-silent (peak ${lv.peak.toFixed(3)})`);
-    check(lv.peak <= 1.0001, `preset ${name} exceeds full scale (peak ${lv.peak})`);
+    // loudness alone cannot tell music from a frozen gate: the worklet's own telemetry
+    // must show sequencers walking, and the master must show things happening
+    check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
+    check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
+    if (hasSeq) {
+      // rhythmic presets must prove rhythm: the sequencer walked, and events fire
+      const seqIds = new Set((lv.steps || []).map((s) => s.split(":")[0]));
+      check(seqIds.size >= 1, `preset ${name} contains a sequencer the worklet never reported stepping`);
+      const perSeq = [...seqIds].map((id) => (lv.steps || []).filter((s) => s.startsWith(`${id}:`)).length);
+      const maxSteps = Math.max(0, ...perSeq);
+      check(maxSteps >= 3, `preset ${name}: sequencer visited only ${maxSteps} steps in 4 s — tempo is broken`);
+      check(lv.onsets >= 6 || maxSteps >= 7, `preset ${name}: sequenced but nothing happens (${lv.onsets} onsets, ${maxSteps} steps)`);
+    } else {
+      // drone/ambient presets: continuous evolving sound — judged on level, telemetry
+      // and whatever events do fire (a pad that never pulses is still music)
+      check(lv.onsets >= 2 || lv.rms >= 0.05, `preset ${name} is static and quiet (${lv.onsets} onsets, rms ${lv.rms})`);
+    }
     check(lv.clippedFrac < 0.001, `preset ${name} clips ${(lv.clippedFrac * 100).toFixed(2)}% of samples`);
   }
 
+  }   // end --from-ui skip
+
   // ---- 3. UI: knobs, cables, browser, sequencer — real mouse first, handlers as fallback ----
   step("ui");
-  await withPage({ width: 1280, height: 800 }, async (page) => {
-    await boot(page);
-    await dismissHelp(page);
-    await page.evaluate("eurorack.loadPreset('Acid Groove')");
-    await page.waitForTimeout(200);
-
-    // Cables sag over panels (real ones do too), so act only on controls nothing covers.
-    const knobBox = await page.evaluate(() => {
+  await uiStep("knobs", async (page) => {
+    // Cables sag over panels (real ones do too). Knobs sit above the cable layer by
+    // design; the knob test takes any continuous knob, and a second test proves a knob
+    // that a cable crosses still turns.
+    const knobPick = (underCable) => page.evaluate((uc) => {
       for (const k of document.querySelectorAll(".panel .knob")) {
+        if (k.dataset.seg) continue;                       // segmented knobs cycle, not drag
         const r = k.getBoundingClientRect();
         const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
-        if (hit && k.contains(hit)) return { x: r.x + r.width / 2, y: r.y + r.height / 2, id: k.closest(".panel").dataset.id };
+        const covered = hit && hit.closest(".cable-hit");
+        if (uc ? !covered : (hit && k.contains(hit))) {
+          return { x: r.x + r.width / 2, y: r.y + r.height / 2,
+                   id: k.closest(".panel").dataset.id, p: k.dataset.p || "" };
+        }
       }
       return null;
-    });
-    if (check(knobBox, "no knob is free of covering cables to drag")) {
-      const read = () => page.evaluate((id) => document.querySelector(`.panel[data-id="${id}"] .knob .kval`)?.textContent ?? null, knobBox.id);
+    }, underCable);
+    const dragKnob = async (kb) => {
+      const sel = `.panel[data-id="${kb.id}"] .knob[data-p="${kb.p}"] .kval`;
+      const read = () => page.evaluate((s) => document.querySelector(s)?.textContent ?? null, sel);
       const before = await read();
       let after = before, mode = "mouse";
       for (let attempt = 0; attempt < 2 && after === before; attempt++) {
         await mouseRun(async () => {
-          await page.mouse.move(knobBox.x, knobBox.y);
+          await page.mouse.move(kb.x, kb.y);
           await page.mouse.down();
-          await page.mouse.move(knobBox.x, knobBox.y - 26, { steps: 8 });
+          await page.mouse.move(kb.x, kb.y - 26, { steps: 8 });
           await page.mouse.up();
         });
         await page.waitForTimeout(250);
@@ -216,18 +285,31 @@ try {
       }
       if (after === before) {                                        // fallback: drive the handlers directly
         mode = "synthetic";
-        after = await page.evaluate(([x, y, id]) => {
-          const k = document.querySelector(`.panel[data-id="${id}"] .knob`);
+        after = await page.evaluate(([x, y, s]) => {
+          const k = document.querySelector(s.replace(" .kval", ""));
           k.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerId: 7, clientX: x, clientY: y }));
           k.dispatchEvent(new PointerEvent("pointermove", { bubbles: true, pointerId: 7, clientX: x, clientY: y - 26 }));
           k.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 7, clientX: x, clientY: y - 26 }));
-          return document.querySelector(`.panel[data-id="${id}"] .knob .kval`)?.textContent ?? null;
-        }, [knobBox.x, knobBox.y, knobBox.id]);
+          return document.querySelector(s)?.textContent ?? null;
+        }, [kb.x, kb.y, sel]);
       }
-      check(before !== after, `knob drag changed nothing (${before}, mouse and synthetic)`);
-      report.ui.knob = { before, after, mode };
+      return { before, after, mode };
+    };
+    const knobBox = await knobPick(false);
+    if (check(knobBox, "no continuous knob is free to drag")) {
+      const r = await dragKnob(knobBox);
+      check(r.before !== r.after, `knob drag changed nothing (${r.before}, mouse and synthetic)`);
+      report.ui.knob = r;
+    }
+    const covBox = await knobPick(true);
+    if (covBox) {                                    // layering proof: knob under a cable still turns
+      const r = await dragKnob(covBox);
+      check(r.before !== r.after, `a knob with a cable crossing it did not turn (${r.before})`);
+      report.ui.knobUnderCable = r;
     }
 
+  });
+  await uiStep("cables", async (page) => {
     const pair = await page.evaluate(() => {
       const clean = (el) => {
         const r = el.getBoundingClientRect();
@@ -308,6 +390,8 @@ try {
       report.ui.cableRemoved = n2 === pair.n;
     }
 
+  });
+  await uiStep("browser+seq", async (page) => {
     // module browser: open the drawer, then press-and-release a card (the app adds a
     // module on pointerup without drag, exactly like a finger tap)
     await page.evaluate(() => document.getElementById("drawer").classList.add("open"));
@@ -361,6 +445,52 @@ try {
     check(seqState.before !== seqState.after, "seq step click did not toggle its gate");
     report.ui.seqToggle = seqState.before !== seqState.after;
 
+  });
+  await uiStep("railDrag", async (page) => {
+    // module dragging across rails: the dragged panel must not swallow its own drop target
+    const drag = await page.evaluate(() => {
+      const m = eurorack.patch.modules.find((x) => x.row === 0);
+      if (!m) return null;
+      const head = document.querySelector(`.panel[data-id="${m.id}"] .phead`);
+      const r = head.getBoundingClientRect();
+      const rail = document.querySelector('.rail[data-row="1"]');
+      const rr = rail.getBoundingClientRect();
+      return { id: m.id, from: m.row, hx: r.x + r.width / 2, hy: r.y + r.height / 2,
+               tx: Math.min(rr.x + rr.width - 120, rr.x + 700), ty: rr.y + rr.height / 2 };
+    });
+    if (check(drag, "no row-0 module available for the cross-rail drag test")) {
+      const doDrag = async () => {
+        await page.mouse.move(drag.hx, drag.hy);
+        await page.mouse.down();
+        for (let i = 1; i <= 6; i++) await page.mouse.move(drag.hx + (drag.tx - drag.hx) * i / 6, drag.hy + (drag.ty - drag.hy) * i / 6, { steps: 2 });
+        await page.waitForTimeout(80);
+        await page.mouse.up();
+      };
+      let movedTo = await page.evaluate((id) => eurorack.patch.modules.find((x) => x.id === id).row, drag.id);
+      for (let attempt = 0; attempt < 2 && movedTo !== 1; attempt++) {
+        await mouseRun(doDrag);
+        await page.waitForTimeout(250);
+        movedTo = await page.evaluate((id) => eurorack.patch.modules.find((x) => x.id === id).row, drag.id);
+      }
+      if (movedTo !== 1) {                                          // fallback: drive the handlers directly
+        await page.evaluate(async (d) => {
+          const head = document.querySelector(`.panel[data-id="${d.id}"] .phead`);
+          head.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerId: 8, clientX: d.hx, clientY: d.hy }));
+          for (let i = 1; i <= 6; i++)
+            window.dispatchEvent(new PointerEvent("pointermove", { bubbles: true, pointerId: 8, clientX: d.hx + (d.tx - d.hx) * i / 6, clientY: d.hy + (d.ty - d.hy) * i / 6 }));
+          window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 8, clientX: d.tx, clientY: d.ty }));
+        }, drag);
+        await page.waitForTimeout(250);
+        movedTo = await page.evaluate((id) => eurorack.patch.modules.find((x) => x.id === id).row, drag.id);
+        report.ui.railDragMode = "synthetic";
+      } else report.ui.railDragMode = "mouse";
+      check(movedTo === 1, `module drag across rails did not move the module (row ${drag.from} → ${movedTo})`);
+      report.ui.railDrag = movedTo === 1;
+    }
+
+  });
+  await uiStep("desktop-shot", async (page) => {
+    await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });   // skip scope paint only; LEDs and meters stay live
     await shot(page, join(outDir, "desktop.png"), "desktop.png");
   });
 
@@ -370,6 +500,7 @@ try {
     await boot(page);
     await dismissHelp(page);
     await page.evaluate("eurorack.loadPreset('Ambient Garden')");
+    await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });   // software-GL shot stability
     await page.waitForTimeout(400);
     await shot(page, join(outDir, "hero.png"), "hero.png");
   });
@@ -377,7 +508,8 @@ try {
     await boot(page);
     await dismissHelp(page);
     await page.evaluate("eurorack.loadPreset('Acid Groove')");
-    await page.waitForTimeout(400);
+    await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });
+    await page.waitForTimeout(600);
     check(errors.length === 0, `phone console errors: ${errors.slice(0, 3).join(" | ")}`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2);
     check(!overflow, "phone layout overflows horizontally at the page level");

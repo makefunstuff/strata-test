@@ -53,6 +53,10 @@ export class Engine {
       if (e.data?.t === "lv" && this.onLevels) this.onLevels(e.data);
     };
     this.ready = true;
+    if (this._pendingPatch) {                           // edits made before audio started are not dropped
+      this.node.port.postMessage({ t: "patch", patch: toWorkletPatch(this._pendingPatch) });
+      this._pendingPatch = null;
+    }
   }
 
   async resume() {
@@ -79,12 +83,22 @@ export class Engine {
       outputChannelCount: [2],
       processorOptions: { patch: toWorkletPatch(patch) },
     });
+    // collect the worklet's own telemetry during the render: the proof uses it to see
+    // whether sequencers actually walked their steps, not just whether it was loud
+    const steps = new Set();
+    let teleN = 0;
+    node.port.onmessage = (e) => {
+      const d = e.data;
+      if (d?.t !== "lv") return;
+      teleN++;
+      if (d.seq) for (const id in d.seq) steps.add(`${id}:${d.seq[id]}`);
+    };
     node.connect(ctx.destination);
     const buf = await ctx.startRendering();
     // Chromium leaks the worklet side of an OfflineAudioContext until the context is closed
     // (a pile of preset renders or WAV exports takes the renderer down without this).
     try { await ctx.close(); } catch { /* older builds */ }
-    return { sampleRate, left: buf.getChannelData(0), right: buf.getChannelData(1) };
+    return { sampleRate, left: buf.getChannelData(0), right: buf.getChannelData(1), steps: [...steps], teleN };
   }
 
   static wav(left, right, sampleRate) {
@@ -117,5 +131,30 @@ export class Engine {
       sum += a * a;
     }
     return { peak, rms: Math.sqrt(sum / left.length), clippedFrac: clipped / left.length };
+  }
+
+  // Energy onsets: local peaks of a 10 ms RMS envelope standing above a 250 ms moving
+  // average — a cheap stand-in for "something keeps happening", which loudness alone
+  // cannot prove (a frozen gate is loud too, and delay tails never go quiet).
+  static onsets(left, sampleRate) {
+    const win = Math.max(1, Math.floor(0.01 * sampleRate));
+    const env = new Float32Array(Math.ceil(left.length / win));
+    for (let w = 0; w < env.length; w++) {
+      let s = 0;
+      for (let k = 0; k < win && w * win + k < left.length; k++) s += left[w * win + k] * left[w * win + k];
+      env[w] = Math.sqrt(s / win);
+    }
+    const avgWin = Math.max(1, Math.floor(0.25 * sampleRate / win));   // 250 ms context
+    const refr = Math.max(1, Math.floor(0.05 * sampleRate / win));     // 50 ms refractory
+    let n = 0, last = -refr - 1;
+    for (let w = 1; w < env.length - 1; w++) {
+      let avg = 0;
+      for (let k = Math.max(0, w - avgWin); k < Math.min(env.length, w + avgWin); k++) avg += env[k];
+      avg /= Math.min(env.length, w + avgWin) - Math.max(0, w - avgWin);
+      if (env[w] > env[w - 1] && env[w] >= env[w + 1] && env[w] > avg * 1.6 + 0.02 && w - last >= refr) {
+        n++; last = w;
+      }
+    }
+    return n;
   }
 }

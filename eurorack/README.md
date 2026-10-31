@@ -3,7 +3,8 @@
 Two rails of real widths, real jacks and real consequences. Nineteen module
 types at their true HP sizes on a 96 HP case, every sound generated in **one
 AudioWorklet** at the audio thread's rate, patches that live in the URL, and
-five presets that make actual music the moment the page opens.
+five presets that make actual music; the page itself opens on a playable
+acid-ish initial patch.
 
 Open `index.html` (or `/eurorack/` on Pages). No build, no dependencies in
 the page itself — plain ES modules, one worklet file the audio context loads.
@@ -13,10 +14,10 @@ the page itself — plain ES modules, one worklet file the audio context loads.
 | rail maths | |
 |---|---|
 | 1 HP = 10 px | panels are `hp × 10` px wide, 264 px tall rows, screws and anodised-aluminium gradients |
-| catalogue | VCO ×2 (sync, FM, PW, sub-ish mix), dual LFO, ADSR ×2, VCA, multimode filter (LP/BP/HP/notch, self-oscillates at high Q), noise, S&H, 16-step sequencer (per-step gate + pitch drag), clock (÷2…×2, 1/16, beat, BAR), quantiser (5 scales), mixer (4ch), delay (fb + damping), reverb (feedback comb pair + diffusers), kick, hat, snare, attenuverter/mute-mult, MIDI-CV, output (level, scope, stereo jacks) |
+| catalogue | VCO ×2 (sync, FM, PW), dual LFO, ADSR ×2, VCA, multimode state-variable filter (LP/BP/HP, self-oscillates at high Q), noise, S&H, 16-step sequencer (per-step gate + pitch drag), clock (1/16, beat, BAR), quantiser (9 scales), mixer (4ch), delay (fb + damping), reverb (feedback comb pair + diffusers), kick, hat, snare, attenuverter/mult, MIDI-CV, output (level, scope, stereo jacks) |
 | patching | drag jack→jack; **any output feeds any number of inputs**; CV, gate and audio jack types are free-form (the worklet does not care, and neither do real eurorackers); click a cable to unplug it; cables sag with a length-dependent catenary and swing when you move a module |
 | play | computer keyboard (Z–M + Q–U rows, octave ± with `[` `]`), on-screen key strip, Web MIDI when a controller is present |
-| keep | autosave to localStorage, named patches, JSON export/import, `#p=` URL sharing (deflate-ish packed), WAV bounce (4 s) rendered through the *same* worklet in an OfflineAudioContext |
+| keep | autosave to localStorage, named patches, JSON export/import, `#p=` URL sharing (base64url-packed), WAV bounce at 8/16/30 s rendered through the *same* worklet in an OfflineAudioContext (the check uses 4 s) |
 
 ## How it is put together
 
@@ -42,16 +43,17 @@ The patch is the program. The UI posts it to the worklet as a message, the
 worklet rebuilds a unit/cable graph off the audio thread, and every
 control message (knob, gate, note) is a small post — the audio thread never
 touches the DOM, and the DOM never touches sample data except through the
-24 Hz telemetry messages that drive the scope and the LEDs.
+~31 Hz telemetry messages that drive the scope and the LEDs.
 
 ### DSP notes that mattered
 
 - **Resonators are Chamberlin biquads with the damping clamped to the stable
   bound** (`min(1/Q, .98, (2−α)/2 − .01)`). The first filter and hat designs
   blew to NaN at extreme knob values; the check would have shipped them if
-  "no console errors" had been the bar. Every state variable is NaN-guarded
-  per unit, and a fault prints through `port.postMessage` instead of
-  silencing the output.
+  "no console errors" had been the bar. Every unit's outputs are clamped to
+  ±8 with non-finite values killed in place, so a runaway feedback patch gets
+  squashed instead of poisoning the mix, and processor faults print through
+  `port.postMessage` instead of silencing the output.
 - **Cables copy whole 128-sample blocks** with one carried sample across the
   seam — cheap, and it means modulation rates (LFOs at 20 Hz) stay smooth.
 - **Sequencer and clock run on the audio clock** (sample counters against
@@ -67,23 +69,31 @@ Chromium (software GL) and asserts, unmocked:
 1. boot with zero console errors, ≥5 modules, initial patch validates,
    worklet node ready, first-run help appears once;
 2. **each of the five presets renders 4 s offline through the production
-   worklet** and must be audible and clean — measured on this run:
+   worklet** and must be audible and *alive*: measured levels
 
-   | preset | peak | RMS | clipped |
+   | preset | peak | RMS | the live proof |
    |---|---|---|---|
-   | Acid Groove | 0.467 | 0.057 | 0 % |
-   | Pluck & Space | 0.521 | 0.081 | 0 % |
-   | Deep Drone | 0.246 | 0.094 | 0 % |
-   | Ambient Garden | 0.105 | 0.067 | 0 % |
-   | Kraut Motor | 0.839 | 0.336 | 0 % |
+   | Acid Groove | ~0.58 | ~0.15 | sequencer walks ≥3 steps, ≥6 onsets |
+   | Pluck & Space | ~0.48 | ~0.11 | sequencer walks ≥3 steps, ≥6 onsets |
+   | Deep Drone | ~0.25 | ~0.09 | telemetry + events or sustained RMS floor |
+   | Ambient Garden | ~0.11 | ~0.07 | telemetry + sustained RMS floor |
+   | Kraut Motor | ~0.84 | ~0.36 | sequencer walks ≥3 steps (motorik: a flat envelope is legitimate) |
 
-3. the UI answers to **real mouse events**: a knob drag changes its value,
-   a jack→jack drag adds exactly one cable, a click on the cable's sag
+   The sequencer-step proof comes from the worklet's own telemetry during the
+   offline render, and the onset detector is a flux test on the master — a
+   frozen gate or a stalled clock measures loud but fails. (It caught a real
+   one: the clock increment was once per-second math in a per-sample loop,
+   which no loudness figure could see.)
+
+3. the UI answers to **real mouse events**: a knob drag changes its value
+   (including a knob with a cable crossing it — the layering contract), a
+   jack→jack drag adds exactly one cable, a click on the cable's sag
    unplugs it, a module-browser press drops a new panel, a seq step toggles
-   its gate. Where the saturated test box starves CDP input, each op races a
-   watchdog and falls back to dispatching pointer events at the real handlers
-   — the report says which mode each proof ran in (`"mouse"` /
-   `"synthetic"`), so a silent downgrade is visible;
+   its gate, and a module dragged across rows actually changes rail. Where
+   the saturated test box starves CDP input, each op races a watchdog and
+   falls back to dispatching pointer events at the real handlers — the report
+   says which mode each proof ran in (`"mouse"` / `"synthetic"`), so a silent
+   downgrade is visible;
 4. desktop, hero and phone screenshots are produced (in `shots/`, gitignored
    except the two the hub card uses).
 
@@ -109,7 +119,8 @@ a passing grade.
   people want chords for.
 - **One worklet for everything** instead of a WebAudio node per module: a
   30-module patch would otherwise be hundreds of nodes and per-node param
-  latency; this keeps patch routing honest (block-rate, sample-accurate).
+  latency; this keeps patch routing honest (block-rate, one block of delay
+  per cable hop — under 3 ms, below touch-to-audio latency anyway).
 - **Jack types are advisory.** Colour and label say CV/audio/gate, but any
   out plugs into any in, exactly like hardware.
 - **Reverb is a Schroeder pair, not convolution**: 4 combs + 2 allpass

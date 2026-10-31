@@ -5,7 +5,7 @@
 // and come out again when you click them. Coordinates are plain CSS pixels (zoom changes
 // px-per-HP and reflows, so no transform maths is involved in cable geometry).
 
-import { DEFS, CATS, HPW, ROW_H, RACK_HP, CABLE_COLORS, paramSpec } from "./defs.js";
+import { DEFS, HPW, ROW_H, RACK_HP, CABLE_COLORS, paramSpec } from "./defs.js";
 
 const SAG = (d) => Math.min(110, 14 + d * 0.22);
 
@@ -25,6 +25,8 @@ export function makeKnob(def, value, onInput, opts = {}) {
   const size = opts.size || 34;
   const wrap = el("knob");
   wrap.style.setProperty("--ks", `${size}px`);
+  if (def.p) wrap.dataset.p = def.p;                    // identity for tests and a11y
+  if (def.seg) wrap.dataset.seg = "1";
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 40 40");
   svg.innerHTML = `
@@ -43,6 +45,8 @@ export function makeKnob(def, value, onInput, opts = {}) {
     svg.querySelector(".val").style.strokeDasharray = `${(v * 100).toFixed(1)} 100`;
     svg.querySelector(".ind").setAttribute("transform", `rotate(${-135 + v * 270} 20 20)`);
     val.textContent = def.fmt ? def.fmt(v) : v.toFixed(2);
+    wrap.setAttribute("aria-valuenow", String(Math.round(v * 100)));
+    wrap.setAttribute("aria-valuetext", val.textContent);
     if (fire) onInput(v);
   };
   set(value, false);
@@ -75,6 +79,23 @@ export function makeKnob(def, value, onInput, opts = {}) {
     set(value);
   }, { passive: false });
   wrap.addEventListener("dblclick", (e) => { e.stopPropagation(); set(def.def ?? 0.5); });
+
+  // the knob is operable without a pointer: focusable slider, arrows to turn
+  wrap.tabIndex = 0;
+  wrap.setAttribute("role", "slider");
+  wrap.setAttribute("aria-label", `${def.label || def.p || "parameter"} knob`);
+  wrap.setAttribute("aria-valuemin", "0");
+  wrap.setAttribute("aria-valuemax", "100");
+  wrap.addEventListener("keydown", (e) => {
+    const step = e.shiftKey ? 0.005 : 0.03;
+    if (e.key === "ArrowUp" || e.key === "ArrowRight") value = Math.min(1, value + step);
+    else if (e.key === "ArrowDown" || e.key === "ArrowLeft") value = Math.max(0, value - step);
+    else if (e.key === "Home") value = 0;
+    else if (e.key === "End") value = 1;
+    else return;
+    e.preventDefault(); e.stopPropagation();       // arrows must not reach the octave shortcuts
+    set(value);
+  });
 
   return { el: wrap, set: (v) => set(v, false) };
 }
@@ -360,6 +381,7 @@ export class Rack {
       const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
       if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
       if (!moved) return;
+      panel.style.pointerEvents = "none";        // let the rail under the cursor be hit-testable
       const newCol = Math.max(0, Math.round(start.col + dx / this.hpw));
       const railUnder = document.elementFromPoint(ev.clientX, ev.clientY)?.closest?.(".rail");
       const newRow = railUnder ? +railUnder.dataset.row : start.row;
@@ -373,6 +395,7 @@ export class Rack {
     const up = () => {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
+      panel.style.pointerEvents = "";
       panel.classList.remove("drag");
       if (moved) {
         panel.style.position = ""; panel.style.left = ""; panel.style.top = ""; panel.style.zIndex = "";
@@ -410,15 +433,24 @@ export class Rack {
   // ---------- telemetry ----------
 
   applyTelemetry({ lv, scope, seq }) {
+    this._lastLv = this._lastLv || new Float32Array(lv.length);
     for (let i = 0; i < this.outJackEls.length && i < lv.length; i++) {
       const v = Math.min(1, lv[i] * 1.6);
-      this.outJackEls[i].style.setProperty("--led", v.toFixed(2));
+      if (Math.abs(v - this._lastLv[i]) > 0.02) {          // style writes only on visible change
+        this.outJackEls[i].style.setProperty("--led", v.toFixed(2));
+        this._lastLv[i] = v;
+      }
     }
+    this._seqCur = this._seqCur || new Map();
     for (const [id, { steps }] of this.seqEls) {
       const cur = seq?.[id];
+      if (this._seqCur.get(id) === cur) continue;
+      this._seqCur.set(id, cur);
       for (const s of steps) s.led.classList.toggle("lit", cur === s.i);
     }
-    if (this.scopeCanvas) {
+    const now = performance.now();
+    if (this.scopeCanvas && now - (this._scopeAt ?? 0) > 55) {   // ≤ ~18 fps scope: paint cost, not message cost
+      this._scopeAt = now;
       const cv = this.scopeCanvas, g = cv.getContext("2d");
       const w = cv.width, h = cv.height;
       g.fillStyle = "#071520"; g.fillRect(0, 0, w, h);

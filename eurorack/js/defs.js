@@ -338,6 +338,24 @@ export function initPatch() {
   };
 }
 
+export function sanitize(patch) {
+  // imported/shared patches are hostile input: bound everything the rack or the
+  // worklet would otherwise take literally (million rails, NaN params, …)
+  patch.modules = (patch.modules ?? []).filter((m) => m && typeof m === "object" && DEFS[m.type]).slice(0, 128);
+  for (const m of patch.modules) {
+    m.row = Number.isFinite(m.row) ? Math.max(0, Math.min(1, Math.round(m.row))) : 0;
+    m.col = Number.isFinite(m.col) ? Math.max(0, Math.min(96 - DEFS[m.type].hp, Math.round(m.col))) : 0;
+    if (m.params && typeof m.params === "object") {
+      for (const k in m.params) if (!Number.isFinite(m.params[k])) delete m.params[k];
+    } else m.params = {};
+  }
+  const ids = new Set(patch.modules.map((m) => m.id));
+  patch.cables = (patch.cables ?? []).filter((c) => c && ids.has(c.src?.m) && ids.has(c.dst?.m)).slice(0, 512);
+  if (!Number.isFinite(patch.bpm)) patch.bpm = 104;
+  patch.bpm = Math.max(30, Math.min(260, patch.bpm));
+  return patch;
+}
+
 export function validate(patch) {
   const errs = [];
   const ids = new Set();

@@ -1,10 +1,10 @@
 // eurorack/js/app.js — the instrument: state, toolbar, module browser, keyboards, MIDI,
 // patch save/load/share/record, and the boot sequence.
 
-import { DEFS, CATS, defaultParams, validate, initPatch, CABLE_COLORS } from "./defs.js";
+import { DEFS, CATS, defaultParams, validate, sanitize, initPatch, CABLE_COLORS } from "./defs.js";
 import { Engine } from "./engine.js";
 import { Rack } from "./rack.js";
-import { PRESETS, PRESET_NAMES, getPreset } from "./presets.js";
+import { PRESET_NAMES, getPreset } from "./presets.js";
 
 const LS_PATCH = "eurorack.patch";
 const LS_PATCHES = "eurorack.patches";
@@ -30,6 +30,12 @@ function saveSoon() {
     try { localStorage.setItem(LS_PATCH, JSON.stringify(app.state.patch)); } catch { /* private mode */ }
   }, 400);
 }
+// the debounce must not eat the last edit when the tab goes away
+window.addEventListener("pagehide", () => {
+  clearTimeout(saveTimer);
+  try { localStorage.setItem(LS_PATCH, JSON.stringify(app.state.patch)); } catch { /* private mode */ }
+});
+window.addEventListener("visibilitychange", () => { if (document.hidden) window.dispatchEvent(new Event("pagehide")); });
 
 function structuralChange() {
   app.rack.rebuild();
@@ -81,6 +87,8 @@ app.removeCable = (id) => {
 };
 
 app.loadPatch = (patch, { save = true } = {}) => {
+  if (!patch || typeof patch !== "object") return false;
+  sanitize(patch);
   const errs = validate(patch);
   if (errs.length) { toast("patch rejected: " + errs[0]); return false; }
   app.state.patch = patch;
@@ -94,10 +102,16 @@ app.loadPatch = (patch, { save = true } = {}) => {
 // ---------- URL hash ----------
 
 function b64urlEncode(s) {
-  return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const b = new TextEncoder().encode(s);
+  let bin = "";
+  for (const c of b) bin += String.fromCharCode(c);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 function b64urlDecode(s) {
-  return decodeURIComponent(escape(atob(s.replace(/-/g, "+").replace(/_/g, "/"))));
+  const bin = atob(s.replace(/-/g, "+").replace(/_/g, "/"));
+  const b = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(b);
 }
 
 export function compactPatch(patch) {
@@ -223,15 +237,26 @@ const KEYMAP = {
 };
 let kbOctave = 4;
 
+const held = new Map();                       // e.code → actual note (survives octave shifts)
 function noteOnRel(semi, vel = 100) {
   const note = kbOctave * 12 + semi;
+  held.set(`k${semi}`, note);
   app.engine.note(true, note, vel);
   $("#kbd").querySelectorAll(`[data-note="${note}"]`).forEach((k) => k.classList.add("down"));
 }
 function noteOffRel(semi) {
-  app.engine.note(false, kbOctave * 12 + semi, 0);
-  $("#kbd").querySelectorAll(`[data-note="${kbOctave * 12 + semi}"]`).forEach((k) => k.classList.remove("down"));
+  const note = held.get(`k${semi}`) ?? kbOctave * 12 + semi;   // release the note that was actually struck
+  held.delete(`k${semi}`);
+  app.engine.note(false, note, 0);
+  $("#kbd").querySelectorAll(`[data-note="${note}"]`).forEach((k) => k.classList.remove("down"));
 }
+function allNotesOff() {
+  for (const note of held.values()) app.engine.note(false, note, 0);
+  held.clear();
+  $("#kbd").querySelectorAll(".key.down").forEach((k) => k.classList.remove("down"));
+}
+window.addEventListener("blur", allNotesOff);
+document.addEventListener("visibilitychange", () => { if (document.hidden) allNotesOff(); });
 
 document.addEventListener("keydown", (e) => {
   if (e.target.matches("input,textarea") || $("#modal").classList.contains("open")) return;
@@ -239,6 +264,7 @@ document.addEventListener("keydown", (e) => {
   else if (e.code === "ArrowDown" && !e.repeat) kbOctave = Math.max(1, kbOctave - 1), updateKbd();
   else if (e.code === "ArrowUp" && !e.repeat) kbOctave = Math.min(7, kbOctave + 1), updateKbd();
   else if (e.code === "Delete") { if (app.state.sel) app.removeModule(app.state.sel); }
+  else if (e.key === "?") { $("#help").classList.add("open"); e.preventDefault(); }
   audioKick();
 });
 document.addEventListener("keyup", (e) => {
@@ -246,6 +272,7 @@ document.addEventListener("keyup", (e) => {
 });
 
 function buildKbd() {
+  allNotesOff();                                // never orphan the .down classes of held keys
   const kbd = $("#kbd .keys");
   kbd.innerHTML = "";
   for (let o = 0; o < 2; o++) {
@@ -279,8 +306,8 @@ async function initMIDI() {
           inp._wired = true;
           inp.onmidimessage = (ev) => {
             const [st, d1, d2] = ev.data;
-            if ((st & 0xf0) === 0x90 && d2 > 0) { app.engine.note(true, d1, d2); flashMidi(true); }
-            else if ((st & 0xf0) === 0x80 || ((st & 0xf0) === 0x90 && d2 === 0)) { app.engine.note(false, d1, 0); flashMidi(true); }
+            if ((st & 0xf0) === 0x90 && d2 > 0) { app.engine.note(true, d1, d2); flashMidi(); }
+            else if ((st & 0xf0) === 0x80 || ((st & 0xf0) === 0x90 && d2 === 0)) { app.engine.note(false, d1, 0); flashMidi(); }
           };
         }
         any = true;
@@ -301,17 +328,20 @@ function flashMidi() {
 
 // ---------- audio lifecycle ----------
 
-let audioStarted = false;
-async function startAudio() {
-  if (audioStarted) return;
-  audioStarted = true;
-  try {
-    await app.engine.start(app.state.patch);
+let audioStarted = false, audioStarting = null;
+function startAudio() {
+  if (audioStarted) return Promise.resolve();
+  if (audioStarting) return audioStarting;          // one attempt in flight, retries allowed after failure
+  audioStarting = app.engine.start(app.state.patch).then(() => {
+    audioStarted = true;
+    audioStarting = null;
     $("#audChip").classList.add("live");
-  } catch (e) {
+  }).catch((e) => {
+    audioStarting = null;                            // a failed start must be retryable by clicking the chip
     $("#audChip").classList.add("dead");
     console.warn("audio engine failed to start:", e);
-  }
+  });
+  return audioStarting;
 }
 function audioKick() {
   startAudio().then(() => app.engine.resume());
@@ -358,7 +388,9 @@ function wireToolbar() {
     for (const n of names) {
       const row = document.createElement("div");
       row.className = "prow";
-      row.innerHTML = `<span>${n}</span>`;
+      const nm = document.createElement("span");
+      nm.textContent = n;                             // names are user data, never HTML
+      row.appendChild(nm);
       const ld = document.createElement("button"); ld.textContent = "load"; ld.className = "prim";
       ld.onclick = () => { if (app.loadPatch(JSON.parse(JSON.stringify(all[n])))) { closeModal(); toast(`loaded “${n}”`); } };
       const dl = document.createElement("button"); dl.textContent = "del";
@@ -468,8 +500,14 @@ window.eurorack = {
   async renderOffline(presetOrPatch, secs = 4) {
     const p = typeof presetOrPatch === "string" ? getPreset(presetOrPatch)
       : presetOrPatch ?? app.state.patch;
-    const r = await Engine.renderOffline(p, secs);
-    return { ...Engine.levels(r.left, r.right), length: r.left.length, sampleRate: r.sampleRate };
+    const r = await Engine.renderOffline(p, secs, app.engine.ctx?.sampleRate ?? 48000);
+    return {
+      ...Engine.levels(r.left, r.right),
+      onsets: Engine.onsets(r.left, r.sampleRate),
+      steps: r.steps, teleN: r.teleN,
+      length: r.left.length, sampleRate: r.sampleRate,
+    };
   },
   compactPatch: () => JSON.stringify(compactPatch(app.state.patch)),
 };
+booted.then(() => { window.eurorack.booted = true; });   // the check waits on the boolean
