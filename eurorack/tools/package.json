@@ -1,0 +1,9 @@
+{
+  "name": "eurorack-tools",
+  "private": true,
+  "type": "module",
+  "description": "Headless checks for the eurorack shelf.",
+  "dependencies": {
+    "playwright-core": "1.48.2"
+  }
+}

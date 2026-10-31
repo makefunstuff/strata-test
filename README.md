@@ -7,7 +7,7 @@ Each mini project lives in its own folder with a short README: what it tries, ho
 
 ## What's in here
 
-Four shelves of browser work, all plain static files (no build step, no npm, no server),
+Six shelves of browser work, all plain static files (no build step, no npm, no server),
 all published to GitHub Pages, the layout on Pages mirroring this repo:
 
 | shelf | what | live |
@@ -17,10 +17,12 @@ all published to GitHub Pages, the layout on Pages mirroring this repo:
 | [`design/`](design/) | eleven design briefs — landing page, dashboard, nine-screen mobile app, TUI, design system, identity, estuary dataviz, grant form, motion system, a flood portal redesign, and one page in nine visual styles — each screenshotted, audited and self-critiqued | [/design/](https://makefunstuff.github.io/strata-test/design/) |
 | [`eyecandy/`](eyecandy/) | five pieces of eye candy — aurora over a mirrored lake, thin-film soap bubbles, 200k-point GPU nebula, bioluminescent jellyfish, a feedback kaleidoscope — each with a panel, a preset and a headless check | [/eyecandy/](https://makefunstuff.github.io/strata-test/eyecandy/) |
 | [`tui/`](tui/) | six terminal apps on the Strata FP4 character grid — system monitor, mail reader, file manager + git, generative music player, ops board, modal editor — each with a keyboard map, a phone tap map and a headless check | [/tui/](https://makefunstuff.github.io/strata-test/tui/) |
+| [`eurorack/`](eurorack/) | a patchable Eurorack modular: nineteen modules at true HP widths in one AudioWorklet, catenary patch cables, sequencer/clock on the audio clock, MIDI and keyboard play, five presets, WAV bounce | [/eurorack/](https://makefunstuff.github.io/strata-test/eurorack/) |
 
 The site root is [`index.html`](index.html), the hub that links them. Each folder carries its own
 headless-Chromium checker (`games/tools/verify.mjs`, `experiments/tools/check.mjs`,
-`design/tools/shoot.mjs`, `eyecandy/tools/check.mjs`, `tui/tools/check.mjs`); the numbers they
+`design/tools/shoot.mjs`, `eyecandy/tools/check.mjs`, `tui/tools/check.mjs`,
+`eurorack/tools/check.mjs`); the numbers they
 last reported are in the shelf READMEs. [`design/README.md`](design/README.md) is the
 design gallery's own summary: the eleven scores, the verdict on range and taste, and the
 two things the audit was blind to. [`tui/README.md`](tui/README.md) is the same for the six

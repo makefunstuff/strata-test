@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eurorack — a modular synth in the browser</title>
+<meta name="description" content="A patchable Eurorack modular synthesizer in the browser: drag modules onto the rails, patch cables, play the keys. Web Audio + AudioWorklet, no build step.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><circle cx=%274%27 cy=%275%27 r=%272%27 fill=%27none%27 stroke=%27%238ee8ff%27/><circle cx=%2711.5%27 cy=%2710.5%27 r=%272%27 fill=%27none%27 stroke=%27%23ff3fa4%27/><path d=%27M4 7 C 2 13, 13 13, 11.5 12.5%27 fill=%27none%27 stroke=%27%23ffb45c%27 stroke-width=%271.2%27/></svg>">
+<link rel="stylesheet" href="eurorack.css">
+</head>
+<body>
+<header class="toolbar" id="toolbar">
+  <span class="brand">EURORACK</span>
+  <button id="addBtn" class="tb add">＋ modules</button>
+  <select id="presetSel" class="tb sel" title="load a preset patch"></select>
+  <label class="bpmbox" title="tempo">♩ <input id="bpm" type="number" min="30" max="260" value="104"></label>
+  <span class="zoombox"><button id="zoomOut" class="tb">−</button><button id="zoomIn" class="tb">＋</button></span>
+  <span class="spacer"></span>
+  <button id="kbdBtn" class="tb">keys</button>
+  <select id="recLen" class="tb sel len" title="recording length"><option>8</option><option selected>16</option><option>30</option></select>
+  <button id="recBtn" class="tb rec">● rec</button>
+  <button id="saveBtn" class="tb">save</button>
+  <button id="loadBtn" class="tb">patches</button>
+  <button id="exportBtn" class="tb">exp</button>
+  <button id="importBtn" class="tb">imp</button>
+  <button id="shareBtn" class="tb">share</button>
+  <span id="midiDot" class="dot" title="MIDI input"></span>
+  <span id="audChip" class="audchip" title="click to start audio">audio</span>
+  <button id="helpBtn" class="tb">?</button>
+  <input id="importFile" type="file" accept="application/json,.json" hidden>
+</header>
+
+<main class="rack-scroll" id="rackScroll">
+  <div id="rackContent">
+    <svg id="cables" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+</main>
+
+<footer class="statusbar">
+  <span class="hint">drag a jack to jack to patch · click a cable to unplug · drag knobs or spin the wheel · drag seq steps, click to toggle gates · play with <kbd>Z</kbd>…<kbd>U</kbd> or the keys strip</span>
+</footer>
+
+<section id="drawer" class="drawer">
+  <div class="dhead"><h3>module browser</h3><span class="dim">click to drop into the first gap · drag onto a rail</span><button class="tb" onclick="document.getElementById('drawer').classList.remove('open')">close</button></div>
+  <div id="browserGrid"></div>
+</section>
+
+<section id="kbd" class="kbd">
+  <div class="kbdctl"><button id="octDown" class="tb">▼</button><span id="octave">C4</span><button id="octUp" class="tb">▲</button></div>
+  <div class="keys"></div>
+</section>
+
+<section id="help" class="overlay">
+  <div class="ocard">
+    <h2>EURORACK</h2>
+    <p>A modular synth in the browser. It makes sound <em>now</em> — press keys
+    <kbd>Z</kbd><kbd>X</kbd><kbd>V</kbd><kbd>H</kbd><kbd>N</kbd><kbd>J</kbd> or tap the
+    <b>keys</b> strip. Plug a real MIDI controller if you have one.</p>
+    <ul>
+      <li><b>Patch:</b> drag from an output jack to an input jack. One output can feed many inputs; click a cable to unplug it.</li>
+      <li><b>Build:</b> <b>＋ modules</b>, then click or drag into the rails. Drag a module by its name strip; ✕ removes it.</li>
+      <li><b>Knobs:</b> drag up/down, or mouse wheel; shift for fine, double-click to reset, click a segmented knob to cycle.</li>
+      <li><b>Sequencer:</b> drag a step up/down for pitch, click to toggle its gate. It free-runs at the ♩ tempo unless you patch a clock into CLK.</li>
+      <li><b>Music out of the box:</b> the <b>presets</b> menu has five finished patches — Acid Groove, Pluck &amp; Space, Deep Drone, Ambient Garden, Kraut Motor.</li>
+      <li><b>Keep:</b> save/patches (localStorage), exp/imp (JSON), share puts the whole patch in the URL, ● rec bounces a WAV.</li>
+    </ul>
+    <p class="dim">Output is limited and safe. If you hear nothing, click anywhere once (browsers need a tap before audio).</p>
+    <button id="helpClose" class="prim big">patch it</button>
+  </div>
+</section>
+
+<div id="modal" class="overlay"></div>
+<div id="toast"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
