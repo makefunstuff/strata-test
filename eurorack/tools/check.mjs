@@ -230,7 +230,25 @@ try {
     // loudness alone cannot tell music from a frozen gate: the worklet's own telemetry
     // must show sequencers walking, and the master must show things happening
     check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
+    // spectrum gates: energy must live where the instruments are. A mis-scaled VCO CV
+    // once put every lead under the kick (97% < 125 Hz, inaudible on speakers); these
+    // numbers are floors measured from the fixed build, ceilings the broken one blew.
+    if (hasSeq) {
+      check(lv.subFrac <= 0.15, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — the low end is swallowing the band`);
+      check(lv.midFrac >= 0.07, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz–4 kHz band`);
+    } else {
+      check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
+    }
     check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
+    // spectrum gates: energy must live where the instruments are. A mis-scaled VCO CV
+    // once put every lead under the kick (97% < 125 Hz, inaudible on speakers); these
+    // numbers are floors measured from the fixed build, ceilings the broken one blew.
+    if (hasSeq) {
+      check(lv.subFrac <= 0.15, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — the low end is swallowing the band`);
+      check(lv.midFrac >= 0.07, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz–4 kHz band`);
+    } else {
+      check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
+    }
     if (hasSeq) {
       // rhythmic presets must prove rhythm: the sequencer walked, and events fire
       const seqIds = new Set((lv.steps || []).map((s) => s.split(":")[0]));
@@ -301,12 +319,25 @@ try {
       check(r.before !== r.after, `knob drag changed nothing (${r.before}, mouse and synthetic)`);
       report.ui.knob = r;
     }
-    const covBox = await knobPick(true);
+    let covBox = await knobPick(true);
+    if (!covBox) {
+      // force the condition: one long cable across the rack always sags over a panel
+      await page.evaluate(() => {
+        const ms = eurorack.patch.modules;
+        if (ms.length < 2) return;
+        const a = ms[0], b = ms[ms.length - 1];
+        const oa = document.querySelector(`.jack[data-m="${a.id}"][data-dir="out"]`);
+        const ib = document.querySelector(`.jack[data-m="${b.id}"][data-dir="in"]`);
+        if (oa && ib) eurorack.addCable({ m: a.id, j: oa.dataset.j }, { m: b.id, j: ib.dataset.j });
+      });
+      await page.waitForTimeout(300);
+      covBox = await knobPick(true);
+    }
     if (covBox) {                                    // layering proof: knob under a cable still turns
       const r = await dragKnob(covBox);
       check(r.before !== r.after, `a knob with a cable crossing it did not turn (${r.before})`);
       report.ui.knobUnderCable = r;
-    }
+    } else report.ui.knobUnderCable = "skipped:no cable sagged over any knob even after forcing one";
 
   });
   await uiStep("cables", async (page) => {
@@ -435,15 +466,34 @@ try {
     report.ui.addModule = nb2 - nb;
     await page.evaluate(() => document.getElementById("drawer").classList.remove("open"));
 
-    const seqState = await page.evaluate(() => {
+    const stepAt = await page.evaluate(() => {
       const step = document.querySelector(".seqgrid .step");
-      const before = step.classList.contains("on");
-      step.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerId: 1, clientY: 0 }));
-      step.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 1, clientY: 0 }));
-      return { before, after: step.classList.contains("on") };
+      const r = step.getBoundingClientRect();
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2, on: step.classList.contains("on") };
     });
-    check(seqState.before !== seqState.after, "seq step click did not toggle its gate");
-    report.ui.seqToggle = seqState.before !== seqState.after;
+    let seqToggled = false, seqMode = "mouse";
+    for (let attempt = 0; attempt < 2 && !seqToggled; attempt++) {
+      await mouseRun(async () => {
+        await page.mouse.move(stepAt.x, stepAt.y);
+        await page.mouse.down();
+        await page.mouse.up();
+      });
+      await page.waitForTimeout(200);
+      seqToggled = (await page.evaluate(() => document.querySelector(".seqgrid .step").classList.contains("on"))) !== stepAt.on;
+    }
+    if (!seqToggled) {                                              // fallback: drive the handlers directly
+      seqMode = "synthetic";
+      seqToggled = await page.evaluate(() => {
+        const step = document.querySelector(".seqgrid .step");
+        const before = step.classList.contains("on");
+        step.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerId: 1, clientY: 0 }));
+        step.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 1, clientY: 0 }));
+        return step.classList.contains("on") !== before;
+      });
+      await page.waitForTimeout(150);
+    }
+    check(seqToggled, "seq step click did not toggle its gate (mouse and synthetic)");
+    report.ui.seqToggle = seqToggled ? seqMode : false;
 
   });
   await uiStep("railDrag", async (page) => {

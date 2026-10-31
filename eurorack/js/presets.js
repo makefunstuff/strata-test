@@ -11,7 +11,6 @@ const C = (id, sm, sj, dm, dj, color) => ({ id, src: { m: sm, j: sj }, dst: { m:
 const hz = (f) => Math.log(f / 20) / Math.log(1200);          // filter/knob cutoff space
 const ms = (t) => Math.log(t / 0.5) / Math.log(6000);          // delay time space
 
-const W = { sine: 0, tri: 1 / 3, saw: 2 / 3, pulse: 1 };       // wave selector positions
 
 export const PRESETS = {
   "Acid Groove": {
@@ -26,7 +25,7 @@ export const PRESETS = {
         g8: 1, g9: 0, g10: 1, g11: 1, g12: 1, g13: 0, g14: 1, g15: 1,
       }),
       M("q1", "quant", 0, 32, { scale: 0 }),
-      M("vco", "vco", 0, 40, { wave: W.saw, oct: 0.34, coarse: 0.5, fine: 0.5, pw: 0.3, fmd: 0 }),
+      M("vco", "vco", 0, 40, { oct: 0.66, coarse: 0.5, fine: 0.5, pw: 0.3, fmd: 0 }),
       M("flt", "filter", 0, 54, { cut: 0.17, res: 0.58, cvamt: 0.95, mode: 0 }),
       M("env", "adsr", 0, 66, { a: 0.02, d: 0.28, s: 0.18, r: 0.22 }),
       M("vca", "vca", 0, 76, { gain: 0.32 }),
@@ -69,7 +68,7 @@ export const PRESETS = {
         g8: 1, g9: 0, g10: 1, g11: 1, g12: 0, g13: 1, g14: 0, g15: 1,
       }),
       M("q1", "quant", 0, 32, { scale: 6 }),           // pentatonic minor
-      M("vco", "vco", 0, 40, { wave: W.pulse, oct: 0.62, coarse: 0.5, fine: 0.5, pw: 0.28, fmd: 0.07 }),
+      M("vco", "vco", 0, 40, { oct: 0.62, coarse: 0.5, fine: 0.5, pw: 0.28, fmd: 0.07 }),
       M("lfo", "lfo", 0, 54, { rate: 0.52, shape: 0 }),
       M("flt", "filter", 0, 62, { cut: 0.5, res: 0.42, cvamt: 0.9, mode: 0 }),
       M("env", "adsr", 0, 74, { a: 0.02, d: 0.2, s: 0.0, r: 0.3 }),
@@ -102,8 +101,8 @@ export const PRESETS = {
   "Deep Drone": {
     v: 1, name: "Deep Drone", bpm: 70,
     modules: [
-      M("vcoA", "vco", 0, 0, { wave: W.saw, oct: 0.34, coarse: 0.5, fine: 0.505, pw: 0.45, fmd: 0 }),
-      M("vcoB", "vco", 0, 14, { wave: W.tri, oct: 0.59, coarse: 0.5, fine: 0.492, pw: 0.5, fmd: 0 }),
+      M("vcoA", "vco", 0, 0, { oct: 0.34, coarse: 0.5, fine: 0.505, pw: 0.45, fmd: 0 }),
+      M("vcoB", "vco", 0, 14, { oct: 0.59, coarse: 0.5, fine: 0.492, pw: 0.5, fmd: 0 }),
       M("lfoA", "lfo", 0, 28, { rate: 0.16, shape: 0 }),
       M("lfoB", "lfo", 0, 36, { rate: 0.1, shape: 1 }),
       M("flt", "filter", 0, 44, { cut: 0.34, res: 0.3, cvamt: 0.75, mode: 0 }),
@@ -141,8 +140,8 @@ export const PRESETS = {
       M("sha1", "sha", 0, 12),
       M("sha2", "sha", 0, 20),
       M("q1", "quant", 0, 28, { scale: 8 }),                  // hirajoshi
-      M("vcoA", "vco", 0, 36, { wave: W.tri, oct: 0.62, coarse: 0.5, fine: 0.5, pw: 0.5, fmd: 0 }),
-      M("vcoB", "vco", 0, 50, { wave: W.sine, oct: 0.87, coarse: 0.5, fine: 0.51, pw: 0.5, fmd: 0.12 }),
+      M("vcoA", "vco", 0, 36, { oct: 0.62, coarse: 0.5, fine: 0.5, pw: 0.5, fmd: 0 }),
+      M("vcoB", "vco", 0, 50, { oct: 0.87, coarse: 0.5, fine: 0.51, pw: 0.5, fmd: 0.12 }),
       M("flt", "filter", 0, 64, { cut: 0.52, res: 0.3, cvamt: 0.5, mode: 0 }),
       M("env", "adsr", 0, 76, { a: 0.55, d: 0.5, s: 0.55, r: 0.75 }),
       M("vca", "vca", 0, 86, { gain: 0.34 }),
@@ -184,7 +183,7 @@ export const PRESETS = {
         p0: 0.25, p1: 0.25, p2: 0.32, p3: 0.25, p4: 0.25, p5: 0.37, p6: 0.25, p7: 0.3,
         g0: 1, g1: 1, g2: 1, g3: 1, g4: 1, g5: 1, g6: 1, g7: 1,
       }),
-      M("vco", "vco", 0, 32, { wave: W.saw, oct: 0.4, coarse: 0.5, fine: 0.5, pw: 0.5, fmd: 0.05 }),
+      M("vco", "vco", 0, 32, { oct: 0.4, coarse: 0.5, fine: 0.5, pw: 0.5, fmd: 0.05 }),
       M("lfo", "lfo", 0, 46, { rate: 0.42, shape: 1 }),
       M("flt", "filter", 0, 54, { cut: 0.42, res: 0.45, cvamt: 0.6, mode: 0 }),
       M("vca", "vca", 0, 66, { gain: 0.3 }),

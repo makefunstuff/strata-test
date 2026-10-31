@@ -18,7 +18,11 @@ const F = {
   oct: (v) => `${(v * 4 - 2).toFixed(1)} oct`,
   semi: (v) => `${(v * 48 - 24).toFixed(1)} st`,
   fine: (v) => `${((v - 0.5) * 100).toFixed(0)} cent`,
-  q: (v) => `Q ${(0.4 + v * v * 18).toFixed(1)}`,
+  q: (v) => `Q ${(0.4 + v * v * 16).toFixed(1)}`,
+  lfo: (v) => `${(0.02 * Math.pow(3000, v)).toFixed(v < 0.6 ? 2 : 1)} Hz`,
+  msA: (v) => `${(0.8 * Math.pow(7500, v)).toFixed(v < 0.5 ? 1 : 0)} ms`,
+  msD: (v) => `${(2 * Math.pow(5000, v)).toFixed(v < 0.5 ? 1 : 0)} ms`,
+  msR: (v) => `${(10 * Math.pow(1200, v)).toFixed(v < 0.5 ? 1 : 0)} ms`,
   fb: (v) => `${Math.round(v * 92)}%`,
   sec: (v) => `${(0.05 + v * v * 9).toFixed(2)} s`,
   n: (v, n0 = 0, n1 = 1) => `${(n0 + v * (n1 - n0)).toFixed(1)}`,
@@ -39,7 +43,6 @@ export const DEFS = {
       { p: "fine", label: "FINE", def: 0.5, fmt: F.fine },
       { p: "pw", label: "PW", def: 0.5, fmt: F.pc },
       { p: "fmd", label: "FM", def: 0, fmt: F.pc },
-      { p: "wave", label: "WAVE", def: 0.375, fmt: F.plain, seg: ["sine", "tri", "saw", "pulse"] },
     ],
     jacks: [
       { j: "v", label: "V/OCT", dir: "in", kind: "cv" },
@@ -54,7 +57,7 @@ export const DEFS = {
   lfo: {
     name: "LFO", cat: "mod", hp: 8, blurb: "0.02 Hz to 60 Hz, five shapes",
     knobs: [
-      { p: "rate", label: "RATE", def: 0.35, fmt: F.hz },
+      { p: "rate", label: "RATE", def: 0.35, fmt: F.lfo },
       { p: "shape", label: "SHAPE", def: 0, fmt: F.plain, seg: ["sine", "tri", "saw", "sqr", "rnd"] },
     ],
     jacks: [
@@ -65,10 +68,10 @@ export const DEFS = {
   adsr: {
     name: "ADSR", cat: "mod", hp: 10, blurb: "attack / decay / sustain / release envelope",
     knobs: [
-      { p: "a", label: "A", def: 0.15, fmt: F.ms },
-      { p: "d", label: "D", def: 0.35, fmt: F.ms },
+      { p: "a", label: "A", def: 0.15, fmt: F.msA },
+      { p: "d", label: "D", def: 0.35, fmt: F.msD },
       { p: "s", label: "S", def: 0.6, fmt: F.pc },
-      { p: "r", label: "R", def: 0.4, fmt: F.ms },
+      { p: "r", label: "R", def: 0.4, fmt: F.msR },
     ],
     jacks: [
       { j: "g", label: "GATE", dir: "in", kind: "gate" },
@@ -317,8 +320,8 @@ export function initPatch() {
     v: 1, name: "Init", bpm: 104,
     modules: [
       { id: "m1", type: "midicv", row: 0, col: 0, params: {} },
-      { id: "m2", type: "vco", row: 0, col: 14, params: { wave: 0.25, coarse: 0.4 } },
-      { id: "m3", type: "vco", row: 0, col: 28, params: { wave: 0.625, coarse: 0.5, fine: 0.53, pw: 0.35 } },
+      { id: "m2", type: "vco", row: 0, col: 14, params: { coarse: 0.4 } },
+      { id: "m3", type: "vco", row: 0, col: 28, params: { coarse: 0.5, fine: 0.53, pw: 0.35 } },
       { id: "m4", type: "filter", row: 0, col: 42, params: { cut: 0.5, res: 0.35 } },
       { id: "m5", type: "adsr", row: 0, col: 54, params: {} },
       { id: "m6", type: "vca", row: 0, col: 64, params: {} },
@@ -351,6 +354,7 @@ export function sanitize(patch) {
   }
   const ids = new Set(patch.modules.map((m) => m.id));
   patch.cables = (patch.cables ?? []).filter((c) => c && ids.has(c.src?.m) && ids.has(c.dst?.m)).slice(0, 512);
+  for (const c of patch.cables) if (!Number.isFinite(c.color)) c.color = (String(c.id ?? "").length * 3) % 8;
   if (!Number.isFinite(patch.bpm)) patch.bpm = 104;
   patch.bpm = Math.max(30, Math.min(260, patch.bpm));
   return patch;

@@ -270,7 +270,7 @@ export class Rack {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("class", "cable");
-    path.setAttribute("stroke", CABLE_COLORS[cable.color % CABLE_COLORS.length]);
+    path.setAttribute("stroke", CABLE_COLORS[(Number.isFinite(cable.color) ? cable.color : 0) % CABLE_COLORS.length] ?? CABLE_COLORS[0]);
     const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
     hit.setAttribute("class", "cable-hit");
     hit.addEventListener("pointerdown", (e) => {
@@ -433,7 +433,7 @@ export class Rack {
   // ---------- telemetry ----------
 
   applyTelemetry({ lv, scope, seq }) {
-    this._lastLv = this._lastLv || new Float32Array(lv.length);
+    if (!this._lastLv || this._lastLv.length !== lv.length) this._lastLv = new Float32Array(lv.length);   // modules added mid-session grow jackMap
     for (let i = 0; i < this.outJackEls.length && i < lv.length; i++) {
       const v = Math.min(1, lv[i] * 1.6);
       if (Math.abs(v - this._lastLv[i]) > 0.02) {          // style writes only on visible change

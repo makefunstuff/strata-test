@@ -238,6 +238,15 @@ const KEYMAP = {
 let kbOctave = 4;
 
 const held = new Map();                       // e.code → actual note (survives octave shifts)
+const midiHeld = new Set();                   // MIDI notes still gating
+let hintedNoMidiCv = false;
+function hintNoMidicv() {                     // the keys are silent without a MIDI-CV module: say so once
+  if (hintedNoMidiCv) return;
+  if (!(app.state.patch.modules || []).some((m) => m.type === "midicv")) {
+    hintedNoMidiCv = true;
+    toast("add a MIDI-CV module to hear the keys");
+  }
+}
 function noteOnRel(semi, vel = 100) {
   const note = kbOctave * 12 + semi;
   held.set(`k${semi}`, note);
@@ -253,6 +262,8 @@ function noteOffRel(semi) {
 function allNotesOff() {
   for (const note of held.values()) app.engine.note(false, note, 0);
   held.clear();
+  for (const note of midiHeld) app.engine.note(false, note, 0);
+  midiHeld.clear();
   $("#kbd").querySelectorAll(".key.down").forEach((k) => k.classList.remove("down"));
 }
 window.addEventListener("blur", allNotesOff);
@@ -260,7 +271,7 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) allNo
 
 document.addEventListener("keydown", (e) => {
   if (e.target.matches("input,textarea") || $("#modal").classList.contains("open")) return;
-  if (e.code in KEYMAP && !e.repeat) { e.preventDefault(); noteOnRel(KEYMAP[e.code]); }
+  if (e.code in KEYMAP && !e.repeat) { e.preventDefault(); noteOnRel(KEYMAP[e.code]); hintNoMidicv(); }
   else if (e.code === "ArrowDown" && !e.repeat) kbOctave = Math.max(1, kbOctave - 1), updateKbd();
   else if (e.code === "ArrowUp" && !e.repeat) kbOctave = Math.min(7, kbOctave + 1), updateKbd();
   else if (e.code === "Delete") { if (app.state.sel) app.removeModule(app.state.sel); }
@@ -306,8 +317,8 @@ async function initMIDI() {
           inp._wired = true;
           inp.onmidimessage = (ev) => {
             const [st, d1, d2] = ev.data;
-            if ((st & 0xf0) === 0x90 && d2 > 0) { app.engine.note(true, d1, d2); flashMidi(); }
-            else if ((st & 0xf0) === 0x80 || ((st & 0xf0) === 0x90 && d2 === 0)) { app.engine.note(false, d1, 0); flashMidi(); }
+            if ((st & 0xf0) === 0x90 && d2 > 0) { app.engine.note(true, d1, d2); midiHeld.add(d1); flashMidi(); }
+            else if ((st & 0xf0) === 0x80 || ((st & 0xf0) === 0x90 && d2 === 0)) { app.engine.note(false, d1, 0); midiHeld.delete(d1); flashMidi(); }
           };
         }
         any = true;
@@ -463,6 +474,8 @@ const booted = (async () => {
   const hash = hashPatch();
   const saved = (() => { try { return JSON.parse(localStorage.getItem(LS_PATCH) || "null"); } catch { return null; } })();
   app.state.patch = hash || saved || initPatch();
+  if (!app.state.patch || typeof app.state.patch !== "object") app.state.patch = initPatch();
+  sanitize(app.state.patch);                 // hash and localStorage are strangers' JSON: same gate as import
   if (validate(app.state.patch).length) app.state.patch = initPatch();
 
   app.rack = new Rack($("#rackScroll"), app);
@@ -504,10 +517,14 @@ window.eurorack = {
     return {
       ...Engine.levels(r.left, r.right),
       onsets: Engine.onsets(r.left, r.sampleRate),
+      ...Engine.spectrum(r.left, r.sampleRate),
       steps: r.steps, teleN: r.teleN,
       length: r.left.length, sampleRate: r.sampleRate,
     };
   },
   compactPatch: () => JSON.stringify(compactPatch(app.state.patch)),
 };
-booted.then(() => { window.eurorack.booted = true; });   // the check waits on the boolean
+booted.then(
+  () => { window.eurorack.booted = true; },              // the check waits on the boolean
+  (e) => { window.eurorack.bootError = String((e && e.stack) || e); console.error("eurorack boot failed:", e); },
+);

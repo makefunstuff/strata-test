@@ -33,6 +33,7 @@ export class Engine {
     this.ready = false;
     this.onLevels = null;      // ({lv:number[], scope:number[], seq:{id:step}}) => void
     this._pendingPatch = null;
+    this.lastError = null;
   }
 
   async start(patch) {
@@ -50,7 +51,9 @@ export class Engine {
     this.gain.gain.value = 1;
     this.node.connect(this.gain).connect(this.ctx.destination);
     this.node.port.onmessage = (e) => {
-      if (e.data?.t === "lv" && this.onLevels) this.onLevels(e.data);
+      const d = e.data;
+      if (d?.t === "lv" && this.onLevels) this.onLevels(d);
+      else if (d?.t === "err") { this.lastError = d.msg; console.error("[worklet]", d.msg); }
     };
     this.ready = true;
     if (this._pendingPatch) {                           // edits made before audio started are not dropped
@@ -99,6 +102,7 @@ export class Engine {
     // (a pile of preset renders or WAV exports takes the renderer down without this).
     try { await ctx.close(); } catch { /* older builds */ }
     return { sampleRate, left: buf.getChannelData(0), right: buf.getChannelData(1), steps: [...steps], teleN };
+    // (spectrum/onsets are computed from left by the caller — Engine.spectrum/Engine.onsets)
   }
 
   static wav(left, right, sampleRate) {
@@ -131,6 +135,46 @@ export class Engine {
       sum += a * a;
     }
     return { peak, rms: Math.sqrt(sum / left.length), clippedFrac: clipped / left.length };
+  }
+
+  // Band energy of a rendered buffer: bass (<125 Hz) vs playable band (125 Hz–4 kHz).
+  // Loudness alone cannot tell a preset from a subsonic rumble — this can.
+  static spectrum(left, sampleRate) {
+    const N = 2048, hop = 1024;
+    const win = new Float32Array(N);
+    for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (N - 1));
+    const re = new Float64Array(N), im = new Float64Array(N);
+    const bits = Math.log2(N) | 0;
+    const bitrev = (x) => { let r = 0; for (let b = 0; b < bits; b++) r = (r << 1) | ((x >> b) & 1); return r; };
+    let bass = 0, mid = 0, sub = 0, total = 0;
+    for (let off = 0; off + N <= left.length; off += hop) {
+      for (let i = 0; i < N; i++) { re[i] = left[off + i] * win[i]; im[i] = 0; }
+      for (let i = 0; i < N; i++) { const j = bitrev(i); if (j > i) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; } }
+      for (let len = 2; len <= N; len <<= 1) {
+        const ang = -2 * Math.PI / len;
+        const wr = Math.cos(ang), wi = Math.sin(ang);
+        for (let i = 0; i < N; i += len) {
+          let cwr = 1, cwi = 0;
+          for (let k = 0; k < len / 2; k++) {
+            const ar = re[i + k], ai = im[i + k];
+            const br = re[i + k + len / 2], bi = im[i + k + len / 2];
+            const xr = br * cwr - bi * cwi, xi = br * cwi + bi * cwr;
+            re[i + k] = ar + xr; im[i + k] = ai + xi;
+            re[i + k + len / 2] = ar - xr; im[i + k + len / 2] = ai - xi;
+            const nwr = cwr * wr - cwi * wi; cwi = cwr * wi + cwi * wr; cwr = nwr;
+          }
+        }
+      }
+      for (let b = 1; b < N / 2; b++) {
+        const pw = re[b] * re[b] + im[b] * im[b];
+        const f = (b * sampleRate) / N;
+        total += pw;
+        if (f < 30) sub += pw;
+        if (f < 125) bass += pw;
+        else if (f <= 4000) mid += pw;
+      }
+    }
+    return { bassFrac: total ? bass / total : 0, midFrac: total ? mid / total : 0, subFrac: total ? sub / total : 0 };
   }
 
   // Energy onsets: local peaks of a 10 ms RMS envelope standing above a 250 ms moving

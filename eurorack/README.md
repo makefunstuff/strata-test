@@ -54,10 +54,17 @@ touches the DOM, and the DOM never touches sample data except through the
   ±8 with non-finite values killed in place, so a runaway feedback patch gets
   squashed instead of poisoning the mix, and processor faults print through
   `port.postMessage` instead of silencing the output.
+- **The CV convention is 1.0 = 72 semitones** (`NOTES_SPAN`), shared by
+  MIDI-CV, sequencer, quantiser and the VCO's panel offsets — which are
+  converted, never added raw (adding raw once made "1 octave" move six, and
+  every preset's lead sat at 60 Hz: loud, measurable, inaudible).
 - **Cables copy whole 128-sample blocks** with one carried sample across the
   seam — cheap, and it means modulation rates (LFOs at 20 Hz) stay smooth.
 - **Sequencer and clock run on the audio clock** (sample counters against
   BPM), not `setInterval`, so steps don't drift against the delay/reverb.
+- **Re-patching keeps the transport**: a rebuild reuses the unit object of any
+  module whose id and type are unchanged, so plugging a cable does not reset
+  the sequencer step, VCO phase or reverb tails — live patching stays musical.
 - The master chain is deliberately a limiter + tanh: patch a feedback loop
   to full and you get squashed, not blown speakers.
 
@@ -69,21 +76,24 @@ Chromium (software GL) and asserts, unmocked:
 1. boot with zero console errors, ≥5 modules, initial patch validates,
    worklet node ready, first-run help appears once;
 2. **each of the five presets renders 4 s offline through the production
-   worklet** and must be audible and *alive*: measured levels
+   worklet** and must be audible, *alive* and **in the right place in the
+   spectrum**: measured levels
 
    | preset | peak | RMS | the live proof |
    |---|---|---|---|
-   | Acid Groove | ~0.58 | ~0.15 | sequencer walks ≥3 steps, ≥6 onsets |
-   | Pluck & Space | ~0.48 | ~0.11 | sequencer walks ≥3 steps, ≥6 onsets |
-   | Deep Drone | ~0.25 | ~0.09 | telemetry + events or sustained RMS floor |
-   | Ambient Garden | ~0.11 | ~0.07 | telemetry + sustained RMS floor |
-   | Kraut Motor | ~0.84 | ~0.36 | sequencer walks ≥3 steps (motorik: a flat envelope is legitimate) |
+   | Acid Groove | ~0.69 | ~0.23 | ≤15 % sub-30 Hz, ≥7 % mid (125 Hz–4 kHz), sequencer walks 16 steps, ≥6 onsets |
+   | Pluck & Space | ~0.74 | ~0.17 | ≤15 % sub, mid ≈36 %, sequencer walks 16 steps, ≥6 onsets |
+   | Deep Drone | ~0.39 | ~0.06 | ≤50 % sub (it is called *Deep*), telemetry + RMS floor |
+   | Ambient Garden | ~0.35 | ~0.11 | ≤50 % sub, telemetry + sustained RMS floor |
+   | Kraut Motor | ~0.86 | ~0.36 | ≤15 % sub, mid ≈12 %, sequencer walks 8 steps (motorik: a flat envelope is legitimate) |
 
    The sequencer-step proof comes from the worklet's own telemetry during the
-   offline render, and the onset detector is a flux test on the master — a
-   frozen gate or a stalled clock measures loud but fails. (It caught a real
-   one: the clock increment was once per-second math in a per-sample loop,
-   which no loudness figure could see.)
+   offline render, the onset detector is a flux test on the master, and the
+   spectrum gate is an FFT band split — a frozen gate, a stalled clock or a
+   miscalibrated VCO CV measures loud but fails. (They caught two real ones:
+   the clock increment was per-second maths in a per-sample loop, and the
+   panel's OCT/SEMI/FINE offsets were 6× their labels, putting every lead
+   under the kick. No loudness figure could see either.)
 
 3. the UI answers to **real mouse events**: a knob drag changes its value
    (including a knob with a cable crossing it — the layering contract), a

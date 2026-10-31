@@ -50,10 +50,9 @@
   class VCO {
     constructor() { this.ph = 0; this.prevSync = 0; this.os = 2; }
     setParams(p) {
-      this.wave = Math.round(p.wave * 3);
       this.oct = p.oct * 4 - 2;
       this.semi = p.coarse * 48 - 24;
-      this.fine = p.fine - 0.5;
+      this.fine = (p.fine - 0.5) * 100;                       // centi-semitones for the cv sum
       this.pw = 0.05 + 0.9 * p.pw;
       this.fmd = p.fmd;
     }
@@ -62,7 +61,9 @@
       let { ph, prevSync } = this;
       const saw = outs.saw, tri = outs.tri, sqr = outs.sqr, sinw = outs.sin;
       for (let i = 0; i < 128; i++) {
-        const cv = (ins.v ? ins.v[i] : 0) + this.oct + this.semi / 12 + this.fine / 12;
+        // CV convention (shared with MIDI-CV): 1.0 spans NOTES_SPAN=72 semitones.
+        // Panel offsets are octaves/semitones/cents — convert, do NOT add raw (that was 6x).
+        const cv = (ins.v ? ins.v[i] : 0) + (this.oct * 12 + this.semi + this.fine) / 72;
         const base = F_C1 * Math.pow(2, (cv * NOTES_SPAN) / 12);
         const f = clamp(base * (1 + this.fmd * (ins.fm ? ins.fm[i] : 0)), 0.002, sr / 4.5);
         const sync = ins.sync && ins.sync[i] > 0.5 ? 1 : 0;
@@ -505,7 +506,7 @@
   class EurorackProcessor extends AudioWorkletProcessor {
     constructor(opts) {
       super();
-      this.nodes = []; this.cables = []; this.outNode = null;
+      this.nodes = []; this.cables = []; this.outNode = null; this.byId = new Map();
       this.lv = new Float32Array(0); this.jackMap = [];
       this.frame = 0; this.limiterPeak = 0;
       this.scopeBuf = new Float32Array(512); this.scopeSign = new Int8Array(512).fill(1); this.scopeW = 0;
@@ -529,6 +530,7 @@
       this.lastPatch = patch;
       this.rngSeed = patch.seed ?? 0x9e3779b9;
       this.bpm = patch.bpm ?? 104;
+      const oldById = this.byId;                     // same id+type ⇒ reuse the unit object: plugging one cable must not rewind the transport
       this.nodes = []; this.cables = []; this.outNode = null;
       this.byId = new Map();
       const spec = patch.paramSpec || {};
@@ -540,7 +542,8 @@
           outs: {}, prevOuts: {}, inBuf: {},
           outNames: OUTS[m.type] || [],
           inNames: INS[m.type] || [],
-          unit: isOut ? null : new UNITS[m.type](),
+          unit: isOut ? null
+            : (oldById.get(m.id)?.type === m.type && oldById.get(m.id).unit) || new UNITS[m.type](),
         };
         for (const o of n.outNames) { n.outs[o] = new Float32Array(128); n.prevOuts[o] = new Float32Array(128); }
         for (const j of n.inNames) n.inBuf[j] = new Float32Array(128);
@@ -549,9 +552,11 @@
           n.p[p] = v; n.tp[p] = v;
         }
         if (n.unit) {
-          let h = 2166136261;
-          for (let i = 0; i < m.id.length; i++) h = Math.imul(h ^ m.id.charCodeAt(i), 16777619);
-          n.unit.rng = mulberry((h ^ this.rngSeed) >>> 0);
+          if (!n.unit.rng) {                          // a reused unit keeps its noise/track state too
+            let h = 2166136261;
+            for (let i = 0; i < m.id.length; i++) h = Math.imul(h ^ m.id.charCodeAt(i), 16777619);
+            n.unit.rng = mulberry((h ^ this.rngSeed) >>> 0);
+          }
           if (m.type === "seq") n.freeRun = !(patch.cables || []).some((c) => c.dst.m === m.id && c.dst.j === "clk");
           try { n.unit.setParams(n.p, { freeRun: n.freeRun }); } catch { /* a unit with no params */ }
         }
@@ -635,13 +640,15 @@
       const inL = out.inBuf.l, inR = out.inBuf.r;
       const a = 1 - Math.exp(-1 / (0.003 * sr)), rel = 1 - Math.exp(-1 / (0.09 * sr));
       for (let i = 0; i < 128; i++) {
-        const x = (inL[i] + inR[i]) * 0.5 * lvl;
-        const sat = Math.tanh(x * 1.35) * 0.86;
-        const abs = Math.abs(sat);
+        const satL = Math.tanh(inL[i] * lvl * 1.35) * 0.86;
+        const satR = Math.tanh(inR[i] * lvl * 1.35) * 0.86;
+        const abs = Math.max(Math.abs(satL), Math.abs(satR));   // one limiter, both channels
         this.limiterPeak += abs > this.limiterPeak ? (abs - this.limiterPeak) * a : -(this.limiterPeak - abs) * rel;
         const g = this.limiterPeak > 0.89 ? 0.89 / this.limiterPeak : 1;
-        const o = Math.max(-0.999, Math.min(0.999, sat * g));
-        L[i] = o; R[i] = o;
+        const oL = Math.max(-0.999, Math.min(0.999, satL * g));
+        const oR = Math.max(-0.999, Math.min(0.999, satR * g));
+        L[i] = oL; R[i] = oR;
+        const o = (oL + oR) * 0.5;
         this.scopeBuf[this.scopeW] = Math.abs(o);
         this.scopeSign[this.scopeW] = o < 0 ? -1 : 1;
         this.scopeW = (this.scopeW + 1) % 512;
