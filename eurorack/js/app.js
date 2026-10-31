@@ -504,6 +504,7 @@ window.eurorack = {
   loadPatch: (p) => app.loadPatch(p),
   loadPreset: (name) => { const p = getPreset(name); return p ? app.loadPatch(p) : false; },
   addModule: (t) => app.addModule(t),
+  shareURL: () => shareURL(),
   addCable: (s, d) => app.addCable(s, d),
   removeCable: (id) => app.removeCable(id),
   presets: PRESET_NAMES,

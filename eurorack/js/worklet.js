@@ -533,7 +533,8 @@
         if (m.t === "patch") this.build(m.patch);
         else if (m.t === "param") {
           const n = this.byId.get(m.m);
-          if (n && m.p in n.tp) { n.tp[m.p] = m.v; }
+          const v = m.v;
+          if (n && m.p in n.tp && Number.isFinite(v)) { n.tp[m.p] = v < 0 ? 0 : v > 1 ? 1 : v; }   // one NaN in a smoothing loop is permanent
         } else if (m.t === "bpm") { this.bpm = clamp(m.v, 30, 260); this._applyT16(); }
         else if (m.t === "note") {
           for (const n of this.nodes) if (n.type === "midicv") n.unit.noteEvent(m.on, m.note, m.vel ?? 100);

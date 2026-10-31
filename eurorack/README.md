@@ -109,12 +109,20 @@ Chromium (software GL) and asserts, unmocked:
    says which mode each proof ran in (`"mouse"` / `"synthetic"`), so a silent
    downgrade is visible. Every named proof must report a positive result —
    a precondition scan returning null is a failure, not a skip;
-4. **the telemetry-driven UI works**: in the one step where telemetry painting
-   is not stubbed, the scope canvas must show trace pixels, jack clip LEDs
-   must light, and a sequencer step lamp must walk — scope/LED code with zero
-   coverage once passed green for three rounds;
-5. desktop, hero and phone screenshots are produced (in `shots/`, gitignored
-   except the two the hub card uses).
+4. **every control is hit-testable** — all 66–77 knobs and jacks of all five
+   presets on desktop, and 67 of them at 390×844 on the phone profile, after
+   the rack scrolls them into view (the probe wipes nothing, reports how many
+   elements it examined, and an ancestor answering for a clipped child is a
+   failure — the exact mutation that let round 4 find seven unpatchable jacks
+   must be caught; it is);
+5. **the telemetry-driven UI paints** — in one step the scope canvas, clip
+   LEDs and step lamps are wiped clean first, then must light up again from
+   live worklet telemetry alone (with the telemetry callback stubbed out,
+   this step fails — proven by mutation, not by hope);
+6. **a shared URL round-trips**: the compact base64 hash reparsed from
+   scratch yields the same patch, validates, and renders audible music;
+7. desktop, hero and phone screenshots are produced with the scope live
+   (in `shots/`, gitignored except the two the hub card uses).
 
 The harness self-heals: if Chromium dies mid-phase (this box runs SwiftShader
 while Strata holds the GPUs), the phase relaunches and retries once, and

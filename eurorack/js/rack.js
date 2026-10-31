@@ -129,6 +129,7 @@ export class Rack {
     patch.modules.sort((a, b) => (a.row ?? 0) - (b.row ?? 0) || (a.col ?? 0) - (b.col ?? 0));
     this.content.querySelectorAll(".rail").forEach((r) => r.remove());
     this.jackEls.clear(); this.outJackEls = []; this.seqEls.clear(); this.cableEls.clear();
+    this._lastLv = null; if (this._seqCur) this._seqCur = new Map();   // diff caches refer to replaced elements — stale cache = dark LEDs
     const rows = Math.max(2, ...patch.modules.map((m) => (m.row ?? 0) + 1));
     for (let r = 0; r < rows; r++) {
       const rail = el("rail", this.content);
@@ -341,6 +342,7 @@ export class Rack {
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
     window.addEventListener("pointercancel", cancel);
   }
 
@@ -403,9 +405,20 @@ export class Rack {
       panel.style.top = `${ev.clientY - 18}px`;
       panel.style.zIndex = 50;
     };
-    const up = () => {
+    const up = (ev) => {
+      if (ev && ev.type === "pointercancel") {                      // interrupted touch: put the panel back, don't strand it
+        panel.style.position = ""; panel.style.left = ""; panel.style.top = ""; panel.style.zIndex = "";
+        panel.style.pointerEvents = "";
+        panel.classList.remove("drag");
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+        window.removeEventListener("pointercancel", up);
+        this.rebuild();
+        return;
+      }
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
       panel.style.pointerEvents = "";
       panel.classList.remove("drag");
       if (moved) {
@@ -449,7 +462,7 @@ export class Rack {
       // map by the worklet's own jack key: the UI may sort/rebuild panels in any
       // order, and a positional zip between two independently-ordered arrays is
       // how meters once started showing another jack's level after plain editing
-      const el_ = (k && k[i]) ? this.jackEls.get(k[i]) : this.outJackEls[i];
+      const el_ = k ? this.jackEls.get(k[i]) : null;   // no positional fallback: a meter mapped by guesswork is the bug we buried
       if (!el_) continue;
       const v = Math.min(1, lv[i] * 1.6);
       if (Math.abs(v - this._lastLv[i]) > 0.02) {          // style writes only on visible change

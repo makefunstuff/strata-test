@@ -6,7 +6,7 @@
 // each knob carries the display mapping used for its value readout.
 
 export const HPW = 10;            // CSS px per HP at zoom 1
-export const ROW_H = 264;         // panel height (a 3U-ish rail)
+export const ROW_H = 264;         // 3U-ish rail height; .panel flex packing keeps jack rows inside it
 export const RACK_HP = 96;        // usable width of one rail in HP
 
 // knob value formats: fmt(v) -> label; v stays 0..1 on the wire

@@ -126,7 +126,7 @@ async function withPage({ width, height, extra = {} }, fn, retries = 1) {
         return loc;
       };
       const errors = [];
-      page.on("console", (m) => { if (m.type() === "error" && !m.text().includes("favicon")) errors.push(m.text()); });
+      page.on("console", (m) => { const t = m.text(); if (m.type() === "error" && !/favicon\.ico/.test(t)) errors.push(t); });
       page.on("pageerror", (e) => errors.push("pageerror: " + e.message));
       page.on("requestfailed", (r) => { if (!r.url().includes("favicon")) errors.push("requestfailed: " + r.url()); });
       const out = await fn(page, errors);
@@ -231,7 +231,7 @@ try {
       if (mods.includes("seq") && mods.includes("quant")) {
         lead = await page.evaluate(async () => {
           const p = JSON.parse(JSON.stringify(eurorack.patch));
-          const drums = new Set(p.modules.filter((m) => ["kick", "hat", "snare"].includes(m.type)).map((m) => m.id));
+          const drums = new Set(p.modules.filter((m) => ["kick", "hat", "snare", "noise"].includes(m.type)).map((m) => m.id));
           p.modules = p.modules.filter((m) => !drums.has(m.id));
           p.cables = p.cables.filter((c) => !drums.has(c.src.m) && !drums.has(c.dst.m));
           const x = await eurorack.renderOffline(p, 3);
@@ -249,6 +249,7 @@ try {
     if (lv.hasFx) check(Math.abs(lv.corr) < 0.995, `preset ${name}: L and R correlate at ${lv.corr.toFixed(4)} — that is dual mono wearing a stereo label`);
     if (lead) { lv.leadMid = lead.midFrac; check(lead.midFrac >= 0.5, `preset ${name}: with drums removed the lead holds only ${Math.round(lead.midFrac * 100)}% of energy in 125 Hz-4 kHz — it is not audible, whatever the mix says`); }
     check(lv.rms >= 0.02, `preset ${name} too quiet to be music (rms ${lv.rms.toFixed(4)})`);
+    check(Math.min(lv.rmsL, lv.rmsR) >= 0.003, `preset ${name}: one channel is silent (rmsL ${lv.rmsL.toFixed(4)}, rmsR ${lv.rmsR.toFixed(4)})`);
     check(lv.peak >= 0.08, `preset ${name} near-silent (peak ${lv.peak.toFixed(3)})`);
     // loudness alone cannot tell music from a frozen gate: the worklet's own telemetry
     // must show sequencers walking, and the master must show things happening
@@ -267,6 +268,7 @@ try {
       check(moving, `preset ${name}: no musical events — ${lv.onsets} onsets and ${maxSteps} steps in 4 s (a frozen gate measures loud too)`);
     } else {
       check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
+      check(lv.midFrac >= 0.03, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz-4 kHz band — drones live here, but something must still be heard`);
       const moving = lv.onsets >= 4 || lv.rms >= 0.05;
       check(moving, `preset ${name}: drone never moved (${lv.onsets} onsets, rms ${lv.rms.toFixed(4)})`);
     }
@@ -343,6 +345,7 @@ try {
     if (covBox) {                                    // layering proof: knob under a cable still turns
       const r = await dragKnob(covBox);
       check(r.before !== r.after, `a knob with a cable crossing it did not turn (${r.before})`);
+      check(r.mode === "mouse", `knob-under-cable ran in "${r.mode}" mode: synthetic dispatch bypasses the hit-testing this proof exists to establish`);
       report.ui.knobUnderCable = r;
     } else report.ui.knobUnderCable = "skipped:no cable sagged over any knob even after forcing one";
 
@@ -546,13 +549,76 @@ try {
     }
 
   });
+
+// Every control must be physically reachable: centred in the viewport (the rack
+// scrolls), the browser's own hit test must land on it. Round 4 found .panel
+// overflow hidden clipping seven jacks off the bottom of rows (HAT OUT unpatchable
+// by mouse in two shipped presets) and the phone squeezing panels into each other —
+// both passed green because no proof ever asked "can a finger actually hit this".
+const reachProbe = (page) => page.evaluate(async () => {
+  const fails = [];
+  // the drawer over the rack must be closed — and the probe reports how many
+  // controls it actually examined, so an empty selector can never pass vacuously
+  for (const d of document.querySelectorAll(".open#drawer, #drawer.open, .drawer.open")) d.classList.remove("open");
+  await new Promise((r) => requestAnimationFrame(r));
+  const els = [...document.querySelectorAll(".panel .jack, .panel .knob")];
+  for (const el of els) {
+    el.scrollIntoView({ block: "center", inline: "center" });
+    await new Promise((r) => requestAnimationFrame(r));
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) { fails.push(`${el.className} zero-size`); continue; }
+    if (r.top < -1 || r.bottom > window.innerHeight + 1 || r.left < -1 || r.right > window.innerWidth + 1) {
+      fails.push(`offscreen ${el.closest(".panel")?.dataset.id ?? "?"} ${el.className.split(" ")[0]} ${Math.round(r.top)}..${Math.round(r.bottom)}`);
+      continue;
+    }
+    const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+    if (!hit || !(el === hit || el.contains(hit))) {   // an ancestor showing through where a clipped child should be is EXACTLY the failure — never accept hit.contains(el)
+      fails.push(`covered ${el.closest(".panel")?.dataset.id ?? "?"}.${el.dataset.j ?? el.dataset.p ?? el.className.split(" ")[0]} by ${hit ? hit.className || hit.tagName : "nothing"}`);
+    }
+  }
+  return { fails, n: els.length };
+});
+
+  await uiStep("reach", async (page) => {
+    const per = {};
+    for (const name of await page.evaluate("eurorack.presets")) {
+      await page.evaluate((n) => eurorack.loadPreset(n), name);
+      await page.waitForTimeout(250);
+      const pr = await reachProbe(page);
+      per[name] = pr;
+      check(pr.n >= 20, `reach (${name}): probe examined only ${pr.n} controls — selector or boot is broken`);
+    }
+    report.ui.reach = Object.fromEntries(Object.entries(per).map(([k, v]) => [k, `${v.n} ok` + (v.fails.length ? `: ${v.fails.slice(0, 4).join(" | ")}` : "")]));
+    for (const [name, pr] of Object.entries(per)) {
+      check(pr.fails.length === 0, `reach (${name}): ${pr.fails.length}/${pr.n} controls unhit-testable, e.g. ${pr.fails.slice(0, 3).join(" | ")}`);
+    }
+  });
+
   await uiStep("telemetry", async (page) => {
     // the telemetry-driven UI (scope trace, clip LEDs, sequencer step lamps) is a
     // third of rack.js and had zero coverage: with everything stubbed out, a worklet
     // that never posts, a mis-keyed map, or a dead canvas all passed green.
     // This step is the one uiStep that does NOT stub applyTelemetry.
+    const live = await page.evaluate(() => ({
+      ctx: eurorack.app.engine.ctx && eurorack.app.engine.ctx.state,
+      ready: eurorack.app.engine.ready === true,
+      err: eurorack.app.engine.lastError,
+    }));
+    check(live.ctx === "running", `telemetry proof: AudioContext is ${live.ctx} — nothing was rendering, so nothing could be proven`);
+    check(live.ready, "telemetry proof: worklet node never became ready");
+    check(!live.err, `telemetry proof: worklet faulted live: ${String(live.err).slice(0, 120)}`);
     const t = await page.evaluate(async () => {
       const rack = eurorack.app.rack;
+      // wipe the evidence FIRST: a canvas drawn during boot and dead telemetry since
+      // looked identical to live telemetry (the exact mutation-test escape)
+      for (const cv of rack.scopeCanvases || []) {
+        const g = cv.getContext("2d");
+        g.fillStyle = "#071520"; g.fillRect(0, 0, cv.width, cv.height);
+      }
+      for (const j of rack.jackEls.values()) j.style.setProperty("--led", "0");
+      for (const s of document.querySelectorAll(".sled.lit")) s.classList.remove("lit");
+      rack._lastLv = null;                          // force the diff-based writers to repaint
+      if (rack._seqCur) rack._seqCur.clear();
       const t0 = performance.now();
       let scopePixels = 0, litJacks = 0, seqLeds = 0;
       while (performance.now() - t0 < 2500) {
@@ -571,10 +637,28 @@ try {
       return { scopePixels, litJacks, seqLeds };
     });
     report.ui.telemetry = t;
+    check(t.scopePixels > 100, `telemetry: scope drew ${t.scopePixels} trace pixels after a clean wipe — the scope path is dead`);
+    check(t.litJacks >= 1, "telemetry: no jack clip LED ever lit while audio ran");
+    check(t.seqLeds >= 1, "telemetry: no sequencer step lamp ever lit");
+  });
+
+
+  await uiStep("share", async (page) => {
+    // the full strangers'-JSON path: compactPatch -> #p= -> hashPatch -> sanitize ->
+    // playable patch. Nothing else in the shelf parses its own share format.
+    const orig = await page.evaluate(() => ({ n: eurorack.patch.modules.length, bpm: eurorack.patch.bpm, url: eurorack.shareURL() }));
+    check(/[&#]p=/.test(orig.url), "share URL carries no patch payload");
+    await page.goto(orig.url, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction("window.eurorack && window.eurorack.booted === true", null, { timeout: 30000 });
+    await dismissHelp(page);
+    const after = await page.evaluate(() => ({ n: eurorack.patch.modules.length, bpm: eurorack.patch.bpm, errs: eurorack.validate().length }));
+    check(after.errs === 0 && after.n === orig.n && after.bpm === orig.bpm,
+      `share round-trip lost the patch: got ${JSON.stringify(after)} from ${JSON.stringify({ n: orig.n, bpm: orig.bpm })}`);
+    const lv = await page.evaluate(async () => await eurorack.renderOffline(eurorack.patch, 2));
+    check(lv.rms >= 0.02, `patch restored from a shared URL makes no music (rms ${lv.rms})`);
   });
 
   await uiStep("desktop-shot", async (page) => {
-    await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });   // skip scope paint only; LEDs and meters stay live
     await shot(page, join(outDir, "desktop.png"), "desktop.png");
   });
 
@@ -592,7 +676,6 @@ try {
     await boot(page);
     await dismissHelp(page);
     await page.evaluate("eurorack.loadPreset('Acid Groove')");
-    await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });
     await page.waitForTimeout(600);
     check(errors.length === 0, `phone console errors: ${errors.slice(0, 3).join(" | ")}`);
     // overflow:hidden on html/body makes the documentElement test vacuous; measure
@@ -614,6 +697,10 @@ try {
       return { keys: !!k && k.scrollWidth > k.clientWidth, rack: (() => { const r = document.getElementById("rackScroll"); return !!r && r.scrollWidth > r.clientWidth; })() };
     });
     report.ui.phoneScroll = scrollable;
+    const pr = await reachProbe(page);
+    report.ui.phoneReach = `${pr.n} ok` + (pr.fails.length ? `: ${pr.fails.slice(0, 4).join(" | ")}` : "");
+    check(pr.n >= 30, `phone reach: probe examined only ${pr.n} controls — the rack never laid out`);
+    check(pr.fails.length === 0, `phone reach: ${pr.fails.length}/${pr.n} controls unhit-testable at 390x844, e.g. ${pr.fails.slice(0, 3).join(" | ")}`);
     await shot(page, join(outDir, "phone.png"), "phone.png");
   });
 } catch (e) {

@@ -38,6 +38,11 @@ export class Engine {
 
   async start(patch) {
     if (this.ready) return;
+    if (this.ctx && this.ctx.state !== "closed") {        // a failed first start used to leave this orphaned
+      await this.ctx.resume().catch(() => {});
+      if (this.node) { this.ready = true; return; }
+      try { this.ctx.close(); } catch {}
+    }
     const Ctx = window.AudioContext || window.webkitAudioContext;
     this.ctx = new Ctx({ latencyHint: "interactive" });
     await this.ctx.audioWorklet.addModule(WORKLET_URL);
@@ -129,6 +134,7 @@ export class Engine {
     // every metric is two-channel: a preset patched entirely to R used to be
     // measured from the silent L — peak, rms, spectrum and onsets all said "quiet"
     let peak = 0, sum = 0, clipped = 0;
+    let sumL = 0, sumR = 0;
     let sLL = 0, sRR = 0, sLR = 0, meanL = 0, meanR = 0;
     for (let i = 0; i < left.length; i++) {
       const l = left[i], rr = right ? (right[i] ?? l) : l;
@@ -136,6 +142,7 @@ export class Engine {
       if (m > peak) peak = m;
       if (m > 0.985) clipped++;
       sum += m * m;
+      sumL += l * l; sumR += rr * rr;
       meanL += l; meanR += rr;
     }
     meanL /= left.length; meanR /= left.length;
@@ -145,7 +152,10 @@ export class Engine {
     }
     const denom = Math.sqrt(sLL * sRR);
     const corr = denom > 1e-12 ? sLR / denom : 1;   // 1.0 = dual mono
-    return { peak, rms: Math.sqrt(sum / left.length), clippedFrac: clipped / left.length, corr };
+    return {
+      peak, rms: Math.sqrt(sum / left.length), clippedFrac: clipped / left.length, corr,
+      rmsL: Math.sqrt(sumL / left.length), rmsR: Math.sqrt(sumR / left.length),   // per-channel floors: a silently-dead R passed for rounds
+    };
   }
 
   // Band energy of a rendered buffer: bass (<125 Hz) vs playable band (125 Hz–4 kHz).
