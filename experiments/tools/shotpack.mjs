@@ -2,7 +2,10 @@
 /*
  * shotpack.mjs — one page load, many frames: the visual-review loop for a big scene.
  *
- *   node experiments/tools/shotpack.mjs 7-tallinn-diorama --spec shots.json [--out dir] [--width 1000] [--height 600]
+ *   node experiments/tools/shotpack.mjs experiments/7-tallinn-diorama --spec experiments/tools/frames-tallinn.json [--out dir] [--width 1000] [--height 600]
+ *
+ * The experiment directory is spelled from the repo root, as with check.mjs: the folder *above* it is
+ * what gets served, so a bare `7-tallinn-diorama` asks for /7-tallinn-diorama/ and gets a 404.
  *
  * --spec is a JSON file holding an array of frames:
  *   { "name": "hero", "wait": 2500, "eval": "async () => { ... window.experiment ... }",

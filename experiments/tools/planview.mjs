@@ -7,12 +7,15 @@
  */
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import pw from "playwright-core";
 import { generateTallinn } from "../7-tallinn-diorama/layout.js";
 import { STREETS } from "../7-tallinn-diorama/osm.js";
 
 const OUT = resolve(process.argv[2] || "/tmp/tln-plan.png");
-const city = generateTallinn();
+// the seed the page opens with, so the plan is a picture of what the browser draws rather than of a
+// different town that happens to share the streets
+const city = generateTallinn(process.argv[3] || "TALLINN");
 const { terr } = city;
 
 const W = 1500, H = 1500, S = 1.05;
@@ -65,8 +68,10 @@ const tmp = "/tmp/tln-plan.html";
 await writeFile(tmp, html);
 
 const browser = await pw.chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? "/usr/bin/chromium",
-  headless: true, args: ["--disable-gpu", "--no-sandbox"],
+  // the same RAM-capped wrapper the other harnesses use: this one renders a 1500×1500 SVG, and an
+  // uncapped chromium next to the model server is how a checking tool becomes the problem
+  executablePath: process.env.CHROMIUM_PATH ?? fileURLToPath(new URL("../../games/tools/chromium-capped.sh", import.meta.url)),
+  headless: true, args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--single-process", "--no-zygote", "--disable-dev-shm-usage", "--disable-gpu", "--no-sandbox"],
 });
 const page = await browser.newPage({ viewport: { width: W, height: H } });
 await page.goto(`file://${tmp}`);

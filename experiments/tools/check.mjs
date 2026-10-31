@@ -1,7 +1,7 @@
 // Headless check for one experiment (the games harness pattern: RAM-capped software Chromium,
 // one page, hard deadline, browser always closed).
 //
-//   node experiments/tools/check.mjs 1-water [--wait 5] [--shot-dir experiments/1-water/shots]
+//   node experiments/tools/check.mjs experiments/1-water [--wait 5] [--shot-dir experiments/1-water/shots]
 //        [--drag fx,fy:dx,dy:ms[:shift]]... [--click fx,fy]... [--eval "js"]... [--label tag]
 //
 // Coordinates are canvas fractions. --eval runs in the page (window.experiment is the hook each
