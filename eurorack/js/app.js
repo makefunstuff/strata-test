@@ -326,7 +326,7 @@ async function initMIDI() {
       app.midiOn = any;
       $("#midiDot").classList.toggle("on", any);
     };
-    acc.onstatechange = wire;
+    acc.onstatechange = () => { allNotesOff(); wire(); };   // a yanked controller must not leave a chord sustaining
     wire();
   } catch { /* no MIDI */ }
 }
@@ -431,7 +431,7 @@ function wireToolbar() {
   };
   $("#shareBtn").onclick = async () => {
     const url = shareURL();
-    history.replaceState(null, "", url.slice(url.indexOf("#")));
+    history.replaceState(null, "", location.pathname + location.search);   // pinning the hash here would let a refresh discard every later edit
     try { await navigator.clipboard.writeText(url); toast("link copied"); }
     catch { prompt("copy this link:", url); }
   };
@@ -516,8 +516,8 @@ window.eurorack = {
     const r = await Engine.renderOffline(p, secs, app.engine.ctx?.sampleRate ?? 48000);
     return {
       ...Engine.levels(r.left, r.right),
-      onsets: Engine.onsets(r.left, r.sampleRate),
-      ...Engine.spectrum(r.left, r.sampleRate),
+      onsets: Engine.onsets(r.left, r.sampleRate, r.right),
+      ...Engine.spectrumStereo(r.left, r.right, r.sampleRate),
       steps: r.steps, teleN: r.teleN,
       length: r.left.length, sampleRate: r.sampleRate,
     };

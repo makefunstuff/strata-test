@@ -16,7 +16,7 @@ the page itself — plain ES modules, one worklet file the audio context loads.
 | 1 HP = 10 px | panels are `hp × 10` px wide, 264 px tall rows, screws and anodised-aluminium gradients |
 | catalogue | VCO ×2 (sync, FM, PW), dual LFO, ADSR ×2, VCA, multimode state-variable filter (LP/BP/HP, self-oscillates at high Q), noise, S&H, 16-step sequencer (per-step gate + pitch drag), clock (1/16, beat, BAR), quantiser (9 scales), mixer (4ch), delay (fb + damping), reverb (feedback comb pair + diffusers), kick, hat, snare, attenuverter/mult, MIDI-CV, output (level, scope, stereo jacks) |
 | patching | drag jack→jack; **any output feeds any number of inputs**; CV, gate and audio jack types are free-form (the worklet does not care, and neither do real eurorackers); click a cable to unplug it; cables sag with a length-dependent catenary and swing when you move a module |
-| play | computer keyboard (Z–M + Q–U rows, octave ± with `[` `]`), on-screen key strip, Web MIDI when a controller is present |
+| play | computer keyboard (Z–M + Q–U rows, octave ± with `↑` `↓` or the ▲▼ buttons), on-screen key strip, Web MIDI when a controller is present |
 | keep | autosave to localStorage, named patches, JSON export/import, `#p=` URL sharing (base64url-packed), WAV bounce at 8/16/30 s rendered through the *same* worklet in an OfflineAudioContext (the check uses 4 s) |
 
 ## How it is put together
@@ -77,23 +77,27 @@ Chromium (software GL) and asserts, unmocked:
    worklet node ready, first-run help appears once;
 2. **each of the five presets renders 4 s offline through the production
    worklet** and must be audible, *alive* and **in the right place in the
-   spectrum**: measured levels
+   spectrum**:
 
-   | preset | peak | RMS | the live proof |
-   |---|---|---|---|
-   | Acid Groove | ~0.69 | ~0.23 | ≤15 % sub-30 Hz, ≥7 % mid (125 Hz–4 kHz), sequencer walks 16 steps, ≥6 onsets |
-   | Pluck & Space | ~0.74 | ~0.17 | ≤15 % sub, mid ≈36 %, sequencer walks 16 steps, ≥6 onsets |
-   | Deep Drone | ~0.39 | ~0.06 | ≤50 % sub (it is called *Deep*), telemetry + RMS floor |
-   | Ambient Garden | ~0.35 | ~0.11 | ≤50 % sub, telemetry + sustained RMS floor |
-   | Kraut Motor | ~0.86 | ~0.36 | ≤15 % sub, mid ≈12 %, sequencer walks 8 steps (motorik: a flat envelope is legitimate) |
+   | preset | peak | RMS | sub <30 Hz | mid 125 Hz–4 kHz |
+   |---|---|---|---|---|
+   | Acid Groove | ~0.63 | ~0.24 | 4 % | 49 % |
+   | Pluck & Space | ~0.73 | ~0.17 | 10 % | 62 % |
+   | Deep Drone | ~0.20 | ~0.09 | 37 % (it is called *Deep*) | 5 % |
+   | Ambient Garden | ~0.28 | ~0.13 | 13 % | 4 % |
+   | Kraut Motor | ~0.86 | ~0.49 | 1 % | 9 % |
 
-   The sequencer-step proof comes from the worklet's own telemetry during the
-   offline render, the onset detector is a flux test on the master, and the
-   spectrum gate is an FFT band split — a frozen gate, a stalled clock or a
-   miscalibrated VCO CV measures loud but fails. (They caught two real ones:
-   the clock increment was per-second maths in a per-sample loop, and the
-   panel's OCT/SEMI/FINE offsets were 6× their labels, putting every lead
-   under the kick. No loudness figure could see either.)
+   Gated, not just tabulated: rhythm presets must stay ≤15 % sub with ≥7 %
+   mid; drones ≤50 % sub. Plus three proofs loudness can't fake — the
+   sequencer walked (from the worklet's own telemetry during the offline
+   render), musical events fired (a flux/onset detector on the master, both
+   channels), and **with the drums removed the lead still owns ≥50 % of the
+   playable band** (measured 94 %/85 %) — the gate that would have caught the
+   6×-CV bug, when every "lead" sat at 60 Hz while the mix measured loud.
+   Presets carrying stereo fx must show L/R correlation < 0.995: the master
+   once silently doubled mid to both channels and every stereo claim was
+   theatre until the correlation gate came in. A preset that fails to load
+   never reaches the gates, and the UI steps fail on console errors too.
 
 3. the UI answers to **real mouse events**: a knob drag changes its value
    (including a knob with a cable crossing it — the layering contract), a
@@ -103,8 +107,13 @@ Chromium (software GL) and asserts, unmocked:
    the saturated test box starves CDP input, each op races a watchdog and
    falls back to dispatching pointer events at the real handlers — the report
    says which mode each proof ran in (`"mouse"` / `"synthetic"`), so a silent
-   downgrade is visible;
-4. desktop, hero and phone screenshots are produced (in `shots/`, gitignored
+   downgrade is visible. Every named proof must report a positive result —
+   a precondition scan returning null is a failure, not a skip;
+4. **the telemetry-driven UI works**: in the one step where telemetry painting
+   is not stubbed, the scope canvas must show trace pixels, jack clip LEDs
+   must light, and a sequencer step lamp must walk — scope/LED code with zero
+   coverage once passed green for three rounds;
+5. desktop, hero and phone screenshots are produced (in `shots/`, gitignored
    except the two the hub card uses).
 
 The harness self-heals: if Chromium dies mid-phase (this box runs SwiftShader

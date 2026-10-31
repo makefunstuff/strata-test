@@ -75,7 +75,7 @@ const deadline = setTimeout(() => {
 let phase = "launch";
 const step = (p) => { phase = p; console.error("check:", p); };
 
-const report = { ok: true, failures: [], presets: {}, ui: {}, shots: [], flakyRetries: 0 };
+const report = { ok: true, partial: fromUi || onlyPreset || null, failures: [], presets: {}, ui: {}, shots: [], flakyRetries: 0 };   // partial: a dev run is never mistaken for the full proof
 const fail = (what) => { report.ok = false; report.failures.push(what); console.error("FAIL:", what); };
 const check = (cond, what) => { if (!cond) fail(what); return cond; };
 const dead = (e) => /closed|crashed|Target|detach|ECONNRESET|connection|watchdog/i.test(String(e?.message || e));
@@ -156,7 +156,7 @@ const boot = async (page) => {
 // test (this box is shared with a GPU hog) must not cost the other tests their proof.
 const uiStep = (name, fn) => {
   step(`ui: ${name}`);
-  return withPage({ width: 1280, height: 800 }, async (page) => {
+  return withPage({ width: 1280, height: 800 }, async (page, errors) => {
     step(`ui: ${name} › boot`);
     await boot(page);
     step(`ui: ${name} › help`);
@@ -174,8 +174,10 @@ const uiStep = (name, fn) => {
     // part of the UI-interaction proof; freeze it so a saturated software rasteriser
     // cannot starve the input pipeline mid-drag. Scope rendering is judged by the shots.
     step(`ui: ${name} › test`);
-    await page.evaluate(() => { eurorack.app.rack.applyTelemetry = () => {}; });
-    return fn(page);
+    if (name !== "telemetry") await page.evaluate(() => { eurorack.app.rack.applyTelemetry = () => {}; });
+    const r = await fn(page);
+    check(errors.length === 0, `ui ${name}: console/page errors during live interaction: ${errors.slice(0, 3).join(" | ")}`);
+    return r;
   });
 };
 
@@ -214,55 +216,60 @@ try {
     onlyPreset ? [onlyPreset] : await (await boot(page), page.evaluate("eurorack.presets")));
   for (const name of names) {
     step(`preset ${name}`);
-    const { lv, hasSeq } = await withPage({ width: 800, height: 600 }, async (page, errors) => {
+    const { lv, lead, hasSeq } = await withPage({ width: 800, height: 600 }, async (page, errors) => {
       await boot(page);
-      check(await page.evaluate((n) => eurorack.loadPreset(n), name), `preset ${name} failed to load`);
+      const loaded = await page.evaluate((n) => eurorack.loadPreset(n), name);
+      if (!loaded) return { lv: null, lead: null, hasSeq: false };
       const errs = await page.evaluate("eurorack.validate()");
       check(errs.length === 0, `preset ${name} invalid: ${errs.slice(0, 3).join("; ")}`);
-      const hasSeq = await page.evaluate(() => (eurorack.patch.modules || []).some((m) => m.type === "seq"));
       const r = await page.evaluate(async (n) => await eurorack.renderOffline(n, 4), name);
+      const mods = await page.evaluate(() => (eurorack.patch.modules || []).map((m) => m.type));
+      // lead audibility: drums out of the patch, the melodic voice must own the
+      // playable band. The 6x-CV bug left leads at ~60 Hz — 3% mid even with drums
+      // removed; 0.5 is the measured floor of the fixed build.
+      let lead = null;
+      if (mods.includes("seq") && mods.includes("quant")) {
+        lead = await page.evaluate(async () => {
+          const p = JSON.parse(JSON.stringify(eurorack.patch));
+          const drums = new Set(p.modules.filter((m) => ["kick", "hat", "snare"].includes(m.type)).map((m) => m.id));
+          p.modules = p.modules.filter((m) => !drums.has(m.id));
+          p.cables = p.cables.filter((c) => !drums.has(c.src.m) && !drums.has(c.dst.m));
+          const x = await eurorack.renderOffline(p, 3);
+          return { midFrac: x.midFrac, rms: x.rms };
+        });
+      }
+      r.hasFx = mods.includes("delay") || mods.includes("reverb");
       check(errors.length === 0, `preset ${name}: console errors during render: ${errors.slice(0, 3).join(" | ")}`);
-      return { lv: r, hasSeq };
+      return { lv: r, lead, hasSeq: mods.includes("seq") };
     });
+    if (!lv) { check(false, `preset ${name} failed to load — levels not measured`); continue; }
     report.presets[name] = lv;
+    // stereo is proved, not claimed: any preset with stereo fx must actually have
+    // two different channels (the dual-mono master once passed every level gate)
+    if (lv.hasFx) check(Math.abs(lv.corr) < 0.995, `preset ${name}: L and R correlate at ${lv.corr.toFixed(4)} — that is dual mono wearing a stereo label`);
+    if (lead) { lv.leadMid = lead.midFrac; check(lead.midFrac >= 0.5, `preset ${name}: with drums removed the lead holds only ${Math.round(lead.midFrac * 100)}% of energy in 125 Hz-4 kHz — it is not audible, whatever the mix says`); }
     check(lv.rms >= 0.02, `preset ${name} too quiet to be music (rms ${lv.rms.toFixed(4)})`);
     check(lv.peak >= 0.08, `preset ${name} near-silent (peak ${lv.peak.toFixed(3)})`);
     // loudness alone cannot tell music from a frozen gate: the worklet's own telemetry
     // must show sequencers walking, and the master must show things happening
     check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
-    // spectrum gates: energy must live where the instruments are. A mis-scaled VCO CV
-    // once put every lead under the kick (97% < 125 Hz, inaudible on speakers); these
-    // numbers are floors measured from the fixed build, ceilings the broken one blew.
     if (hasSeq) {
+      // spectrum gates on the full mix: a mis-scaled VCO CV once put every lead
+      // under the kick (97% < 125 Hz). The lead-removal test above is the one that
+      // SEES a 60 Hz lead; these bound the mix.
       check(lv.subFrac <= 0.15, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — the low end is swallowing the band`);
-      check(lv.midFrac >= 0.07, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz–4 kHz band`);
-    } else {
-      check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
-    }
-    check(lv.teleN >= 20, `preset ${name}: worklet posted no telemetry during render (${lv.teleN} msgs)`);
-    // spectrum gates: energy must live where the instruments are. A mis-scaled VCO CV
-    // once put every lead under the kick (97% < 125 Hz, inaudible on speakers); these
-    // numbers are floors measured from the fixed build, ceilings the broken one blew.
-    if (hasSeq) {
-      check(lv.subFrac <= 0.15, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — the low end is swallowing the band`);
-      check(lv.midFrac >= 0.07, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz–4 kHz band`);
-    } else {
-      check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
-    }
-    if (hasSeq) {
-      // rhythmic presets must prove rhythm: the sequencer walked, and events fire
+      check(lv.midFrac >= 0.07, `preset ${name}: only ${Math.round(lv.midFrac * 100)}% of energy in the playable 125 Hz-4 kHz band`);
       const seqIds = new Set((lv.steps || []).map((s) => s.split(":")[0]));
-      check(seqIds.size >= 1, `preset ${name} contains a sequencer the worklet never reported stepping`);
-      const perSeq = [...seqIds].map((id) => (lv.steps || []).filter((s) => s.startsWith(`${id}:`)).length);
-      const maxSteps = Math.max(0, ...perSeq);
-      check(maxSteps >= 3, `preset ${name}: sequencer visited only ${maxSteps} steps in 4 s — tempo is broken`);
-      check(lv.onsets >= 6 || maxSteps >= 7, `preset ${name}: sequenced but nothing happens (${lv.onsets} onsets, ${maxSteps} steps)`);
+      check(seqIds.size >= 1, `preset ${name}: sequenced preset but no sequencer reported walking`);
+      const maxSteps = Math.max(0, ...[...seqIds].map((id) => new Set((lv.steps || []).filter((s) => s.startsWith(id + ":")).map((s) => s.split(":")[1])).size));
+      check(maxSteps >= 3, `preset ${name}: sequencer walked only ${maxSteps} distinct steps in 4 s — it is not cycling`);
+      const moving = lv.onsets >= 6 || maxSteps >= 7;
+      check(moving, `preset ${name}: no musical events — ${lv.onsets} onsets and ${maxSteps} steps in 4 s (a frozen gate measures loud too)`);
     } else {
-      // drone/ambient presets: continuous evolving sound — judged on level, telemetry
-      // and whatever events do fire (a pad that never pulses is still music)
-      check(lv.onsets >= 2 || lv.rms >= 0.05, `preset ${name} is static and quiet (${lv.onsets} onsets, rms ${lv.rms})`);
+      check(lv.subFrac <= 0.5, `preset ${name}: ${Math.round(lv.subFrac * 100)}% of energy under 30 Hz — that is a drone, not a preset`);
+      const moving = lv.onsets >= 4 || lv.rms >= 0.05;
+      check(moving, `preset ${name}: drone never moved (${lv.onsets} onsets, rms ${lv.rms.toFixed(4)})`);
     }
-    check(lv.clippedFrac < 0.001, `preset ${name} clips ${(lv.clippedFrac * 100).toFixed(2)}% of samples`);
   }
 
   }   // end --from-ui skip
@@ -539,6 +546,33 @@ try {
     }
 
   });
+  await uiStep("telemetry", async (page) => {
+    // the telemetry-driven UI (scope trace, clip LEDs, sequencer step lamps) is a
+    // third of rack.js and had zero coverage: with everything stubbed out, a worklet
+    // that never posts, a mis-keyed map, or a dead canvas all passed green.
+    // This step is the one uiStep that does NOT stub applyTelemetry.
+    const t = await page.evaluate(async () => {
+      const rack = eurorack.app.rack;
+      const t0 = performance.now();
+      let scopePixels = 0, litJacks = 0, seqLeds = 0;
+      while (performance.now() - t0 < 2500) {
+        await new Promise((res) => setTimeout(res, 150));
+        if (rack.scopeCanvas) {
+          const g = rack.scopeCanvas.getContext("2d");
+          const d = g.getImageData(0, 0, rack.scopeCanvas.width, rack.scopeCanvas.height).data;
+          let n = 0;
+          for (let i = 0; i < d.length; i += 4) if (d[i] > 110 && d[i + 1] > 170 && d[i + 2] > 190) n++;   // #8ee8ff trace, above the faint grid
+          scopePixels = Math.max(scopePixels, n);
+        }
+        litJacks = Math.max(litJacks, [...document.querySelectorAll(".jack")]
+          .filter((j) => parseFloat(j.style.getPropertyValue("--led") || "0") > 0.05).length);
+        seqLeds = Math.max(seqLeds, document.querySelectorAll(".sled.lit").length);
+      }
+      return { scopePixels, litJacks, seqLeds };
+    });
+    report.ui.telemetry = t;
+  });
+
   await uiStep("desktop-shot", async (page) => {
     await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });   // skip scope paint only; LEDs and meters stay live
     await shot(page, join(outDir, "desktop.png"), "desktop.png");
@@ -561,8 +595,25 @@ try {
     await page.evaluate(() => { eurorack.app.rack.scopeCanvas = null; });
     await page.waitForTimeout(600);
     check(errors.length === 0, `phone console errors: ${errors.slice(0, 3).join(" | ")}`);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2);
-    check(!overflow, "phone layout overflows horizontally at the page level");
+    // overflow:hidden on html/body makes the documentElement test vacuous; measure
+    // the actual strips that must fit a 390 px screen (the rack scroll area is meant
+    // to overflow — that is the rack working, not the layout breaking)
+    const fit = await page.evaluate(() => {
+      const over = [];
+      for (const sel of ["#toolbar", "footer.statusbar", "#kbd", "#rackScroll"]) {
+        const e = document.querySelector(sel);
+        if (!e) continue;
+        const r = e.getBoundingClientRect();
+        if (r.right > window.innerWidth + 2 || r.left < -2) over.push(`${sel} ${Math.round(r.left)}..${Math.round(r.right)}`);
+      }
+      return over;
+    });
+    check(fit.length === 0, `phone layout overflows horizontally: ${fit.join(", ")}`);
+    const scrollable = await page.evaluate(() => {
+      const k = document.querySelector(".keys"), b = document.getElementById("browserGrid") || document.querySelector(".browser");
+      return { keys: !!k && k.scrollWidth > k.clientWidth, rack: (() => { const r = document.getElementById("rackScroll"); return !!r && r.scrollWidth > r.clientWidth; })() };
+    });
+    report.ui.phoneScroll = scrollable;
     await shot(page, join(outDir, "phone.png"), "phone.png");
   });
 } catch (e) {

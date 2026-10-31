@@ -13,6 +13,7 @@ export const RACK_HP = 96;        // usable width of one rail in HP
 const F = {
   hz: (v) => `${(20 * Math.pow(1200, v)).toFixed(v < 0.3 ? 1 : 0)} Hz`,
   ms: (v) => `${(0.5 * Math.pow(6000, v)).toFixed(v < 0.4 ? 1 : 0)} ms`,
+  msr: (a, b) => (v) => `${(a * Math.pow(b / a, v)).toFixed(v < 0.35 ? 1 : 0)} ms`,   // a..b ms, log — the worklet's own lp() mapping, not a guess
   pc: (v) => `${Math.round(v * 100)}%`,
   pcB: (v) => `${Math.round((v * 2 - 1) * 100) >= 0 ? "+" : ""}${Math.round((v * 2 - 1) * 100)}%`,
   oct: (v) => `${(v * 4 - 2).toFixed(1)} oct`,
@@ -24,7 +25,7 @@ const F = {
   msD: (v) => `${(2 * Math.pow(5000, v)).toFixed(v < 0.5 ? 1 : 0)} ms`,
   msR: (v) => `${(10 * Math.pow(1200, v)).toFixed(v < 0.5 ? 1 : 0)} ms`,
   fb: (v) => `${Math.round(v * 92)}%`,
-  sec: (v) => `${(0.05 + v * v * 9).toFixed(2)} s`,
+  sec: (v) => `${(0.15 + v * v * 9).toFixed(2)} s`,
   n: (v, n0 = 0, n1 = 1) => `${(n0 + v * (n1 - n0)).toFixed(1)}`,
   x: (v) => `×${(v * 4).toFixed(2)}`,
   off: (v) => `${((v - 0.5) * 2).toFixed(2)} V`,
@@ -122,7 +123,7 @@ export const DEFS = {
   seq: {
     name: "SEQ-16", cat: "seq", hp: 24, blurb: "16-step pitch + gate sequencer, clock in, glide",
     knobs: [
-      { p: "glide", label: "GLIDE", def: 0.2, fmt: F.ms },
+      { p: "glide", label: "GLIDE", def: 0.2, fmt: F.msr(0.5, 220) },
       { p: "len", label: "LEN", def: 0, fmt: F.plain, seg: ["8", "16"] },
     ],
     jacks: [
@@ -171,7 +172,7 @@ export const DEFS = {
   delay: {
     name: "DELAY", cat: "fx", hp: 12, blurb: "damped feedback delay",
     knobs: [
-      { p: "time", label: "TIME", def: 0.55, fmt: F.ms },
+      { p: "time", label: "TIME", def: 0.55, fmt: F.msr(12, 1500) },
       { p: "fb", label: "FB", def: 0.5, fmt: F.fb },
       { p: "damp", label: "DAMP", def: 0.45, fmt: F.pc },
       { p: "mix", label: "MIX", def: 0.35, fmt: F.pc },
@@ -198,7 +199,7 @@ export const DEFS = {
     name: "KICK", cat: "drums", hp: 10, blurb: "analogue kick: swept sine + click",
     knobs: [
       { p: "tune", label: "TUNE", def: 0.45, fmt: F.pc },
-      { p: "decay", label: "DECAY", def: 0.45, fmt: F.ms },
+      { p: "decay", label: "DECAY", def: 0.45, fmt: F.msr(50, 1400) },
       { p: "level", label: "LVL", def: 0.85, fmt: F.pc },
     ],
     jacks: [
@@ -209,7 +210,7 @@ export const DEFS = {
   hat: {
     name: "HAT", cat: "drums", hp: 6, blurb: "resonant noise hi-hat",
     knobs: [
-      { p: "decay", label: "DECAY", def: 0.25, fmt: F.ms },
+      { p: "decay", label: "DECAY", def: 0.25, fmt: F.msr(8, 600) },
       { p: "tone", label: "TONE", def: 0.6, fmt: F.pc },
       { p: "level", label: "LVL", def: 0.6, fmt: F.pc },
     ],
@@ -222,7 +223,7 @@ export const DEFS = {
     name: "SNARE", cat: "drums", hp: 8, blurb: "noise + tone snare",
     knobs: [
       { p: "tune", label: "TUNE", def: 0.5, fmt: F.pc },
-      { p: "decay", label: "DECAY", def: 0.4, fmt: F.ms },
+      { p: "decay", label: "DECAY", def: 0.4, fmt: F.msr(30, 500) },
       { p: "level", label: "LVL", def: 0.7, fmt: F.pc },
     ],
     jacks: [
@@ -349,7 +350,11 @@ export function sanitize(patch) {
     m.row = Number.isFinite(m.row) ? Math.max(0, Math.min(1, Math.round(m.row))) : 0;
     m.col = Number.isFinite(m.col) ? Math.max(0, Math.min(96 - DEFS[m.type].hp, Math.round(m.col))) : 0;
     if (m.params && typeof m.params === "object") {
-      for (const k in m.params) if (!Number.isFinite(m.params[k])) delete m.params[k];
+      for (const k in m.params) {                        // every param rides the wire as 0..1 — bound the magnitude too
+        const v = m.params[k];
+        if (!Number.isFinite(v)) delete m.params[k];
+        else m.params[k] = Math.max(0, Math.min(1, v));
+      }
     } else m.params = {};
   }
   const ids = new Set(patch.modules.map((m) => m.id));

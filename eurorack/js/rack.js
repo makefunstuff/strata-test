@@ -110,7 +110,8 @@ export class Rack {
     this.svg = root.querySelector("#cables");
     this.hpw = HPW;
     this.jackEls = new Map();      // "m.j" -> element
-    this.outJackEls = [];          // flat, in worklet meter order
+    this.outJackEls = [];          // flat, in worklet meter order (fallback)
+    this.scopeCanvases = [];       // every OUTPUT panel's scope (a rack may hold more than one)
     this.seqEls = new Map();       // module id -> {steps:[{led,bar}], last:-1}
     this.scopeCanvas = null;
     this.cableEls = new Map();     // cable id -> {path, hit}
@@ -144,6 +145,7 @@ export class Rack {
 
   setZoom(z) {
     this.hpw = HPW * z;
+    this.root.style.setProperty("--hpw", `${this.hpw}px`);   // the rail stripe scales with the grid, at any zoom
     this.rebuild();
   }
 
@@ -184,7 +186,7 @@ export class Rack {
       const jk = el(`jack ${j.kind} ${j.dir}`, cell);
       jk.dataset.m = mod.id; jk.dataset.j = j.j; jk.dataset.dir = j.dir;
       this.jackEls.set(`${mod.id}.${j.j}`, jk);
-      if (j.dir === "out") this.outJackEls.push(jk);
+      if (j.dir === "out") this.outJackEls.push(jk);   // index fallback only; telemetry maps by key
       jk.addEventListener("pointerdown", (e) => this._startPatch(e, mod.id, j.j, j.dir));
     }
     if (d.scope) {
@@ -196,7 +198,7 @@ export class Rack {
       g0.fillStyle = "#071520"; g0.fillRect(0, 0, cv.width, cv.height);
       g0.strokeStyle = "rgba(142,232,255,.18)";
       g0.beginPath(); g0.moveTo(0, cv.height / 2); g0.lineTo(cv.width, cv.height / 2); g0.stroke();
-      this.scopeCanvas = cv;
+      this.scopeCanvas = cv; this.scopeCanvases.push(cv);
     }
     p.addEventListener("pointerdown", (e) => {
       this.app.state.sel = mod.id;
@@ -300,6 +302,7 @@ export class Rack {
 
   _startPatch(e, mid, jack, dir) {
     e.stopPropagation(); e.preventDefault();
+    if (this.pending && this.pending._cancel) this.pending._cancel();   // a second pointerdown must not orphan the first live cable
     const srcEl = this.jackEls.get(`${mid}.${jack}`);
     const from = this._jackXY(srcEl);
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -314,11 +317,17 @@ export class Rack {
       const a = dir === "out" ? from : to, b = dir === "out" ? to : from;
       path.setAttribute("d", this._cablePath(a, b));
     };
-    const up = (ev) => {
+    const cleanup = () => {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", cancel);
       path.remove();
-      this.pending = null;
+      if (this.pending === st) this.pending = null;
+    };
+    st._cancel = cleanup;
+    const cancel = () => cleanup();
+    const up = (ev) => {
+      cleanup();
       const hit = document.elementFromPoint(ev.clientX, ev.clientY);
       const jk = hit?.closest?.(".jack");
       if (!jk) return;
@@ -332,6 +341,7 @@ export class Rack {
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", cancel);
   }
 
   _animLoop = () => {
@@ -387,6 +397,7 @@ export class Rack {
       const newRow = railUnder ? +railUnder.dataset.row : start.row;
       mod.col = Math.min(newCol, RACK_HP - d.hp);
       mod.row = newRow;
+      this.redrawCables();                          // cables track the module while it flies (the README promised swing)
       panel.style.position = "fixed";
       panel.style.left = `${ev.clientX - 60}px`;
       panel.style.top = `${ev.clientY - 18}px`;
@@ -432,12 +443,17 @@ export class Rack {
 
   // ---------- telemetry ----------
 
-  applyTelemetry({ lv, scope, seq }) {
+  applyTelemetry({ lv, k, scope, seq }) {
     if (!this._lastLv || this._lastLv.length !== lv.length) this._lastLv = new Float32Array(lv.length);   // modules added mid-session grow jackMap
-    for (let i = 0; i < this.outJackEls.length && i < lv.length; i++) {
+    for (let i = 0; i < lv.length; i++) {
+      // map by the worklet's own jack key: the UI may sort/rebuild panels in any
+      // order, and a positional zip between two independently-ordered arrays is
+      // how meters once started showing another jack's level after plain editing
+      const el_ = (k && k[i]) ? this.jackEls.get(k[i]) : this.outJackEls[i];
+      if (!el_) continue;
       const v = Math.min(1, lv[i] * 1.6);
       if (Math.abs(v - this._lastLv[i]) > 0.02) {          // style writes only on visible change
-        this.outJackEls[i].style.setProperty("--led", v.toFixed(2));
+        el_.style.setProperty("--led", v.toFixed(2));
         this._lastLv[i] = v;
       }
     }
@@ -449,9 +465,10 @@ export class Rack {
       for (const s of steps) s.led.classList.toggle("lit", cur === s.i);
     }
     const now = performance.now();
-    if (this.scopeCanvas && now - (this._scopeAt ?? 0) > 55) {   // ≤ ~18 fps scope: paint cost, not message cost
+    if (this.scopeCanvas && this.scopeCanvases.length && now - (this._scopeAt ?? 0) > 55) {   // ≤ ~18 fps: paint cost, not message cost
       this._scopeAt = now;
-      const cv = this.scopeCanvas, g = cv.getContext("2d");
+      for (const cv of this.scopeCanvases) {
+      const g = cv.getContext("2d");
       const w = cv.width, h = cv.height;
       g.fillStyle = "#071520"; g.fillRect(0, 0, w, h);
       g.strokeStyle = "rgba(142,232,255,.13)"; g.lineWidth = 1;
@@ -469,6 +486,7 @@ export class Rack {
         i ? g.lineTo(x, y) : g.moveTo(x, y);
       }
       g.stroke(); g.shadowBlur = 0;
+      }
     }
   }
 }

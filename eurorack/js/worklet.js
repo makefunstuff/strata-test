@@ -134,7 +134,7 @@
           env += (this.s - env) * kD;
           if (Math.abs(env - this.s) < 0.0015) env = this.s;
         } else if (st === 3) {                           // exponential release to silence
-          env -= env * kR + 0.00003;
+          env -= env * kR + kR * 0.02;                        // floor scales with R (a fixed one faked ~10 ms minimum)
           if (env <= 0.001) { env = 0; st = 0; }
         }
         e[i] = env; inv[i] = 1 - env;
@@ -228,7 +228,7 @@
   }
 
   class SEQ {
-    constructor() { this.step = 0; this.prevClk = 0; this.prevRst = 0; this.pitch = 0.5; this.gate = 0; this.tick = 0; }
+    constructor() { this.step = 0; this.played = 0; this.prevClk = 0; this.prevRst = 0; this.pitch = 0.5; this.gate = 0; this.tick = 0; }
     setParams(p, c) {
       this.freeRun = c && c.freeRun;
       this.glide = lp(0.5, 220, p.glide) / 1000;
@@ -248,11 +248,11 @@
           if (tick >= 1) tick -= 1;
         } else clk = ins.clk[i] > 0.5 ? 1 : 0;
         const rst = ins.rst[i] > 0.5 ? 1 : 0;
-        if (rst && !prevRst) step = 0;
+        if (rst && !prevRst) { step = 0; this.played = 0; }
         prevRst = rst;
-        if (clk && !prevClk) { step = (step + 1) % this.len; gate = this[`g${step}`]; }
+        if (clk && !prevClk) { gate = this[`g${step}`]; this.played = step; step = (step + 1) % this.len; }
         prevClk = clk;
-        pitch += (this[`p${step}`] - pitch) * kg;
+        pitch += (this[`p${this.played}`] - pitch) * kg;
         pitch_[i] = pitch;
         gate_[i] = gate;
       }
@@ -264,7 +264,7 @@
   class CLOCK {
     constructor() { this.tick = 0; this.c16 = 0; this.p16 = 0; this.pb = 0; this.pbar = 0; }
     process(ins, outs) {
-      const dur = 0.04 * sampleRate;                          // 40 ms pulses
+      const dur = Math.max(64, Math.min(0.04 * sampleRate, 0.4 / this.t16));   // pulses always fall
       let { tick, c16, p16, pb, pbar } = this;
       const t16 = outs.t16, b = outs.b, bar = outs.bar;
       for (let i = 0; i < 128; i++) {
@@ -289,7 +289,9 @@
     process(ins, outs) {
       const sc = this.scale, out = outs.out;
       for (let i = 0; i < 128; i++) {
-        const st = clamp(ins.in[i], 0, 0.9999) * NOTES_SPAN;   // 0..72 semitones over 6 octaves
+        let x = ins.in[i];                                     // 0..1 is pitch space; bipolar sources FOLD into it
+        if (x < 0) x = -x; else if (x > 1) x = 2 - x;
+        const st = clamp(x, 0, 0.9999) * NOTES_SPAN;            // 0..72 semitones over 6 octaves
         const oct = Math.floor(st / 12);
         const within = st - oct * 12;
         let best = sc[0], bd = 99;
@@ -314,7 +316,8 @@
     setParams(p) {
       const sr = sampleRate;
       if (!this.buf) this.buf = new Float32Array(Math.ceil(sr * 2));
-      this.t = lp(12, 1500, p.time) / 1000 * sr;
+      const tTgt = lp(12, 1500, p.time) / 1000 * sr;
+      if (this.t === undefined || this.t > 2 * sr) this.t = tTgt; else this.tTgt = tTgt;
       this.fb = p.fb * 0.92;
       this.damp = 1 - Math.exp(-1 / (lp(0.3, 24, p.damp) * sr));   // one-pole in the loop
       this.mix = p.mix;
@@ -323,6 +326,7 @@
       const buf = this.buf, L = buf.length;
       let { w, lpState } = this;
       const in_ = ins.in, out = outs.out;
+      if (this.tTgt !== undefined) this.t += (this.tTgt - this.t) * 0.01;   // ~70 ms glide, no read-pointer jumps
       const d = this.t, di = Math.floor(d), fr = d - di;
       for (let i = 0; i < 128; i++) {
         buf[w] = in_[i] + lpState * this.fb;
@@ -338,11 +342,12 @@
   }
 
   class REVERB {
-    constructor() { this.combs = null; }
+    constructor() { this.combs = null; this.hpX = 0; this.hpY = 0; }
     setParams(p) {
       const sr = sampleRate;
       const scale = 48000 / sr;
-      const lens = [1557, 1617, 1491, 1422].map((l) => Math.max(16, Math.round(l * scale * (0.55 + p.size * 1.9))));
+      const sizeQ = Math.ceil((0.55 + p.size * 1.9) * 6) / 6;   // 6 buckets: wiping the combs on every wiggle audibly kills the tail
+      const lens = [1557, 1617, 1491, 1422].map((l) => Math.max(16, Math.round(l * scale * sizeQ)));
       const t60 = 0.15 + p.decay * p.decay * 9;
       const k = 1 - Math.exp(-1 / (lp(0.25, 24, p.damp) * sr));
       if (!this.combs) this.combs = lens.map((l) => ({ buf: new Float32Array(l), i: 0, lp: 0 }));
@@ -357,12 +362,18 @@
     }
     process(ins, outs) {
       const in_ = ins.in, out = outs.out;
+      // pre high-pass ~90 Hz, as every real reverb has: a kick's 40 Hz fundamental
+      // fed into a 3 s tail is a subsonic cloud, not a space
+      const a = 1 / (1 + 2 * Math.PI * 90 / sampleRate);
+      let { hpX, hpY } = this;
       for (let i = 0; i < 128; i++) {
+        const x = in_[i];
+        hpY = a * (hpY + x - hpX); hpX = x;
         let sum = 0;
         for (const c of this.combs) {
           const o = c.buf[c.i];
           c.lp += (o - c.lp) * c.k;
-          c.buf[c.i] = in_[i] + c.lp * c.g;
+          c.buf[c.i] = hpY + c.lp * c.g;
           c.i = (c.i + 1) % c.buf.length;
           sum += o;
         }
@@ -377,6 +388,7 @@
         }
         out[i] = in_[i] * (1 - this.mix * 0.85) + sum * this.mix * 1.7;
       }
+      this.hpX = hpX; this.hpY = hpY;
     }
   }
 
@@ -508,12 +520,16 @@
       super();
       this.nodes = []; this.cables = []; this.outNode = null; this.byId = new Map();
       this.lv = new Float32Array(0); this.jackMap = [];
-      this.frame = 0; this.limiterPeak = 0;
+      this.frame = 0; this.limiterPeak = 0; this.errs = 0;
       this.scopeBuf = new Float32Array(512); this.scopeSign = new Int8Array(512).fill(1); this.scopeW = 0;
       const po = opts && opts.processorOptions;
       this.build((po && po.patch) || { modules: [], cables: [] });
       this.port.onmessage = (e) => {
         const m = e.data;
+        try { this._message(m); } catch (err) { this._err(err); }
+      };
+    }
+    _message(m) {
         if (m.t === "patch") this.build(m.patch);
         else if (m.t === "param") {
           const n = this.byId.get(m.m);
@@ -521,8 +537,7 @@
         } else if (m.t === "bpm") { this.bpm = clamp(m.v, 30, 260); this._applyT16(); }
         else if (m.t === "note") {
           for (const n of this.nodes) if (n.type === "midicv") n.unit.noteEvent(m.on, m.note, m.vel ?? 100);
-        } else if (m.t === "reset") this.build(this.lastPatch);
-      };
+        } else if (m.t === "reset") this.build(this.lastPatch || { modules: [], cables: [] });
     }
 
     // patch = {modules:[{id,type}], params:{id:{p:v}}, cables:[{src:{m,j},dst:{m,j}}], bpm, seed, paramSpec}
@@ -587,10 +602,15 @@
       for (const n of this.nodes) if (n.unit && (n.type === "seq" || n.type === "clock")) n.unit.t16 = r;
     }
 
+    _err(e) {                                  // report a fault, once-ish: a catch that posts
+      if (this.errs++ >= 5) return;             // every block is 18k console lines a second
+      this.port.postMessage({ t: "err", msg: String(e && e.stack || e) });
+    }
     process(inputs, outputs, config) {
       try { return this._process(inputs, outputs, config); }
       catch (e) {
-        this.port.postMessage({ t: "err", msg: String(e && e.stack || e) });
+        this._err(e);
+        for (const ch of outputs[0] || []) if (ch) ch.fill(0);   // silence, never stale buffers
         return true;
       }
     }
@@ -665,7 +685,7 @@
       this.frame = (this.frame + 1) % 12;
       if (this.frame === 0) {
         const seq = {};
-        for (const n of this.nodes) if (n.type === "seq") seq[n.id] = n.unit.step;
+        for (const n of this.nodes) if (n.type === "seq") seq[n.id] = n.unit.played;
         const scope = new Array(512);
         for (let i = 0; i < 512; i++) {
           const k = (this.scopeW + i) % 512;
@@ -674,6 +694,7 @@
         this.port.postMessage({
           t: "lv",
           lv: Array.from(this.lv, (v) => Math.round(v * 512) / 512),
+          k: this.jackMap,                       // keys, so meters survive any re-sort the UI does
           scope: Array.from(scope, (v) => Math.round(v * 512) / 512),
           seq,
         });
