@@ -505,6 +505,10 @@ window.eurorack = {
   loadPreset: (name) => { const p = getPreset(name); return p ? app.loadPatch(p) : false; },
   addModule: (t) => app.addModule(t),
   shareURL: () => shareURL(),
+  controlCount: () => (app.state.patch.modules || []).reduce((acc, m) => {
+    const d = DEFS[m.type];
+    return d ? acc + (d.jacks?.length || 0) + (d.knobs?.length || 0) : acc;
+  }, 0),
   addCable: (s, d) => app.addCable(s, d),
   removeCable: (id) => app.removeCable(id),
   presets: PRESET_NAMES,

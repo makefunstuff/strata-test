@@ -78,7 +78,7 @@ const step = (p) => { phase = p; console.error("check:", p); };
 const report = { ok: true, partial: fromUi || onlyPreset || null, failures: [], presets: {}, ui: {}, shots: [], flakyRetries: 0 };   // partial: a dev run is never mistaken for the full proof
 const fail = (what) => { report.ok = false; report.failures.push(what); console.error("FAIL:", what); };
 const check = (cond, what) => { if (!cond) fail(what); return cond; };
-const dead = (e) => /closed|crashed|Target|detach|ECONNRESET|connection|watchdog/i.test(String(e?.message || e));
+const dead = (e) => /closed|crashed|Target|detach|ECONNRESET|connection|watchdog|timeout/i.test(String(e?.message || e));
 
 // screenshots wait for a produced frame; under a saturated software GL that wait can hang
 async function shot(page, path, name) {
@@ -202,6 +202,8 @@ try {
       return !!e.ready;
     });
     check(ready, "worklet node never became ready");
+    const werr = await page.evaluate("window.eurorack && eurorack.app.engine.lastError");
+    check(!werr, `worklet faulted during boot: ${String(werr).slice(0, 160)}`);
     const helpOpen = await page.evaluate(() => document.getElementById("help").classList.contains("open"));
     check(helpOpen, "how-to overlay did not open on first visit");
     if (helpOpen) {
@@ -557,11 +559,12 @@ try {
 // both passed green because no proof ever asked "can a finger actually hit this".
 const reachProbe = (page) => page.evaluate(async () => {
   const fails = [];
-  // the drawer over the rack must be closed — and the probe reports how many
-  // controls it actually examined, so an empty selector can never pass vacuously
   for (const d of document.querySelectorAll(".open#drawer, #drawer.open, .drawer.open")) d.classList.remove("open");
   await new Promise((r) => requestAnimationFrame(r));
   const els = [...document.querySelectorAll(".panel .jack, .panel .knob")];
+  // self-verifying: the probe must have examined every control the patch defines
+  // (counted from DEFS, not from the DOM it is testing) — a selector that matches
+  // nothing, or a rack that never built, can no longer report a clean sweep
   for (const el of els) {
     el.scrollIntoView({ block: "center", inline: "center" });
     await new Promise((r) => requestAnimationFrame(r));
@@ -576,7 +579,7 @@ const reachProbe = (page) => page.evaluate(async () => {
       fails.push(`covered ${el.closest(".panel")?.dataset.id ?? "?"}.${el.dataset.j ?? el.dataset.p ?? el.className.split(" ")[0]} by ${hit ? hit.className || hit.tagName : "nothing"}`);
     }
   }
-  return { fails, n: els.length };
+  return { fails, n: els.length, expected: eurorack.controlCount() };
 });
 
   await uiStep("reach", async (page) => {
@@ -586,7 +589,7 @@ const reachProbe = (page) => page.evaluate(async () => {
       await page.waitForTimeout(250);
       const pr = await reachProbe(page);
       per[name] = pr;
-      check(pr.n >= 20, `reach (${name}): probe examined only ${pr.n} controls — selector or boot is broken`);
+      check(pr.n === pr.expected && pr.n > 0, `reach (${name}): probe examined ${pr.n} of ${pr.expected} controls the patch defines — selector or rack is broken`);
     }
     report.ui.reach = Object.fromEntries(Object.entries(per).map(([k, v]) => [k, `${v.n} ok` + (v.fails.length ? `: ${v.fails.slice(0, 4).join(" | ")}` : "")]));
     for (const [name, pr] of Object.entries(per)) {
@@ -699,7 +702,7 @@ const reachProbe = (page) => page.evaluate(async () => {
     report.ui.phoneScroll = scrollable;
     const pr = await reachProbe(page);
     report.ui.phoneReach = `${pr.n} ok` + (pr.fails.length ? `: ${pr.fails.slice(0, 4).join(" | ")}` : "");
-    check(pr.n >= 30, `phone reach: probe examined only ${pr.n} controls — the rack never laid out`);
+    check(pr.n === pr.expected && pr.n > 0, `phone reach: probe examined ${pr.n} of ${pr.expected} controls — the rack never laid out`);
     check(pr.fails.length === 0, `phone reach: ${pr.fails.length}/${pr.n} controls unhit-testable at 390x844, e.g. ${pr.fails.slice(0, 3).join(" | ")}`);
     await shot(page, join(outDir, "phone.png"), "phone.png");
   });

@@ -40,7 +40,10 @@ export class Engine {
     if (this.ready) return;
     if (this.ctx && this.ctx.state !== "closed") {        // a failed first start used to leave this orphaned
       await this.ctx.resume().catch(() => {});
-      if (this.node) { this.ready = true; return; }
+      if (this.node) {                                  // ready means RUNNING: a node bolted to a suspended
+        if (this.ctx.state === "running") this.ready = true;   // context is silent, and ready=true would
+        return;                                          // make the retry button refuse to retry
+      }
       try { this.ctx.close(); } catch {}
     }
     const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -60,7 +63,8 @@ export class Engine {
       if (d?.t === "lv" && this.onLevels) this.onLevels(d);
       else if (d?.t === "err") { this.lastError = d.msg; console.error("[worklet]", d.msg); }
     };
-    this.ready = true;
+    if (this.ctx.state !== "running") await this.ctx.resume().catch(() => {});
+    this.ready = this.ctx.state === "running";           // autoplay-blocked starts stay retryable, boot still completes
     if (this._pendingPatch) {                           // edits made before audio started are not dropped
       this.node.port.postMessage({ t: "patch", patch: toWorkletPatch(this._pendingPatch) });
       this._pendingPatch = null;
@@ -212,14 +216,14 @@ export class Engine {
   // Energy onsets: local peaks of a 10 ms RMS envelope standing above a 250 ms moving
   // average — a cheap stand-in for "something keeps happening", which loudness alone
   // cannot prove (a frozen gate is loud too, and delay tails never go quiet).
-  static onsets(left, sampleRate, right) {
+  static onsets(left, sampleRate, right = left) {
     const win = Math.max(1, Math.floor(0.01 * sampleRate));
     const env = new Float32Array(Math.ceil(left.length / win));
     for (let w = 0; w < env.length; w++) {
       let s = 0;
       for (let k = 0; k < win && w * win + k < left.length; k++) {
         const i = w * win + k;
-        const m = Math.max(Math.abs(left[i]), right ? Math.abs(right[i]) : 0);   // both channels count
+        const m = Math.max(Math.abs(left[i]), Math.abs(right[i] ?? 0));   // both channels count
         s += m * m;
       }
       env[w] = Math.sqrt(s / win);
