@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><rect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230a0d14%27/><path d=%27M1 11q2.5-3 4.5 0t4.5 0 5-1%27 fill=%27none%27 stroke=%27%238ee8ff%27 stroke-width=%271.6%27/><circle cx=%2711.5%27 cy=%274.5%27 r=%272.2%27 fill=%27none%27 stroke=%27%23ff3fa4%27 stroke-width=%271.4%27/></svg>">
-<title>strata-test — six graphics experiments</title>
+<title>strata-test — seven graphics experiments</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/press-start-2p@5.3.0/index.css">
 <style>
 :root{--ink:#eaf6ff;--dim:#8ba0b4;--cyan:#8ee8ff;--amber:#ffb45c;--bg:#04060a}
@@ -45,8 +45,9 @@ code{color:var(--amber)}
 <body>
 <div class="scan"></div>
 <main>
-  <h1>SIX GRAPHICS EXPERIMENTS</h1>
-  <p class="lead">Water, demolition, cloth, flocking, fire and a whole town — six three.js motion pieces, each in one
+  <h1>SEVEN GRAPHICS EXPERIMENTS</h1>
+  <p class="lead">Water, demolition, cloth, flocking, fire, a whole town and one real city — seven three.js motion
+  pieces, each in one
   folder of plain static files. Three.js 0.170.0 and lil-gui come from a pinned CDN importmap: no build
   step, no npm, no server. Every page carries a control panel, a quality preset and interaction hints,
   and every one was checked in headless Chromium.
@@ -151,6 +152,25 @@ code{color:var(--amber)}
       canvas at load, so the whole town is code.</p>
       <div class="row"><span class="tag">procedural</span><span class="tag">merged geometry</span><span class="tag">tilt-shift</span>
       <kbd>N</kbd> night <kbd>C</kbd> new town <kbd>V</kbd> view <kbd>G</kbd> panel <kbd>Drag</kbd> orbit</div>
+    </a>
+
+    <a class="card" href="7-tallinn-diorama/index.html">
+      <img class="hero" src="7-tallinn-diorama/shots/hero.jpg" alt="Tallinn Old Town diorama on a cut-away earth chunk: Toompea hill, the Town Hall spire, the red roofs and the town wall" loading="lazy">
+      <div class="thumbs">
+        <img src="7-tallinn-diorama/shots/alt1.jpg" alt="Tallinn at night: lanterns on the square, windows lit, the spire above the roofs" loading="lazy">
+        <img src="7-tallinn-diorama/shots/alt2.jpg" alt="The December market on Raekoja plats, stalls with lit awnings and the tree" loading="lazy">
+        <img src="7-tallinn-diorama/shots/alt3.jpg" alt="Toompea from the Lower Town: the pink castle wall, Tall Hermann and Nevsky's onion domes on the limestone ridge" loading="lazy">
+      </div>
+      <h2>7 · Tallinn Old Town diorama</h2>
+      <p class="why">The same kit pointed at one real city: the street plan, the building footprints and
+      the town wall are baked from OpenStreetMap, and the sixteen landmarks are put where they stand and
+      modelled by hand — the Town Hall with Old Thomas on its spire, Nevsky's onion domes, the 124 m needle
+      of Oleviste, Kiek in de Kök, Fat Margaret, the twin Viru towers, Toompea on its limestone ridge. The
+      660 houses between them are built from their own footprints with painted gables, and everything from
+      the bay to the December market is code: no textures, no build step. Tap a landmark on the rail to fly
+      to it and read what it is, or press ▶ and take the tour.</p>
+      <div class="row"><span class="tag">OpenStreetMap</span><span class="tag">instancing</span><span class="tag">day · night · winter</span>
+      <kbd>N</kbd> night <kbd>C</kbd> snow <kbd>V</kbd> view <kbd>G</kbd> panel <kbd>Tour</kbd> ▶ <kbd>Drag</kbd> orbit</div>
     </a>
   </div>
 

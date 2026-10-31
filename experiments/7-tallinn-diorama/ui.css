@@ -1,0 +1,98 @@
+/* The overlay this page asks for: a landmark rail you tap to fly to, an info card, and a small
+   dock with the hour, the season and the tour. It sits on the shared lab.css look (same ink,
+   accent and translucent panels) and gets out of the way on a phone, where the rail becomes a
+   chip strip above the dock instead of a column over the town. */
+
+.rail, .card, .dock { position: fixed; z-index: 12; }
+
+/* ---------------------------------------------------------------- the landmark rail ---- */
+.rail {
+  top: 132px; left: 18px; width: 216px; max-height: calc(100% - 260px);
+  overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 2px; padding: 6px;
+  background: rgba(7, 12, 19, 0.7); border: 1px solid rgba(111, 216, 255, 0.16);
+  border-radius: 6px; backdrop-filter: blur(7px);
+  scrollbar-width: thin; scrollbar-color: rgba(111, 216, 255, 0.3) transparent;
+}
+.rail .rail-h {
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+  padding: 4px 6px 6px;
+}
+.rail button {
+  display: flex; align-items: baseline; gap: 7px; width: 100%; text-align: left;
+  font: inherit; font-size: 11px; color: var(--ink); background: none; cursor: pointer;
+  border: 0; border-left: 2px solid transparent; padding: 4px 6px; border-radius: 3px;
+}
+.rail button:hover { background: rgba(38, 66, 96, 0.5); }
+.rail button.on { background: rgba(52, 92, 130, 0.55); border-left-color: var(--accent); }
+.rail button .yr { color: var(--dim); font-size: 9.5px; margin-left: auto; white-space: nowrap; }
+.rail button .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------------------------------------------------------------------- the info card ---- */
+.card {
+  left: 18px; bottom: 54px; width: 344px; max-width: calc(100vw - 36px);
+  background: rgba(7, 12, 19, 0.82); border: 1px solid rgba(111, 216, 255, 0.2);
+  border-radius: 7px; backdrop-filter: blur(9px); padding: 12px 14px 13px;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.card.show { opacity: 1; transform: none; pointer-events: auto; }
+.card .c-top { display: flex; align-items: baseline; gap: 8px; }
+.card .c-name { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 0.03em; }
+.card .c-year { font-size: 10px; color: var(--accent); letter-spacing: 0.06em; }
+.card .c-close {
+  margin-left: auto; font: inherit; font-size: 14px; line-height: 1; color: var(--dim);
+  background: none; border: 0; cursor: pointer; padding: 0 2px;
+}
+.card .c-close:hover { color: var(--accent); }
+.card .c-et { display: block; font-size: 10px; color: var(--dim); font-style: italic; margin: 2px 0 7px; }
+.card .c-text { display: block; font-size: 11px; line-height: 1.5; color: #cddcec; }
+
+/* ---------------------------------------------------------------------------- the dock ---- */
+.dock {
+  right: 18px; bottom: 46px; display: flex; flex-direction: column; gap: 7px; align-items: stretch;
+  padding: 8px 10px; min-width: 258px;
+  background: rgba(7, 12, 19, 0.72); border: 1px solid rgba(111, 216, 255, 0.16);
+  border-radius: 7px; backdrop-filter: blur(7px);
+}
+.dock .hour { display: flex; align-items: center; gap: 8px; }
+.dock .hour .h-lab {
+  font-size: 10px; color: var(--accent); min-width: 42px; letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.dock .hour input { flex: 1; accent-color: var(--accent); height: 14px; cursor: pointer; }
+.dock .btns { display: flex; gap: 5px; }
+.dock button {
+  font: inherit; font-size: 10.5px; color: var(--ink); background: rgba(20, 34, 50, 0.9);
+  border: 1px solid rgba(111, 216, 255, 0.14); border-radius: 4px; padding: 4px 7px; cursor: pointer;
+  letter-spacing: 0.03em;
+}
+.dock button:hover { background: rgba(38, 66, 96, 0.9); border-color: rgba(111, 216, 255, 0.35); }
+.dock button.on { background: rgba(52, 92, 130, 0.95); border-color: var(--accent); color: #fff; }
+.dock button.wide { flex: 1; }
+
+/* the hour and the sun go together, so the dock is one object; the tour button holds the state */
+.dock[data-tour="on"] button[data-act="tour"] { border-color: var(--accent); color: #fff; }
+
+@media (max-width: 640px) {
+  /* A phone: the rail would cover the town, so it lies down as a chip strip above the dock, and
+     the card becomes a sheet over it. The back link moves to the top right, where the subtitle
+     used to be, because the whole bottom edge now belongs to the controls. */
+  .rail {
+    top: auto; bottom: 108px; left: 8px; right: 8px; width: auto; max-height: none;
+    flex-direction: row; gap: 5px; overflow-x: auto; overflow-y: hidden; padding: 5px 6px;
+    scroll-snap-type: x proximity;
+  }
+  .rail .rail-h { display: none; }
+  .rail button { width: auto; border-left: 0; border-bottom: 2px solid transparent;
+    border-radius: 999px; padding: 5px 10px; scroll-snap-align: center; }
+  .rail button.on { border-left: 0; border-bottom-color: var(--accent); }
+  .rail button .yr { display: none; }
+  .card { left: 8px; right: 8px; bottom: 168px; width: auto; padding: 10px 12px 11px; }
+  .card .c-text { font-size: 10.5px; line-height: 1.45; }
+  .dock { left: 8px; right: 8px; bottom: 10px; min-width: 0; }
+  .dock button { padding: 6px 8px; }         /* thumb-sized enough to hit */
+  .hint { bottom: 152px; }
+  a.back { left: auto; right: 14px; top: 14px; bottom: auto; }
+  .fps { bottom: auto; top: 40px; }
+}

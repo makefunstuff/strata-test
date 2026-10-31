@@ -1,0 +1,121 @@
+[
+ {
+  "name": "lm-00-setup",
+  "width": 560,
+  "height": 360,
+  "wait": 3400,
+  "eval": "async()=>{const e=window.experiment;e.setQuality('medium');e.setAutoRotate(false);e.setSeason('summer');e.setTime(0.45);e.setTilt(0.4);return 'ok';}"
+ },
+ {
+  "name": "lm-raekoda",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('raekoda');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-raekoja-plats",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('raekoja-plats');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-oleviste",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('oleviste');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-niguliste",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('niguliste');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-puhavaimu",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('puhavaimu');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-viru",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('viru');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-toompea",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('toompea');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-hermann",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('hermann');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-nevski",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('nevski');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-toomkirik",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('toomkirik');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-kiek",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('kiek');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-margareeta",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('margareeta');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-katariina",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('katariina');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-suurgild",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('suurgild');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-jaani",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('jaani');return e.landmark()||'none';}"
+ },
+ {
+  "name": "lm-linnahall",
+  "width": 560,
+  "height": 360,
+  "wait": 2400,
+  "eval": "async()=>{const e=window.experiment;e.setChrome(false);e.openLandmark('linnahall');return e.landmark()||'none';}"
+ }
+]

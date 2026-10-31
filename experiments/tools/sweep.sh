@@ -21,3 +21,6 @@ run fire    5-volumetric-fire   --click 0.5,0.6 --eval "async()=>{const e=window
 # width gets its own run: the panel, the preset and the layout are all different there.
 run diorama 6-medieval-diorama  --drag 0.5,0.5:0.62,0.42:700 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setView('hero');e.setSeed('Thornburgh');await new Promise(r=>setTimeout(r,1500));e.setNight(1);return JSON.stringify(e.state());}"
 run phone  6-medieval-diorama  --width 390 --height 780 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setQuality('low');e.setView('hero');return JSON.stringify(e.state());}"
+# Tallinn: the real plan, then December night on the square; and the phone layout on `low`
+run tallinn 7-tallinn-diorama              --drag 0.5,0.5:0.62,0.42:700 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setView('hero');e.setSeed('tallinn');await new Promise(r=>setTimeout(r,1500));e.setSeason('winter');e.setNight(1);return JSON.stringify(e.state());}"
+run tallphon 7-tallinn-diorama  --width 390 --height 780 --eval "async()=>{const e=window.experiment;e.setChrome(false);e.setAutoRotate(false);e.setQuality('low');e.setView('toompea');return JSON.stringify(e.state());}"
